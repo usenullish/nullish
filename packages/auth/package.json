@@ -1,0 +1,25 @@
+{
+  "name": "@usenullish/nullish-auth",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server/index.ts",
+    "./client": "./src/client/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@better-auth/api-key": "^1.7.18",
+    "@better-auth/drizzle-adapter": "^1.7.18",
+    "@usenullish/nullish-admin": "workspace:*",
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-engine": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "better-auth": "^1.7.18",
+    "zod": "^4.6"
+  }
+}

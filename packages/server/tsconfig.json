@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    // Required for importing "zod/compile"
+    "noUncheckedSideEffectImports": false
+  }
+}

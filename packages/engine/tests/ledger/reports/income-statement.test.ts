@@ -1,0 +1,288 @@
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/bun-sql";
+import { SQL as BunSQL } from "bun";
+import { assertNonNullish } from "@usenullish/nullish-common";
+import { AccountType, DbSchema, EXCHANGE_RATE_ONE } from "@usenullish/nullish-schema/db";
+import { IncomeStatementReport } from "../../../src/ledger/reports/income-statement";
+import { DbCollectionJournal } from "../../../src/ledger/composites/journal";
+import type { DbLedgerReportsArgs } from "../../../src/ledger/reports/_ledger-reports";
+import type { DbCollectionStoreInitArgs } from "../../../src/store";
+import { envDbUrl } from "@usenullish/nullish-env";
+import {
+  ancestorAccountIds,
+  createOrganization,
+  leafAccountId,
+  readAccountBalance,
+  resetDb,
+  seedUsers,
+  TEST_USER_ID,
+  waitFor,
+} from "../../_test-utils";
+
+const periods = DbSchema.Ledger.Periods.PeriodsSchema;
+const accounts = DbSchema.Ledger.Accounts.AccountsSchema;
+
+const client = new BunSQL(envDbUrl());
+const db = drizzle({ client });
+
+const otherLeafAccountId = async (
+  organizationId: string,
+  type: string,
+  excludeId: string,
+): Promise<string | undefined> => {
+  const rows = await db
+    .select({ id: accounts.id, parentId: accounts.parentId, type: accounts.type })
+    .from(accounts)
+    .where(eq(accounts.organizationId, organizationId));
+
+  const parentIds = new Set(
+    rows.map((row) => row.parentId).filter((value): value is string => value !== null),
+  );
+
+  return rows.find((row) => row.type === type && row.id !== excludeId && !parentIds.has(row.id))
+    ?.id;
+};
+
+const postEntry = async (args: {
+  organizationId: string;
+  debitAccountId: string;
+  creditAccountId: string;
+  amount: bigint;
+  validOn?: Date;
+}): Promise<void> => {
+  const store = DbCollectionJournal.create({
+    db: db as unknown as DbCollectionStoreInitArgs<string>["db"],
+    userId: TEST_USER_ID,
+    foreignKeyId: args.organizationId,
+  });
+
+  const result = await store.insert({
+    values: {
+      entry: { validOn: args.validOn ?? new Date("2026-06-15"), reference: "TEST-ENTRY" },
+      postings: [
+        {
+          accountId: args.debitAccountId,
+          description: "Debit side",
+          currency: "CHF",
+          exchangeRate: EXCHANGE_RATE_ONE,
+          vatRateId: null,
+          debit: args.amount,
+          credit: 0n,
+        },
+        {
+          accountId: args.creditAccountId,
+          description: "Credit side",
+          currency: "CHF",
+          exchangeRate: EXCHANGE_RATE_ONE,
+          vatRateId: null,
+          debit: 0n,
+          credit: args.amount,
+        },
+      ],
+    },
+  });
+
+  if (result.status === "error") {
+    throw result.err;
+  }
+
+  await waitFor(
+    () => readAccountBalance(db, args.debitAccountId),
+    (balance) => balance?.totalDebit === args.amount,
+  );
+};
+
+describe("income-statement", () => {
+  let orgId: string;
+  let siblingOrgId: string;
+  let periodId: string;
+  let siblingPeriodId: string;
+  let incomeAccountId: string;
+  let expenseAccountId: string;
+  let unpostedExpenseAccountId: string;
+  let siblingIncomeAccountId: string;
+
+  beforeAll(async () => {
+    await resetDb(db);
+    await seedUsers(db);
+
+    orgId = await createOrganization(db, TEST_USER_ID);
+    siblingOrgId = await createOrganization(db, TEST_USER_ID);
+
+    const [period, siblingPeriod] = await db
+      .insert(periods)
+      .values([
+        { organizationId: orgId, startOn: new Date("2026-01-01"), endOn: new Date("2026-12-31") },
+        {
+          organizationId: siblingOrgId,
+          startOn: new Date("2026-01-01"),
+          endOn: new Date("2026-12-31"),
+        },
+      ])
+      .returning({ id: periods.id });
+    assertNonNullish(period);
+    assertNonNullish(siblingPeriod);
+    periodId = period.id;
+    siblingPeriodId = siblingPeriod.id;
+
+    const assetAccountId = await leafAccountId(db, orgId, AccountType.ASSET);
+    const liabilityAccountId = await leafAccountId(db, orgId, AccountType.LIABILITY);
+    incomeAccountId = await leafAccountId(db, orgId, AccountType.INCOME);
+    expenseAccountId = await leafAccountId(db, orgId, AccountType.EXPENSE);
+    const siblingExpenseAccountId = await leafAccountId(db, siblingOrgId, AccountType.EXPENSE);
+    siblingIncomeAccountId = await leafAccountId(db, siblingOrgId, AccountType.INCOME);
+
+    const unposted = await otherLeafAccountId(orgId, AccountType.EXPENSE, expenseAccountId);
+    assertNonNullish(unposted);
+    unpostedExpenseAccountId = unposted;
+
+    await postEntry({
+      organizationId: orgId,
+      debitAccountId: expenseAccountId,
+      creditAccountId: incomeAccountId,
+      amount: 4000n,
+    });
+    await postEntry({
+      organizationId: orgId,
+      debitAccountId: assetAccountId,
+      creditAccountId: liabilityAccountId,
+      amount: 6000n,
+    });
+    await postEntry({
+      organizationId: siblingOrgId,
+      debitAccountId: siblingExpenseAccountId,
+      creditAccountId: siblingIncomeAccountId,
+      amount: 2000n,
+    });
+  });
+
+  afterAll(async () => {
+    await resetDb(db);
+    await client.close();
+  });
+
+  test("includes only income-statement account types (income, expense)", async () => {
+    const result = await IncomeStatementReport.create({
+      db: db as unknown as DbLedgerReportsArgs["db"],
+      userId: TEST_USER_ID,
+      organizationId: orgId,
+    }).list({ periodId });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    const expectedAccountIds = [
+      ...(await ancestorAccountIds(db, orgId, incomeAccountId)),
+      ...(await ancestorAccountIds(db, orgId, expenseAccountId)),
+    ];
+
+    expect(result.result.map((row) => row.accountId).sort()).toEqual(expectedAccountIds.sort());
+    expect(result.result.every((row) => row.type !== AccountType.ASSET)).toBeTrue();
+    expect(result.result.every((row) => row.type !== AccountType.LIABILITY)).toBeTrue();
+  });
+
+  test("excludes accounts with a zero balance", async () => {
+    const result = await IncomeStatementReport.create({
+      db: db as unknown as DbLedgerReportsArgs["db"],
+      userId: TEST_USER_ID,
+      organizationId: orgId,
+    }).list({ periodId });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    expect(result.result.map((row) => row.accountId)).not.toContain(unpostedExpenseAccountId);
+  });
+
+  test("orders rows by account code ascending", async () => {
+    const result = await IncomeStatementReport.create({
+      db: db as unknown as DbLedgerReportsArgs["db"],
+      userId: TEST_USER_ID,
+      organizationId: orgId,
+    }).list({ periodId });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    const codes = result.result.map((row) => row.code);
+    expect(codes).toEqual([...codes].sort());
+  });
+
+  test("scopes rows to the configured organization", async () => {
+    const result = await IncomeStatementReport.create({
+      db: db as unknown as DbLedgerReportsArgs["db"],
+      userId: TEST_USER_ID,
+      organizationId: siblingOrgId,
+    }).list({ periodId: siblingPeriodId });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    const accountIds = result.result.map((row) => row.accountId);
+    expect(accountIds).toContain(siblingIncomeAccountId);
+    expect(accountIds).not.toContain(incomeAccountId);
+  });
+  describe("across periods", () => {
+    let periodsOrgId: string;
+    let secondPeriodId: string;
+    let previousAccountId: string;
+
+    beforeAll(async () => {
+      periodsOrgId = await createOrganization(db, TEST_USER_ID);
+
+      const [, secondPeriod] = await db
+        .insert(periods)
+        .values([
+          {
+            organizationId: periodsOrgId,
+            startOn: new Date("2026-01-01"),
+            endOn: new Date("2026-12-31"),
+          },
+          {
+            organizationId: periodsOrgId,
+            startOn: new Date("2027-01-01"),
+            endOn: new Date("2027-12-31"),
+          },
+        ])
+        .returning({ id: periods.id });
+      assertNonNullish(secondPeriod);
+      secondPeriodId = secondPeriod.id;
+
+      const assetAccountId = await leafAccountId(db, periodsOrgId, AccountType.ASSET);
+      const incomeAccountId = await leafAccountId(db, periodsOrgId, AccountType.INCOME);
+      previousAccountId = incomeAccountId;
+
+      await postEntry({
+        organizationId: periodsOrgId,
+        debitAccountId: assetAccountId,
+        creditAccountId: incomeAccountId,
+        amount: 1000n,
+        validOn: new Date("2026-06-15"),
+      });
+    });
+
+    test("excludes an account without activity in the period", async () => {
+      const result = await IncomeStatementReport.create({
+        db: db as unknown as DbLedgerReportsArgs["db"],
+        userId: TEST_USER_ID,
+        organizationId: periodsOrgId,
+      }).list({ periodId: secondPeriodId });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.map((row) => row.accountId)).not.toContain(previousAccountId);
+    });
+  });
+});

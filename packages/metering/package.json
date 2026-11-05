@@ -1,0 +1,19 @@
+{
+  "name": "@usenullish/nullish-metering",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-admin": "workspace:*",
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*"
+  }
+}

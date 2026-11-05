@@ -1,0 +1,83 @@
+FROM oven/bun:1.4.4-slim@sha256:1846adf22496bd711036aae8be147e57bdebbaea2e5264e3e0b5af1db187d9a4 AS base
+WORKDIR /usr/src/app
+
+# install dependencies into a temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+COPY packages/common/package.json /temp/dev/packages/common/
+COPY packages/schema/package.json /temp/dev/packages/schema/
+COPY packages/env/package.json /temp/dev/packages/env/
+COPY packages/db/package.json /temp/dev/packages/db/
+COPY packages/engine/package.json /temp/dev/packages/engine/
+COPY packages/migration/package.json /temp/dev/packages/migration/
+COPY packages/storage/package.json /temp/dev/packages/storage/
+COPY packages/auth/package.json /temp/dev/packages/auth/
+COPY packages/admin/package.json /temp/dev/packages/admin/
+COPY packages/client/package.json /temp/dev/packages/client/
+
+RUN cd /temp/dev && bun install --frozen-lockfile --ignore-scripts
+
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+COPY packages/common/package.json /temp/prod/packages/common/
+COPY packages/schema/package.json /temp/prod/packages/schema/
+COPY packages/env/package.json /temp/prod/packages/env/
+COPY packages/db/package.json /temp/prod/packages/db/
+COPY packages/engine/package.json /temp/prod/packages/engine/
+COPY packages/migration/package.json /temp/prod/packages/migration/
+COPY packages/storage/package.json /temp/prod/packages/storage/
+COPY packages/auth/package.json /temp/prod/packages/auth/
+COPY packages/admin/package.json /temp/prod/packages/admin/
+COPY packages/client/package.json /temp/prod/packages/client/
+
+RUN cd /temp/prod && bun install --frozen-lockfile --ignore-scripts --production
+
+# copy node_modules from the temp directory, then copy the packages the client
+# actually imports and build it
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY --from=install /temp/dev/packages/common/node_modules ./packages/common/node_modules
+COPY --from=install /temp/dev/packages/schema/node_modules ./packages/schema/node_modules
+COPY --from=install /temp/dev/packages/auth/node_modules ./packages/auth/node_modules
+COPY --from=install /temp/dev/packages/client/node_modules ./packages/client/node_modules
+
+COPY package.json package.json
+COPY tsconfig.json tsconfig.json
+COPY bunfig.toml bunfig.toml
+
+COPY packages/common ./packages/common
+COPY packages/schema ./packages/schema
+COPY packages/auth ./packages/auth
+COPY packages/client ./packages/client
+
+ENV NODE_ENV=production
+RUN bun run --filter @usenullish/nullish-client build
+
+# build final image
+FROM base AS release
+
+ENV NODE_ENV=production
+
+# Copy runtime dependencies
+COPY --from=install /temp/prod/node_modules ./node_modules
+COPY --from=install /temp/prod/packages/client/node_modules ./packages/client/node_modules
+
+# Copy runtime
+COPY --from=prerelease /usr/src/app/packages/client/package.json ./packages/client/package.json
+COPY --from=prerelease /usr/src/app/packages/client/build ./packages/client/build
+
+COPY LICENSE README.md /
+
+# The CMD paths are relative to the client package
+WORKDIR /usr/src/app/packages/client
+
+USER bun
+
+EXPOSE 3000
+
+# Without --bun, Bun would try to run react-router-serve with Node
+CMD ["bun", "--bun", "./node_modules/.bin/react-router-serve", "./build/server/index.js"]

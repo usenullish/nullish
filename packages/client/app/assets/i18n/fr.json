@@ -1,0 +1,1380 @@
+{
+  "core": {
+    "text": {
+      "no_currency": "Aucune devise trouvée.",
+      "no_language": "Aucune langue trouvée."
+    },
+    "action": {
+      "skip": "Passer",
+      "close": "Fermer",
+      "submit": "Valider",
+      "update": "Mettre à jour",
+      "edit": "Modifier",
+      "clear": "Effacer",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "send": "Envoyer",
+      "hide_amounts": "Masquer les montants",
+      "show_amounts": "Afficher les montants",
+      "toggle_theme": "Changer de thème",
+      "generate": "Générer",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "more_actions": "Plus d'actions",
+      "details": "Détails",
+      "copy": "Copier",
+      "open": "Ouvrir",
+      "delete": "Supprimer",
+      "choose_file": "Choisir un fichier"
+    },
+    "label": {
+      "number": "Numéro",
+      "language": "Langue",
+      "select_language": "Sélectionner une langue",
+      "id": "ID",
+      "name": "Nom",
+      "type": "Type",
+      "status": "Statut",
+      "start": "Début",
+      "end": "Fin",
+      "start_date": "Date de début",
+      "end_date": "Date de fin",
+      "date": "Date",
+      "description": "Description",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "code": "Code",
+      "rate": "Taux",
+      "amount": "Montant",
+      "currency": "Devise",
+      "exchange_rate": "Taux de change",
+      "debit": "Débit",
+      "credit": "Crédit",
+      "balance": "Solde",
+      "account_id": "ID du compte",
+      "purpose": "Usage",
+      "search": "Rechercher",
+      "from": "Du",
+      "to": "Au",
+      "valid_on": "Valable le",
+      "reference": "Référence",
+      "all": "Tous",
+      "step": "Étape {current} sur {total}",
+      "created_at": "Créé le",
+      "updated_at": "Modifié le",
+      "version": "Version"
+    },
+    "status": {
+      "open": "Ouverte",
+      "closed": "Clôturée"
+    },
+    "state": {
+      "hold_tight": "Un instant…",
+      "unexpected_error": "Une erreur inattendue s'est produite !",
+      "thinking": "Réflexion…",
+      "language_error": "La langue n'a pas pu être changée.",
+      "saving": "Enregistrement…",
+      "deleting": "Suppression…"
+    },
+    "toast": {
+      "copied": "Copié dans le presse-papiers.",
+      "copy_error": "Impossible de copier dans le presse-papiers."
+    }
+  },
+  "auth": {
+    "action": {
+      "sign_out": "Se déconnecter",
+      "sign_in": "Se connecter",
+      "sign_up": "S'inscrire",
+      "signing_in": "Connexion…",
+      "signing_up": "Inscription…",
+      "change_password": "Changer le mot de passe",
+      "changing_password": "Modification…",
+      "verify": "Vérifier",
+      "verifying": "Vérification…",
+      "use_backup_code": "Utiliser un code de secours",
+      "use_authenticator": "Utiliser ton app d'authentification"
+    },
+    "label": {
+      "password": "Mot de passe",
+      "current_password": "Mot de passe actuel",
+      "new_password": "Nouveau mot de passe",
+      "code": "Code",
+      "backup_code": "Code de secours",
+      "trust_device": "Faire confiance à cet appareil pendant {days} jours"
+    },
+    "text": {
+      "sign_in_description": "Saisis ton e-mail et ton mot de passe pour te connecter.",
+      "sign_up_description": "Crée ton compte pour commencer.",
+      "no_account": "Pas encore inscrit ?",
+      "has_account": "Tu as déjà un compte ?",
+      "session_expired": "Ta session a expiré. Reconnecte-toi.",
+      "change_password_title": "Changer ton mot de passe",
+      "two_factor_description": "Saisis le code à 6 chiffres de ton app d'authentification.",
+      "backup_code_description": "Saisis l'un de tes codes de secours."
+    },
+    "toast": {
+      "change_password_success": "Ton mot de passe est changé. Tes autres appareils sont déconnectés."
+    },
+    "error": {
+      "sign_up_disabled": "Les inscriptions sont fermées.",
+      "sign_up_invitation_only": "L'inscription se fait uniquement sur invitation.",
+      "user_has_organizations": "Quitte ou supprime tes organisations avant de supprimer ton compte.",
+      "user_has_api_keys": "Supprime tes clés API avant de supprimer ton compte."
+    }
+  },
+  "errors": {
+    "label": {
+      "error": "Erreur"
+    },
+    "text": {
+      "oops": "Oups !",
+      "unexpected": "Une erreur inattendue s'est produite.",
+      "not_found": "La page demandée est introuvable."
+    }
+  },
+  "navigation": {
+    "organization": "Organisation",
+    "reports": "Rapports",
+    "settings": "Paramètres",
+    "assistant": "Assistant",
+    "bank": "Banque",
+    "banking": "Banque",
+    "journal": "Journal",
+    "clients": "Clients",
+    "invoices": "Factures",
+    "balance_sheet": "Bilan",
+    "income_statement": "Compte de résultat",
+    "vat_declaration": "Décompte TVA",
+    "account_ledger": "Feuille de compte",
+    "accounting": "Comptabilité",
+    "accounts": "Comptes",
+    "system_accounts": "Comptes système",
+    "periods": "Périodes",
+    "vat": "TVA",
+    "methods": "Méthodes",
+    "billing": "Facturation",
+    "rates": "Taux",
+    "document_templates": "Modèles de documents",
+    "details": "Détails",
+    "bank_relations": "Comptes bancaires",
+    "organizations": "Organisations",
+    "team": "Équipe",
+    "members": "Membres",
+    "invitations": "Invitations",
+    "migrations": "Migrations"
+  },
+  "greeting": {
+    "morning": "Bonjour, {name}",
+    "morning_anonymous": "Bonjour",
+    "afternoon": "Bon après-midi, {name}",
+    "afternoon_anonymous": "Bon après-midi",
+    "evening": "Bonsoir, {name}",
+    "evening_anonymous": "Bonsoir",
+    "late": "Encore au travail, {name} ?",
+    "late_anonymous": "Encore au travail ?"
+  },
+  "chat": {
+    "action": {
+      "use_own_llm": "Utiliser ton propre LLM",
+      "new_conversation": "Nouveau"
+    },
+    "state": {
+      "pondering": "Je réfléchis…",
+      "mulling": "Je cogite…",
+      "noodling": "Hmm, voyons voir…",
+      "looking_up": "Recherche…",
+      "creating": "Création…",
+      "updating": "Mise à jour…",
+      "working": "Traitement…"
+    },
+    "label": {
+      "placeholder_organization": "Pose une question sur {organization}, p. ex. quelles factures sont encore ouvertes ?",
+      "placeholder_unscoped": "p. ex. Où ai-je des factures ouvertes ?",
+      "history": "Historique",
+      "title": "Titre",
+      "placeholder_disabled": "L'assistant n'est pas configuré sur cette instance."
+    },
+    "text": {
+      "untitled_conversation": "Conversation sans titre",
+      "limit_reached": "Tu as atteint la limite d'utilisation de l'assistant. Réessaie plus tard.",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "La conversation et ses messages sont supprimés. Cette action est irréversible.",
+      "empty": "Aucune conversation pour l'instant."
+    },
+    "toast": {
+      "load_conversations_error": "Les conversations n'ont pas pu être chargées.",
+      "load_messages_error": "Les messages précédents n'ont pas pu être chargés.",
+      "delete_success": "La conversation est supprimée.",
+      "delete_error": "La conversation n'a pas pu être supprimée."
+    }
+  },
+  "organizations": {
+    "setup": {
+      "organization": "Organisation",
+      "vat": "TVA",
+      "vat_rate": "Taux"
+    },
+    "setup_done": {
+      "organization": "Hourra, {name} est créée",
+      "vat": "Bravo, la TVA est configurée",
+      "vat_rate": "Parfait, le taux de la dette fiscale nette est en place"
+    },
+    "setup_next": {
+      "vat": "L'organisation est-elle assujettie à la TVA ?",
+      "vat_rate": "Dernière chose : le taux de la dette fiscale nette."
+    },
+    "action": {
+      "create": "Créer une organisation",
+      "lets_go": "C'est parti !",
+      "delete": "Supprimer l'organisation"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "legal_form": "Forme juridique",
+      "legal_form_llc": "Sàrl",
+      "legal_form_corporation": "SA",
+      "legal_form_sole_proprietorship": "Entreprise individuelle",
+      "address": "Adresse",
+      "care_of": "Aux bons soins de",
+      "street": "Rue",
+      "postal_code": "NPA",
+      "city": "Localité",
+      "country": "Pays",
+      "communication": "Communication",
+      "website": "Site web",
+      "settings": "Paramètres de l'organisation",
+      "select_country": "Choisir un pays",
+      "danger_zone": "Zone de danger"
+    },
+    "text": {
+      "new": "Nouvelle organisation",
+      "intro": "Offrons un foyer à ton entreprise !",
+      "ready": "{name} est prête",
+      "no_country": "Aucun pays trouvé.",
+      "no_results": "Aucune organisation trouvée.",
+      "danger_zone": "La suppression rend l'organisation accessible en lecture seule. Elle est supprimée définitivement, avec toutes ses données, après 30 jours.",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "L'organisation passe immédiatement en lecture seule et est supprimée définitivement, avec toutes ses données, après 30 jours. Cette action est irréversible.",
+      "deleted": "Cette organisation a été marquée comme supprimée le {date}."
+    },
+    "toast": {
+      "create_error": "L'organisation n'a pas pu être créée.",
+      "update_success": "L'organisation a été mise à jour.",
+      "update_error": "L'organisation n'a pas pu être mise à jour.",
+      "delete_success": "L'organisation a été marquée comme supprimée.",
+      "delete_error": "L'organisation n'a pas pu être supprimée."
+    }
+  },
+  "clients": {
+    "action": {
+      "create": "Créer un client"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "text": {
+      "details": "Détails du client",
+      "empty": "Aucun client pour l'instant.",
+      "edit_title": "Modifier le client",
+      "no_results": "Aucun client trouvé.",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "Le client et ses contacts sont supprimés. Un client avec des factures ne peut pas être supprimé. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "Le client est créé.",
+      "create_error": "Le client n'a pas pu être créé.",
+      "update_success": "Le client est enregistré.",
+      "update_error": "Le client n'a pas pu être enregistré.",
+      "delete_success": "Le client est supprimé.",
+      "delete_error": "Le client n'a pas pu être supprimé."
+    },
+    "type": {
+      "company": "Entreprise",
+      "individual": "Particulier"
+    }
+  },
+  "contacts": {
+    "action": {
+      "create": "Créer un contact",
+      "add": "Ajouter un contact"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "last_name": "Nom",
+      "first_name": "Prénom"
+    },
+    "text": {
+      "title": "Contacts",
+      "empty": "Aucun contact pour l'instant.",
+      "edit_title": "Modifier le contact",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "Le contact est retiré du client. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "Le contact est créé.",
+      "create_error": "Le contact n'a pas pu être créé.",
+      "update_success": "Le contact est enregistré.",
+      "update_error": "Le contact n'a pas pu être enregistré.",
+      "delete_success": "Le contact est supprimé.",
+      "delete_error": "Le contact n'a pas pu être supprimé."
+    }
+  },
+  "invoices": {
+    "action": {
+      "create": "Créer une facture",
+      "add_line": "Ajouter une ligne",
+      "open": "Émettre",
+      "pay": "Payer",
+      "void": "Annuler",
+      "write_off": "Passer en perte",
+      "download": "Télécharger",
+      "generate_pdf": "Générer le PDF"
+    },
+    "state": {
+      "creating": "Création…",
+      "paying": "Paiement…",
+      "generating": "Génération…",
+      "printing": "Impression…"
+    },
+    "label": {
+      "issue_date": "Date d'émission",
+      "due_date": "Date d'échéance",
+      "pdf": "PDF",
+      "document_template": "Modèle de document",
+      "default_template": "Modèle par défaut",
+      "select_template": "Choisir un modèle",
+      "select_language": "Choisir une langue",
+      "bank_relation": "Compte bancaire",
+      "issued_from": "Émises du",
+      "issued_to": "Émises au",
+      "client": "Client",
+      "vat_rate": "Taux TVA",
+      "select_client": "Choisir un client",
+      "subtotal": "Sous-total",
+      "vat": "TVA",
+      "total": "Total",
+      "paid": "Payé",
+      "remaining": "Montant ouvert"
+    },
+    "text": {
+      "details": "Détails de la facture",
+      "pay_title": "Payer la facture",
+      "pdf_generated": "Ton PDF est prêt",
+      "pdf_failed": "La génération du PDF a échoué",
+      "pdf_timeout": "La génération du PDF prend plus de temps que prévu. Réessaie plus tard.",
+      "empty": "Aucune facture pour l'instant.",
+      "open_title": "Ouvrir cette facture ?",
+      "open_description": "Ses écritures seront comptabilisées et ses lignes ne pourront plus être modifiées.",
+      "void_title": "Annuler cette facture ?",
+      "void_description": "Ses écritures seront extournées. Cette action est irréversible.",
+      "write_off_title": "Passer cette facture en perte ?",
+      "write_off_description": "Le montant ouvert sera comptabilisé comme perte sur clients. Cette action est irréversible.",
+      "delete_title": "Supprimer le brouillon de facture pour {client} du {date} ?",
+      "delete_description": "Le brouillon de facture et ses lignes sont supprimés. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "La facture est créée.",
+      "create_error": "La facture n'a pas pu être créée.",
+      "open_success": "La facture est ouverte.",
+      "open_error": "La facture n'a pas pu être ouverte.",
+      "void_success": "La facture est annulée.",
+      "void_error": "La facture n'a pas pu être annulée.",
+      "write_off_success": "La facture est passée en perte.",
+      "write_off_error": "La facture n'a pas pu être passée en perte.",
+      "pay_success": "Le paiement est enregistré.",
+      "pay_error": "Le paiement n'a pas pu être enregistré.",
+      "pdf_error": "Le PDF n'a pas pu être généré.",
+      "delete_success": "La facture est supprimée.",
+      "delete_error": "La facture n'a pas pu être supprimée."
+    },
+    "status": {
+      "draft": "Brouillon",
+      "open": "Ouverte",
+      "paid": "Payée",
+      "uncollectible": "Irrécouvrable",
+      "void": "Annulée"
+    }
+  },
+  "lines": {
+    "action": {
+      "create": "Créer une ligne de facture"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "quantity": "Quantité",
+      "unit_price": "Prix unitaire",
+      "total": "Total"
+    },
+    "text": {
+      "empty": "Aucune ligne pour l'instant.",
+      "delete_title": "Supprimer la ligne {name} ?",
+      "delete_description": "La ligne est retirée du brouillon de facture. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "La ligne est ajoutée.",
+      "create_error": "La ligne n'a pas pu être ajoutée.",
+      "delete_success": "La ligne est supprimée.",
+      "delete_error": "La ligne n'a pas pu être supprimée."
+    },
+    "type": {
+      "item": "Article",
+      "discount": "Rabais"
+    }
+  },
+  "journal": {
+    "action": {
+      "create": "Créer une écriture",
+      "duplicate": "Dupliquer",
+      "remove_line": "Supprimer la ligne",
+      "add_line": "Ajouter une ligne",
+      "copy_tag": "Copier l'étiquette"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "postings": "Imputations",
+      "line": "Ligne {line}",
+      "valid_from": "Valable du",
+      "valid_to": "Valable au",
+      "account": "Compte",
+      "total_debit": "Total débit",
+      "total_credit": "Total crédit",
+      "difference": "Différence",
+      "invoice": "Facture",
+      "period": "Période",
+      "movement": "Mouvement bancaire",
+      "vat_rate": "Taux de TVA",
+      "no_vat_rate": "Pas de taux de TVA",
+      "vat_side": "TVA sur",
+      "vat_posting": "TVA",
+      "origin": "Origine",
+      "tag": "Étiquette"
+    },
+    "text": {
+      "new": "Nouvelle écriture",
+      "empty": "Aucune écriture pour l'instant.",
+      "delete_title": "Supprimer l'écriture {name} ?",
+      "delete_description": "L'écriture et ses imputations sont supprimées. Une écriture d'une période clôturée ou comptabilisée par une facture ne peut pas être supprimée. Cette action est irréversible.",
+      "details": "Détails de l'écriture",
+      "edit_title": "Modifier l'écriture",
+      "missing_description": "Ajoute une référence ou une description sur au moins une ligne.",
+      "migrated": "Migrée"
+    },
+    "toast": {
+      "create_success": "L'écriture est créée.",
+      "create_error": "L'écriture n'a pas pu être créée.",
+      "delete_success": "L'écriture est supprimée.",
+      "delete_error": "L'écriture n'a pas pu être supprimée.",
+      "update_success": "L'écriture est enregistrée.",
+      "update_error": "L'écriture n'a pas pu être enregistrée."
+    },
+    "invoice_journal": {
+      "open": "Ouverture de facture",
+      "payment": "Paiement de facture",
+      "void": "Annulation de facture",
+      "uncollectible": "Perte sur facture"
+    },
+    "period_journal": {
+      "opening": "Solde d'ouverture",
+      "result": "Résultat de l'exercice"
+    }
+  },
+  "accounts": {
+    "action": {
+      "create": "Créer un compte"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "parent": "Compte parent"
+    },
+    "text": {
+      "no_results": "Aucun compte trouvé.",
+      "create_title": "Créer un compte",
+      "edit_title": "Modifier le compte",
+      "delete_title": "Supprimer le compte {name} ?",
+      "delete_description": "Un compte avec des écritures, des sous-comptes ou attribué à un compte système ne peut pas être supprimé. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "Le compte est créé.",
+      "create_error": "Le compte n'a pas pu être créé.",
+      "update_success": "Le compte est enregistré.",
+      "update_error": "Le compte n'a pas pu être enregistré.",
+      "delete_success": "Le compte est supprimé.",
+      "delete_error": "Le compte n'a pas pu être supprimé."
+    },
+    "type": {
+      "asset": "Actifs",
+      "liability": "Capitaux étrangers",
+      "equity": "Capitaux propres",
+      "income": "Produits",
+      "expense": "Charges",
+      "closing": "Clôture"
+    },
+    "names": {
+      "1": "Actifs",
+      "10": "Actifs circulants",
+      "100": "Trésorerie",
+      "1020": "Banque",
+      "109": "Comptes d'attente",
+      "1090": "Comptes de transfert",
+      "1091": "Compte d'attente pour salaires",
+      "1099": "Compte d'attente pour des montants à clarifier",
+      "110": "Créances résultant de la vente de biens et de prestations de services",
+      "1100": "Créances suisses",
+      "1109": "Corrections de la valeur des créances",
+      "1130": "Paiements anticipés aux fournisseurs",
+      "114": "Autres créances à court terme",
+      "1140": "Prêts",
+      "117": "Créances à court terme envers des institutions publiques",
+      "1170": "Impôt préalable: TVA s/matériel, marchandises, prestations et énergie",
+      "1171": "Impôt préalable: TVA s/investissements et autres charges d'exploitation",
+      "1172": "Réconciliation de l'impôt préalable lors de changement de méthode",
+      "1173": "Réduction de l'impôt préalable",
+      "1174": "Correction de l'impôt préalable",
+      "1175": "Décompte TVA",
+      "1176": "Impôt anticipé à récupérer",
+      "118": "Créances de sécurité sociale",
+      "1183": "Compte courant Assurance-accidents",
+      "1184": "Compte courant Assurance maladie",
+      "1188": "Compte courant Impôt à la source",
+      "120": "Stocks et prestations de services non facturées",
+      "1200": "Stocks de marchandises commerciales",
+      "1280": "Travaux en cours",
+      "130": "Actifs de régularisation (actifs transitoires)",
+      "1300": "Charges payées d'avance",
+      "14": "Actifs immobilisés",
+      "150": "Immobilisations corporelles meubles",
+      "1500": "Machines et appareils",
+      "1510": "Mobilier et installations",
+      "1520": "Machines de bureau",
+      "1530": "Véhicules",
+      "2": "Passifs",
+      "20": "Capitaux étrangers à court terme",
+      "200": "Dettes résultant de l'achat de biens et de prestations de services",
+      "2000": "Dettes résultant d'achats de matières et de marchandises",
+      "2030": "Acomptes reçus de tiers",
+      "210": "Dettes à court terme portant intérêt",
+      "2100": "Compte courant A",
+      "2190": "Carte de crédit",
+      "220": "Autres dettes à court terme",
+      "2200": "TVA due",
+      "2201": "Décompte TVA",
+      "2202": "Réconciliation du chiffre d'affaires suite à un changement de méthode",
+      "2203": "Impôt sur les acquisitions",
+      "227": "Dettes de sécurité sociale",
+      "2270": "Compte courant Institutions de prévoyance professionnelle",
+      "2271": "Compte courant AVS, AI, APG, AC",
+      "2272": "Compte courant Caisse d'allocations familiales (CAF)",
+      "2273": "Compte courant Assurance-accidents",
+      "2274": "Compte courant Assurance maladie (indemnité journalière maladie)",
+      "2279": "Compte courant Impôt à la source",
+      "230": "Passifs de régularisation (passifs transitoires)",
+      "2300": "Passifs de régularisation (passifs transitoires)",
+      "24": "Capitaux étrangers à long terme",
+      "240": "Dettes à long terme portant intérêt",
+      "2400": "Emprunts A",
+      "2560": "Autres dettes envers l'actionnaire",
+      "28": "Capitaux propres",
+      "280": "Capital",
+      "2800": "Capital",
+      "282": "Apports en capital et retraits",
+      "2820": "Apports en capital et retraits",
+      "285": "Privé",
+      "2850": "Compte privé",
+      "289": "Bénéfice ou perte de l'exercice",
+      "2891": "Bénéfice ou perte de l'exercice",
+      "290": "Réserves et bénéfice reporté ou perte reportée",
+      "2950": "Réserve légale issue du bénéfice",
+      "2970": "Bénéfice ou perte reporté",
+      "2979": "Bénéfice ou perte de l'exercice",
+      "3": "Produits nets des ventes de biens et de prestations de services",
+      "30": "Chiffre d'affaires de la production vendue",
+      "300": "Ventes de produits fabriqués",
+      "3000": "Ventes de produits fabriqués",
+      "32": "Ventes de marchandises",
+      "320": "Ventes de marchandises",
+      "3200": "Ventes de marchandises",
+      "34": "Ventes de prestations",
+      "340": "Ventes brutes de prestations",
+      "3400": "Ventes brutes de prestations",
+      "36": "Produits annexes résultant de la vente",
+      "360": "Produits annexes résultant de livraisons et de prestations de services",
+      "3600": "Produits annexes résultant de livraisons et de prestations de services",
+      "368": "Autres produits",
+      "3680": "Autres produits",
+      "38": "Déductions sur ventes",
+      "380": "Déductions sur ventes",
+      "3800": "Escomptes",
+      "3801": "Rabais et réductions de prix",
+      "3802": "Ristournes",
+      "3803": "Commissions de tiers",
+      "3804": "Frais d'encaissement",
+      "3805": "Pertes sur clients, variation du ducroire",
+      "3806": "Différences de change",
+      "39": "Variation des stocks",
+      "394": "Variation de la valeur des prestations non facturées",
+      "3940": "Variation de la valeur des prestations non facturées",
+      "4": "Charges de matériel, de marchandises et des prestations",
+      "40": "Charges de matériel",
+      "400": "Charges de matériel production",
+      "4000": "Charges de matériel produit",
+      "42": "Charges de marchandises",
+      "420": "Charges de marchandises destinées à la revente",
+      "4200": "Achats de marchandises",
+      "4208": "Variations de stocks",
+      "427": "Charges directes d'achat Commerce",
+      "4270": "Frets à l'achat",
+      "44": "Prestations et travaux de tiers",
+      "440": "Charges de prestations de tiers",
+      "4400": "Charges pour prestations de services",
+      "46": "Autres charges",
+      "462": "Autres charges de marchandises",
+      "4620": "Autres charges de marchandises",
+      "464": "Autres charges pour prestations de tiers",
+      "4640": "Autres charges pour prestations de tiers",
+      "465": "Charges d'emballage",
+      "4650": "Charges d'emballage",
+      "466": "Variation des provisions pour garantie",
+      "4660": "Variation des provisions pour garantie",
+      "47": "Charges directes d'achat",
+      "4700": "Frets à l'achat",
+      "48": "Variation des stocks",
+      "480": "Variation des stocks de matières et marchandises",
+      "4800": "Variation des stocks de marchandises",
+      "49": "Déductions obtenues sur achats",
+      "490": "Réductions des prix d'achat",
+      "4900": "Escomptes",
+      "4901": "Rabais et réductions de prix",
+      "4906": "Différences de change",
+      "5": "Charges de personnel",
+      "50": "Charges de personnel Production",
+      "500": "Charges salariales Production - secteur A",
+      "5000": "Salaires",
+      "5001": "Indemnités",
+      "5002": "Participations au bénéfice",
+      "5003": "Commissions",
+      "5005": "Prestations des assurances sociales",
+      "5008": "Autres charges de personnel",
+      "57": "Charges sociales",
+      "570": "Charges sociales",
+      "5700": "AVS, AI, APG, AC",
+      "5710": "Caisse d'allocations familiales (CAF)",
+      "5720": "Prévoyance professionnelle",
+      "5730": "Assurance-accidents",
+      "5740": "Assurance maladie (indemnité journalière maladie)",
+      "5790": "Impôts à la source",
+      "58": "Autres charges de personnel",
+      "581": "Formation et formation continue",
+      "5810": "Formation obligatoire",
+      "582": "Indemnités effectives",
+      "5820": "Dépenses effectifs",
+      "583": "Indemnités forfaitaires",
+      "5832": "Dépenses, voyage, voiture, nuitée",
+      "588": "Autres charges de personnel",
+      "5880": "Manifestations en faveur du personnel",
+      "589": "Parts privées sur charges de personnel",
+      "5890": "Parts privées sur charges de personnel",
+      "5891": "Compensation en nature",
+      "6": "Autres charges d'exploitation",
+      "60": "Charges de locaux",
+      "600": "Loyers pour locaux de tiers",
+      "6000": "Loyer",
+      "603": "Charges accessoires",
+      "6030": "Charges accessoires",
+      "6040": "Nettoyage",
+      "61": "Entretien, réparations, remplacements (ERR), leasing",
+      "610": "ERR installations de production",
+      "6100": "ERR machines et appareils de production",
+      "62": "Charges de véhicules et de transport",
+      "620": "Charges de véhicules",
+      "6200": "Réparation",
+      "6210": "Essence",
+      "6220": "Assurance responsabilité civile",
+      "6260": "Véhicules en leasing",
+      "6270": "Parts privées sur charges de véhicules",
+      "63": "Assurances-choses, droits, taxes, autorisations",
+      "630": "Assurances-choses",
+      "6300": "Assurance pour dommage naturels",
+      "636": "Droits, taxes et autorisations",
+      "6360": "Droits et taxes",
+      "64": "Charges d'énergie et évacuation des déchets",
+      "640": "Charges d'énergie",
+      "6400": "Charges d'énergie",
+      "65": "Charges d'administration et d'informatique",
+      "650": "Charges d'administration",
+      "6500": "Matériel de bureau",
+      "6510": "Frais de communication",
+      "6512": "Internet",
+      "6513": "Frais de port",
+      "6530": "Honoraires pour la tenue de la comptabilité",
+      "6559": "Autres frais d'administration",
+      "657": "Frais informatiques",
+      "6570": "Frais informatiques",
+      "66": "Charges de publicité",
+      "660": "Publicité, médias électroniques",
+      "6600": "Publicité dans les journaux",
+      "664": "Frais de déplacement, service à la clientèle",
+      "6640": "Frais de déplacement",
+      "6641": "Service à la clientèle",
+      "68": "Amortissements et corrections de la valeur des actifs immobilisés",
+      "680": "Ajustement de la valeur des immobilisations financières",
+      "6800": "Ajustement de la valeur de titres des actifs immobilisés",
+      "69": "Charges et produits financiers",
+      "690": "Charges financières",
+      "6900": "Intérêts débiteurs sur crédit bancaire",
+      "6940": "Frais bancaires",
+      "6945": "Différence d'arrondi",
+      "6949": "Pertes de change",
+      "695": "Produits financiers",
+      "6950": "Produits financiers sur avoirs en banque",
+      "6999": "Gains de change",
+      "8": "Résultats exceptionnels et hors exploitation",
+      "80": "Résultats hors exploitation",
+      "8000": "Charges hors exploitation",
+      "8100": "Produits hors exploitation",
+      "85": "Charges et produits exceptionnels, uniques ou hors période",
+      "8505": "Pertes exceptionnelles sur débiteurs",
+      "8514": "Bénéfices exceptionnels sur aliénations d'actifs immobilisés",
+      "89": "Impôts directs",
+      "8900": "Impôts sur le bénéfice/Impôts cantonaux et communaux",
+      "9": "Clôture",
+      "91": "Clôture",
+      "9000": "Compte de résultat",
+      "9100": "Bilan d'ouverture",
+      "9101": "Bilan de clôture",
+      "9200": "Bénéfice ou perte de l'exercice",
+      "9900": "Corrections",
+      "9901": "Transfert de soldes"
+    }
+  },
+  "system_accounts": {
+    "action": {
+      "create": "Créer un compte système"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "account": "Compte",
+      "search_account": "Rechercher par numéro ou nom"
+    },
+    "text": {
+      "create_title": "Créer un compte système",
+      "edit_title": "Modifier le compte système",
+      "empty": "Aucun compte système pour l'instant."
+    },
+    "toast": {
+      "create_success": "Le compte système est créé.",
+      "create_error": "Le compte système n'a pas pu être créé.",
+      "update_success": "Le compte système est enregistré.",
+      "update_error": "Le compte système n'a pas pu être enregistré."
+    },
+    "purpose": {
+      "bank_account": "Compte bancaire",
+      "debtor": "Débiteurs",
+      "creditor": "Créanciers",
+      "customer_credit_balance": "Soldes créditeurs clients",
+      "default_income": "Produits par défaut",
+      "default_expense": "Charges par défaut",
+      "income_reduction": "Déductions sur ventes",
+      "bad_debts": "Pertes sur clients",
+      "expense_reduction": "Déductions obtenues sur achats",
+      "vat_tax_due": "TVA due",
+      "settlement_account_vat": "Décompte TVA",
+      "vat_remuneration_received": "Réconciliation TVA (méthode de décompte)",
+      "regards_tax": "Impôt sur les acquisitions",
+      "tax_pre_material": "Impôt préalable sur matériel et prestations",
+      "tax_pre_investment": "Impôt préalable sur investissements",
+      "transitory_tax_account_pre": "Réconciliation de l'impôt préalable (méthode de décompte)",
+      "tax_pre_tax_cuts": "Réduction de l'impôt préalable",
+      "tax_pre_tax_correction": "Correction de l'impôt préalable",
+      "rounding_differences": "Différences d'arrondi",
+      "exchange_rate_losses": "Pertes de change",
+      "exchange_rate_gains": "Gains de change",
+      "profit_and_loss": "Compte de résultat",
+      "opening_balance_sheet": "Bilan d'ouverture",
+      "closing_balance_sheet": "Bilan de clôture",
+      "annual_profit": "Bénéfice ou perte de l'exercice",
+      "annual_result": "Résultat de l'exercice (capitaux propres)",
+      "correction": "Corrections",
+      "balance_takeover": "Transfert de soldes",
+      "capital": "Capital",
+      "capital_contributions": "Apports en capital et retraits",
+      "private_account": "Compte privé"
+    }
+  },
+  "periods": {
+    "action": {
+      "create": "Créer une période",
+      "close": "Clôturer"
+    },
+    "state": {
+      "creating": "Création…",
+      "closing": "Clôture…"
+    },
+    "label": {
+      "period": "Période",
+      "status_only": "Juste la marquer comme clôturée"
+    },
+    "text": {
+      "intro": "Une période couvre généralement un exercice comptable. Les écritures ne peuvent être passées que dans une période ouverte.",
+      "empty": "Aucune période pour l'instant.",
+      "close_title": "Clôturer cette période ?",
+      "close_description": "Une fois clôturée, plus aucune écriture ne peut être passée ni modifiée du {start} au {end}. Cette action est irréversible.",
+      "edit": "Modifier la période",
+      "status_only_hint": "Aucune écriture de clôture n'est créée. Pratique quand elles sont déjà dans ta compta, p. ex. après une migration."
+    },
+    "toast": {
+      "create_success": "La période est créée.",
+      "create_error": "La période n'a pas pu être créée.",
+      "close_success": "La période est clôturée.",
+      "close_error": "La période n'a pas pu être clôturée.",
+      "update_success": "La période est enregistrée.",
+      "update_error": "La période n'a pas pu être enregistrée."
+    }
+  },
+  "billing": {
+    "label": {
+      "payment_term_days": "Délai de paiement (jours)",
+      "default_vat_rate": "Taux de TVA par défaut",
+      "default_bank_relation": "Compte bancaire par défaut",
+      "no_bank_relation": "Aucun compte bancaire"
+    },
+    "toast": {
+      "update_success": "Les paramètres de facturation ont été mis à jour.",
+      "update_error": "Les paramètres de facturation n'ont pas pu être mis à jour."
+    }
+  },
+  "vat": {
+    "action": {
+      "settings_create": "Créer les paramètres TVA",
+      "methods_create": "Créer les méthodes TVA",
+      "period_create": "Créer une période TVA",
+      "rate_create": "Créer un taux TVA",
+      "period_close": "Clôturer"
+    },
+    "state": {
+      "creating": "Création…",
+      "closing": "Clôture…"
+    },
+    "label": {
+      "number": "Numéro TVA",
+      "number_placeholder": "CHE-123.456.789 TVA",
+      "remuneration_method": "Mode de décompte",
+      "select_remuneration_method": "Choisir un mode de décompte",
+      "payment_method": "Méthode de calcul",
+      "select_payment_method": "Choisir une méthode de calcul",
+      "rate_percent": "Taux (%)",
+      "net_rate_percent": "Taux net (%, TDFN uniquement)",
+      "net_rate": "Taux net",
+      "no_vat_rate": "Pas de taux de TVA"
+    },
+    "text": {
+      "period_edit": "Modifier la période TVA",
+      "rate_edit": "Modifier le taux TVA",
+      "method_edit": "Modifier les méthodes TVA",
+      "periods_empty": "Aucune période TVA pour l'instant.",
+      "rates_empty": "Aucun taux TVA pour l'instant.",
+      "methods_empty": "Aucune méthode TVA pour l'instant.",
+      "settings_not_configured": "La TVA n'est pas encore configurée.",
+      "settings_intro": "Ton numéro TVA et ta façon de décompter avec l'administration fiscale.",
+      "period_close_title": "Clôturer cette période TVA ?",
+      "period_close_description": "Une fois clôturée, la période TVA du {start} au {end} ne peut plus être modifiée. Cette action est irréversible."
+    },
+    "toast": {
+      "settings_create_success": "Les paramètres TVA sont créés.",
+      "settings_create_error": "Les paramètres TVA n'ont pas pu être créés.",
+      "settings_update_success": "Les paramètres TVA sont enregistrés.",
+      "settings_update_error": "Les paramètres TVA n'ont pas pu être enregistrés.",
+      "methods_create_success": "Les méthodes TVA sont créées.",
+      "methods_create_error": "Les méthodes TVA n'ont pas pu être créées.",
+      "methods_update_success": "Les méthodes TVA sont enregistrées.",
+      "methods_update_error": "Les méthodes TVA n'ont pas pu être enregistrées.",
+      "period_create_success": "La période TVA est créée.",
+      "period_create_error": "La période TVA n'a pas pu être créée.",
+      "period_update_success": "La période TVA est enregistrée.",
+      "period_update_error": "La période TVA n'a pas pu être enregistrée.",
+      "rate_create_success": "Le taux TVA est créé.",
+      "rate_create_error": "Le taux TVA n'a pas pu être créé.",
+      "rate_update_success": "Le taux TVA est enregistré.",
+      "rate_update_error": "Le taux TVA n'a pas pu être enregistré.",
+      "period_close_success": "La période TVA est clôturée.",
+      "period_close_error": "La période TVA n'a pas pu être clôturée."
+    },
+    "remuneration_method": {
+      "agreed": "Convenues",
+      "received": "Reçues"
+    },
+    "payment_method": {
+      "net_rate": "Taux de la dette fiscale nette",
+      "effective": "Méthode effective"
+    },
+    "type": {
+      "net_rate_tax": "Taux de la dette fiscale nette",
+      "acquisition_tax_investments": "Impôt sur les acquisitions (investissements)",
+      "acquisition_tax_materials": "Impôt sur les acquisitions (matériel)",
+      "non_consideration": "Non-contre-prestations",
+      "non_taxable_turnover": "Chiffre d'affaires non imposable",
+      "import_tax_materials": "Impôt sur les importations (matériel)",
+      "import_tax_investments": "Impôt sur les importations (investissements)",
+      "sales_tax_due": "TVA due",
+      "input_tax_materials": "Impôt préalable (matériel)",
+      "input_tax_investments": "Impôt préalable (investissements)"
+    }
+  },
+  "document_templates": {
+    "action": {
+      "create": "Créer un modèle de document"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "label": {
+      "html": "Modèle HTML"
+    },
+    "text": {
+      "create_title": "Créer un modèle de document",
+      "edit_title": "Modifier le modèle de document",
+      "details": "Détails du modèle de document",
+      "keep_current": "Laisse vide pour conserver le modèle actuel.",
+      "empty": "Aucun modèle de document pour l'instant.",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "Le modèle de document et toutes ses langues sont supprimés. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "Le modèle de document est créé.",
+      "create_error": "Le modèle de document n'a pas pu être créé.",
+      "update_success": "Le modèle de document est enregistré.",
+      "update_error": "Le modèle de document n'a pas pu être enregistré.",
+      "delete_success": "Le modèle de document est supprimé.",
+      "delete_error": "Le modèle de document n'a pas pu être supprimé."
+    },
+    "type": {
+      "invoice": "Facture"
+    }
+  },
+  "template_contents": {
+    "action": {
+      "add": "Ajouter un contenu"
+    },
+    "state": {
+      "creating": "Création…"
+    },
+    "text": {
+      "title": "Contenus",
+      "empty": "Aucun contenu pour l'instant.",
+      "edit_title": "Modifier le contenu",
+      "delete_title": "Supprimer le contenu ?",
+      "delete_description": "Le contenu est supprimé. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "Le contenu est ajouté.",
+      "create_error": "Le contenu n'a pas pu être ajouté.",
+      "update_success": "Le contenu est enregistré.",
+      "update_error": "Le contenu n'a pas pu être enregistré.",
+      "delete_success": "Le contenu est supprimé.",
+      "delete_error": "Le contenu n'a pas pu être supprimé."
+    }
+  },
+  "bank_relations": {
+    "action": {
+      "create": "Créer un compte bancaire",
+      "upload_file": "Uploader un fichier bancaire"
+    },
+    "state": {
+      "creating": "Création…",
+      "uploading": "Upload…"
+    },
+    "label": {
+      "iban": "IBAN",
+      "qr_iban": "QR-IBAN",
+      "account": "Compte comptable",
+      "file": "Fichier",
+      "balance": "Solde",
+      "reconciliation": "Rapprochement"
+    },
+    "text": {
+      "create_title": "Créer un compte bancaire",
+      "edit_title": "Modifier le compte bancaire",
+      "empty": "Aucun compte bancaire pour le moment.",
+      "delete_title": "Supprimer {name} ?",
+      "delete_description": "Le compte bancaire est supprimé. Cette action est irréversible.",
+      "upload_title": "Uploader un fichier bancaire pour {name}",
+      "upload_description": "Télécharge-le depuis ton e-banking au format « camt.053 » et sélectionne-le ici. Jusqu'à {size} Mo.",
+      "to_reconcile": "{count} à rapprocher",
+      "balance_on": "au {date}",
+      "up_to_date": "À jour"
+    },
+    "toast": {
+      "create_success": "Le compte bancaire est créé.",
+      "create_error": "Le compte bancaire n'a pas pu être créé.",
+      "update_success": "Le compte bancaire est enregistré.",
+      "update_error": "Le compte bancaire n'a pas pu être enregistré.",
+      "delete_success": "Le compte bancaire est supprimé.",
+      "delete_error": "Le compte bancaire n'a pas pu être supprimé.",
+      "import_success": "{inserted} mouvements importés, {existing} déjà importés.",
+      "import_already": "Ces relevés ont déjà été importés.",
+      "import_error": "Les relevés n'ont pas pu être importés."
+    }
+  },
+  "bank_movements": {
+    "action": {
+      "reconcile": "Rapprocher",
+      "book": "Comptabiliser",
+      "book_payment": "Comptabiliser le paiement",
+      "ignore": "Ignorer",
+      "not_this_invoice": "Pas cette facture"
+    },
+    "state": {
+      "booking": "Comptabilisation…",
+      "ignoring": "En cours…"
+    },
+    "label": {
+      "booked_on": "Comptabilisé le",
+      "amount": "Montant",
+      "counterparty": "Contrepartie",
+      "payment_from": "Paiement de",
+      "payment_to": "Paiement à",
+      "original_amount": "Montant d'origine",
+      "bank_fees": "Frais bancaires",
+      "communication": "Communication",
+      "reference": "Référence",
+      "booked_from": "Comptabilisé du",
+      "booked_to": "Comptabilisé au",
+      "account": "Compte",
+      "vat_rate": "Taux de TVA",
+      "description": "Description",
+      "invoice": "Facture",
+      "remaining": "Reste dû",
+      "overpaid": "Payé en trop",
+      "value_on": "Date de valeur",
+      "bank_reference": "Référence bancaire",
+      "sender": "Donneur d'ordre",
+      "recipient": "Bénéficiaire"
+    },
+    "text": {
+      "title": "Mouvements",
+      "empty": "Aucun mouvement.",
+      "reconcile_title": "Rapprocher les mouvements",
+      "matched_title": "Associés à une facture",
+      "account_title": "À comptabiliser sur un compte",
+      "already_paid": "Cette facture est déjà payée.",
+      "ignore_title": "Ignorer ce mouvement ?",
+      "ignore_description": "Un mouvement ignoré ne comptabilise rien et ne pourra plus être rapproché. Cette action est irréversible.",
+      "nothing_to_reconcile": "Rien à rapprocher.",
+      "details": "Détails du mouvement"
+    },
+    "status": {
+      "unreconciled": "À rapprocher",
+      "reconciled": "Rapproché",
+      "ignored": "Ignoré"
+    },
+    "toast": {
+      "book_success": "Le mouvement est comptabilisé.",
+      "book_error": "Le mouvement n'a pas pu être comptabilisé.",
+      "ignore_success": "Le mouvement est ignoré.",
+      "ignore_error": "Le mouvement n'a pas pu être ignoré."
+    }
+  },
+  "reports": {
+    "label": {
+      "box": "Chiffre",
+      "taxable_base": "Base imposable",
+      "tax": "Impôt",
+      "total": "Total",
+      "period_result": "Résultat de l'exercice",
+      "result": "Bénéfice ou perte",
+      "total_liabilities_equity": "Total des passifs"
+    },
+    "text": {
+      "net_rates": "Taux de la dette fiscale nette",
+      "tax_rates": "Taux d'imposition",
+      "acquisition_tax": "Impôt sur les acquisitions",
+      "turnover": "I. Chiffre d'affaires",
+      "tax_calculation": "II. Calcul de l'impôt",
+      "corrections": "III. Corrections",
+      "other_flows": "IV. Autres mouvements de fonds",
+      "computed_at": "Calculé le {date}",
+      "not_balanced": "Les actifs et les passifs ne sont pas équilibrés.",
+      "account_ledger_empty": "Aucune écriture sur ce compte pour la période."
+    },
+    "box": {
+      "200": "Total des contre-prestations",
+      "220": "Prestations exonérées",
+      "225": "Transferts avec la procédure de déclaration",
+      "235": "Diminutions de la contre-prestation (pertes sur débiteurs)",
+      "289": "Total des déductions",
+      "299": "Chiffre d'affaires imposable",
+      "399": "Total de l'impôt dû",
+      "400": "Impôt préalable sur les coûts en matériel et en prestations de services",
+      "405": "Impôt préalable sur les investissements et autres charges d'exploitation",
+      "415": "Corrections de l'impôt préalable : double affectation, prestations à soi-même",
+      "470": "Imputation de l'impôt (formulaire 1050)",
+      "471": "Imputation de l'impôt (formulaires 1055, 1056)",
+      "479": "Total des corrections",
+      "500": "Montant dû",
+      "510": "Solde en faveur de l'assujetti",
+      "910": "Dons, dividendes",
+      "382": "Impôt sur les acquisitions (avant 2024)",
+      "383": "Impôt sur les acquisitions (dès 2024)"
+    }
+  },
+  "api_keys": {
+    "action": {
+      "create": "Créer une clé API",
+      "delete": "Supprimer",
+      "done": "Terminé"
+    },
+    "state": {
+      "creating": "Création…",
+      "deleting": "Suppression…"
+    },
+    "label": {
+      "key": "Clé",
+      "resource": "Ressource",
+      "access": "Accès",
+      "read": "Lecture",
+      "read_write": "Lecture et écriture",
+      "expiration": "Expiration",
+      "expires_on": "Expire le",
+      "last_used": "Dernière utilisation",
+      "never": "Jamais",
+      "days": "{days} jours"
+    },
+    "resource": {
+      "mcp": "Serveur MCP",
+      "api": "Rest API"
+    },
+    "text": {
+      "title": "Clés API",
+      "create_title": "Créer une clé API",
+      "created_title": "Ta clé API est créée",
+      "empty": "Aucune clé API pour l'instant.",
+      "created_description": "Copie cette clé maintenant, elle ne sera plus affichée.",
+      "delete_title": "Supprimer cette clé API ?",
+      "delete_description": "Les applications qui utilisent cette clé perdent leur accès immédiatement. Cette action est irréversible."
+    },
+    "toast": {
+      "create_success": "La clé API est créée.",
+      "create_error": "La clé API n'a pas pu être créée.",
+      "delete_success": "La clé API est supprimée.",
+      "delete_error": "La clé API n'a pas pu être supprimée."
+    }
+  },
+  "usage": {
+    "label": {
+      "model": "Modèle",
+      "input_tokens": "Tokens en entrée",
+      "output_tokens": "Tokens en sortie"
+    },
+    "text": {
+      "title": "Utilisation",
+      "period": "{month} · réinitialisée le {date}"
+    },
+    "toast": {
+      "load_error": "L'utilisation n'a pas pu être chargée."
+    }
+  },
+  "profile": {
+    "label": {
+      "danger_zone": "Zone de danger",
+      "account": "Compte"
+    },
+    "action": {
+      "delete": "Supprimer mon compte"
+    },
+    "text": {
+      "danger_zone": "Tu nous quittes ? Quitte ou supprime d'abord tes organisations et supprime tes clés API, puis ton compte pourra partir.",
+      "delete_title": "Supprimer ton compte ?",
+      "delete_description": "Cette action est irréversible. Saisis ton mot de passe pour confirmer."
+    },
+    "toast": {
+      "delete_success": "Ton compte est supprimé."
+    }
+  },
+  "team": {
+    "label": {
+      "role": "Rôle"
+    },
+    "role": {
+      "admin": "Admin",
+      "accountant": "Comptable",
+      "reviewer": "Lecteur"
+    },
+    "text": {
+      "delete_title": "Retirer {name} de l'équipe ?",
+      "delete_description": "Cette personne perd l'accès à l'organisation et ses conversations avec l'Assistant dans celle-ci sont supprimées. Cette action est irréversible."
+    },
+    "toast": {
+      "delete_success": "Le membre est retiré.",
+      "delete_error": "Le membre n'a pas pu être retiré."
+    }
+  },
+  "invitations": {
+    "action": {
+      "create": "Inviter",
+      "done": "Terminé",
+      "accept": "Accepter",
+      "decline": "Refuser",
+      "back_home": "Retour à l'accueil"
+    },
+    "state": {
+      "creating": "Invitation…",
+      "accepting": "Acceptation…",
+      "declining": "Refus…"
+    },
+    "label": {
+      "expires_on": "Expire le"
+    },
+    "text": {
+      "create_title": "Inviter un membre",
+      "created_title": "Lien d'invitation",
+      "created_description": "Copie ce lien maintenant et partage-le avec {email}, il ne sera plus affiché. Il ne peut être accepté qu'en se connectant avec cet e-mail, jusqu'au {date}.",
+      "delete_title": "Révoquer l'invitation de {email} ?",
+      "delete_description": "Le lien cesse de fonctionner. Cette action est irréversible.",
+      "invited": "Tu es invité à rejoindre {organization}.",
+      "sign_in": "Connecte-toi ou crée un compte avec l'adresse e-mail à laquelle l'invitation a été envoyée.",
+      "invalid_link": "Ce lien d'invitation n'est pas valide.",
+      "load_error": "L'invitation n'a pas pu être chargée."
+    },
+    "toast": {
+      "create_success": "L'invitation est créée.",
+      "create_error": "L'invitation n'a pas pu être créée.",
+      "delete_success": "L'invitation est révoquée.",
+      "delete_error": "L'invitation n'a pas pu être révoquée.",
+      "accept_success": "Tu as rejoint {organization}.",
+      "accept_error": "L'invitation n'a pas pu être acceptée.",
+      "decline_error": "L'invitation n'a pas pu être refusée."
+    }
+  },
+  "two_factor": {
+    "action": {
+      "turn_on": "Activer",
+      "continue": "Continuer",
+      "continuing": "Vérification…",
+      "copy_backup_codes": "Copier les codes de secours",
+      "done": "Terminé",
+      "turn_off": "Désactiver",
+      "turning_off": "Désactivation…",
+      "generate_backup_codes": "Générer",
+      "generating_backup_codes": "Génération…",
+      "show_setup_key": "saisis plutôt ce code texte",
+      "new_backup_codes": "Nouveaux codes de secours"
+    },
+    "label": {
+      "backup_codes": "Codes de secours",
+      "setup_key": "Code texte",
+      "step": "Étape {number}",
+      "authenticator_app": "App d'authentification",
+      "configured": "Configurée"
+    },
+    "text": {
+      "title": "Authentification à deux facteurs",
+      "password_description": "Confirme ton mot de passe pour configurer l'authentification à deux facteurs.",
+      "scan_description": "Scanne l'image ci-dessous avec ton app d'authentification. Si tu ne peux pas utiliser de code QR, {link}.",
+      "backup_codes_description": "L'authentification à deux facteurs est activée. Garde ces codes de secours en lieu sûr : chacun te permet de te connecter une fois si tu perds ton app d'authentification. Ils ne seront plus affichés.",
+      "disable_title": "Désactiver l'authentification à deux facteurs ?",
+      "disable_description": "La connexion ne demandera plus que ton mot de passe. Confirme avec ton mot de passe.",
+      "new_backup_codes_title": "Nouveaux codes de secours",
+      "new_backup_codes_description": "Quand tu génères de nouveaux codes de secours, les actuels ne fonctionneront plus. Confirme avec ton mot de passe.",
+      "backup_codes_saved_description": "Tes anciens codes de secours ne fonctionnent plus.",
+      "backup_codes_once": "Garde ces codes en lieu sûr : chacun te permet de te connecter une fois si tu perds ton app d'authentification. Ils ne seront plus affichés.",
+      "code_description": "Saisis le code à {digits} chiffres affiché dans ton app d'authentification, il change toutes les {period} secondes.",
+      "disabled": "Ajoute une deuxième étape à ta connexion avec un code d'une app d'authentification."
+    }
+  },
+  "migrations": {
+    "action": {
+      "create": "Lancer une migration",
+      "add_file": "Ajouter un fichier",
+      "replace_file": "Remplacer le fichier",
+      "run": "Lancer la migration",
+      "retry": "Relancer",
+      "continue": "Continuer"
+    },
+    "state": {
+      "creating": "Démarrage…",
+      "uploading": "Envoi…",
+      "starting": "Démarrage…",
+      "running": "Migration de tes données…"
+    },
+    "label": {
+      "file": "Fichier",
+      "created_at": "Lancée",
+      "valid_on": "Soldes au",
+      "source": "Source"
+    },
+    "status": {
+      "draft": "Brouillon",
+      "succeeded": "Terminée",
+      "failed": "Échouée"
+    },
+    "type": {
+      "accounts": "Plan comptable",
+      "balances": "Soldes d'ouverture",
+      "journal": "Journal",
+      "clients": "Clients",
+      "invoices": "Factures"
+    },
+    "provider": {
+      "bexio": "Bexio"
+    },
+    "text": {
+      "title": "Migration depuis {provider}",
+      "description": "Ajoute les fichiers exportés de {provider}, puis lance la migration.",
+      "empty": "Aucune migration pour l'instant.",
+      "empty_files": "Aucun fichier pour l'instant.",
+      "upload_title": "Ajouter un fichier",
+      "replace_title": "Remplacer {name}",
+      "upload_description": "Choisis un fichier exporté de {provider}. Jusqu'à {size} Ko.",
+      "delete_title": "Supprimer cette migration ?",
+      "delete_description": "La migration et ses fichiers sont supprimés. Cette action est irréversible.",
+      "delete_file_title": "Supprimer {name} ?",
+      "delete_file_description": "Le fichier est retiré de la migration. Cette action est irréversible.",
+      "succeeded": "C'est fait, tes données sont migrées",
+      "failed": "Cette migration a échoué et n'a rien importé",
+      "timeout": "Ça prend un moment. Reviens tout à l'heure pour voir comment ça s'est passé.",
+      "create_error": "La migration n'a pas pu être lancée.",
+      "upload_error": "Le fichier n'a pas pu être envoyé.",
+      "run_error": "La migration n'a pas pu être lancée.",
+      "new_title": "Nouvelle migration",
+      "source_title": "D'où viennent tes données ?"
+    },
+    "toast": {
+      "delete_success": "La migration est supprimée.",
+      "delete_error": "La migration n'a pas pu être supprimée.",
+      "delete_file_success": "Le fichier est supprimé.",
+      "delete_file_error": "Le fichier n'a pas pu être supprimé."
+    },
+    "step": {
+      "source": "Source",
+      "files": "Fichiers",
+      "processing": "Migration",
+      "result": "Résultat"
+    }
+  },
+  "notifications": {
+    "label": {
+      "notifications": "Notifications"
+    },
+    "text": {
+      "empty": "Rien de nouveau."
+    }
+  },
+  "environment": {
+    "dev": "Développement",
+    "test": "Test",
+    "demo": "Démo",
+    "staging": "Préproduction"
+  }
+}

@@ -1,0 +1,1380 @@
+{
+  "core": {
+    "text": {
+      "no_currency": "No currency found.",
+      "no_language": "No language found."
+    },
+    "action": {
+      "skip": "Skip",
+      "close": "Close",
+      "submit": "Submit",
+      "update": "Update",
+      "edit": "Edit",
+      "clear": "Clear",
+      "previous": "Previous",
+      "next": "Next",
+      "send": "Send",
+      "hide_amounts": "Hide amounts",
+      "show_amounts": "Show amounts",
+      "toggle_theme": "Toggle theme",
+      "generate": "Generate",
+      "save": "Save",
+      "cancel": "Cancel",
+      "more_actions": "More actions",
+      "details": "Details",
+      "copy": "Copy",
+      "open": "Open",
+      "delete": "Delete",
+      "choose_file": "Choose a file"
+    },
+    "label": {
+      "number": "Number",
+      "language": "Language",
+      "select_language": "Select a language",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "start": "Start",
+      "end": "End",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "date": "Date",
+      "description": "Description",
+      "email": "Email",
+      "phone": "Phone",
+      "code": "Code",
+      "rate": "Rate",
+      "amount": "Amount",
+      "currency": "Currency",
+      "exchange_rate": "Exchange rate",
+      "debit": "Debit",
+      "credit": "Credit",
+      "balance": "Balance",
+      "account_id": "Account ID",
+      "purpose": "Purpose",
+      "search": "Search",
+      "from": "From",
+      "to": "To",
+      "valid_on": "Valid on",
+      "reference": "Reference",
+      "all": "All",
+      "step": "Step {current} of {total}",
+      "created_at": "Created",
+      "updated_at": "Last updated",
+      "version": "Version"
+    },
+    "status": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "state": {
+      "hold_tight": "Hold tight…",
+      "unexpected_error": "An unexpected error occurred!",
+      "thinking": "Thinking…",
+      "language_error": "The language could not be changed.",
+      "saving": "Saving…",
+      "deleting": "Deleting…"
+    },
+    "toast": {
+      "copied": "Copied to the clipboard.",
+      "copy_error": "Could not copy to the clipboard."
+    }
+  },
+  "auth": {
+    "action": {
+      "sign_out": "Sign out",
+      "sign_in": "Sign in",
+      "sign_up": "Sign up",
+      "signing_in": "Signing in…",
+      "signing_up": "Signing up…",
+      "change_password": "Change password",
+      "changing_password": "Changing…",
+      "verify": "Verify",
+      "verifying": "Verifying…",
+      "use_backup_code": "Use a backup code",
+      "use_authenticator": "Use your authenticator app"
+    },
+    "label": {
+      "password": "Password",
+      "current_password": "Current password",
+      "new_password": "New password",
+      "code": "Code",
+      "backup_code": "Backup code",
+      "trust_device": "Trust this device for {days} days"
+    },
+    "text": {
+      "sign_in_description": "Enter your email and password to sign in.",
+      "sign_up_description": "Create your account to get started.",
+      "no_account": "Not signed up yet?",
+      "has_account": "Already have an account?",
+      "session_expired": "Your session has expired. Please sign in again.",
+      "change_password_title": "Change your password",
+      "two_factor_description": "Enter the 6-digit code from your authenticator app.",
+      "backup_code_description": "Enter one of your backup codes."
+    },
+    "toast": {
+      "change_password_success": "Your password is changed. Your other devices are signed out."
+    },
+    "error": {
+      "sign_up_disabled": "Sign-up is disabled.",
+      "sign_up_invitation_only": "Sign-up is by invitation only.",
+      "user_has_organizations": "Leave or delete your organizations before deleting your account.",
+      "user_has_api_keys": "Delete your API keys before deleting your account."
+    }
+  },
+  "errors": {
+    "label": {
+      "error": "Error"
+    },
+    "text": {
+      "oops": "Oops!",
+      "unexpected": "An unexpected error occurred.",
+      "not_found": "The requested page could not be found."
+    }
+  },
+  "navigation": {
+    "organization": "Organization",
+    "reports": "Reports",
+    "settings": "Settings",
+    "assistant": "Assistant",
+    "bank": "Bank",
+    "banking": "Banking",
+    "journal": "Journal",
+    "clients": "Clients",
+    "invoices": "Invoices",
+    "balance_sheet": "Balance sheet",
+    "income_statement": "Income statement",
+    "vat_declaration": "VAT declaration",
+    "account_ledger": "Account ledger",
+    "accounting": "Accounting",
+    "accounts": "Accounts",
+    "system_accounts": "System accounts",
+    "periods": "Periods",
+    "vat": "VAT",
+    "methods": "Methods",
+    "billing": "Billing",
+    "rates": "Rates",
+    "document_templates": "Document templates",
+    "details": "Details",
+    "bank_relations": "Bank accounts",
+    "organizations": "Organizations",
+    "team": "Team",
+    "members": "Members",
+    "invitations": "Invitations",
+    "migrations": "Migrations"
+  },
+  "greeting": {
+    "morning": "Good morning, {name}",
+    "morning_anonymous": "Good morning",
+    "afternoon": "Good afternoon, {name}",
+    "afternoon_anonymous": "Good afternoon",
+    "evening": "Good evening, {name}",
+    "evening_anonymous": "Good evening",
+    "late": "Working late, {name}?",
+    "late_anonymous": "Working late?"
+  },
+  "chat": {
+    "action": {
+      "use_own_llm": "Use your own LLM",
+      "new_conversation": "New"
+    },
+    "state": {
+      "pondering": "Pondering…",
+      "mulling": "Mulling it over…",
+      "noodling": "Noodling…",
+      "looking_up": "Looking it up…",
+      "creating": "Creating…",
+      "updating": "Updating…",
+      "working": "Working on it…"
+    },
+    "label": {
+      "placeholder_organization": "Ask about {organization}, e.g. which invoices are still open?",
+      "placeholder_unscoped": "e.g. Where do I have open invoices?",
+      "history": "History",
+      "title": "Title",
+      "placeholder_disabled": "The assistant isn't set up on this instance."
+    },
+    "text": {
+      "untitled_conversation": "Untitled conversation",
+      "limit_reached": "You have reached the usage limit of the assistant. Please try again later.",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The conversation and its messages are deleted. This action is irreversible.",
+      "empty": "No conversation yet."
+    },
+    "toast": {
+      "load_conversations_error": "The conversations could not be loaded.",
+      "load_messages_error": "The previous messages could not be loaded.",
+      "delete_success": "The conversation is deleted.",
+      "delete_error": "The conversation could not be deleted."
+    }
+  },
+  "organizations": {
+    "setup": {
+      "organization": "Organization",
+      "vat": "VAT",
+      "vat_rate": "Rate"
+    },
+    "setup_done": {
+      "organization": "Hooray, {name} is created",
+      "vat": "Well done, VAT is set up",
+      "vat_rate": "Perfect, the net rate tax is in place"
+    },
+    "setup_next": {
+      "vat": "Is the organization subject to VAT?",
+      "vat_rate": "One last thing: the net rate tax."
+    },
+    "action": {
+      "create": "Create organization",
+      "lets_go": "Let's go!",
+      "delete": "Delete organization"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "legal_form": "Legal form",
+      "legal_form_llc": "LLC",
+      "legal_form_corporation": "Corporation",
+      "legal_form_sole_proprietorship": "Sole proprietorship",
+      "address": "Address",
+      "care_of": "Care of",
+      "street": "Street",
+      "postal_code": "Postal code",
+      "city": "City",
+      "country": "Country",
+      "communication": "Communication",
+      "website": "Website",
+      "settings": "Organization settings",
+      "select_country": "Select a country",
+      "danger_zone": "Danger zone"
+    },
+    "text": {
+      "new": "New organization",
+      "intro": "Let's give your business a home!",
+      "ready": "{name} is all set",
+      "no_country": "No country found.",
+      "no_results": "No organization found.",
+      "danger_zone": "Deleting the organization makes it read-only. It is deleted for good, with all its data, after 30 days.",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The organization becomes read-only right away and is deleted for good, with all its data, after 30 days. This action is irreversible.",
+      "deleted": "This organization was marked as deleted on {date}."
+    },
+    "toast": {
+      "create_error": "The organization could not be created.",
+      "update_success": "The organization has been updated.",
+      "update_error": "The organization could not be updated.",
+      "delete_success": "The organization has been marked as deleted.",
+      "delete_error": "The organization could not be deleted."
+    }
+  },
+  "clients": {
+    "action": {
+      "create": "Create a client"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "text": {
+      "details": "Client details",
+      "empty": "No client yet.",
+      "edit_title": "Edit client",
+      "no_results": "No client found.",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The client and its contacts are deleted. A client with invoices cannot be deleted. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The client is created.",
+      "create_error": "The client could not be created.",
+      "update_success": "The client is saved.",
+      "update_error": "The client could not be saved.",
+      "delete_success": "The client is deleted.",
+      "delete_error": "The client could not be deleted."
+    },
+    "type": {
+      "company": "Company",
+      "individual": "Individual"
+    }
+  },
+  "contacts": {
+    "action": {
+      "create": "Create a contact",
+      "add": "Add contact"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "last_name": "Last name",
+      "first_name": "First name"
+    },
+    "text": {
+      "title": "Contacts",
+      "empty": "No contact yet.",
+      "edit_title": "Edit contact",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The contact is removed from the client. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The contact is created.",
+      "create_error": "The contact could not be created.",
+      "update_success": "The contact is saved.",
+      "update_error": "The contact could not be saved.",
+      "delete_success": "The contact is deleted.",
+      "delete_error": "The contact could not be deleted."
+    }
+  },
+  "invoices": {
+    "action": {
+      "create": "Create an invoice",
+      "add_line": "Add a line",
+      "open": "Open",
+      "pay": "Pay",
+      "void": "Void",
+      "write_off": "Write off",
+      "download": "Download",
+      "generate_pdf": "Generate PDF"
+    },
+    "state": {
+      "creating": "Creating…",
+      "paying": "Paying…",
+      "generating": "Generating…",
+      "printing": "Printing…"
+    },
+    "label": {
+      "issue_date": "Issue date",
+      "due_date": "Due date",
+      "pdf": "PDF",
+      "document_template": "Document template",
+      "default_template": "Default template",
+      "select_template": "Select a template",
+      "select_language": "Select a language",
+      "bank_relation": "Bank account",
+      "issued_from": "Issued from",
+      "issued_to": "Issued to",
+      "client": "Client",
+      "vat_rate": "VAT rate",
+      "select_client": "Select a client",
+      "subtotal": "Subtotal",
+      "vat": "VAT",
+      "total": "Total",
+      "paid": "Paid",
+      "remaining": "Remaining"
+    },
+    "text": {
+      "details": "Invoice details",
+      "pay_title": "Pay invoice",
+      "pdf_generated": "Your PDF is ready",
+      "pdf_failed": "PDF generation failed",
+      "pdf_timeout": "The PDF is taking longer than expected. Try again later.",
+      "empty": "No invoice yet.",
+      "open_title": "Open this invoice?",
+      "open_description": "Its journal entries will be booked and its lines can no longer be changed.",
+      "void_title": "Void this invoice?",
+      "void_description": "Its journal entries will be reversed. This cannot be undone.",
+      "write_off_title": "Write off this invoice?",
+      "write_off_description": "The open amount will be booked as a loss on receivables. This cannot be undone.",
+      "delete_title": "Delete the draft invoice for {client} of {date}?",
+      "delete_description": "The draft invoice and its lines are deleted. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The invoice is created.",
+      "create_error": "The invoice could not be created.",
+      "open_success": "The invoice is open.",
+      "open_error": "The invoice could not be opened.",
+      "void_success": "The invoice is voided.",
+      "void_error": "The invoice could not be voided.",
+      "write_off_success": "The invoice is written off.",
+      "write_off_error": "The invoice could not be written off.",
+      "pay_success": "The payment is recorded.",
+      "pay_error": "The payment could not be recorded.",
+      "pdf_error": "The PDF could not be generated.",
+      "delete_success": "The invoice is deleted.",
+      "delete_error": "The invoice could not be deleted."
+    },
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "paid": "Paid",
+      "uncollectible": "Uncollectible",
+      "void": "Void"
+    }
+  },
+  "lines": {
+    "action": {
+      "create": "Create an invoice line"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "quantity": "Quantity",
+      "unit_price": "Unit price",
+      "total": "Total"
+    },
+    "text": {
+      "empty": "No line yet.",
+      "delete_title": "Delete the line {name}?",
+      "delete_description": "The line is removed from the draft invoice. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The line is added.",
+      "create_error": "The line could not be added.",
+      "delete_success": "The line is deleted.",
+      "delete_error": "The line could not be deleted."
+    },
+    "type": {
+      "item": "Item",
+      "discount": "Discount"
+    }
+  },
+  "journal": {
+    "action": {
+      "create": "Create a new entry",
+      "duplicate": "Duplicate",
+      "remove_line": "Remove line",
+      "add_line": "Add line",
+      "copy_tag": "Copy entry tag"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "postings": "Postings",
+      "line": "Line {line}",
+      "valid_from": "Valid from",
+      "valid_to": "Valid to",
+      "account": "Account",
+      "total_debit": "Total debit",
+      "total_credit": "Total credit",
+      "difference": "Difference",
+      "invoice": "Invoice",
+      "period": "Period",
+      "movement": "Bank movement",
+      "vat_rate": "VAT rate",
+      "no_vat_rate": "No VAT rate",
+      "vat_side": "VAT on",
+      "vat_posting": "VAT",
+      "origin": "Origin",
+      "tag": "Entry tag"
+    },
+    "text": {
+      "new": "New journal entry",
+      "empty": "No journal entry yet.",
+      "delete_title": "Delete the entry {name}?",
+      "delete_description": "The entry and its postings are deleted. An entry of a closed period or booked by an invoice cannot be deleted. This action is irreversible.",
+      "details": "Journal entry details",
+      "edit_title": "Edit journal entry",
+      "missing_description": "Add a reference or a description on at least one line.",
+      "migrated": "Migrated"
+    },
+    "toast": {
+      "create_success": "The journal entry is created.",
+      "create_error": "The journal entry could not be created.",
+      "delete_success": "The journal entry is deleted.",
+      "delete_error": "The journal entry could not be deleted.",
+      "update_success": "The journal entry is saved.",
+      "update_error": "The journal entry could not be saved."
+    },
+    "invoice_journal": {
+      "open": "Invoice opening",
+      "payment": "Invoice payment",
+      "void": "Invoice void",
+      "uncollectible": "Invoice write-off"
+    },
+    "period_journal": {
+      "opening": "Opening balance",
+      "result": "Annual result"
+    }
+  },
+  "accounts": {
+    "action": {
+      "create": "Create account"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "parent": "Parent account"
+    },
+    "text": {
+      "no_results": "No account found.",
+      "create_title": "Create an account",
+      "edit_title": "Edit account",
+      "delete_title": "Delete the account {name}?",
+      "delete_description": "An account with postings, sub-accounts or assigned to a system account cannot be deleted. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The account is created.",
+      "create_error": "The account could not be created.",
+      "update_success": "The account is saved.",
+      "update_error": "The account could not be saved.",
+      "delete_success": "The account is deleted.",
+      "delete_error": "The account could not be deleted."
+    },
+    "type": {
+      "asset": "Assets",
+      "liability": "Liabilities",
+      "equity": "Equity",
+      "income": "Income",
+      "expense": "Expenses",
+      "closing": "Closing"
+    },
+    "names": {
+      "1": "Assets",
+      "10": "Current assets",
+      "100": "Cash and cash equivalents",
+      "1020": "Bank",
+      "109": "Transfer account",
+      "1090": "Transfer account",
+      "1091": "Transitory account",
+      "1099": "Unclear amounts",
+      "110": "Accounts receivable trade and services",
+      "1100": "Accounts receivable trade and services",
+      "1109": "VA receivables trade and service",
+      "1130": "Advance payments to suppliers",
+      "114": "Other short-term receivables",
+      "1140": "Loans",
+      "117": "Receivables from government agencies",
+      "1170": "Input tax on cost of material and services",
+      "1171": "Input tax on investments and other operating expenses",
+      "1172": "Tax equalization accounting method",
+      "1173": "Pre-tax reduction",
+      "1174": "Input tax correction",
+      "1175": "Settlement account VAT",
+      "1176": "Withholding tax",
+      "118": "Receivables from social insurances and social security institutions",
+      "1183": "CA Accident insurance",
+      "1184": "CA Sick pay insurance",
+      "1188": "CA Source taxation",
+      "120": "Inventories",
+      "1200": "Trade goods inventory",
+      "1280": "Not invoiced services",
+      "130": "Prepaid expenses",
+      "1300": "Prepaid expenses",
+      "14": "Fixed assets",
+      "150": "Tangible assets",
+      "1500": "Machinery",
+      "1510": "Movable property, furnishings",
+      "1520": "Office machinery, computers, communication",
+      "1530": "Vehicles",
+      "2": "Liabilities",
+      "20": "Short-term third-party capital",
+      "200": "Suppliers or creditors",
+      "2000": "Liabilities trade payables",
+      "2030": "Advance payments from customers",
+      "210": "Short-term onerous liabilities",
+      "2100": "Current account A",
+      "2190": "Credit card",
+      "220": "Other short-term liabilities",
+      "2200": "Turnover tax",
+      "2201": "Turnover tax on receivables",
+      "2202": "VAT compensation accounting method",
+      "2203": "Service import tax",
+      "227": "Social security liabilities",
+      "2270": "Due to BVG",
+      "2271": "Due to AHV/ALV",
+      "2272": "Due to FAK",
+      "2273": "Due to UVG",
+      "2274": "Due to KVG",
+      "2279": "Tax at source due",
+      "230": "Accruals and deferred income",
+      "2300": "Unpaid expenses",
+      "24": "Long-term onerous liabilities",
+      "240": "Long-term onerous liabilities",
+      "2400": "Loan",
+      "2560": "Liabilities to shareholder A",
+      "28": "Equity",
+      "280": "Capital",
+      "2800": "Capital",
+      "282": "Contributions to equity/equity withdrawals",
+      "2820": "Contributions to equity/equity withdrawals",
+      "285": "Private account",
+      "2850": "Private account",
+      "289": "Annual profit or annual loss",
+      "2891": "Annual profit or annual loss",
+      "290": "Legal Reserves, profit or loss",
+      "2950": "Legal reserve Retained earnings",
+      "2970": "Earned Surplus carried forward or loss carried forward",
+      "2979": "Annual profit or annual loss",
+      "3": "Net revenues",
+      "30": "Production yield",
+      "300": "Production yield",
+      "3000": "Production yield",
+      "32": "Income from Trading",
+      "320": "Income from Trading",
+      "3200": "Income from Trading",
+      "34": "Income from Services",
+      "340": "Income from Services",
+      "3400": "Income from Services",
+      "36": "Other revenues",
+      "360": "Other revenues and services",
+      "3600": "Additional income from deliveries and services",
+      "368": "Other revenues",
+      "3680": "Other revenues",
+      "38": "Revenue reduction",
+      "380": "Revenue reduction",
+      "3800": "Cash discounts",
+      "3801": "Rebates and price deductions",
+      "3802": "Reimbursements",
+      "3803": "Commission to third parties",
+      "3804": "Collection expenses",
+      "3805": "Losses from receivables",
+      "3806": "Exchange rate differences",
+      "39": "Changes in inventories",
+      "394": "Changes in inventories of services",
+      "3940": "Changes in inventories of unbilled services",
+      "4": "Cost for material, goods, services and energy",
+      "40": "Materials procurement",
+      "400": "Materials procurement Production A",
+      "4000": "Materials procurement A",
+      "42": "Expenses for goods for resale",
+      "420": "Expenses for goods for resale",
+      "4200": "Purchase of merchandise",
+      "4208": "Changes in inventories",
+      "427": "Direct purchase expenses trade",
+      "4270": "Incoming freight charges",
+      "44": "Costs of services",
+      "440": "Costs of services",
+      "4400": "Purchase of services",
+      "46": "Other expenses",
+      "462": "Other expenses for merchandise",
+      "4620": "Other expenses for merchandise",
+      "464": "Other expenses for services",
+      "4640": "Other expenses for services",
+      "465": "Expenses for packaging",
+      "4650": "Expenses for packaging",
+      "466": "Change in reserve for warranties",
+      "4660": "Change in reserve for warranties",
+      "47": "Direct purchase expenses",
+      "4700": "Incoming freight charges",
+      "48": "Changes in inventories",
+      "480": "Changes in inventories of materials and trading goods",
+      "4800": "Changes in inventories of trading goods",
+      "49": "Reduction of Costs",
+      "490": "Reduction of Costs",
+      "4900": "Cash discounts",
+      "4901": "Rebates and price deductions",
+      "4906": "Exchange rate differences",
+      "5": "Personnel expenses",
+      "50": "Personnel expenses",
+      "500": "Salary cost",
+      "5000": "Salaries",
+      "5001": "Allowances",
+      "5002": "Profit-sharing",
+      "5003": "Commissions",
+      "5005": "Social security benefits",
+      "5008": "Other personnel expenses",
+      "57": "Contribution to social insurance",
+      "570": "Contribution to social insurance",
+      "5700": "AHV, IV, EO, ALV",
+      "5710": "FAK",
+      "5720": "Occupational pension",
+      "5730": "Accident insurance",
+      "5740": "Daily sickness insurance",
+      "5790": "Tax at source",
+      "58": "Other personnel expenses",
+      "581": "Education and training",
+      "5810": "Education and training",
+      "582": "Expenses, actual",
+      "5820": "Expenses, actual",
+      "583": "Expenses, flat-rate",
+      "5832": "Expenses, travel, car, overnight stay",
+      "588": "Other personnel expenses",
+      "5880": "Personnel events",
+      "589": "Private share Employee expenses",
+      "5890": "Private share Employee expenses",
+      "5891": "Compensation in kind",
+      "6": "Operating expenses",
+      "60": "Rental",
+      "600": "Rental",
+      "6000": "Rent",
+      "603": "Additional costs",
+      "6030": "Additional costs",
+      "6040": "Cleaning",
+      "61": "Maintenance, repairs, replacem. of tangible assets",
+      "610": "Maintenance, repairs, replacem. of tangible assets",
+      "6100": "Expenses Machinery and equipment",
+      "62": "Vehicle and transportation expenses",
+      "620": "Expenses Vehicle",
+      "6200": "Repairs",
+      "6210": "Fuel",
+      "6220": "Vehicle Insurance",
+      "6260": "Vehicle Leasing",
+      "6270": "Private share Vehicle expenses",
+      "63": "Insurance for damage of items",
+      "630": "Insurance Premiums",
+      "6300": "Insurance Premiums",
+      "636": "Duties and charges",
+      "6360": "Duties and charges",
+      "64": "Electricity",
+      "640": "Electricity",
+      "6400": "Electricity",
+      "65": "Administrative and IT costs",
+      "650": "Administrative costs",
+      "6500": "Office material",
+      "6510": "Communication costs",
+      "6512": "Internet",
+      "6513": "Postage",
+      "6530": "Accounting expenses",
+      "6559": "Other administrative expenses",
+      "657": "IT costs",
+      "6570": "IT costs",
+      "66": "Advertising",
+      "660": "Advertising",
+      "6600": "Advertising",
+      "664": "Travel expenses",
+      "6640": "Travel expenses",
+      "6641": "Representation expenses",
+      "68": "Depreciation on financial assets",
+      "680": "Depreciation on financial assets",
+      "6800": "Depreciation on financial assets",
+      "69": "Financial costs and revenue",
+      "690": "Financial costs",
+      "6900": "Interest expenses",
+      "6940": "Bank charges",
+      "6945": "Rounding differences",
+      "6949": "Exchange losses",
+      "695": "Financial revenue",
+      "6950": "Return on bank deposits",
+      "6999": "Exchange gains",
+      "8": "Extraordinary expenditures / income",
+      "80": "Non-company related expenditures / income",
+      "8000": "Non-company related expenditures",
+      "8100": "Non-company related income",
+      "85": "Extraordinary out-of-period expenditures / income",
+      "8505": "Extraordinary losses on receivables",
+      "8514": "Extraordinary profits from the sale of fixed assets",
+      "89": "Direct taxes",
+      "8900": "Direct taxes",
+      "9": "Annual Profit",
+      "91": "Annual Profit",
+      "9000": "Profit and Loss Account",
+      "9100": "Opening balance",
+      "9101": "Closing balance",
+      "9200": "Annual profit or loss",
+      "9900": "Corrections",
+      "9901": "Balance transfer"
+    }
+  },
+  "system_accounts": {
+    "action": {
+      "create": "Create system account"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "account": "Account",
+      "search_account": "Search by number or name"
+    },
+    "text": {
+      "create_title": "Create a system account",
+      "edit_title": "Edit system account",
+      "empty": "No system account yet."
+    },
+    "toast": {
+      "create_success": "The system account is created.",
+      "create_error": "The system account could not be created.",
+      "update_success": "The system account is saved.",
+      "update_error": "The system account could not be saved."
+    },
+    "purpose": {
+      "bank_account": "Bank account",
+      "debtor": "Debtors",
+      "creditor": "Creditors",
+      "customer_credit_balance": "Customer credit balance",
+      "default_income": "Default income",
+      "default_expense": "Default expense",
+      "income_reduction": "Revenue reductions",
+      "bad_debts": "Bad debts",
+      "expense_reduction": "Purchase price reductions",
+      "vat_tax_due": "VAT due",
+      "settlement_account_vat": "VAT settlement account",
+      "vat_remuneration_received": "VAT reconciliation (accounting method)",
+      "regards_tax": "Acquisition tax",
+      "tax_pre_material": "Input tax on materials and services",
+      "tax_pre_investment": "Input tax on investments",
+      "transitory_tax_account_pre": "Input tax reconciliation (accounting method)",
+      "tax_pre_tax_cuts": "Input tax reduction",
+      "tax_pre_tax_correction": "Input tax correction",
+      "rounding_differences": "Rounding differences",
+      "exchange_rate_losses": "Exchange losses",
+      "exchange_rate_gains": "Exchange gains",
+      "profit_and_loss": "Profit and loss",
+      "opening_balance_sheet": "Opening balance sheet",
+      "closing_balance_sheet": "Closing balance sheet",
+      "annual_profit": "Annual profit or loss",
+      "annual_result": "Annual result (equity)",
+      "correction": "Corrections",
+      "balance_takeover": "Balance transfer",
+      "capital": "Capital",
+      "capital_contributions": "Capital contributions and withdrawals",
+      "private_account": "Private account"
+    }
+  },
+  "periods": {
+    "action": {
+      "create": "Create a period",
+      "close": "Close"
+    },
+    "state": {
+      "creating": "Creating…",
+      "closing": "Closing…"
+    },
+    "label": {
+      "period": "Period",
+      "status_only": "Only mark it as closed"
+    },
+    "text": {
+      "intro": "A period usually covers one fiscal year. Entries can only be booked in an open period.",
+      "empty": "No period yet.",
+      "close_title": "Close this period?",
+      "close_description": "Once closed, no entry can be booked or changed from {start} to {end}. This cannot be undone.",
+      "edit": "Edit period",
+      "status_only_hint": "No closing entries are created. Handy when they're already in your books, e.g. after a migration."
+    },
+    "toast": {
+      "create_success": "The period is created.",
+      "create_error": "The period could not be created.",
+      "close_success": "The period is closed.",
+      "close_error": "The period could not be closed.",
+      "update_success": "The period is saved.",
+      "update_error": "The period could not be saved."
+    }
+  },
+  "billing": {
+    "label": {
+      "payment_term_days": "Payment term (days)",
+      "default_vat_rate": "Default VAT rate",
+      "default_bank_relation": "Default bank account",
+      "no_bank_relation": "No bank account"
+    },
+    "toast": {
+      "update_success": "The billing settings have been updated.",
+      "update_error": "The billing settings could not be updated."
+    }
+  },
+  "vat": {
+    "action": {
+      "settings_create": "Create VAT settings",
+      "methods_create": "Create VAT methods",
+      "period_create": "Create a VAT period",
+      "rate_create": "Create a VAT rate",
+      "period_close": "Close"
+    },
+    "state": {
+      "creating": "Creating…",
+      "closing": "Closing…"
+    },
+    "label": {
+      "number": "VAT number",
+      "number_placeholder": "CHE-123.456.789 MWST",
+      "remuneration_method": "Remuneration method",
+      "select_remuneration_method": "Select a remuneration method",
+      "payment_method": "Payment method",
+      "select_payment_method": "Select a payment method",
+      "rate_percent": "Rate (%)",
+      "net_rate_percent": "Net rate (%, net rate tax only)",
+      "net_rate": "Net rate",
+      "no_vat_rate": "No VAT rate"
+    },
+    "text": {
+      "period_edit": "Edit VAT period",
+      "rate_edit": "Edit VAT rate",
+      "method_edit": "Edit VAT methods",
+      "periods_empty": "No VAT period yet.",
+      "rates_empty": "No VAT rate yet.",
+      "methods_empty": "No VAT methods yet.",
+      "settings_not_configured": "VAT is not configured yet.",
+      "settings_intro": "Your VAT number and how you settle with the tax administration.",
+      "period_close_title": "Close this VAT period?",
+      "period_close_description": "Once closed, the VAT period from {start} to {end} can no longer be changed. This cannot be undone."
+    },
+    "toast": {
+      "settings_create_success": "The VAT settings are created.",
+      "settings_create_error": "The VAT settings could not be created.",
+      "settings_update_success": "The VAT settings are saved.",
+      "settings_update_error": "The VAT settings could not be saved.",
+      "methods_create_success": "The VAT methods are created.",
+      "methods_create_error": "The VAT methods could not be created.",
+      "methods_update_success": "The VAT methods are saved.",
+      "methods_update_error": "The VAT methods could not be saved.",
+      "period_create_success": "The VAT period is created.",
+      "period_create_error": "The VAT period could not be created.",
+      "period_update_success": "The VAT period is saved.",
+      "period_update_error": "The VAT period could not be saved.",
+      "rate_create_success": "The VAT rate is created.",
+      "rate_create_error": "The VAT rate could not be created.",
+      "rate_update_success": "The VAT rate is saved.",
+      "rate_update_error": "The VAT rate could not be saved.",
+      "period_close_success": "The VAT period is closed.",
+      "period_close_error": "The VAT period could not be closed."
+    },
+    "remuneration_method": {
+      "agreed": "Agreed",
+      "received": "Received"
+    },
+    "payment_method": {
+      "net_rate": "Net rate",
+      "effective": "Effective"
+    },
+    "type": {
+      "net_rate_tax": "Net rate tax",
+      "acquisition_tax_investments": "Acquisition tax (investments)",
+      "acquisition_tax_materials": "Acquisition tax (materials)",
+      "non_consideration": "Non-consideration",
+      "non_taxable_turnover": "Non-taxable turnover",
+      "import_tax_materials": "Import tax (materials)",
+      "import_tax_investments": "Import tax (investments)",
+      "sales_tax_due": "Sales tax",
+      "input_tax_materials": "Input tax (materials)",
+      "input_tax_investments": "Input tax (investments)"
+    }
+  },
+  "document_templates": {
+    "action": {
+      "create": "Create document template"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "label": {
+      "html": "HTML template"
+    },
+    "text": {
+      "create_title": "Create a document template",
+      "edit_title": "Edit document template",
+      "details": "Document template details",
+      "keep_current": "Leave empty to keep the current template.",
+      "empty": "No document template yet.",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The document template and all its languages are deleted. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The document template is created.",
+      "create_error": "The document template could not be created.",
+      "update_success": "The document template is saved.",
+      "update_error": "The document template could not be saved.",
+      "delete_success": "The document template is deleted.",
+      "delete_error": "The document template could not be deleted."
+    },
+    "type": {
+      "invoice": "Invoice"
+    }
+  },
+  "template_contents": {
+    "action": {
+      "add": "Add content"
+    },
+    "state": {
+      "creating": "Creating…"
+    },
+    "text": {
+      "title": "Contents",
+      "empty": "No content yet.",
+      "edit_title": "Edit content",
+      "delete_title": "Delete the content?",
+      "delete_description": "The content is deleted. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The content is added.",
+      "create_error": "The content could not be added.",
+      "update_success": "The content is saved.",
+      "update_error": "The content could not be saved.",
+      "delete_success": "The content is deleted.",
+      "delete_error": "The content could not be deleted."
+    }
+  },
+  "bank_relations": {
+    "action": {
+      "create": "Create bank account",
+      "upload_file": "Upload bank file"
+    },
+    "state": {
+      "creating": "Creating…",
+      "uploading": "Uploading…"
+    },
+    "label": {
+      "iban": "IBAN",
+      "qr_iban": "QR-IBAN",
+      "account": "Ledger account",
+      "file": "File",
+      "balance": "Balance",
+      "reconciliation": "Reconciliation"
+    },
+    "text": {
+      "create_title": "Create a bank account",
+      "edit_title": "Edit bank account",
+      "empty": "No bank account yet.",
+      "delete_title": "Delete {name}?",
+      "delete_description": "The bank account is deleted. This action is irreversible.",
+      "upload_title": "Upload a bank file to {name}",
+      "upload_description": "Download it from your e-banking as \"camt.053\" and select it here. Up to {size} MB.",
+      "to_reconcile": "{count} to reconcile",
+      "balance_on": "on {date}",
+      "up_to_date": "Up to date"
+    },
+    "toast": {
+      "create_success": "The bank account is created.",
+      "create_error": "The bank account could not be created.",
+      "update_success": "The bank account is saved.",
+      "update_error": "The bank account could not be saved.",
+      "delete_success": "The bank account is deleted.",
+      "delete_error": "The bank account could not be deleted.",
+      "import_success": "{inserted} movements imported, {existing} already imported.",
+      "import_already": "These statements were already imported.",
+      "import_error": "The statements could not be imported."
+    }
+  },
+  "bank_movements": {
+    "action": {
+      "reconcile": "Reconcile",
+      "book": "Book",
+      "book_payment": "Book payment",
+      "ignore": "Ignore",
+      "not_this_invoice": "Not this invoice"
+    },
+    "state": {
+      "booking": "Booking…",
+      "ignoring": "Ignoring…"
+    },
+    "label": {
+      "booked_on": "Booked on",
+      "amount": "Amount",
+      "counterparty": "Counterparty",
+      "payment_from": "Payment from",
+      "payment_to": "Payment to",
+      "original_amount": "Original amount",
+      "bank_fees": "Bank fees",
+      "communication": "Communication",
+      "reference": "Reference",
+      "booked_from": "Booked from",
+      "booked_to": "Booked to",
+      "account": "Account",
+      "vat_rate": "VAT rate",
+      "description": "Description",
+      "invoice": "Invoice",
+      "remaining": "Remains due",
+      "overpaid": "Overpaid",
+      "value_on": "Value date",
+      "bank_reference": "Bank reference",
+      "sender": "Sender",
+      "recipient": "Recipient"
+    },
+    "text": {
+      "title": "Movements",
+      "empty": "No movement.",
+      "reconcile_title": "Reconcile movements",
+      "matched_title": "Matched with an invoice",
+      "account_title": "To book on an account",
+      "already_paid": "This invoice is already paid.",
+      "ignore_title": "Ignore this movement?",
+      "ignore_description": "An ignored movement books nothing and cannot be reconciled afterwards. This action is irreversible.",
+      "nothing_to_reconcile": "Nothing to reconcile.",
+      "details": "Movement details"
+    },
+    "status": {
+      "unreconciled": "To reconcile",
+      "reconciled": "Reconciled",
+      "ignored": "Ignored"
+    },
+    "toast": {
+      "book_success": "The movement is booked.",
+      "book_error": "The movement could not be booked.",
+      "ignore_success": "The movement is ignored.",
+      "ignore_error": "The movement could not be ignored."
+    }
+  },
+  "reports": {
+    "label": {
+      "box": "Box",
+      "taxable_base": "Taxable base",
+      "tax": "Tax",
+      "total": "Total",
+      "period_result": "Result of the period",
+      "result": "Profit or loss",
+      "total_liabilities_equity": "Total liabilities and equity"
+    },
+    "text": {
+      "net_rates": "Net rates",
+      "tax_rates": "Tax rates",
+      "acquisition_tax": "Acquisition tax",
+      "turnover": "I. Turnover",
+      "tax_calculation": "II. Tax calculation",
+      "corrections": "III. Corrections",
+      "other_flows": "IV. Other cash flows",
+      "computed_at": "Computed on {date}",
+      "not_balanced": "Assets and liabilities do not balance.",
+      "account_ledger_empty": "No posting on this account for the period."
+    },
+    "box": {
+      "200": "Total gross turnover",
+      "220": "Tax-exempt turnover",
+      "225": "Transfers via notification procedure",
+      "235": "Reductions of consideration (bad debts)",
+      "289": "Total deductions",
+      "299": "Taxable turnover",
+      "399": "Total tax liability",
+      "400": "Input tax on materials and services",
+      "405": "Input tax on investments and other operating costs",
+      "415": "Input tax corrections: mixed use, own use",
+      "470": "Tax crediting (form 1050)",
+      "471": "Tax crediting (forms 1055, 1056)",
+      "479": "Total corrections",
+      "500": "Amount payable",
+      "510": "Refund claim",
+      "910": "Donations, dividends",
+      "382": "Acquisition tax (pre-2024)",
+      "383": "Acquisition tax (post-2024)"
+    }
+  },
+  "api_keys": {
+    "action": {
+      "create": "Create API key",
+      "delete": "Delete",
+      "done": "Done"
+    },
+    "state": {
+      "creating": "Creating…",
+      "deleting": "Deleting…"
+    },
+    "label": {
+      "key": "Key",
+      "resource": "Resource",
+      "access": "Access",
+      "read": "Read",
+      "read_write": "Read and write",
+      "expiration": "Expiration",
+      "expires_on": "Expires on",
+      "last_used": "Last used",
+      "never": "Never",
+      "days": "{days} days"
+    },
+    "resource": {
+      "mcp": "MCP server",
+      "api": "REST API"
+    },
+    "text": {
+      "title": "API keys",
+      "create_title": "Create an API key",
+      "created_title": "Your API key is created",
+      "empty": "No API key yet.",
+      "created_description": "Copy this key now, it will not be shown again.",
+      "delete_title": "Delete this API key?",
+      "delete_description": "Applications using this key lose their access immediately. This action is irreversible."
+    },
+    "toast": {
+      "create_success": "The API key is created.",
+      "create_error": "The API key could not be created.",
+      "delete_success": "The API key is deleted.",
+      "delete_error": "The API key could not be deleted."
+    }
+  },
+  "usage": {
+    "label": {
+      "model": "Model",
+      "input_tokens": "Input tokens",
+      "output_tokens": "Output tokens"
+    },
+    "text": {
+      "title": "Usage",
+      "period": "{month} · resets on {date}"
+    },
+    "toast": {
+      "load_error": "The usage could not be loaded."
+    }
+  },
+  "profile": {
+    "label": {
+      "danger_zone": "Danger zone",
+      "account": "Account"
+    },
+    "action": {
+      "delete": "Delete my account"
+    },
+    "text": {
+      "danger_zone": "Leaving us? Leave or delete your organizations and delete your API keys first, then your account can go.",
+      "delete_title": "Delete your account?",
+      "delete_description": "This action is irreversible. Enter your password to confirm."
+    },
+    "toast": {
+      "delete_success": "Your account is deleted."
+    }
+  },
+  "team": {
+    "label": {
+      "role": "Role"
+    },
+    "role": {
+      "admin": "Admin",
+      "accountant": "Accountant",
+      "reviewer": "Reviewer"
+    },
+    "text": {
+      "delete_title": "Remove {name} from the team?",
+      "delete_description": "They lose access to the organization and their Assistant conversations in it are deleted. This action is irreversible."
+    },
+    "toast": {
+      "delete_success": "The member is removed.",
+      "delete_error": "The member could not be removed."
+    }
+  },
+  "invitations": {
+    "action": {
+      "create": "Invite",
+      "done": "Done",
+      "accept": "Accept",
+      "decline": "Decline",
+      "back_home": "Back to home"
+    },
+    "state": {
+      "creating": "Inviting…",
+      "accepting": "Accepting…",
+      "declining": "Declining…"
+    },
+    "label": {
+      "expires_on": "Expires on"
+    },
+    "text": {
+      "create_title": "Invite a member",
+      "created_title": "Invitation link",
+      "created_description": "Copy this link now and share it with {email}, it will not be shown again. It can only be accepted by signing in with this email, until {date}.",
+      "delete_title": "Revoke the invitation of {email}?",
+      "delete_description": "The link stops working. This action is irreversible.",
+      "invited": "You've been invited to join {organization}.",
+      "sign_in": "Sign in or create an account with the email address the invitation was sent to.",
+      "invalid_link": "This invitation link is invalid.",
+      "load_error": "The invitation could not be loaded."
+    },
+    "toast": {
+      "create_success": "The invitation is created.",
+      "create_error": "The invitation could not be created.",
+      "delete_success": "The invitation is revoked.",
+      "delete_error": "The invitation could not be revoked.",
+      "accept_success": "You joined {organization}.",
+      "accept_error": "The invitation could not be accepted.",
+      "decline_error": "The invitation could not be declined."
+    }
+  },
+  "two_factor": {
+    "action": {
+      "turn_on": "Turn on",
+      "continue": "Continue",
+      "continuing": "Checking…",
+      "copy_backup_codes": "Copy backup codes",
+      "done": "Done",
+      "turn_off": "Turn off",
+      "turning_off": "Turning off…",
+      "generate_backup_codes": "Generate",
+      "generating_backup_codes": "Generating…",
+      "show_setup_key": "enter this text code",
+      "new_backup_codes": "New backup codes"
+    },
+    "label": {
+      "backup_codes": "Backup codes",
+      "setup_key": "Text code",
+      "step": "Step {number}",
+      "authenticator_app": "Authenticator app",
+      "configured": "Configured"
+    },
+    "text": {
+      "title": "Two-factor authentication",
+      "password_description": "Confirm your password to set up two-factor authentication.",
+      "scan_description": "Scan the image below with your authenticator app. If you can't use a QR code, {link} instead.",
+      "backup_codes_description": "Two-factor authentication is on. Keep these backup codes somewhere safe: each one lets you sign in once if you lose your authenticator app. They won’t be shown again.",
+      "disable_title": "Turn off two-factor authentication?",
+      "disable_description": "Signing in will only need your password again. Confirm with your password.",
+      "new_backup_codes_title": "New backup codes",
+      "new_backup_codes_description": "When you generate new backup codes, your current ones will stop working. Confirm with your password.",
+      "backup_codes_saved_description": "Your previous backup codes no longer work.",
+      "backup_codes_once": "Keep these codes somewhere safe: each one lets you sign in once if you lose your authenticator app. They won’t be shown again.",
+      "code_description": "Enter the {digits}-digit code shown in your authenticator app, it changes every {period} seconds.",
+      "disabled": "Add a second step to your sign-in with a code from an authenticator app."
+    }
+  },
+  "migrations": {
+    "action": {
+      "create": "Start a migration",
+      "add_file": "Add a file",
+      "replace_file": "Replace file",
+      "run": "Run the migration",
+      "retry": "Run it again",
+      "continue": "Continue"
+    },
+    "state": {
+      "creating": "Starting…",
+      "uploading": "Uploading…",
+      "starting": "Starting…",
+      "running": "Migrating your data…"
+    },
+    "label": {
+      "file": "File",
+      "created_at": "Started",
+      "valid_on": "Balances as of",
+      "source": "Source"
+    },
+    "status": {
+      "draft": "Draft",
+      "succeeded": "Done",
+      "failed": "Failed"
+    },
+    "type": {
+      "accounts": "Chart of accounts",
+      "balances": "Opening balances",
+      "journal": "Journal",
+      "clients": "Clients",
+      "invoices": "Invoices"
+    },
+    "provider": {
+      "bexio": "Bexio"
+    },
+    "text": {
+      "title": "Migration from {provider}",
+      "description": "Add the files exported from {provider}, then run the migration.",
+      "empty": "No migration yet.",
+      "empty_files": "No file yet.",
+      "upload_title": "Add a file",
+      "replace_title": "Replace {name}",
+      "upload_description": "Pick a file exported from {provider}. Up to {size} KB.",
+      "delete_title": "Delete this migration?",
+      "delete_description": "The migration and its files are deleted. This action is irreversible.",
+      "delete_file_title": "Delete {name}?",
+      "delete_file_description": "The file is removed from the migration. This action is irreversible.",
+      "succeeded": "All done, your data is migrated",
+      "failed": "This migration failed and imported nothing",
+      "timeout": "It's taking a while. Come back in a moment to check how it went.",
+      "create_error": "The migration could not be started.",
+      "upload_error": "The file could not be uploaded.",
+      "run_error": "The migration could not be run.",
+      "new_title": "New migration",
+      "source_title": "Where does your data come from?"
+    },
+    "toast": {
+      "delete_success": "The migration is deleted.",
+      "delete_error": "The migration could not be deleted.",
+      "delete_file_success": "The file is deleted.",
+      "delete_file_error": "The file could not be deleted."
+    },
+    "step": {
+      "source": "Source",
+      "files": "Files",
+      "processing": "Migration",
+      "result": "Result"
+    }
+  },
+  "notifications": {
+    "label": {
+      "notifications": "Notifications"
+    },
+    "text": {
+      "empty": "Nothing new."
+    }
+  },
+  "environment": {
+    "dev": "Development",
+    "test": "Test",
+    "demo": "Demo",
+    "staging": "Staging"
+  }
+}

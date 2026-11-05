@@ -1,0 +1,21 @@
+{
+  "name": "@usenullish/nullish-cli",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "dev": "NODE_ENV=development bun run --elide-lines=0 --env-file=../../.env.development ./src/index.ts",
+    "build": "NODE_ENV=production bun build --compile --minify-whitespace --minify-syntax --target bun --outfile ./build/cli ./src/index.ts",
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.8.1",
+    "@usenullish/nullish-admin": "workspace:*",
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "zod": "^4.6"
+  }
+}

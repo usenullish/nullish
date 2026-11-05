@@ -1,0 +1,1380 @@
+{
+  "core": {
+    "text": {
+      "no_currency": "Keine Währung gefunden.",
+      "no_language": "Keine Sprache gefunden."
+    },
+    "action": {
+      "skip": "Überspringen",
+      "close": "Schliessen",
+      "submit": "Absenden",
+      "update": "Aktualisieren",
+      "edit": "Bearbeiten",
+      "clear": "Zurücksetzen",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "send": "Senden",
+      "hide_amounts": "Beträge ausblenden",
+      "show_amounts": "Beträge einblenden",
+      "toggle_theme": "Design wechseln",
+      "generate": "Generieren",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "more_actions": "Weitere Aktionen",
+      "details": "Details",
+      "copy": "Kopieren",
+      "open": "Öffnen",
+      "delete": "Löschen",
+      "choose_file": "Datei auswählen"
+    },
+    "label": {
+      "number": "Nummer",
+      "language": "Sprache",
+      "select_language": "Sprache auswählen",
+      "id": "ID",
+      "name": "Name",
+      "type": "Typ",
+      "status": "Status",
+      "start": "Beginn",
+      "end": "Ende",
+      "start_date": "Startdatum",
+      "end_date": "Enddatum",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "code": "Code",
+      "rate": "Satz",
+      "amount": "Betrag",
+      "currency": "Währung",
+      "exchange_rate": "Wechselkurs",
+      "debit": "Soll",
+      "credit": "Haben",
+      "balance": "Saldo",
+      "account_id": "Konto-ID",
+      "purpose": "Zweck",
+      "search": "Suchen",
+      "from": "Von",
+      "to": "Bis",
+      "valid_on": "Gültig am",
+      "reference": "Referenz",
+      "all": "Alle",
+      "step": "Schritt {current} von {total}",
+      "created_at": "Erstellt am",
+      "updated_at": "Geändert am",
+      "version": "Version"
+    },
+    "status": {
+      "open": "Offen",
+      "closed": "Abgeschlossen"
+    },
+    "state": {
+      "hold_tight": "Einen Moment…",
+      "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten!",
+      "thinking": "Denke nach…",
+      "language_error": "Die Sprache konnte nicht geändert werden.",
+      "saving": "Wird gespeichert…",
+      "deleting": "Wird gelöscht…"
+    },
+    "toast": {
+      "copied": "In die Zwischenablage kopiert.",
+      "copy_error": "Konnte nicht in die Zwischenablage kopiert werden."
+    }
+  },
+  "auth": {
+    "action": {
+      "sign_out": "Abmelden",
+      "sign_in": "Anmelden",
+      "sign_up": "Registrieren",
+      "signing_in": "Anmeldung…",
+      "signing_up": "Registrierung…",
+      "change_password": "Passwort ändern",
+      "changing_password": "Wird geändert…",
+      "verify": "Bestätigen",
+      "verifying": "Wird geprüft…",
+      "use_backup_code": "Backup-Code verwenden",
+      "use_authenticator": "Deine Authenticator-App verwenden"
+    },
+    "label": {
+      "password": "Passwort",
+      "current_password": "Aktuelles Passwort",
+      "new_password": "Neues Passwort",
+      "code": "Code",
+      "backup_code": "Backup-Code",
+      "trust_device": "Diesem Gerät {days} Tage lang vertrauen"
+    },
+    "text": {
+      "sign_in_description": "Gib deine E-Mail-Adresse und dein Passwort ein, um dich anzumelden.",
+      "sign_up_description": "Erstelle dein Konto, um loszulegen.",
+      "no_account": "Noch kein Konto?",
+      "has_account": "Hast du bereits ein Konto?",
+      "session_expired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "change_password_title": "Passwort ändern",
+      "two_factor_description": "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",
+      "backup_code_description": "Gib einen deiner Backup-Codes ein."
+    },
+    "toast": {
+      "change_password_success": "Dein Passwort wurde geändert. Deine anderen Geräte wurden abgemeldet."
+    },
+    "error": {
+      "sign_up_disabled": "Die Registrierung ist deaktiviert.",
+      "sign_up_invitation_only": "Die Registrierung ist nur auf Einladung möglich.",
+      "user_has_organizations": "Verlasse oder lösche deine Organisationen, bevor du dein Konto löschst.",
+      "user_has_api_keys": "Lösche deine API-Schlüssel, bevor du dein Konto löschst."
+    }
+  },
+  "errors": {
+    "label": {
+      "error": "Fehler"
+    },
+    "text": {
+      "oops": "Hoppla!",
+      "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+      "not_found": "Die angeforderte Seite wurde nicht gefunden."
+    }
+  },
+  "navigation": {
+    "organization": "Organisation",
+    "reports": "Berichte",
+    "settings": "Einstellungen",
+    "assistant": "Assistent",
+    "bank": "Bank",
+    "banking": "Bank",
+    "journal": "Journal",
+    "clients": "Kunden",
+    "invoices": "Rechnungen",
+    "balance_sheet": "Bilanz",
+    "income_statement": "Erfolgsrechnung",
+    "vat_declaration": "MWST-Abrechnung",
+    "account_ledger": "Kontoblatt",
+    "accounting": "Buchhaltung",
+    "accounts": "Konten",
+    "system_accounts": "Systemkonten",
+    "periods": "Perioden",
+    "vat": "MWST",
+    "methods": "Methoden",
+    "billing": "Rechnungsstellung",
+    "rates": "Sätze",
+    "document_templates": "Dokumentvorlagen",
+    "details": "Details",
+    "bank_relations": "Bankkonten",
+    "organizations": "Organisationen",
+    "team": "Team",
+    "members": "Mitglieder",
+    "invitations": "Einladungen",
+    "migrations": "Migrationen"
+  },
+  "greeting": {
+    "morning": "Guten Morgen, {name}",
+    "morning_anonymous": "Guten Morgen",
+    "afternoon": "Guten Tag, {name}",
+    "afternoon_anonymous": "Guten Tag",
+    "evening": "Guten Abend, {name}",
+    "evening_anonymous": "Guten Abend",
+    "late": "Noch am Arbeiten, {name}?",
+    "late_anonymous": "Noch am Arbeiten?"
+  },
+  "chat": {
+    "action": {
+      "use_own_llm": "Eigenes LLM verwenden",
+      "new_conversation": "Neu"
+    },
+    "state": {
+      "pondering": "Ich überlege…",
+      "mulling": "Ich grüble…",
+      "noodling": "Hmm, mal sehen…",
+      "looking_up": "Wird nachgeschlagen…",
+      "creating": "Wird erstellt…",
+      "updating": "Wird aktualisiert…",
+      "working": "Wird bearbeitet…"
+    },
+    "label": {
+      "placeholder_organization": "Frag etwas zu {organization}, z. B. welche Rechnungen noch offen sind?",
+      "placeholder_unscoped": "z. B. Wo habe ich offene Rechnungen?",
+      "history": "Verlauf",
+      "title": "Titel",
+      "placeholder_disabled": "Der Assistent ist auf dieser Instanz nicht eingerichtet."
+    },
+    "text": {
+      "untitled_conversation": "Unterhaltung ohne Titel",
+      "limit_reached": "Du hast das Nutzungslimit des Assistenten erreicht. Bitte versuche es später erneut.",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Die Unterhaltung und ihre Nachrichten werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "empty": "Noch keine Unterhaltung."
+    },
+    "toast": {
+      "load_conversations_error": "Die Unterhaltungen konnten nicht geladen werden.",
+      "load_messages_error": "Die vorherigen Nachrichten konnten nicht geladen werden.",
+      "delete_success": "Die Unterhaltung wurde gelöscht.",
+      "delete_error": "Die Unterhaltung konnte nicht gelöscht werden."
+    }
+  },
+  "organizations": {
+    "setup": {
+      "organization": "Organisation",
+      "vat": "MWST",
+      "vat_rate": "Satz"
+    },
+    "setup_done": {
+      "organization": "Hurra, {name} wurde erstellt",
+      "vat": "Bravo, die MWST ist eingerichtet",
+      "vat_rate": "Perfekt, der Saldosteuersatz ist erfasst"
+    },
+    "setup_next": {
+      "vat": "Ist die Organisation mehrwertsteuerpflichtig?",
+      "vat_rate": "Noch eine Sache: der Saldosteuersatz."
+    },
+    "action": {
+      "create": "Organisation erstellen",
+      "lets_go": "Los geht's!",
+      "delete": "Organisation löschen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "legal_form": "Rechtsform",
+      "legal_form_llc": "GmbH",
+      "legal_form_corporation": "AG",
+      "legal_form_sole_proprietorship": "Einzelunternehmen",
+      "address": "Adresse",
+      "care_of": "c/o",
+      "street": "Strasse",
+      "postal_code": "PLZ",
+      "city": "Ort",
+      "country": "Land",
+      "communication": "Kommunikation",
+      "website": "Website",
+      "settings": "Organisationseinstellungen",
+      "select_country": "Land auswählen",
+      "danger_zone": "Gefahrenzone"
+    },
+    "text": {
+      "new": "Neue Organisation",
+      "intro": "Geben wir deinem Unternehmen ein Zuhause!",
+      "ready": "{name} ist startklar",
+      "no_country": "Kein Land gefunden.",
+      "no_results": "Keine Organisation gefunden.",
+      "danger_zone": "Durch das Löschen ist die Organisation nur noch lesbar. Nach 30 Tagen wird sie mit allen Daten endgültig gelöscht.",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Die Organisation ist ab sofort nur noch lesbar und wird nach 30 Tagen mit allen Daten endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleted": "Diese Organisation wurde am {date} als gelöscht markiert."
+    },
+    "toast": {
+      "create_error": "Die Organisation konnte nicht erstellt werden.",
+      "update_success": "Die Organisation wurde aktualisiert.",
+      "update_error": "Die Organisation konnte nicht aktualisiert werden.",
+      "delete_success": "Die Organisation wurde als gelöscht markiert.",
+      "delete_error": "Die Organisation konnte nicht gelöscht werden."
+    }
+  },
+  "clients": {
+    "action": {
+      "create": "Kunde erstellen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "text": {
+      "details": "Kundendetails",
+      "empty": "Noch kein Kunde.",
+      "edit_title": "Kunde bearbeiten",
+      "no_results": "Kein Kunde gefunden.",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Der Kunde und seine Kontakte werden gelöscht. Ein Kunde mit Rechnungen kann nicht gelöscht werden. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Der Kunde ist erstellt.",
+      "create_error": "Der Kunde konnte nicht erstellt werden.",
+      "update_success": "Der Kunde ist gespeichert.",
+      "update_error": "Der Kunde konnte nicht gespeichert werden.",
+      "delete_success": "Der Kunde wurde gelöscht.",
+      "delete_error": "Der Kunde konnte nicht gelöscht werden."
+    },
+    "type": {
+      "company": "Unternehmen",
+      "individual": "Privatperson"
+    }
+  },
+  "contacts": {
+    "action": {
+      "create": "Kontakt erstellen",
+      "add": "Kontakt hinzufügen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "last_name": "Nachname",
+      "first_name": "Vorname"
+    },
+    "text": {
+      "title": "Kontakte",
+      "empty": "Noch keine Kontakte.",
+      "edit_title": "Kontakt bearbeiten",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Der Kontakt wird vom Kunden entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Der Kontakt ist erstellt.",
+      "create_error": "Der Kontakt konnte nicht erstellt werden.",
+      "update_success": "Der Kontakt ist gespeichert.",
+      "update_error": "Der Kontakt konnte nicht gespeichert werden.",
+      "delete_success": "Der Kontakt wurde gelöscht.",
+      "delete_error": "Der Kontakt konnte nicht gelöscht werden."
+    }
+  },
+  "invoices": {
+    "action": {
+      "create": "Rechnung erstellen",
+      "add_line": "Position hinzufügen",
+      "open": "Ausstellen",
+      "pay": "Bezahlen",
+      "void": "Stornieren",
+      "write_off": "Abschreiben",
+      "download": "Herunterladen",
+      "generate_pdf": "PDF generieren"
+    },
+    "state": {
+      "creating": "Wird erstellt…",
+      "paying": "Wird bezahlt…",
+      "generating": "Wird generiert…",
+      "printing": "Wird gedruckt…"
+    },
+    "label": {
+      "issue_date": "Rechnungsdatum",
+      "due_date": "Fälligkeitsdatum",
+      "pdf": "PDF",
+      "document_template": "Dokumentvorlage",
+      "default_template": "Standardvorlage",
+      "select_template": "Vorlage auswählen",
+      "select_language": "Sprache auswählen",
+      "bank_relation": "Bankkonto",
+      "issued_from": "Ausgestellt ab",
+      "issued_to": "Ausgestellt bis",
+      "client": "Kunde",
+      "vat_rate": "MWST-Satz",
+      "select_client": "Kunde auswählen",
+      "subtotal": "Zwischentotal",
+      "vat": "MWST",
+      "total": "Total",
+      "paid": "Bezahlt",
+      "remaining": "Offener Betrag"
+    },
+    "text": {
+      "details": "Rechnungsdetails",
+      "pay_title": "Rechnung bezahlen",
+      "pdf_generated": "Dein PDF ist bereit",
+      "pdf_failed": "PDF-Erstellung fehlgeschlagen",
+      "pdf_timeout": "Die PDF-Erstellung dauert länger als erwartet. Versuche es später erneut.",
+      "empty": "Noch keine Rechnung.",
+      "open_title": "Diese Rechnung eröffnen?",
+      "open_description": "Ihre Buchungen werden erfasst und ihre Positionen können nicht mehr geändert werden.",
+      "void_title": "Diese Rechnung stornieren?",
+      "void_description": "Ihre Buchungen werden storniert. Dies kann nicht rückgängig gemacht werden.",
+      "write_off_title": "Diese Rechnung abschreiben?",
+      "write_off_description": "Der offene Betrag wird als Debitorenverlust gebucht. Dies kann nicht rückgängig gemacht werden.",
+      "delete_title": "Den Rechnungsentwurf für {client} vom {date} löschen?",
+      "delete_description": "Der Rechnungsentwurf und seine Positionen werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Die Rechnung ist erstellt.",
+      "create_error": "Die Rechnung konnte nicht erstellt werden.",
+      "open_success": "Die Rechnung ist eröffnet.",
+      "open_error": "Die Rechnung konnte nicht eröffnet werden.",
+      "void_success": "Die Rechnung ist storniert.",
+      "void_error": "Die Rechnung konnte nicht storniert werden.",
+      "write_off_success": "Die Rechnung ist abgeschrieben.",
+      "write_off_error": "Die Rechnung konnte nicht abgeschrieben werden.",
+      "pay_success": "Die Zahlung ist erfasst.",
+      "pay_error": "Die Zahlung konnte nicht erfasst werden.",
+      "pdf_error": "Das PDF konnte nicht generiert werden.",
+      "delete_success": "Die Rechnung wurde gelöscht.",
+      "delete_error": "Die Rechnung konnte nicht gelöscht werden."
+    },
+    "status": {
+      "draft": "Entwurf",
+      "open": "Offen",
+      "paid": "Bezahlt",
+      "uncollectible": "Uneinbringlich",
+      "void": "Storniert"
+    }
+  },
+  "lines": {
+    "action": {
+      "create": "Rechnungsposition erstellen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "quantity": "Menge",
+      "unit_price": "Einzelpreis",
+      "total": "Total"
+    },
+    "text": {
+      "empty": "Noch keine Position.",
+      "delete_title": "Die Position {name} löschen?",
+      "delete_description": "Die Position wird aus dem Rechnungsentwurf entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Die Position ist hinzugefügt.",
+      "create_error": "Die Position konnte nicht hinzugefügt werden.",
+      "delete_success": "Die Position wurde gelöscht.",
+      "delete_error": "Die Position konnte nicht gelöscht werden."
+    },
+    "type": {
+      "item": "Artikel",
+      "discount": "Rabatt"
+    }
+  },
+  "journal": {
+    "action": {
+      "create": "Neue Buchung erstellen",
+      "duplicate": "Duplizieren",
+      "remove_line": "Zeile entfernen",
+      "add_line": "Zeile hinzufügen",
+      "copy_tag": "Kennung kopieren"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "postings": "Buchungszeilen",
+      "line": "Zeile {line}",
+      "valid_from": "Gültig ab",
+      "valid_to": "Gültig bis",
+      "account": "Konto",
+      "total_debit": "Total Soll",
+      "total_credit": "Total Haben",
+      "difference": "Differenz",
+      "invoice": "Rechnung",
+      "period": "Periode",
+      "movement": "Bankbewegung",
+      "vat_rate": "MWST-Satz",
+      "no_vat_rate": "Kein MWST-Satz",
+      "vat_side": "MWST auf",
+      "vat_posting": "MWST",
+      "origin": "Herkunft",
+      "tag": "Kennung"
+    },
+    "text": {
+      "new": "Neue Buchung",
+      "empty": "Noch keine Buchung.",
+      "delete_title": "Die Buchung {name} löschen?",
+      "delete_description": "Die Buchung und ihre Buchungszeilen werden gelöscht. Eine Buchung einer abgeschlossenen Periode oder aus einer Rechnung kann nicht gelöscht werden. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "details": "Buchungsdetails",
+      "edit_title": "Buchung bearbeiten",
+      "missing_description": "Füge eine Referenz oder eine Beschreibung in mindestens einer Zeile hinzu.",
+      "migrated": "Migriert"
+    },
+    "toast": {
+      "create_success": "Die Buchung ist erstellt.",
+      "create_error": "Die Buchung konnte nicht erstellt werden.",
+      "delete_success": "Die Buchung wurde gelöscht.",
+      "delete_error": "Die Buchung konnte nicht gelöscht werden.",
+      "update_success": "Die Buchung ist gespeichert.",
+      "update_error": "Die Buchung konnte nicht gespeichert werden."
+    },
+    "invoice_journal": {
+      "open": "Rechnungseröffnung",
+      "payment": "Rechnungszahlung",
+      "void": "Rechnungsstornierung",
+      "uncollectible": "Rechnungsabschreibung"
+    },
+    "period_journal": {
+      "opening": "Eröffnungsbilanz",
+      "result": "Jahresergebnis"
+    }
+  },
+  "accounts": {
+    "action": {
+      "create": "Konto erstellen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "parent": "Übergeordnetes Konto"
+    },
+    "text": {
+      "no_results": "Kein Konto gefunden.",
+      "create_title": "Konto erstellen",
+      "edit_title": "Konto bearbeiten",
+      "delete_title": "Das Konto {name} löschen?",
+      "delete_description": "Ein Konto mit Buchungen, Unterkonten oder einer Zuordnung zu einem Systemkonto kann nicht gelöscht werden. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Das Konto wurde erstellt.",
+      "create_error": "Das Konto konnte nicht erstellt werden.",
+      "update_success": "Das Konto wurde gespeichert.",
+      "update_error": "Das Konto konnte nicht gespeichert werden.",
+      "delete_success": "Das Konto wurde gelöscht.",
+      "delete_error": "Das Konto konnte nicht gelöscht werden."
+    },
+    "type": {
+      "asset": "Aktiven",
+      "liability": "Fremdkapital",
+      "equity": "Eigenkapital",
+      "income": "Ertrag",
+      "expense": "Aufwand",
+      "closing": "Abschluss"
+    },
+    "names": {
+      "1": "Aktiven",
+      "10": "Umlaufvermögen",
+      "100": "Flüssige Mittel",
+      "1020": "Bank",
+      "109": "Transferkonto",
+      "1090": "Transferkonto",
+      "1091": "Lohndurchlaufkonto",
+      "1099": "Unklare Beträge",
+      "110": "Forderungen aus Lieferungen und Leistungen",
+      "1100": "Forderungen aus Lieferungen und Leistungen",
+      "1109": "Wertberichtigung Forderungen",
+      "1130": "Vorauszahlungen an Lieferanten",
+      "114": "Übrige kurzfristige Forderungen gegenüber Dritten",
+      "1140": "Darlehen",
+      "117": "Forderungen staatlichen Stellen",
+      "1170": "Vorsteuer Material, Waren, DL - Kl. 4",
+      "1171": "Vorsteuer Inv., übr. Betriebsaufwand Kl.1 5-8",
+      "1172": "Vorsteuerausgleich Abrechnungsmethode",
+      "1173": "Vorsteuerkürzung",
+      "1174": "Vorsteuerkorrektur",
+      "1175": "Abrechnungskonto MWST",
+      "1176": "Verrechnungssteuer",
+      "118": "Ford. Sozialvers./Kautionen/Depot",
+      "1183": "Kontokorrent Unfallversicherung",
+      "1184": "Kontokorrent Krankentaggeldversicherung",
+      "1188": "Kontokorrent Quellensteuer",
+      "120": "Vorräte / nicht fakturierte Dienstleistungen",
+      "1200": "Lager Handelsware",
+      "1280": "Nicht fakturierte Dienstleistungen",
+      "130": "Aktive Rechnungsabgrenzungen",
+      "1300": "Bezahlter Aufwand des Folgejahres",
+      "14": "Anlagevermögen",
+      "150": "Mobile Sachanlagen",
+      "1500": "Maschinen und Apparate",
+      "1510": "Mobiliar und Einrichtungen",
+      "1520": "Informatik",
+      "1530": "Fahrzeuge",
+      "2": "Passiven",
+      "20": "Kurzfristiges Fremdkapital",
+      "200": "Verbindlichkeiten aus Lieferungen und Leistungen",
+      "2000": "Verbindlichkeiten Material- / Warenaufwand",
+      "2030": "Erhaltene Anzahlungen von Dritten",
+      "210": "Kurzfristige Verbindlichkeiten",
+      "2100": "Kontokorrent Inhaber A",
+      "2190": "Kreditkarte",
+      "220": "Übrige kurzfristige Verbindlichkeiten",
+      "2200": "Geschuldete Mehrwertsteuer (Umsatzsteuer)",
+      "2201": "Abrechnungskonto MWST",
+      "2202": "Umsatzsteuerausgleich Abrechnungsmethode",
+      "2203": "Bezugsteuer",
+      "227": "Verbindlichkeiten Sozialversicherungen",
+      "2270": "Kontokorrent Vorsorgeeinrichtung",
+      "2271": "Kontokorrent AHV, IV, EO, ALV",
+      "2272": "Kontokorrent FAK",
+      "2273": "Kontokorrent Unfallversicherung",
+      "2274": "Kontokorrent Krankentaggeld",
+      "2279": "Kontokorrent Quellensteuer",
+      "230": "Passive Rechnungsabgrenzungen",
+      "2300": "Passive Rechnungsabgrenzungen",
+      "24": "Langfristiges Fremdkapital",
+      "240": "Langfristige Verbindlichkeiten",
+      "2400": "Darlehen",
+      "2560": "Verbindlichkeiten Aktionär / Gesellschafter",
+      "28": "Eigenkapital",
+      "280": "Kapital",
+      "2800": "Kapital",
+      "282": "Kapitaleinlagen und Kapitalrückzüge",
+      "2820": "Kapitaleinlagen und Kapitalrückzüge",
+      "285": "Privat",
+      "2850": "Privatkonto",
+      "289": "Jahresgewinn oder Jahresverlust",
+      "2891": "Jahresgewinn oder Jahresverlust",
+      "290": "Reserven / Jahresgewinn/-verlust",
+      "2950": "Gesetzliche Gewinnreserve",
+      "2970": "Gewinnvortrag oder Verlustvortrag",
+      "2979": "Jahresgewinn oder Jahresverlust",
+      "3": "Betrieblicher Ertrag",
+      "30": "Produktionserlös",
+      "300": "Produktionserlös",
+      "3000": "Bruttoerlös Erzeugnis",
+      "32": "Handelserlös",
+      "320": "Handelserlös",
+      "3200": "Handelserlös",
+      "34": "Dienstleistungserlös",
+      "340": "Dienstleistungserlös",
+      "3400": "Dienstleistungserlös",
+      "36": "Übrige Erlöse",
+      "360": "Nebenerlös Lieferungen und Leistungen",
+      "3600": "Nebenerlös Lieferungen und Leistungen",
+      "368": "Sonstige Erlöse",
+      "3680": "Sonstige Erlöse",
+      "38": "Erlösminderung",
+      "380": "Erlösminderung",
+      "3800": "Skonti",
+      "3801": "Rabatte und Preisnachlässe",
+      "3802": "Rückvergütungen",
+      "3803": "Provision an Dritte",
+      "3804": "Inkassospesen",
+      "3805": "Verluste / Wertberichtigung Forderungen",
+      "3806": "Kursdifferenzen",
+      "39": "Bestandesänderungen",
+      "394": "Bestandsänderungen Dienstleistungen",
+      "3940": "Bestandsänderungen nicht fakturierte Dienstleistungen",
+      "4": "Aufwand für Material, Handel, Dienstleistung",
+      "40": "Materialaufwand",
+      "400": "Materialaufwand Produktion",
+      "4000": "Materialeinkauf Erzeugnis",
+      "42": "Handelswarenaufwand",
+      "420": "Handelswarenaufwand",
+      "4200": "Einkauf Handelsware",
+      "4208": "Bestandesänderungen",
+      "427": "Direkte Einkaufsspesen Handel",
+      "4270": "Eingangsfrachten",
+      "44": "Aufwand für bezogene Dienstleistungen",
+      "440": "Aufwand für bezogene Dienstleistungen",
+      "4400": "Einkauf Dienstleistungen",
+      "46": "Übriger Aufwand",
+      "462": "Übriger Handelswarenaufwand",
+      "4620": "Übriger Handelswarenaufwand",
+      "464": "Übriger Aufwand für Dienstleistungen",
+      "4640": "Übriger Aufwand für Dienstleistungen",
+      "465": "Aufwand für Verpackungen",
+      "4650": "Aufwand für Verpackungen",
+      "466": "Veränderung der Garantierückstellungen",
+      "4660": "Veränderung der Garantierückstellungen",
+      "47": "Direkte Einkaufsspesen",
+      "4700": "Eingangsfrachten und Zoll",
+      "48": "Bestandsänderungen",
+      "480": "Bestandsänderung Material / Handelswaren",
+      "4800": "Bestandsänderung Handelswaren",
+      "49": "Einkaufspreisminderungen",
+      "490": "Einkaufspreisminderungen",
+      "4900": "Skonti",
+      "4901": "Rabatte und Preisnachlässe",
+      "4906": "Kursdifferenzen",
+      "5": "Personalaufwand",
+      "50": "Personalaufwand",
+      "500": "Lohnaufwand",
+      "5000": "Löhne",
+      "5001": "Zulagen",
+      "5002": "Erfolgsbeteiligungen",
+      "5003": "Provisionen",
+      "5005": "Leistungen von Sozialversicherungen",
+      "5008": "Übriger Personalaufwand",
+      "57": "Sozialversicherungsaufwand",
+      "570": "Sozialversicherungsaufwand",
+      "5700": "AHV, IV, EO, ALV",
+      "5710": "FAK",
+      "5720": "Vorsorgeeinrichtungen",
+      "5730": "Unfallversicherung",
+      "5740": "Krankentaggeldversicherung",
+      "5790": "Quellensteuer",
+      "58": "Übriger Personalaufwand",
+      "581": "Aus- und Weiterbildung",
+      "5810": "Aus- und Weiterbildung",
+      "582": "Spesenentschädigung effektiv",
+      "5820": "Spesenentschädigung effektiv",
+      "583": "Spesenentschädigung pauschal",
+      "5832": "Spesen, Reise, Auto, Übernachtung",
+      "588": "Sonstiger Personalaufwand",
+      "5880": "Personalanlässe",
+      "589": "Privatanteile Personalaufwand",
+      "5890": "Privatanteile Personalaufwand",
+      "5891": "Ausgleich Naturalleistungen",
+      "6": "Betrieblicher Aufwand",
+      "60": "Raumaufwand",
+      "600": "Fremdmiete Geschäftslokalitäten",
+      "6000": "Miete",
+      "603": "Nebenkosten",
+      "6030": "Nebenkosten",
+      "6040": "Reinigung",
+      "61": "Unterhalt, Reparaturen, Ersatz (URE), Leasing",
+      "610": "URE Maschinen und Einrichtungen",
+      "6100": "URE Maschinen und Einrichtungen",
+      "62": "Fahrzeug und Transportaufwand",
+      "620": "Fahrzeugaufwand",
+      "6200": "Reparaturen",
+      "6210": "Betriebsstoffe",
+      "6220": "Fahrzeugversicherung und Abgaben",
+      "6260": "Fahrzeugleasing",
+      "6270": "Privatanteile Fahrzeugaufwand",
+      "63": "Sachversicherungen, Abgaben, Gebühren, Bewilligungen",
+      "630": "Sachversicherungen",
+      "6300": "Sachversicherungen",
+      "636": "Abgaben, Gebühren, Bewilligungen",
+      "6360": "Abgaben, Gebühren, Bewilligungen",
+      "64": "Energie- und Entsorgungsaufwand",
+      "640": "Energie- und Entsorgungsaufwand",
+      "6400": "Energie- und Entsorgungsaufwand",
+      "65": "Verwaltungs- und Informatikaufwand",
+      "650": "Verwaltungsaufwand",
+      "6500": "Büromaterial",
+      "6510": "Kommunikationskosten",
+      "6512": "Internet",
+      "6513": "Porti",
+      "6530": "Buchführung",
+      "6559": "Sonstiger Verwaltungsaufwand",
+      "657": "Informatikaufwand",
+      "6570": "Informatikaufwand",
+      "66": "Werbeaufwand",
+      "660": "Werbeinserate, elektronische Medien",
+      "6600": "Werbeinserate, elektronische Medien",
+      "664": "Reisespesen, Kundenbetreuung",
+      "6640": "Reisespesen",
+      "6641": "Kundenbetreuung",
+      "68": "Abschreibung / WB Anlagevermögen",
+      "680": "WB Anlagevermögen",
+      "6800": "Abschreibung / WB Anlagevermögen",
+      "69": "Finanzaufwand und Finanzertrag",
+      "690": "Finanzaufwand",
+      "6900": "Zinsaufwand",
+      "6940": "Bankspesen",
+      "6945": "Rundungsdifferenz",
+      "6949": "Währungsverluste",
+      "695": "Finanzertrag",
+      "6950": "Erträge aus Bankguthaben",
+      "6999": "Währungsgewinne",
+      "8": "Ausserordentlicher Aufwand / Ertrag",
+      "80": "Betriebsfremder Aufwand und betriebsfremder Ertrag",
+      "8000": "Betriebsfremder a.o. Aufwand",
+      "8100": "Betriebsfremder a.o. Ertrag",
+      "85": "Ausserordentlicher, einmaliger oder periodenfremder Aufwand und Ertrag",
+      "8505": "A.o. Verluste von Forderungen",
+      "8514": "A.o. Gewinne Veräusserung Anlagevermögen",
+      "89": "Direkte Steuern",
+      "8900": "Direkte Steuern",
+      "9": "Abschluss",
+      "91": "Abschluss",
+      "9000": "Erfolgsrechnung",
+      "9100": "Eröffnungsbilanz",
+      "9101": "Schlussbilanz",
+      "9200": "Jahresgewinn oder Jahresverlust",
+      "9900": "Korrekturen",
+      "9901": "Saldoübernahme"
+    }
+  },
+  "system_accounts": {
+    "action": {
+      "create": "Systemkonto erstellen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "account": "Konto",
+      "search_account": "Nach Nummer oder Name suchen"
+    },
+    "text": {
+      "create_title": "Systemkonto erstellen",
+      "edit_title": "Systemkonto bearbeiten",
+      "empty": "Noch kein Systemkonto."
+    },
+    "toast": {
+      "create_success": "Das Systemkonto ist erstellt.",
+      "create_error": "Das Systemkonto konnte nicht erstellt werden.",
+      "update_success": "Das Systemkonto ist gespeichert.",
+      "update_error": "Das Systemkonto konnte nicht gespeichert werden."
+    },
+    "purpose": {
+      "bank_account": "Bankkonto",
+      "debtor": "Debitoren",
+      "creditor": "Kreditoren",
+      "customer_credit_balance": "Kundenguthaben",
+      "default_income": "Standard-Ertrag",
+      "default_expense": "Standard-Aufwand",
+      "income_reduction": "Erlösminderungen",
+      "bad_debts": "Debitorenverluste",
+      "expense_reduction": "Einkaufspreisminderungen",
+      "vat_tax_due": "Geschuldete MWST",
+      "settlement_account_vat": "Abrechnungskonto MWST",
+      "vat_remuneration_received": "Umsatzsteuerausgleich Abrechnungsmethode",
+      "regards_tax": "Bezugsteuer",
+      "tax_pre_material": "Vorsteuer Material und Dienstleistungen",
+      "tax_pre_investment": "Vorsteuer Investitionen",
+      "transitory_tax_account_pre": "Vorsteuerausgleich Abrechnungsmethode",
+      "tax_pre_tax_cuts": "Vorsteuerkürzung",
+      "tax_pre_tax_correction": "Vorsteuerkorrektur",
+      "rounding_differences": "Rundungsdifferenzen",
+      "exchange_rate_losses": "Währungsverluste",
+      "exchange_rate_gains": "Währungsgewinne",
+      "profit_and_loss": "Erfolgsrechnung",
+      "opening_balance_sheet": "Eröffnungsbilanz",
+      "closing_balance_sheet": "Schlussbilanz",
+      "annual_profit": "Jahresgewinn oder Jahresverlust",
+      "annual_result": "Jahresergebnis (Eigenkapital)",
+      "correction": "Korrekturen",
+      "balance_takeover": "Saldoübernahme",
+      "capital": "Kapital",
+      "capital_contributions": "Kapitaleinlagen und Kapitalrückzüge",
+      "private_account": "Privatkonto"
+    }
+  },
+  "periods": {
+    "action": {
+      "create": "Periode erstellen",
+      "close": "Abschliessen"
+    },
+    "state": {
+      "creating": "Wird erstellt…",
+      "closing": "Wird abgeschlossen…"
+    },
+    "label": {
+      "period": "Periode",
+      "status_only": "Nur als abgeschlossen markieren"
+    },
+    "text": {
+      "intro": "Eine Periode umfasst in der Regel ein Geschäftsjahr. Buchungen sind nur in einer offenen Periode möglich.",
+      "empty": "Noch keine Periode.",
+      "close_title": "Diese Periode abschliessen?",
+      "close_description": "Nach dem Abschluss können vom {start} bis {end} keine Buchungen mehr erfasst oder geändert werden. Dies kann nicht rückgängig gemacht werden.",
+      "edit": "Periode bearbeiten",
+      "status_only_hint": "Es werden keine Abschlussbuchungen erstellt. Praktisch, wenn sie schon in deiner Buchhaltung sind, z. B. nach einer Migration."
+    },
+    "toast": {
+      "create_success": "Die Periode ist erstellt.",
+      "create_error": "Die Periode konnte nicht erstellt werden.",
+      "close_success": "Die Periode ist abgeschlossen.",
+      "close_error": "Die Periode konnte nicht abgeschlossen werden.",
+      "update_success": "Die Periode ist gespeichert.",
+      "update_error": "Die Periode konnte nicht gespeichert werden."
+    }
+  },
+  "billing": {
+    "label": {
+      "payment_term_days": "Zahlungsfrist (Tage)",
+      "default_vat_rate": "Standard-MWST-Satz",
+      "default_bank_relation": "Standard-Bankkonto",
+      "no_bank_relation": "Kein Bankkonto"
+    },
+    "toast": {
+      "update_success": "Die Rechnungseinstellungen wurden aktualisiert.",
+      "update_error": "Die Rechnungseinstellungen konnten nicht aktualisiert werden."
+    }
+  },
+  "vat": {
+    "action": {
+      "settings_create": "MWST-Einstellungen erstellen",
+      "methods_create": "MWST-Methoden erstellen",
+      "period_create": "MWST-Periode erstellen",
+      "rate_create": "MWST-Satz erstellen",
+      "period_close": "Abschliessen"
+    },
+    "state": {
+      "creating": "Wird erstellt…",
+      "closing": "Wird abgeschlossen…"
+    },
+    "label": {
+      "number": "MWST-Nummer",
+      "number_placeholder": "CHE-123.456.789 MWST",
+      "remuneration_method": "Abrechnungsart",
+      "select_remuneration_method": "Abrechnungsart auswählen",
+      "payment_method": "Abrechnungsmethode",
+      "select_payment_method": "Abrechnungsmethode auswählen",
+      "rate_percent": "Satz (%)",
+      "net_rate_percent": "Saldosteuersatz (%, nur Saldosteuer)",
+      "net_rate": "Saldosteuersatz",
+      "no_vat_rate": "Kein MWST-Satz"
+    },
+    "text": {
+      "period_edit": "MWST-Periode bearbeiten",
+      "rate_edit": "MWST-Satz bearbeiten",
+      "method_edit": "MWST-Methoden bearbeiten",
+      "periods_empty": "Noch keine MWST-Periode.",
+      "rates_empty": "Noch kein MWST-Satz.",
+      "methods_empty": "Noch keine MWST-Methoden.",
+      "settings_not_configured": "Die MWST ist noch nicht konfiguriert.",
+      "settings_intro": "Deine MWST-Nummer und wie du mit der Steuerverwaltung abrechnest.",
+      "period_close_title": "Diese MWST-Periode abschliessen?",
+      "period_close_description": "Nach dem Abschluss kann die MWST-Periode vom {start} bis {end} nicht mehr geändert werden. Dies kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "settings_create_success": "Die MWST-Einstellungen sind erstellt.",
+      "settings_create_error": "Die MWST-Einstellungen konnten nicht erstellt werden.",
+      "settings_update_success": "Die MWST-Einstellungen sind gespeichert.",
+      "settings_update_error": "Die MWST-Einstellungen konnten nicht gespeichert werden.",
+      "methods_create_success": "Die MWST-Methoden sind erstellt.",
+      "methods_create_error": "Die MWST-Methoden konnten nicht erstellt werden.",
+      "methods_update_success": "Die MWST-Methoden sind gespeichert.",
+      "methods_update_error": "Die MWST-Methoden konnten nicht gespeichert werden.",
+      "period_create_success": "Die MWST-Periode ist erstellt.",
+      "period_create_error": "Die MWST-Periode konnte nicht erstellt werden.",
+      "period_update_success": "Die MWST-Periode ist gespeichert.",
+      "period_update_error": "Die MWST-Periode konnte nicht gespeichert werden.",
+      "rate_create_success": "Der MWST-Satz ist erstellt.",
+      "rate_create_error": "Der MWST-Satz konnte nicht erstellt werden.",
+      "rate_update_success": "Der MWST-Satz ist gespeichert.",
+      "rate_update_error": "Der MWST-Satz konnte nicht gespeichert werden.",
+      "period_close_success": "Die MWST-Periode ist abgeschlossen.",
+      "period_close_error": "Die MWST-Periode konnte nicht abgeschlossen werden."
+    },
+    "remuneration_method": {
+      "agreed": "Vereinbart",
+      "received": "Vereinnahmt"
+    },
+    "payment_method": {
+      "net_rate": "Saldosteuersatz",
+      "effective": "Effektive Methode"
+    },
+    "type": {
+      "net_rate_tax": "Saldosteuer",
+      "acquisition_tax_investments": "Bezugsteuer (Investitionen)",
+      "acquisition_tax_materials": "Bezugsteuer (Material)",
+      "non_consideration": "Nicht-Entgelte",
+      "non_taxable_turnover": "Nicht steuerbarer Umsatz",
+      "import_tax_materials": "Einfuhrsteuer (Material)",
+      "import_tax_investments": "Einfuhrsteuer (Investitionen)",
+      "sales_tax_due": "Umsatzsteuer",
+      "input_tax_materials": "Vorsteuer (Material)",
+      "input_tax_investments": "Vorsteuer (Investitionen)"
+    }
+  },
+  "document_templates": {
+    "action": {
+      "create": "Dokumentvorlage erstellen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "label": {
+      "html": "HTML-Vorlage"
+    },
+    "text": {
+      "create_title": "Dokumentvorlage erstellen",
+      "edit_title": "Dokumentvorlage bearbeiten",
+      "details": "Details der Dokumentvorlage",
+      "keep_current": "Leer lassen, um die aktuelle Vorlage zu behalten.",
+      "empty": "Noch keine Dokumentvorlage.",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Die Dokumentvorlage und alle ihre Sprachen werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Die Dokumentvorlage ist erstellt.",
+      "create_error": "Die Dokumentvorlage konnte nicht erstellt werden.",
+      "update_success": "Die Dokumentvorlage ist gespeichert.",
+      "update_error": "Die Dokumentvorlage konnte nicht gespeichert werden.",
+      "delete_success": "Die Dokumentvorlage wurde gelöscht.",
+      "delete_error": "Die Dokumentvorlage konnte nicht gelöscht werden."
+    },
+    "type": {
+      "invoice": "Rechnung"
+    }
+  },
+  "template_contents": {
+    "action": {
+      "add": "Inhalt hinzufügen"
+    },
+    "state": {
+      "creating": "Wird erstellt…"
+    },
+    "text": {
+      "title": "Inhalte",
+      "empty": "Noch kein Inhalt.",
+      "edit_title": "Inhalt bearbeiten",
+      "delete_title": "Inhalt löschen?",
+      "delete_description": "Der Inhalt wird gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Der Inhalt wurde hinzugefügt.",
+      "create_error": "Der Inhalt konnte nicht hinzugefügt werden.",
+      "update_success": "Der Inhalt wurde gespeichert.",
+      "update_error": "Der Inhalt konnte nicht gespeichert werden.",
+      "delete_success": "Der Inhalt wurde gelöscht.",
+      "delete_error": "Der Inhalt konnte nicht gelöscht werden."
+    }
+  },
+  "bank_relations": {
+    "action": {
+      "create": "Bankkonto erstellen",
+      "upload_file": "Bankdatei hochladen"
+    },
+    "state": {
+      "creating": "Wird erstellt…",
+      "uploading": "Wird hochgeladen…"
+    },
+    "label": {
+      "iban": "IBAN",
+      "qr_iban": "QR-IBAN",
+      "account": "Buchhaltungskonto",
+      "file": "Datei",
+      "balance": "Saldo",
+      "reconciliation": "Abgleich"
+    },
+    "text": {
+      "create_title": "Bankkonto erstellen",
+      "edit_title": "Bankkonto bearbeiten",
+      "empty": "Noch kein Bankkonto.",
+      "delete_title": "{name} löschen?",
+      "delete_description": "Das Bankkonto wird gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "upload_title": "Bankdatei für {name} hochladen",
+      "upload_description": "Lade sie in deinem E-Banking als «camt.053» herunter und wähle sie hier aus. Bis {size} MB.",
+      "to_reconcile": "{count} abzugleichen",
+      "balance_on": "am {date}",
+      "up_to_date": "Aktuell"
+    },
+    "toast": {
+      "create_success": "Das Bankkonto wurde erstellt.",
+      "create_error": "Das Bankkonto konnte nicht erstellt werden.",
+      "update_success": "Das Bankkonto wurde gespeichert.",
+      "update_error": "Das Bankkonto konnte nicht gespeichert werden.",
+      "delete_success": "Das Bankkonto wurde gelöscht.",
+      "delete_error": "Das Bankkonto konnte nicht gelöscht werden.",
+      "import_success": "{inserted} Bewegungen importiert, {existing} bereits importiert.",
+      "import_already": "Diese Kontoauszüge wurden bereits importiert.",
+      "import_error": "Die Kontoauszüge konnten nicht importiert werden."
+    }
+  },
+  "bank_movements": {
+    "action": {
+      "reconcile": "Abgleichen",
+      "book": "Verbuchen",
+      "book_payment": "Zahlung verbuchen",
+      "ignore": "Ignorieren",
+      "not_this_invoice": "Nicht diese Rechnung"
+    },
+    "state": {
+      "booking": "Wird verbucht…",
+      "ignoring": "Wird ignoriert…"
+    },
+    "label": {
+      "booked_on": "Gebucht am",
+      "amount": "Betrag",
+      "counterparty": "Gegenpartei",
+      "payment_from": "Zahlung von",
+      "payment_to": "Zahlung an",
+      "original_amount": "Ursprungsbetrag",
+      "bank_fees": "Bankgebühren",
+      "communication": "Mitteilung",
+      "reference": "Referenz",
+      "booked_from": "Gebucht ab",
+      "booked_to": "Gebucht bis",
+      "account": "Konto",
+      "vat_rate": "MWST-Satz",
+      "description": "Beschreibung",
+      "invoice": "Rechnung",
+      "remaining": "Noch offen",
+      "overpaid": "Überzahlt",
+      "value_on": "Valuta",
+      "bank_reference": "Bankreferenz",
+      "sender": "Auftraggeber",
+      "recipient": "Begünstigter"
+    },
+    "text": {
+      "title": "Bewegungen",
+      "empty": "Keine Bewegung.",
+      "reconcile_title": "Bewegungen abgleichen",
+      "matched_title": "Einer Rechnung zugeordnet",
+      "account_title": "Auf ein Konto zu verbuchen",
+      "already_paid": "Diese Rechnung ist bereits bezahlt.",
+      "ignore_title": "Diese Bewegung ignorieren?",
+      "ignore_description": "Eine ignorierte Bewegung verbucht nichts und kann danach nicht mehr abgeglichen werden. Diese Aktion ist unwiderruflich.",
+      "nothing_to_reconcile": "Nichts abzugleichen.",
+      "details": "Bewegungsdetails"
+    },
+    "status": {
+      "unreconciled": "Abzugleichen",
+      "reconciled": "Abgeglichen",
+      "ignored": "Ignoriert"
+    },
+    "toast": {
+      "book_success": "Die Bewegung ist verbucht.",
+      "book_error": "Die Bewegung konnte nicht verbucht werden.",
+      "ignore_success": "Die Bewegung ist ignoriert.",
+      "ignore_error": "Die Bewegung konnte nicht ignoriert werden."
+    }
+  },
+  "reports": {
+    "label": {
+      "box": "Ziffer",
+      "taxable_base": "Steuerbarer Betrag",
+      "tax": "Steuer",
+      "total": "Total",
+      "period_result": "Jahresergebnis",
+      "result": "Gewinn oder Verlust",
+      "total_liabilities_equity": "Total Passiven"
+    },
+    "text": {
+      "net_rates": "Saldosteuersätze",
+      "tax_rates": "Steuersätze",
+      "acquisition_tax": "Bezugsteuer",
+      "turnover": "I. Umsatz",
+      "tax_calculation": "II. Steuerberechnung",
+      "corrections": "III. Korrekturen",
+      "other_flows": "IV. Andere Mittelflüsse",
+      "computed_at": "Berechnet am {date}",
+      "not_balanced": "Aktiven und Passiven sind nicht ausgeglichen.",
+      "account_ledger_empty": "Keine Buchung auf diesem Konto in der Periode."
+    },
+    "box": {
+      "200": "Total der Entgelte",
+      "220": "Von der Steuer befreite Leistungen",
+      "225": "Übertragungen im Meldeverfahren",
+      "235": "Entgeltsminderungen (Debitorenverluste)",
+      "289": "Total Abzüge",
+      "299": "Steuerbarer Gesamtumsatz",
+      "399": "Total geschuldete Steuer",
+      "400": "Vorsteuer auf Material- und Dienstleistungsaufwand",
+      "405": "Vorsteuer auf Investitionen und übrigem Betriebsaufwand",
+      "415": "Vorsteuerkorrekturen: gemischte Verwendung, Eigenverbrauch",
+      "470": "Steueranrechnung (Formular 1050)",
+      "471": "Steueranrechnung (Formulare 1055, 1056)",
+      "479": "Total Korrekturen",
+      "500": "Zu bezahlender Betrag",
+      "510": "Guthaben der steuerpflichtigen Person",
+      "910": "Spenden, Dividenden",
+      "382": "Bezugsteuer (vor 2024)",
+      "383": "Bezugsteuer (ab 2024)"
+    }
+  },
+  "api_keys": {
+    "action": {
+      "create": "API-Schlüssel erstellen",
+      "delete": "Löschen",
+      "done": "Fertig"
+    },
+    "state": {
+      "creating": "Wird erstellt…",
+      "deleting": "Wird gelöscht…"
+    },
+    "label": {
+      "key": "Schlüssel",
+      "resource": "Ressource",
+      "access": "Zugriff",
+      "read": "Lesen",
+      "read_write": "Lesen und schreiben",
+      "expiration": "Ablauf",
+      "expires_on": "Läuft ab am",
+      "last_used": "Zuletzt verwendet",
+      "never": "Nie",
+      "days": "{days} Tage"
+    },
+    "resource": {
+      "mcp": "MCP-Server",
+      "api": "REST-API"
+    },
+    "text": {
+      "title": "API-Schlüssel",
+      "create_title": "API-Schlüssel erstellen",
+      "created_title": "Dein API-Schlüssel wurde erstellt",
+      "empty": "Noch kein API-Schlüssel.",
+      "created_description": "Kopiere diesen Schlüssel jetzt, er wird nicht mehr angezeigt.",
+      "delete_title": "Diesen API-Schlüssel löschen?",
+      "delete_description": "Anwendungen, die diesen Schlüssel verwenden, verlieren sofort ihren Zugriff. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "create_success": "Der API-Schlüssel wurde erstellt.",
+      "create_error": "Der API-Schlüssel konnte nicht erstellt werden.",
+      "delete_success": "Der API-Schlüssel wurde gelöscht.",
+      "delete_error": "Der API-Schlüssel konnte nicht gelöscht werden."
+    }
+  },
+  "usage": {
+    "label": {
+      "model": "Modell",
+      "input_tokens": "Eingabe-Tokens",
+      "output_tokens": "Ausgabe-Tokens"
+    },
+    "text": {
+      "title": "Nutzung",
+      "period": "{month} · wird am {date} zurückgesetzt"
+    },
+    "toast": {
+      "load_error": "Die Nutzung konnte nicht geladen werden."
+    }
+  },
+  "profile": {
+    "label": {
+      "danger_zone": "Gefahrenzone",
+      "account": "Konto"
+    },
+    "action": {
+      "delete": "Mein Konto löschen"
+    },
+    "text": {
+      "danger_zone": "Du verlässt uns? Verlasse oder lösche zuerst deine Organisationen und lösche deine API-Schlüssel, dann kann dein Konto gehen.",
+      "delete_title": "Dein Konto löschen?",
+      "delete_description": "Diese Aktion kann nicht rückgängig gemacht werden. Gib zur Bestätigung dein Passwort ein."
+    },
+    "toast": {
+      "delete_success": "Dein Konto ist gelöscht."
+    }
+  },
+  "team": {
+    "label": {
+      "role": "Rolle"
+    },
+    "role": {
+      "admin": "Admin",
+      "accountant": "Buchhalter",
+      "reviewer": "Leser"
+    },
+    "text": {
+      "delete_title": "{name} aus dem Team entfernen?",
+      "delete_description": "Die Person verliert den Zugriff auf die Organisation und ihre Unterhaltungen mit dem Assistenten darin werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "toast": {
+      "delete_success": "Das Mitglied wurde entfernt.",
+      "delete_error": "Das Mitglied konnte nicht entfernt werden."
+    }
+  },
+  "invitations": {
+    "action": {
+      "create": "Einladen",
+      "done": "Fertig",
+      "accept": "Annehmen",
+      "decline": "Ablehnen",
+      "back_home": "Zurück zur Startseite"
+    },
+    "state": {
+      "creating": "Wird eingeladen…",
+      "accepting": "Wird angenommen…",
+      "declining": "Wird abgelehnt…"
+    },
+    "label": {
+      "expires_on": "Läuft ab am"
+    },
+    "text": {
+      "create_title": "Mitglied einladen",
+      "created_title": "Einladungslink",
+      "created_description": "Kopiere diesen Link jetzt und teile ihn mit {email}, er wird nicht mehr angezeigt. Er kann nur bis zum {date} angenommen werden, indem man sich mit dieser E-Mail anmeldet.",
+      "delete_title": "Einladung von {email} widerrufen?",
+      "delete_description": "Der Link funktioniert nicht mehr. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "invited": "Du wurdest eingeladen, {organization} beizutreten.",
+      "sign_in": "Melde dich an oder erstelle ein Konto mit der E-Mail-Adresse, an die die Einladung gesendet wurde.",
+      "invalid_link": "Dieser Einladungslink ist ungültig.",
+      "load_error": "Die Einladung konnte nicht geladen werden."
+    },
+    "toast": {
+      "create_success": "Die Einladung wurde erstellt.",
+      "create_error": "Die Einladung konnte nicht erstellt werden.",
+      "delete_success": "Die Einladung wurde widerrufen.",
+      "delete_error": "Die Einladung konnte nicht widerrufen werden.",
+      "accept_success": "Du bist {organization} beigetreten.",
+      "accept_error": "Die Einladung konnte nicht angenommen werden.",
+      "decline_error": "Die Einladung konnte nicht abgelehnt werden."
+    }
+  },
+  "two_factor": {
+    "action": {
+      "turn_on": "Aktivieren",
+      "continue": "Weiter",
+      "continuing": "Wird geprüft…",
+      "copy_backup_codes": "Backup-Codes kopieren",
+      "done": "Fertig",
+      "turn_off": "Deaktivieren",
+      "turning_off": "Wird deaktiviert…",
+      "generate_backup_codes": "Erstellen",
+      "generating_backup_codes": "Wird erstellt…",
+      "show_setup_key": "gib stattdessen diesen Textcode ein",
+      "new_backup_codes": "Neue Backup-Codes"
+    },
+    "label": {
+      "backup_codes": "Backup-Codes",
+      "setup_key": "Textcode",
+      "step": "Schritt {number}",
+      "authenticator_app": "Authenticator-App",
+      "configured": "Eingerichtet"
+    },
+    "text": {
+      "title": "Zwei-Faktor-Authentifizierung",
+      "password_description": "Bestätige dein Passwort, um die Zwei-Faktor-Authentifizierung einzurichten.",
+      "scan_description": "Scanne das Bild unten mit deiner Authenticator-App. Wenn du keinen QR-Code verwenden kannst, {link}.",
+      "backup_codes_description": "Die Zwei-Faktor-Authentifizierung ist aktiviert. Bewahre diese Backup-Codes sicher auf: Mit jedem kannst du dich einmal anmelden, falls du deine Authenticator-App verlierst. Sie werden nicht noch einmal angezeigt.",
+      "disable_title": "Zwei-Faktor-Authentifizierung deaktivieren?",
+      "disable_description": "Zum Anmelden brauchst du dann wieder nur dein Passwort. Bestätige mit deinem Passwort.",
+      "new_backup_codes_title": "Neue Backup-Codes",
+      "new_backup_codes_description": "Wenn du neue Backup-Codes erstellst, funktionieren die aktuellen nicht mehr. Bestätige mit deinem Passwort.",
+      "backup_codes_saved_description": "Deine bisherigen Backup-Codes funktionieren nicht mehr.",
+      "backup_codes_once": "Bewahre diese Codes sicher auf: Mit jedem kannst du dich einmal anmelden, falls du deine Authenticator-App verlierst. Sie werden nicht noch einmal angezeigt.",
+      "code_description": "Gib den {digits}-stelligen Code aus deiner Authenticator-App ein, er ändert sich alle {period} Sekunden.",
+      "disabled": "Füge deiner Anmeldung einen zweiten Schritt mit einem Code aus einer Authenticator-App hinzu."
+    }
+  },
+  "migrations": {
+    "action": {
+      "create": "Migration starten",
+      "add_file": "Datei hinzufügen",
+      "replace_file": "Datei ersetzen",
+      "run": "Migration ausführen",
+      "retry": "Nochmals ausführen",
+      "continue": "Weiter"
+    },
+    "state": {
+      "creating": "Wird gestartet…",
+      "uploading": "Wird hochgeladen…",
+      "starting": "Wird gestartet…",
+      "running": "Deine Daten werden migriert…"
+    },
+    "label": {
+      "file": "Datei",
+      "created_at": "Gestartet",
+      "valid_on": "Saldi per",
+      "source": "Quelle"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "succeeded": "Erledigt",
+      "failed": "Fehlgeschlagen"
+    },
+    "type": {
+      "accounts": "Kontenplan",
+      "balances": "Eröffnungssaldi",
+      "journal": "Journal",
+      "clients": "Kunden",
+      "invoices": "Rechnungen"
+    },
+    "provider": {
+      "bexio": "Bexio"
+    },
+    "text": {
+      "title": "Migration von {provider}",
+      "description": "Füge die aus {provider} exportierten Dateien hinzu und führe dann die Migration aus.",
+      "empty": "Noch keine Migration.",
+      "empty_files": "Noch keine Datei.",
+      "upload_title": "Datei hinzufügen",
+      "replace_title": "{name} ersetzen",
+      "upload_description": "Wähle eine aus {provider} exportierte Datei. Bis {size} KB.",
+      "delete_title": "Diese Migration löschen?",
+      "delete_description": "Die Migration und ihre Dateien werden gelöscht. Diese Aktion ist nicht umkehrbar.",
+      "delete_file_title": "{name} löschen?",
+      "delete_file_description": "Die Datei wird aus der Migration entfernt. Diese Aktion ist nicht umkehrbar.",
+      "succeeded": "Erledigt, deine Daten sind migriert",
+      "failed": "Diese Migration ist fehlgeschlagen und hat nichts importiert",
+      "timeout": "Das dauert etwas. Schau gleich nochmals vorbei, um zu sehen, wie es gelaufen ist.",
+      "create_error": "Die Migration konnte nicht gestartet werden.",
+      "upload_error": "Die Datei konnte nicht hochgeladen werden.",
+      "run_error": "Die Migration konnte nicht ausgeführt werden.",
+      "new_title": "Neue Migration",
+      "source_title": "Woher kommen deine Daten?"
+    },
+    "toast": {
+      "delete_success": "Die Migration ist gelöscht.",
+      "delete_error": "Die Migration konnte nicht gelöscht werden.",
+      "delete_file_success": "Die Datei ist gelöscht.",
+      "delete_file_error": "Die Datei konnte nicht gelöscht werden."
+    },
+    "step": {
+      "source": "Quelle",
+      "files": "Dateien",
+      "processing": "Migration",
+      "result": "Ergebnis"
+    }
+  },
+  "notifications": {
+    "label": {
+      "notifications": "Benachrichtigungen"
+    },
+    "text": {
+      "empty": "Nichts Neues."
+    }
+  },
+  "environment": {
+    "dev": "Entwicklung",
+    "test": "Test",
+    "demo": "Demo",
+    "staging": "Staging"
+  }
+}

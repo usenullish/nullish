@@ -1,0 +1,19 @@
+{
+  "name": "@usenullish/nullish-db",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "zod": "^4.6"
+  }
+}

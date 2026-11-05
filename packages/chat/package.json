@@ -1,0 +1,21 @@
+{
+  "name": "@usenullish/nullish-chat",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "openai": "^7.51.0",
+    "zod": "^4.6"
+  }
+}

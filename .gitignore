@@ -1,0 +1,28 @@
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# LLM tools
+.claude/
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# Tmp
+*~
+*.sw[mnpcod]
+*.log
+*.tmp
+*.tmp.*
+log.txt
+npm-debug.log*
+
+# Node
+node_modules
+build
+
+# For development
+.nullish
+tmp

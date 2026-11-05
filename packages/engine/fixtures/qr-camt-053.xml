@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>MSG-20261014-0001</MsgId>
+      <CreDtTm>2026-10-14T23:00:00+02:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>STMT-20261014-0001</Id>
+      <ElctrncSeqNb>1</ElctrncSeqNb>
+      <CreDtTm>2026-10-14T23:00:00+02:00</CreDtTm>
+      <FrToDt>
+        <FrDtTm>2026-10-01T00:00:00+02:00</FrDtTm>
+        <ToDtTm>2026-10-14T23:59:59+02:00</ToDtTm>
+      </FrToDt>
+      <Acct>
+        <Id>
+          <IBAN>CH3908704016075473007</IBAN>
+        </Id>
+        <Ccy>CHF</Ccy>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>OPBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="CHF">10000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2026-10-01</Dt>
+        </Dt>
+      </Bal>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>CLBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="CHF">10930.50</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2026-10-14</Dt>
+        </Dt>
+      </Bal>
+
+      <Ntry>
+        <Amt Ccy="CHF">1055.50</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>
+          <Cd>BOOK</Cd>
+        </Sts>
+        <BookgDt>
+          <Dt>2026-10-06</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2026-10-06</Dt>
+        </ValDt>
+        <AcctSvcrRef>20261006000101</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>VCOM</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>20261006000101-1</AcctSvcrRef>
+              <EndToEndId>NOTPROVIDED</EndToEndId>
+            </Refs>
+            <Amt Ccy="CHF">1055.50</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <RltdPties>
+              <Dbtr>
+                <Pty>
+                  <Nm>Test Client SA</Nm>
+                </Pty>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH9300762011623852957</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>QRR</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>000000532139565642554536114</Ref>
+                </CdtrRefInf>
+              </Strd>
+            </RmtInf>
+            <AddtlTxInf>QR-bill payment // Test Client SA</AddtlTxInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+
+      <Ntry>
+        <Amt Ccy="CHF">200.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>
+          <Cd>BOOK</Cd>
+        </Sts>
+        <BookgDt>
+          <Dt>2026-10-08</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2026-10-08</Dt>
+        </ValDt>
+        <AcctSvcrRef>20261008000202</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>DMCT</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>20261008000202-1</AcctSvcrRef>
+            </Refs>
+            <Amt Ccy="CHF">200.00</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <RltdPties>
+              <Dbtr>
+                <Pty>
+                  <Nm>Jane Owner</Nm>
+                </Pty>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH5604835012345678009</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Capital contribution</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+
+      <Ntry>
+        <Amt Ccy="CHF">320.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <Sts>
+          <Cd>BOOK</Cd>
+        </Sts>
+        <BookgDt>
+          <Dt>2026-10-10</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2026-10-10</Dt>
+        </ValDt>
+        <AcctSvcrRef>20261010000303</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>ICDT</Cd>
+              <SubFmlyCd>DMCT</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <NtryDtls>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>20261010000303-1</AcctSvcrRef>
+              <EndToEndId>SUPPLIER-INV-4711</EndToEndId>
+            </Refs>
+            <Amt Ccy="CHF">320.00</Amt>
+            <CdtDbtInd>DBIT</CdtDbtInd>
+            <RltdPties>
+              <Cdtr>
+                <Pty>
+                  <Nm>Office Supplies AG</Nm>
+                </Pty>
+              </Cdtr>
+              <CdtrAcct>
+                <Id>
+                  <IBAN>CH9300762011623852957</IBAN>
+                </Id>
+              </CdtrAcct>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Invoice 4711</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+
+      <Ntry>
+        <Amt Ccy="CHF">5.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <Sts>
+          <Cd>BOOK</Cd>
+        </Sts>
+        <BookgDt>
+          <Dt>2026-10-14</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2026-10-14</Dt>
+        </ValDt>
+        <AcctSvcrRef>20261014000404</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>ACMT</Cd>
+            <Fmly>
+              <Cd>MDOP</Cd>
+              <SubFmlyCd>CHRG</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <AddtlNtryInf>Account maintenance fee</AddtlNtryInf>
+      </Ntry>
+
+      <Ntry>
+        <Amt Ccy="CHF">75.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>
+          <Cd>PDNG</Cd>
+        </Sts>
+        <BookgDt>
+          <Dt>2026-10-14</Dt>
+        </BookgDt>
+        <AcctSvcrRef>20261014000505</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>DMCT</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <AddtlNtryInf>Pending incoming payment</AddtlNtryInf>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

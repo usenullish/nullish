@@ -1,0 +1,32 @@
+{
+  "name": "@usenullish/nullish-jobs",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate:schema": "bun run ./scripts/template-schema.ts && bunx oxfmt ./tmp/invoices/schema.json",
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-engine": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-migration": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "@usenullish/nullish-storage": "workspace:*",
+    "bullmq": "^6.7.0",
+    "liquidjs": "^10.30.1",
+    "pg": "^8.23.1",
+    "puppeteer": "^25.16.0",
+    "swissqrbill": "^4.4.4",
+    "zod": "^4.6"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
+  }
+}

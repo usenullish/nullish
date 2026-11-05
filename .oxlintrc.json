@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y"],
+  "ignorePatterns": ["dist"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "ignoreRestSiblings": true,
+        "fix": {
+          "imports": "safe-fix",
+          "variables": "off"
+        }
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "never",
+      { "astro": "always", "json": "always", "css": "always", "svg": "always", "html": "always" }
+    ],
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/aria-role": ["error", { "ignoreNonDOM": true }],
+    "jsx-a11y/no-autofocus": ["error", { "ignoreNonDOM": true }]
+  },
+  "overrides": [
+    {
+      "files": ["packages/client/app/ui/**"],
+      "rules": {
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/heading-has-content": "off",
+        "jsx-a11y/anchor-has-content": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "jsx-a11y/no-static-element-interactions": "off"
+      }
+    }
+  ],
+  "env": {
+    "builtin": true
+  }
+}

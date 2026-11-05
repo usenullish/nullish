@@ -1,0 +1,1380 @@
+{
+  "core": {
+    "text": {
+      "no_currency": "Nessuna valuta trovata.",
+      "no_language": "Nessuna lingua trovata."
+    },
+    "action": {
+      "skip": "Salta",
+      "close": "Chiudi",
+      "submit": "Invia",
+      "update": "Aggiorna",
+      "edit": "Modifica",
+      "clear": "Cancella",
+      "previous": "Precedente",
+      "next": "Successivo",
+      "send": "Invia",
+      "hide_amounts": "Nascondi gli importi",
+      "show_amounts": "Mostra gli importi",
+      "toggle_theme": "Cambia tema",
+      "generate": "Genera",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "more_actions": "Altre azioni",
+      "details": "Dettagli",
+      "copy": "Copia",
+      "open": "Apri",
+      "delete": "Elimina",
+      "choose_file": "Scegli un file"
+    },
+    "label": {
+      "number": "Numero",
+      "language": "Lingua",
+      "select_language": "Seleziona una lingua",
+      "id": "ID",
+      "name": "Nome",
+      "type": "Tipo",
+      "status": "Stato",
+      "start": "Inizio",
+      "end": "Fine",
+      "start_date": "Data di inizio",
+      "end_date": "Data di fine",
+      "date": "Data",
+      "description": "Descrizione",
+      "email": "E-mail",
+      "phone": "Telefono",
+      "code": "Codice",
+      "rate": "Aliquota",
+      "amount": "Importo",
+      "currency": "Valuta",
+      "exchange_rate": "Tasso di cambio",
+      "debit": "Dare",
+      "credit": "Avere",
+      "balance": "Saldo",
+      "account_id": "ID conto",
+      "purpose": "Scopo",
+      "search": "Cerca",
+      "from": "Dal",
+      "to": "Al",
+      "valid_on": "Valido il",
+      "reference": "Riferimento",
+      "all": "Tutti",
+      "step": "Passo {current} di {total}",
+      "created_at": "Creato il",
+      "updated_at": "Modificato il",
+      "version": "Versione"
+    },
+    "status": {
+      "open": "Aperto",
+      "closed": "Chiuso"
+    },
+    "state": {
+      "hold_tight": "Un attimo…",
+      "unexpected_error": "Si è verificato un errore imprevisto!",
+      "thinking": "Sto pensando…",
+      "language_error": "Non è stato possibile cambiare la lingua.",
+      "saving": "Salvataggio…",
+      "deleting": "Eliminazione…"
+    },
+    "toast": {
+      "copied": "Copiato negli appunti.",
+      "copy_error": "Impossibile copiare negli appunti."
+    }
+  },
+  "auth": {
+    "action": {
+      "sign_out": "Esci",
+      "sign_in": "Accedi",
+      "sign_up": "Registrati",
+      "signing_in": "Accesso…",
+      "signing_up": "Registrazione…",
+      "change_password": "Cambia password",
+      "changing_password": "Modifica in corso…",
+      "verify": "Verifica",
+      "verifying": "Verifica in corso…",
+      "use_backup_code": "Usa un codice di backup",
+      "use_authenticator": "Usa la tua app di autenticazione"
+    },
+    "label": {
+      "password": "Password",
+      "current_password": "Password attuale",
+      "new_password": "Nuova password",
+      "code": "Codice",
+      "backup_code": "Codice di backup",
+      "trust_device": "Considera attendibile questo dispositivo per {days} giorni"
+    },
+    "text": {
+      "sign_in_description": "Inserisci la tua e-mail e la password per accedere.",
+      "sign_up_description": "Crea il tuo account per iniziare.",
+      "no_account": "Non sei ancora registrato?",
+      "has_account": "Hai già un account?",
+      "session_expired": "La sessione è scaduta. Accedi di nuovo.",
+      "change_password_title": "Cambia la tua password",
+      "two_factor_description": "Inserisci il codice a 6 cifre della tua app di autenticazione.",
+      "backup_code_description": "Inserisci uno dei tuoi codici di backup."
+    },
+    "toast": {
+      "change_password_success": "La tua password è stata cambiata. Gli altri dispositivi sono stati disconnessi."
+    },
+    "error": {
+      "sign_up_disabled": "Le registrazioni sono chiuse.",
+      "sign_up_invitation_only": "La registrazione è solo su invito.",
+      "user_has_organizations": "Lascia o elimina le tue organizzazioni prima di eliminare il tuo account.",
+      "user_has_api_keys": "Elimina le tue chiavi API prima di eliminare il tuo account."
+    }
+  },
+  "errors": {
+    "label": {
+      "error": "Errore"
+    },
+    "text": {
+      "oops": "Ops!",
+      "unexpected": "Si è verificato un errore imprevisto.",
+      "not_found": "La pagina richiesta non è stata trovata."
+    }
+  },
+  "navigation": {
+    "organization": "Organizzazione",
+    "reports": "Rapporti",
+    "settings": "Impostazioni",
+    "assistant": "Assistente",
+    "bank": "Banca",
+    "banking": "Banca",
+    "journal": "Giornale",
+    "clients": "Clienti",
+    "invoices": "Fatture",
+    "balance_sheet": "Bilancio",
+    "income_statement": "Conto economico",
+    "vat_declaration": "Rendiconto IVA",
+    "account_ledger": "Scheda di conto",
+    "accounting": "Contabilità",
+    "accounts": "Conti",
+    "system_accounts": "Conti di sistema",
+    "periods": "Periodi",
+    "vat": "IVA",
+    "methods": "Metodi",
+    "billing": "Fatturazione",
+    "rates": "Aliquote",
+    "document_templates": "Modelli di documento",
+    "details": "Dettagli",
+    "bank_relations": "Conti bancari",
+    "organizations": "Organizzazioni",
+    "team": "Team",
+    "members": "Membri",
+    "invitations": "Inviti",
+    "migrations": "Migrazioni"
+  },
+  "greeting": {
+    "morning": "Buongiorno, {name}",
+    "morning_anonymous": "Buongiorno",
+    "afternoon": "Buon pomeriggio, {name}",
+    "afternoon_anonymous": "Buon pomeriggio",
+    "evening": "Buonasera, {name}",
+    "evening_anonymous": "Buonasera",
+    "late": "Ancora al lavoro, {name}?",
+    "late_anonymous": "Ancora al lavoro?"
+  },
+  "chat": {
+    "action": {
+      "use_own_llm": "Usa il tuo LLM",
+      "new_conversation": "Nuovo"
+    },
+    "state": {
+      "pondering": "Ci penso su…",
+      "mulling": "Ci rimugino…",
+      "noodling": "Hmm, vediamo…",
+      "looking_up": "Ricerca…",
+      "creating": "Creazione…",
+      "updating": "Aggiornamento…",
+      "working": "Elaborazione…"
+    },
+    "label": {
+      "placeholder_organization": "Chiedi qualcosa su {organization}, ad es. quali fatture sono ancora aperte?",
+      "placeholder_unscoped": "ad es. Dove ho fatture aperte?",
+      "history": "Cronologia",
+      "title": "Titolo",
+      "placeholder_disabled": "L'assistente non è configurato su questa istanza."
+    },
+    "text": {
+      "untitled_conversation": "Conversazione senza titolo",
+      "limit_reached": "Hai raggiunto il limite di utilizzo dell'assistente. Riprova più tardi.",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "La conversazione e i suoi messaggi vengono eliminati. Questa azione è irreversibile.",
+      "empty": "Ancora nessuna conversazione."
+    },
+    "toast": {
+      "load_conversations_error": "Non è stato possibile caricare le conversazioni.",
+      "load_messages_error": "Non è stato possibile caricare i messaggi precedenti.",
+      "delete_success": "La conversazione è stata eliminata.",
+      "delete_error": "Non è stato possibile eliminare la conversazione."
+    }
+  },
+  "organizations": {
+    "setup": {
+      "organization": "Organizzazione",
+      "vat": "IVA",
+      "vat_rate": "Aliquota"
+    },
+    "setup_done": {
+      "organization": "Evviva, {name} è stata creata",
+      "vat": "Bravo, l'IVA è configurata",
+      "vat_rate": "Perfetto, l'aliquota saldo è registrata"
+    },
+    "setup_next": {
+      "vat": "L'organizzazione è soggetta all'IVA?",
+      "vat_rate": "Un'ultima cosa: l'aliquota saldo."
+    },
+    "action": {
+      "create": "Crea l'organizzazione",
+      "lets_go": "Andiamo!",
+      "delete": "Elimina organizzazione"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "legal_form": "Forma giuridica",
+      "legal_form_llc": "Sagl",
+      "legal_form_corporation": "SA",
+      "legal_form_sole_proprietorship": "Ditta individuale",
+      "address": "Indirizzo",
+      "care_of": "Presso",
+      "street": "Via",
+      "postal_code": "NPA",
+      "city": "Località",
+      "country": "Paese",
+      "communication": "Comunicazione",
+      "website": "Sito web",
+      "settings": "Impostazioni dell'organizzazione",
+      "select_country": "Seleziona un paese",
+      "danger_zone": "Zona di pericolo"
+    },
+    "text": {
+      "new": "Nuova organizzazione",
+      "intro": "Diamo una casa alla tua azienda!",
+      "ready": "{name} è pronta",
+      "no_country": "Nessun paese trovato.",
+      "no_results": "Nessuna organizzazione trovata.",
+      "danger_zone": "L'eliminazione rende l'organizzazione di sola lettura. Viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni.",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "L'organizzazione passa subito in sola lettura e viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni. Questa azione è irreversibile.",
+      "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}."
+    },
+    "toast": {
+      "create_error": "Non è stato possibile creare l'organizzazione.",
+      "update_success": "L'organizzazione è stata aggiornata.",
+      "update_error": "Non è stato possibile aggiornare l'organizzazione.",
+      "delete_success": "L'organizzazione è stata contrassegnata come eliminata.",
+      "delete_error": "Non è stato possibile eliminare l'organizzazione."
+    }
+  },
+  "clients": {
+    "action": {
+      "create": "Crea un cliente"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "text": {
+      "details": "Dettagli del cliente",
+      "empty": "Ancora nessun cliente.",
+      "edit_title": "Modifica cliente",
+      "no_results": "Nessun cliente trovato.",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "Il cliente e i suoi contatti vengono eliminati. Un cliente con fatture non può essere eliminato. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "Il cliente è stato creato.",
+      "create_error": "Impossibile creare il cliente.",
+      "update_success": "Il cliente è stato salvato.",
+      "update_error": "Impossibile salvare il cliente.",
+      "delete_success": "Il cliente è stato eliminato.",
+      "delete_error": "Non è stato possibile eliminare il cliente."
+    },
+    "type": {
+      "company": "Azienda",
+      "individual": "Privato"
+    }
+  },
+  "contacts": {
+    "action": {
+      "create": "Crea un contatto",
+      "add": "Aggiungi contatto"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "last_name": "Cognome",
+      "first_name": "Nome"
+    },
+    "text": {
+      "title": "Contatti",
+      "empty": "Ancora nessun contatto.",
+      "edit_title": "Modifica contatto",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "Il contatto viene rimosso dal cliente. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "Il contatto è stato creato.",
+      "create_error": "Impossibile creare il contatto.",
+      "update_success": "Il contatto è stato salvato.",
+      "update_error": "Impossibile salvare il contatto.",
+      "delete_success": "Il contatto è stato eliminato.",
+      "delete_error": "Non è stato possibile eliminare il contatto."
+    }
+  },
+  "invoices": {
+    "action": {
+      "create": "Crea una fattura",
+      "add_line": "Aggiungi una riga",
+      "open": "Emetti",
+      "pay": "Paga",
+      "void": "Annulla",
+      "write_off": "Stralcia",
+      "download": "Scarica",
+      "generate_pdf": "Genera PDF"
+    },
+    "state": {
+      "creating": "Creazione…",
+      "paying": "Pagamento…",
+      "generating": "Generazione…",
+      "printing": "Stampa in corso…"
+    },
+    "label": {
+      "issue_date": "Data di emissione",
+      "due_date": "Data di scadenza",
+      "pdf": "PDF",
+      "document_template": "Modello di documento",
+      "default_template": "Modello predefinito",
+      "select_template": "Seleziona un modello",
+      "select_language": "Seleziona una lingua",
+      "bank_relation": "Conto bancario",
+      "issued_from": "Emesse dal",
+      "issued_to": "Emesse al",
+      "client": "Cliente",
+      "vat_rate": "Aliquota IVA",
+      "select_client": "Seleziona un cliente",
+      "subtotal": "Subtotale",
+      "vat": "IVA",
+      "total": "Totale",
+      "paid": "Pagato",
+      "remaining": "Importo aperto"
+    },
+    "text": {
+      "details": "Dettagli della fattura",
+      "pay_title": "Paga la fattura",
+      "pdf_generated": "Il tuo PDF è pronto",
+      "pdf_failed": "Generazione del PDF non riuscita",
+      "pdf_timeout": "La generazione del PDF richiede più tempo del previsto. Riprova più tardi.",
+      "empty": "Ancora nessuna fattura.",
+      "open_title": "Aprire questa fattura?",
+      "open_description": "Le sue registrazioni verranno contabilizzate e le sue righe non potranno più essere modificate.",
+      "void_title": "Annullare questa fattura?",
+      "void_description": "Le sue registrazioni verranno stornate. L'operazione è irreversibile.",
+      "write_off_title": "Ammortizzare questa fattura?",
+      "write_off_description": "L'importo aperto verrà contabilizzato come perdita su crediti. L'operazione è irreversibile.",
+      "delete_title": "Eliminare la bozza di fattura per {client} del {date}?",
+      "delete_description": "La bozza di fattura e le sue righe vengono eliminate. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "La fattura è stata creata.",
+      "create_error": "Impossibile creare la fattura.",
+      "open_success": "La fattura è aperta.",
+      "open_error": "Impossibile aprire la fattura.",
+      "void_success": "La fattura è annullata.",
+      "void_error": "Impossibile annullare la fattura.",
+      "write_off_success": "La fattura è stata ammortizzata.",
+      "write_off_error": "Impossibile ammortizzare la fattura.",
+      "pay_success": "Il pagamento è registrato.",
+      "pay_error": "Impossibile registrare il pagamento.",
+      "pdf_error": "Impossibile generare il PDF.",
+      "delete_success": "La fattura è stata eliminata.",
+      "delete_error": "Non è stato possibile eliminare la fattura."
+    },
+    "status": {
+      "draft": "Bozza",
+      "open": "Aperta",
+      "paid": "Pagata",
+      "uncollectible": "Inesigibile",
+      "void": "Annullata"
+    }
+  },
+  "lines": {
+    "action": {
+      "create": "Crea una riga di fattura"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "quantity": "Quantità",
+      "unit_price": "Prezzo unitario",
+      "total": "Totale"
+    },
+    "text": {
+      "empty": "Ancora nessuna riga.",
+      "delete_title": "Eliminare la riga {name}?",
+      "delete_description": "La riga viene rimossa dalla bozza di fattura. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "La riga è stata aggiunta.",
+      "create_error": "Impossibile aggiungere la riga.",
+      "delete_success": "La riga è stata eliminata.",
+      "delete_error": "Non è stato possibile eliminare la riga."
+    },
+    "type": {
+      "item": "Articolo",
+      "discount": "Sconto"
+    }
+  },
+  "journal": {
+    "action": {
+      "create": "Crea una registrazione",
+      "duplicate": "Duplica",
+      "remove_line": "Rimuovi riga",
+      "add_line": "Aggiungi riga",
+      "copy_tag": "Copia etichetta"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "postings": "Movimenti",
+      "line": "Riga {line}",
+      "valid_from": "Valido dal",
+      "valid_to": "Valido al",
+      "account": "Conto",
+      "total_debit": "Totale dare",
+      "total_credit": "Totale avere",
+      "difference": "Differenza",
+      "invoice": "Fattura",
+      "period": "Periodo",
+      "movement": "Movimento bancario",
+      "vat_rate": "Aliquota IVA",
+      "no_vat_rate": "Nessuna aliquota IVA",
+      "vat_side": "IVA su",
+      "vat_posting": "IVA",
+      "origin": "Origine",
+      "tag": "Etichetta"
+    },
+    "text": {
+      "new": "Nuova registrazione",
+      "empty": "Ancora nessuna registrazione.",
+      "delete_title": "Eliminare la registrazione {name}?",
+      "delete_description": "La registrazione e le sue righe vengono eliminate. Una registrazione di un periodo chiuso o contabilizzata da una fattura non può essere eliminata. Questa azione è irreversibile.",
+      "details": "Dettagli della registrazione",
+      "edit_title": "Modifica registrazione",
+      "missing_description": "Aggiungi un riferimento o una descrizione in almeno una riga.",
+      "migrated": "Migrata"
+    },
+    "toast": {
+      "create_success": "La registrazione è stata creata.",
+      "create_error": "Impossibile creare la registrazione.",
+      "delete_success": "La registrazione è stata eliminata.",
+      "delete_error": "Non è stato possibile eliminare la registrazione.",
+      "update_success": "La registrazione è stata salvata.",
+      "update_error": "Impossibile salvare la registrazione."
+    },
+    "invoice_journal": {
+      "open": "Apertura della fattura",
+      "payment": "Pagamento della fattura",
+      "void": "Annullamento della fattura",
+      "uncollectible": "Perdita su fattura"
+    },
+    "period_journal": {
+      "opening": "Bilancio di apertura",
+      "result": "Risultato d'esercizio"
+    }
+  },
+  "accounts": {
+    "action": {
+      "create": "Crea conto"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "parent": "Conto superiore"
+    },
+    "text": {
+      "no_results": "Nessun conto trovato.",
+      "create_title": "Crea un conto",
+      "edit_title": "Modifica conto",
+      "delete_title": "Eliminare il conto {name}?",
+      "delete_description": "Un conto con registrazioni, sottoconti o assegnato a un conto di sistema non può essere eliminato. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "Il conto è stato creato.",
+      "create_error": "Non è stato possibile creare il conto.",
+      "update_success": "Il conto è stato salvato.",
+      "update_error": "Non è stato possibile salvare il conto.",
+      "delete_success": "Il conto è stato eliminato.",
+      "delete_error": "Non è stato possibile eliminare il conto."
+    },
+    "type": {
+      "asset": "Attivi",
+      "liability": "Capitale di terzi",
+      "equity": "Capitale proprio",
+      "income": "Ricavi",
+      "expense": "Costi",
+      "closing": "Chiusura"
+    },
+    "names": {
+      "1": "Attivi",
+      "10": "Attivo circolante",
+      "100": "Liquidità",
+      "1020": "Banca",
+      "109": "Conti di trasferimento",
+      "1090": "Conto di trasferimento",
+      "1091": "Conto di giro salari",
+      "1099": "Importi da chiarire",
+      "110": "Crediti da forniture e prestazioni",
+      "1100": "Crediti Svizzera",
+      "1109": "Rettifica valore crediti",
+      "1130": "Anticipi ai fornitori",
+      "114": "Altri crediti a breve termine",
+      "1140": "Prestiti",
+      "117": "Altri crediti a breve termine verso amministrazioni pubbliche",
+      "1170": "Imposta precedente su materiale, merce, servizi e energia, classe 4",
+      "1171": "Imposta precedente su investimenti e altri costi d'esercizio, classi 1/5-8",
+      "1172": "Compensazione dell'imposta precedente in base al metodo di rendiconto",
+      "1173": "Riduzione della deduzione dell'imposta precedente",
+      "1174": "Correzione della deduzione dell'imposta precedente",
+      "1175": "IVA, rendiconto",
+      "1176": "Imposta preventiva",
+      "118": "Altri crediti a breve termine verso assicurazioni sociali",
+      "1183": "Conto corrente assicurazione infortuni",
+      "1184": "Conto corrente assicurazione indennità giornaliera per malattia",
+      "1188": "Conto corrente imposta alla fonte",
+      "120": "Scorte e prestazioni di servizi non fatturate",
+      "1200": "Merce di rivendita",
+      "1280": "Prestazioni di servizi non fatturate",
+      "130": "Ratei e risconti attivi",
+      "1300": "Costi dell'anno successivo pagati in anticipo",
+      "14": "Attivo fisso",
+      "150": "Immobilizzazioni materiali mobiliari",
+      "1500": "Macchine e attrezzature",
+      "1510": "Mobilio e installazioni",
+      "1520": "Macchine ufficio",
+      "1530": "Veicolo",
+      "2": "Passivi",
+      "20": "Capitale di terzi a breve termine",
+      "200": "Debiti per forniture e prestazioni",
+      "2000": "Debiti per costi per il materiale e la merce",
+      "2030": "Anticipi ricevuti da terzi",
+      "210": "Debiti onerosi a breve termine",
+      "2100": "Conto corrente A",
+      "2190": "Carta di credito",
+      "220": "Altri debiti a breve termine",
+      "2200": "IVA dovuta",
+      "2201": "IVA, rendiconto",
+      "2202": "Compensazione IVA dovuta in base al metodo di rendiconto",
+      "2203": "Imposta sull'acquisto",
+      "227": "Altri debiti a breve termine verso assicurazioni sociali",
+      "2270": "Conto corrente istituto di previdenza",
+      "2271": "Conto corrente AVS, AI, IPG, AD",
+      "2272": "Conto corrente cassa assegni familiari",
+      "2273": "Conto corrente assicurazione infortuni",
+      "2274": "Conto corrente assicurazione indennità giornaliera per malattia",
+      "2279": "Conto corrente imposta alla fonte",
+      "230": "Ratei e risconti passivi, accantonamenti a breve termine",
+      "2300": "Ratei e risconti passivi, accantonamenti a breve termine",
+      "24": "Capitale di terzi a lungo termine",
+      "240": "Debiti onerosi a lungo termine",
+      "2400": "Prestito A",
+      "2560": "Debiti verso azionista",
+      "28": "Capitale proprio",
+      "280": "Capitale",
+      "2800": "Capitale",
+      "282": "Apporti di capitale e prelevamenti di capitale",
+      "2820": "Apporti di capitale e prelevamenti di capitale",
+      "285": "Privato",
+      "2850": "Conto privato",
+      "289": "Utile annuo o perdita annua",
+      "2891": "Utile annuo o perdita annua",
+      "290": "Riserve / utile d'esercizio e perdita d'esercizio",
+      "2950": "Riserva legale da utili",
+      "2970": "Utile riportato o perdita riportata",
+      "2979": "Utile annuo o perdita annua",
+      "3": "Ricavi da forniture e prestazioni",
+      "30": "Ricavi prodotto fabbricati",
+      "300": "Ricavi produzione",
+      "3000": "Ricavi produzione",
+      "32": "Ricavi merci di rivendita",
+      "320": "Ricavi attività commerciale",
+      "3200": "Ricavi attività commerciale",
+      "34": "Ricavi prestazioni di servizi",
+      "340": "Ricavi prestazioni di servizi settore",
+      "3400": "Ricavi prestazioni di servizi settore",
+      "36": "Altri ricavi e prestazioni di servizi",
+      "360": "Ricavi accessori da forniture e prestazioni",
+      "3600": "Ulteriori ricavi da forniture e servizi",
+      "368": "Altri ricavi",
+      "3680": "Altri ricavi",
+      "38": "Diminuzioni dei ricavi",
+      "380": "Diminuzioni dei ricavi",
+      "3800": "Sconti",
+      "3801": "Ribassi e riduzioni di prezzo",
+      "3802": "Ristorni",
+      "3803": "Provvigioni a terzi",
+      "3804": "Spese d'incasso",
+      "3805": "Perdite su crediti, variazioni della rettifica valore",
+      "3806": "Differenze di cambio",
+      "39": "Variazioni delle scorte di prodotti",
+      "394": "Variazioni scorte di prestazioni di servizi non fatturate",
+      "3940": "Variazioni scorte di prestazioni di servizi non fatturate",
+      "4": "Costi per il materiale, la merce e servizi",
+      "40": "Costi per il materiale",
+      "400": "Costi per il materiale per la produzione settore",
+      "4000": "Acquisti materiale prodotto A",
+      "42": "Costi delle merci di rivendita",
+      "420": "Costi delle merci di rivendita settore",
+      "4200": "Acquisti articolo di rivendita",
+      "4208": "Variazioni scorte",
+      "427": "Spese d'acquisto dirette merci di rivendita",
+      "4270": "Noli in entrata",
+      "44": "Costi per lavori di terzi / prestazioni di subappaltanti",
+      "440": "Costi per lavori di terzi / prestazioni di subappaltanti settore",
+      "4400": "Lavori di terzi / prestazioni di subappaltanti",
+      "46": "Altri costi",
+      "462": "Altri costi per le merci di rivendita",
+      "4620": "Altri costi per le merci di rivendita",
+      "464": "Altri costi per le prestazioni di servizi",
+      "4640": "Altri costi per le prestazioni di servizi",
+      "465": "Costi per imballaggi",
+      "4650": "Costi per imballaggi",
+      "466": "Variazione degli accantonamenti per garanzia",
+      "4660": "Variazione degli accantonamenti per garanzia",
+      "47": "Spese d'acquisto dirette",
+      "4700": "Noli in entrata",
+      "48": "Variazioni delle scorte",
+      "480": "Variazioni delle scorte di materiale e di merci di rivendita",
+      "4800": "Variazioni scorte merci di rivendita",
+      "49": "Diminuzioni dei costi d'acquisto",
+      "490": "Riduzioni del prezzo d'acquisto",
+      "4900": "Sconti",
+      "4901": "Ribassi e riduzioni di prezzo",
+      "4906": "Differenze di cambio",
+      "5": "Costi per il personale",
+      "50": "Costi per il personale - produzione",
+      "500": "Costi dei salari - produzione settore A",
+      "5000": "Salari",
+      "5001": "Indennità",
+      "5002": "Partecipazioni al risultato",
+      "5003": "Provvigioni",
+      "5005": "Prestazioni da assicurazioni sociali",
+      "5008": "Altri costi del personale",
+      "57": "Costi delle assicurazioni sociali",
+      "570": "Costi delle assicurazioni sociali",
+      "5700": "AVS, AI, IPG, AD",
+      "5710": "Assegni familiari",
+      "5720": "Previdenza professionale",
+      "5730": "Assicurazione infortuni",
+      "5740": "Assicurazione indennità giornaliera per malattia",
+      "5790": "Imposta alla fonte",
+      "58": "Altri costi per il personale",
+      "581": "Formazione e aggiornamento professionale",
+      "5810": "Formazione per le necessità aziendali",
+      "582": "Rimborso spese effettive",
+      "5820": "Compensazione delle spese effettive",
+      "583": "Rimborso spese forfettarie",
+      "5832": "Spese, viaggio, auto, pernottamento",
+      "588": "Altri costi del personale",
+      "5880": "Ricorrenze per il personale",
+      "589": "Quota privata dei costi del personale",
+      "5890": "Quota privata dei costi del personale",
+      "5891": "Compensazione in natura",
+      "6": "Altri costi d'esercizio",
+      "60": "Costi dei locali",
+      "600": "Locazioni da terzi dei locali aziendali",
+      "6000": "Canone di locazione",
+      "603": "Costi accessori",
+      "6030": "Costi accessori",
+      "6040": "Pulizia",
+      "61": "Manutenzioni, riparazioni, sostituzioni (MRS); leasing",
+      "610": "MRS di impianti di produzione",
+      "6100": "MRS macchine e attrezzature",
+      "62": "Costi auto e di trasporto",
+      "620": "Costi auto",
+      "6200": "Riparazioni",
+      "6210": "Benzina",
+      "6220": "Assicurazione responsabilità civile",
+      "6260": "Leasing veicoli",
+      "6270": "Quota privata dei costi auto",
+      "63": "Assicurazioni cose, contributi, tasse e autorizzazioni",
+      "630": "Assicurazioni cose, contributi, tasse e autorizzazioni",
+      "6300": "Assicurazione danni calamità naturali",
+      "636": "Contributi, tasse e autorizzazioni",
+      "6360": "Contributi",
+      "64": "Costi energia e smaltimento",
+      "640": "Costi per l'energia",
+      "6400": "Corrente industriale",
+      "65": "Costi amministrativi e informatici",
+      "650": "Costi amministrativi",
+      "6500": "Materiale d'ufficio",
+      "6510": "Costi di comunicazione",
+      "6512": "Internet",
+      "6513": "Porti",
+      "6530": "Tenuta contabilità",
+      "6559": "Altri costi di amministrazione",
+      "657": "Costi informatici incluso leasing",
+      "6570": "Costi per l'informatica",
+      "66": "Costi pubblicitari",
+      "660": "Inserzioni pubblicitarie, media elettronici",
+      "6600": "Inserzioni pubblicitarie",
+      "664": "Spese di viaggio, assistenza ai clienti",
+      "6640": "Spese",
+      "6641": "Assistenza ai clienti",
+      "68": "Ammortamenti e rettifiche di valore dell'attivo fisso",
+      "680": "Rettifiche di valore immobilizzazioni finanziarie",
+      "6800": "Rettifiche di valore titoli dell'attivo fisso",
+      "69": "Costi finanziari e ricavi finanziari",
+      "690": "Costi finanziari",
+      "6900": "Costi per interessi bancari",
+      "6940": "Spese banca",
+      "6945": "Differenza di arrotondamento",
+      "6949": "Perdite su cambio",
+      "695": "Ricavi finanziari",
+      "6950": "Ricavi da averi bancari",
+      "6999": "Utili su cambio",
+      "8": "Risultato estraneo, straordinario, unico o relativo ad altri periodi contabili",
+      "80": "Costi estranei e ricavi estranei",
+      "8000": "Costi estranei",
+      "8100": "Ricavi estranei",
+      "85": "Costi e ricavi straordinari, unici o relativi ad altri periodi contabili",
+      "8505": "Perdite straordinarie da crediti",
+      "8514": "Utili straordinari da alienazione di attivo fisso",
+      "89": "Imposte dirette",
+      "8900": "Imposte sull'utile",
+      "9": "Chiusura",
+      "91": "Chiusura",
+      "9000": "Conto economico",
+      "9100": "Bilancio di apertura",
+      "9101": "Bilancio di chiusura",
+      "9200": "Utile annuo o perdita annua",
+      "9900": "Adeguamenti",
+      "9901": "Trasferimento del saldo"
+    }
+  },
+  "system_accounts": {
+    "action": {
+      "create": "Crea un conto di sistema"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "account": "Conto",
+      "search_account": "Cerca per numero o nome"
+    },
+    "text": {
+      "create_title": "Crea un conto di sistema",
+      "edit_title": "Modifica il conto di sistema",
+      "empty": "Ancora nessun conto di sistema."
+    },
+    "toast": {
+      "create_success": "Il conto di sistema è stato creato.",
+      "create_error": "Impossibile creare il conto di sistema.",
+      "update_success": "Il conto di sistema è stato salvato.",
+      "update_error": "Impossibile salvare il conto di sistema."
+    },
+    "purpose": {
+      "bank_account": "Conto bancario",
+      "debtor": "Debitori",
+      "creditor": "Creditori",
+      "customer_credit_balance": "Saldi creditori clienti",
+      "default_income": "Ricavi predefiniti",
+      "default_expense": "Costi predefiniti",
+      "income_reduction": "Diminuzioni dei ricavi",
+      "bad_debts": "Perdite su crediti",
+      "expense_reduction": "Diminuzioni dei costi d'acquisto",
+      "vat_tax_due": "IVA dovuta",
+      "settlement_account_vat": "IVA, rendiconto",
+      "vat_remuneration_received": "Compensazione IVA (metodo di rendiconto)",
+      "regards_tax": "Imposta sull'acquisto",
+      "tax_pre_material": "Imposta precedente su materiale e servizi",
+      "tax_pre_investment": "Imposta precedente su investimenti",
+      "transitory_tax_account_pre": "Compensazione dell'imposta precedente (metodo di rendiconto)",
+      "tax_pre_tax_cuts": "Riduzione dell'imposta precedente",
+      "tax_pre_tax_correction": "Correzione dell'imposta precedente",
+      "rounding_differences": "Differenze di arrotondamento",
+      "exchange_rate_losses": "Perdite su cambio",
+      "exchange_rate_gains": "Utili su cambio",
+      "profit_and_loss": "Conto economico",
+      "opening_balance_sheet": "Bilancio di apertura",
+      "closing_balance_sheet": "Bilancio di chiusura",
+      "annual_profit": "Utile o perdita d'esercizio",
+      "annual_result": "Risultato d'esercizio (capitale proprio)",
+      "correction": "Adeguamenti",
+      "balance_takeover": "Trasferimento del saldo",
+      "capital": "Capitale",
+      "capital_contributions": "Apporti e prelevamenti di capitale",
+      "private_account": "Conto privato"
+    }
+  },
+  "periods": {
+    "action": {
+      "create": "Crea un periodo",
+      "close": "Chiudi"
+    },
+    "state": {
+      "creating": "Creazione…",
+      "closing": "Chiusura…"
+    },
+    "label": {
+      "period": "Periodo",
+      "status_only": "Segna solo come chiuso"
+    },
+    "text": {
+      "intro": "Un periodo copre di solito un esercizio contabile. Le registrazioni sono possibili solo in un periodo aperto.",
+      "empty": "Ancora nessun periodo.",
+      "close_title": "Chiudere questo periodo?",
+      "close_description": "Una volta chiuso, dal {start} al {end} non sarà più possibile registrare o modificare alcuna scrittura. L'operazione è irreversibile.",
+      "edit": "Modifica il periodo",
+      "status_only_hint": "Non viene creata nessuna scrittura di chiusura. Comodo quando sono già nella tua contabilità, ad es. dopo una migrazione."
+    },
+    "toast": {
+      "create_success": "Il periodo è stato creato.",
+      "create_error": "Impossibile creare il periodo.",
+      "close_success": "Il periodo è chiuso.",
+      "close_error": "Impossibile chiudere il periodo.",
+      "update_success": "Il periodo è stato salvato.",
+      "update_error": "Impossibile salvare il periodo."
+    }
+  },
+  "billing": {
+    "label": {
+      "payment_term_days": "Termine di pagamento (giorni)",
+      "default_vat_rate": "Aliquota IVA predefinita",
+      "default_bank_relation": "Conto bancario predefinito",
+      "no_bank_relation": "Nessun conto bancario"
+    },
+    "toast": {
+      "update_success": "Le impostazioni di fatturazione sono state aggiornate.",
+      "update_error": "Non è stato possibile aggiornare le impostazioni di fatturazione."
+    }
+  },
+  "vat": {
+    "action": {
+      "settings_create": "Crea le impostazioni IVA",
+      "methods_create": "Crea i metodi IVA",
+      "period_create": "Crea un periodo IVA",
+      "rate_create": "Crea un'aliquota IVA",
+      "period_close": "Chiudi"
+    },
+    "state": {
+      "creating": "Creazione…",
+      "closing": "Chiusura…"
+    },
+    "label": {
+      "number": "Numero IVA",
+      "number_placeholder": "CHE-123.456.789 IVA",
+      "remuneration_method": "Metodo di rendiconto",
+      "select_remuneration_method": "Seleziona un metodo di rendiconto",
+      "payment_method": "Metodo di calcolo",
+      "select_payment_method": "Seleziona un metodo di calcolo",
+      "rate_percent": "Aliquota (%)",
+      "net_rate_percent": "Aliquota saldo (%, solo aliquota saldo)",
+      "net_rate": "Aliquota saldo",
+      "no_vat_rate": "Nessuna aliquota IVA"
+    },
+    "text": {
+      "period_edit": "Modifica il periodo IVA",
+      "rate_edit": "Modifica l'aliquota IVA",
+      "method_edit": "Modifica i metodi IVA",
+      "periods_empty": "Ancora nessun periodo IVA.",
+      "rates_empty": "Ancora nessuna aliquota IVA.",
+      "methods_empty": "Ancora nessun metodo IVA.",
+      "settings_not_configured": "L'IVA non è ancora configurata.",
+      "settings_intro": "Il tuo numero IVA e come rendiconti con l'amministrazione fiscale.",
+      "period_close_title": "Chiudere questo periodo IVA?",
+      "period_close_description": "Una volta chiuso, il periodo IVA dal {start} al {end} non può più essere modificato. L'operazione è irreversibile."
+    },
+    "toast": {
+      "settings_create_success": "Le impostazioni IVA sono state create.",
+      "settings_create_error": "Impossibile creare le impostazioni IVA.",
+      "settings_update_success": "Le impostazioni IVA sono state salvate.",
+      "settings_update_error": "Impossibile salvare le impostazioni IVA.",
+      "methods_create_success": "I metodi IVA sono stati creati.",
+      "methods_create_error": "Impossibile creare i metodi IVA.",
+      "methods_update_success": "I metodi IVA sono stati salvati.",
+      "methods_update_error": "Impossibile salvare i metodi IVA.",
+      "period_create_success": "Il periodo IVA è stato creato.",
+      "period_create_error": "Impossibile creare il periodo IVA.",
+      "period_update_success": "Il periodo IVA è stato salvato.",
+      "period_update_error": "Impossibile salvare il periodo IVA.",
+      "rate_create_success": "L'aliquota IVA è stata creata.",
+      "rate_create_error": "Impossibile creare l'aliquota IVA.",
+      "rate_update_success": "L'aliquota IVA è stata salvata.",
+      "rate_update_error": "Impossibile salvare l'aliquota IVA.",
+      "period_close_success": "Il periodo IVA è chiuso.",
+      "period_close_error": "Non è stato possibile chiudere il periodo IVA."
+    },
+    "remuneration_method": {
+      "agreed": "Convenute",
+      "received": "Ricevute"
+    },
+    "payment_method": {
+      "net_rate": "Aliquota saldo",
+      "effective": "Metodo effettivo"
+    },
+    "type": {
+      "net_rate_tax": "Aliquota saldo",
+      "acquisition_tax_investments": "Imposta sull'acquisto (investimenti)",
+      "acquisition_tax_materials": "Imposta sull'acquisto (materiale)",
+      "non_consideration": "Non controprestazioni",
+      "non_taxable_turnover": "Cifra d'affari non imponibile",
+      "import_tax_materials": "Imposta sull'importazione (materiale)",
+      "import_tax_investments": "Imposta sull'importazione (investimenti)",
+      "sales_tax_due": "IVA dovuta",
+      "input_tax_materials": "Imposta precedente (materiale)",
+      "input_tax_investments": "Imposta precedente (investimenti)"
+    }
+  },
+  "document_templates": {
+    "action": {
+      "create": "Crea un modello di documento"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "label": {
+      "html": "Modello HTML"
+    },
+    "text": {
+      "create_title": "Crea un modello di documento",
+      "edit_title": "Modifica il modello di documento",
+      "details": "Dettagli del modello di documento",
+      "keep_current": "Lascia vuoto per mantenere il modello attuale.",
+      "empty": "Ancora nessun modello di documento.",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "Il modello di documento e tutte le sue lingue vengono eliminati. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "Il modello di documento è stato creato.",
+      "create_error": "Impossibile creare il modello di documento.",
+      "update_success": "Il modello di documento è stato salvato.",
+      "update_error": "Impossibile salvare il modello di documento.",
+      "delete_success": "Il modello di documento è stato eliminato.",
+      "delete_error": "Non è stato possibile eliminare il modello di documento."
+    },
+    "type": {
+      "invoice": "Fattura"
+    }
+  },
+  "template_contents": {
+    "action": {
+      "add": "Aggiungi un contenuto"
+    },
+    "state": {
+      "creating": "Creazione…"
+    },
+    "text": {
+      "title": "Contenuti",
+      "empty": "Ancora nessun contenuto.",
+      "edit_title": "Modifica contenuto",
+      "delete_title": "Eliminare il contenuto?",
+      "delete_description": "Il contenuto viene eliminato. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "Il contenuto è stato aggiunto.",
+      "create_error": "Impossibile aggiungere il contenuto.",
+      "update_success": "Il contenuto è stato salvato.",
+      "update_error": "Impossibile salvare il contenuto.",
+      "delete_success": "Il contenuto è stato eliminato.",
+      "delete_error": "Impossibile eliminare il contenuto."
+    }
+  },
+  "bank_relations": {
+    "action": {
+      "create": "Crea conto bancario",
+      "upload_file": "Carica un file bancario"
+    },
+    "state": {
+      "creating": "Creazione…",
+      "uploading": "Caricamento…"
+    },
+    "label": {
+      "iban": "IBAN",
+      "qr_iban": "QR-IBAN",
+      "account": "Conto contabile",
+      "file": "File",
+      "balance": "Saldo",
+      "reconciliation": "Riconciliazione"
+    },
+    "text": {
+      "create_title": "Crea un conto bancario",
+      "edit_title": "Modifica conto bancario",
+      "empty": "Nessun conto bancario per ora.",
+      "delete_title": "Eliminare {name}?",
+      "delete_description": "Il conto bancario viene eliminato. Questa azione è irreversibile.",
+      "upload_title": "Carica un file bancario per {name}",
+      "upload_description": "Scaricalo dal tuo e-banking in formato «camt.053» e selezionalo qui. Fino a {size} MB.",
+      "to_reconcile": "{count} da riconciliare",
+      "balance_on": "al {date}",
+      "up_to_date": "Aggiornato"
+    },
+    "toast": {
+      "create_success": "Il conto bancario è stato creato.",
+      "create_error": "Impossibile creare il conto bancario.",
+      "update_success": "Il conto bancario è stato salvato.",
+      "update_error": "Impossibile salvare il conto bancario.",
+      "delete_success": "Il conto bancario è stato eliminato.",
+      "delete_error": "Impossibile eliminare il conto bancario.",
+      "import_success": "{inserted} movimenti importati, {existing} già importati.",
+      "import_already": "Questi estratti conto sono già stati importati.",
+      "import_error": "Impossibile importare gli estratti conto."
+    }
+  },
+  "bank_movements": {
+    "action": {
+      "reconcile": "Riconcilia",
+      "book": "Contabilizza",
+      "book_payment": "Contabilizza il pagamento",
+      "ignore": "Ignora",
+      "not_this_invoice": "Non questa fattura"
+    },
+    "state": {
+      "booking": "Contabilizzazione…",
+      "ignoring": "In corso…"
+    },
+    "label": {
+      "booked_on": "Contabilizzato il",
+      "amount": "Importo",
+      "counterparty": "Controparte",
+      "payment_from": "Pagamento da",
+      "payment_to": "Pagamento a",
+      "original_amount": "Importo originale",
+      "bank_fees": "Spese bancarie",
+      "communication": "Comunicazione",
+      "reference": "Riferimento",
+      "booked_from": "Contabilizzato dal",
+      "booked_to": "Contabilizzato al",
+      "account": "Conto",
+      "vat_rate": "Aliquota IVA",
+      "description": "Descrizione",
+      "invoice": "Fattura",
+      "remaining": "Ancora dovuto",
+      "overpaid": "Pagato in eccesso",
+      "value_on": "Data valuta",
+      "bank_reference": "Riferimento bancario",
+      "sender": "Ordinante",
+      "recipient": "Beneficiario"
+    },
+    "text": {
+      "title": "Movimenti",
+      "empty": "Nessun movimento.",
+      "reconcile_title": "Riconcilia i movimenti",
+      "matched_title": "Associati a una fattura",
+      "account_title": "Da contabilizzare su un conto",
+      "already_paid": "Questa fattura è già pagata.",
+      "ignore_title": "Ignorare questo movimento?",
+      "ignore_description": "Un movimento ignorato non contabilizza nulla e non potrà più essere riconciliato. Questa azione è irreversibile.",
+      "nothing_to_reconcile": "Niente da riconciliare.",
+      "details": "Dettagli del movimento"
+    },
+    "status": {
+      "unreconciled": "Da riconciliare",
+      "reconciled": "Riconciliato",
+      "ignored": "Ignorato"
+    },
+    "toast": {
+      "book_success": "Il movimento è contabilizzato.",
+      "book_error": "Impossibile contabilizzare il movimento.",
+      "ignore_success": "Il movimento è ignorato.",
+      "ignore_error": "Impossibile ignorare il movimento."
+    }
+  },
+  "reports": {
+    "label": {
+      "box": "Cifra",
+      "taxable_base": "Base imponibile",
+      "tax": "Imposta",
+      "total": "Totale",
+      "period_result": "Risultato d'esercizio",
+      "result": "Utile o perdita",
+      "total_liabilities_equity": "Totale passivi"
+    },
+    "text": {
+      "net_rates": "Aliquote saldo",
+      "tax_rates": "Aliquote",
+      "acquisition_tax": "Imposta sull'acquisto",
+      "turnover": "I. Cifra d'affari",
+      "tax_calculation": "II. Calcolo dell'imposta",
+      "corrections": "III. Correzioni",
+      "other_flows": "IV. Altri flussi di mezzi",
+      "computed_at": "Calcolato il {date}",
+      "not_balanced": "Attivi e passivi non sono in equilibrio.",
+      "account_ledger_empty": "Nessuna registrazione su questo conto nel periodo."
+    },
+    "box": {
+      "200": "Totale delle controprestazioni",
+      "220": "Prestazioni esenti",
+      "225": "Trasferimenti mediante procedura di notifica",
+      "235": "Diminuzioni della controprestazione (perdite su debitori)",
+      "289": "Totale delle deduzioni",
+      "299": "Cifra d'affari imponibile",
+      "399": "Totale dell'imposta dovuta",
+      "400": "Imposta precedente su costi del materiale e prestazioni di servizi",
+      "405": "Imposta precedente su investimenti e altri costi d'esercizio",
+      "415": "Correzioni dell'imposta precedente: doppia utilizzazione, consumo proprio",
+      "470": "Computo dell'imposta (modulo 1050)",
+      "471": "Computo dell'imposta (moduli 1055, 1056)",
+      "479": "Totale delle correzioni",
+      "500": "Importo da pagare",
+      "510": "Saldo a favore del contribuente",
+      "910": "Doni, dividendi",
+      "382": "Imposta sull'acquisto (prima del 2024)",
+      "383": "Imposta sull'acquisto (dal 2024)"
+    }
+  },
+  "api_keys": {
+    "action": {
+      "create": "Crea chiave API",
+      "delete": "Elimina",
+      "done": "Fatto"
+    },
+    "state": {
+      "creating": "Creazione…",
+      "deleting": "Eliminazione…"
+    },
+    "label": {
+      "key": "Chiave",
+      "resource": "Risorsa",
+      "access": "Accesso",
+      "read": "Lettura",
+      "read_write": "Lettura e scrittura",
+      "expiration": "Scadenza",
+      "expires_on": "Scade il",
+      "last_used": "Ultimo utilizzo",
+      "never": "Mai",
+      "days": "{days} giorni"
+    },
+    "resource": {
+      "mcp": "Server MCP",
+      "api": "API REST"
+    },
+    "text": {
+      "title": "Chiavi API",
+      "create_title": "Crea una chiave API",
+      "created_title": "La tua chiave API è stata creata",
+      "empty": "Ancora nessuna chiave API.",
+      "created_description": "Copia questa chiave ora, non verrà più mostrata.",
+      "delete_title": "Eliminare questa chiave API?",
+      "delete_description": "Le applicazioni che utilizzano questa chiave perdono immediatamente l'accesso. Questa azione è irreversibile."
+    },
+    "toast": {
+      "create_success": "La chiave API è stata creata.",
+      "create_error": "Non è stato possibile creare la chiave API.",
+      "delete_success": "La chiave API è stata eliminata.",
+      "delete_error": "Non è stato possibile eliminare la chiave API."
+    }
+  },
+  "usage": {
+    "label": {
+      "model": "Modello",
+      "input_tokens": "Token in ingresso",
+      "output_tokens": "Token in uscita"
+    },
+    "text": {
+      "title": "Utilizzo",
+      "period": "{month} · si azzera il {date}"
+    },
+    "toast": {
+      "load_error": "Non è stato possibile caricare l'utilizzo."
+    }
+  },
+  "profile": {
+    "label": {
+      "danger_zone": "Zona di pericolo",
+      "account": "Account"
+    },
+    "action": {
+      "delete": "Elimina il mio account"
+    },
+    "text": {
+      "danger_zone": "Ci lasci? Prima lascia o elimina le tue organizzazioni ed elimina le tue chiavi API, poi il tuo account potrà andare.",
+      "delete_title": "Eliminare il tuo account?",
+      "delete_description": "Questa azione è irreversibile. Inserisci la tua password per confermare."
+    },
+    "toast": {
+      "delete_success": "Il tuo account è eliminato."
+    }
+  },
+  "team": {
+    "label": {
+      "role": "Ruolo"
+    },
+    "role": {
+      "admin": "Admin",
+      "accountant": "Contabile",
+      "reviewer": "Lettore"
+    },
+    "text": {
+      "delete_title": "Rimuovere {name} dal team?",
+      "delete_description": "La persona perde l'accesso all'organizzazione e le sue conversazioni con l'Assistente in essa vengono eliminate. Questa azione è irreversibile."
+    },
+    "toast": {
+      "delete_success": "Il membro è stato rimosso.",
+      "delete_error": "Impossibile rimuovere il membro."
+    }
+  },
+  "invitations": {
+    "action": {
+      "create": "Invita",
+      "done": "Fatto",
+      "accept": "Accetta",
+      "decline": "Rifiuta",
+      "back_home": "Torna alla home"
+    },
+    "state": {
+      "creating": "Invito in corso…",
+      "accepting": "Accettazione…",
+      "declining": "Rifiuto…"
+    },
+    "label": {
+      "expires_on": "Scade il"
+    },
+    "text": {
+      "create_title": "Invita un membro",
+      "created_title": "Link d'invito",
+      "created_description": "Copia questo link ora e condividilo con {email}, non verrà più mostrato. Può essere accettato solo accedendo con questa e-mail, fino al {date}.",
+      "delete_title": "Revocare l'invito di {email}?",
+      "delete_description": "Il link smette di funzionare. Questa azione è irreversibile.",
+      "invited": "Sei stato invitato a unirti a {organization}.",
+      "sign_in": "Accedi o crea un account con l'indirizzo e-mail a cui è stato inviato l'invito.",
+      "invalid_link": "Questo link d'invito non è valido.",
+      "load_error": "Impossibile caricare l'invito."
+    },
+    "toast": {
+      "create_success": "L'invito è stato creato.",
+      "create_error": "Impossibile creare l'invito.",
+      "delete_success": "L'invito è stato revocato.",
+      "delete_error": "Impossibile revocare l'invito.",
+      "accept_success": "Ti sei unito a {organization}.",
+      "accept_error": "Impossibile accettare l'invito.",
+      "decline_error": "Impossibile rifiutare l'invito."
+    }
+  },
+  "two_factor": {
+    "action": {
+      "turn_on": "Attiva",
+      "continue": "Continua",
+      "continuing": "Verifica in corso…",
+      "copy_backup_codes": "Copia i codici di backup",
+      "done": "Fatto",
+      "turn_off": "Disattiva",
+      "turning_off": "Disattivazione…",
+      "generate_backup_codes": "Genera",
+      "generating_backup_codes": "Generazione…",
+      "show_setup_key": "inserisci invece questo codice di testo",
+      "new_backup_codes": "Nuovi codici di backup"
+    },
+    "label": {
+      "backup_codes": "Codici di backup",
+      "setup_key": "Codice di testo",
+      "step": "Passo {number}",
+      "authenticator_app": "App di autenticazione",
+      "configured": "Configurata"
+    },
+    "text": {
+      "title": "Autenticazione a due fattori",
+      "password_description": "Conferma la tua password per configurare l'autenticazione a due fattori.",
+      "scan_description": "Scansiona l'immagine qui sotto con la tua app di autenticazione. Se non puoi usare un codice QR, {link}.",
+      "backup_codes_description": "L'autenticazione a due fattori è attiva. Conserva questi codici di backup in un posto sicuro: ognuno ti permette di accedere una volta se perdi la tua app di autenticazione. Non verranno più mostrati.",
+      "disable_title": "Disattivare l'autenticazione a due fattori?",
+      "disable_description": "Per accedere basterà di nuovo la tua password. Conferma con la tua password.",
+      "new_backup_codes_title": "Nuovi codici di backup",
+      "new_backup_codes_description": "Quando generi nuovi codici di backup, quelli attuali smetteranno di funzionare. Conferma con la tua password.",
+      "backup_codes_saved_description": "I tuoi codici di backup precedenti non funzionano più.",
+      "backup_codes_once": "Conserva questi codici in un posto sicuro: ognuno ti permette di accedere una volta se perdi la tua app di autenticazione. Non verranno più mostrati.",
+      "code_description": "Inserisci il codice a {digits} cifre mostrato nella tua app di autenticazione, cambia ogni {period} secondi.",
+      "disabled": "Aggiungi un secondo passaggio al tuo accesso con un codice da un'app di autenticazione."
+    }
+  },
+  "migrations": {
+    "action": {
+      "create": "Avvia una migrazione",
+      "add_file": "Aggiungi un file",
+      "replace_file": "Sostituisci il file",
+      "run": "Esegui la migrazione",
+      "retry": "Riprova",
+      "continue": "Continua"
+    },
+    "state": {
+      "creating": "Avvio…",
+      "uploading": "Caricamento…",
+      "starting": "Avvio…",
+      "running": "Migrazione dei tuoi dati…"
+    },
+    "label": {
+      "file": "File",
+      "created_at": "Avviata",
+      "valid_on": "Saldi al",
+      "source": "Fonte"
+    },
+    "status": {
+      "draft": "Bozza",
+      "succeeded": "Completata",
+      "failed": "Non riuscita"
+    },
+    "type": {
+      "accounts": "Piano dei conti",
+      "balances": "Saldi d'apertura",
+      "journal": "Giornale",
+      "clients": "Clienti",
+      "invoices": "Fatture"
+    },
+    "provider": {
+      "bexio": "Bexio"
+    },
+    "text": {
+      "title": "Migrazione da {provider}",
+      "description": "Aggiungi i file esportati da {provider}, poi esegui la migrazione.",
+      "empty": "Ancora nessuna migrazione.",
+      "empty_files": "Ancora nessun file.",
+      "upload_title": "Aggiungi un file",
+      "replace_title": "Sostituisci {name}",
+      "upload_description": "Scegli un file esportato da {provider}. Fino a {size} KB.",
+      "delete_title": "Eliminare questa migrazione?",
+      "delete_description": "La migrazione e i suoi file vengono eliminati. Questa azione è irreversibile.",
+      "delete_file_title": "Eliminare {name}?",
+      "delete_file_description": "Il file viene rimosso dalla migrazione. Questa azione è irreversibile.",
+      "succeeded": "Fatto, i tuoi dati sono migrati",
+      "failed": "Questa migrazione non è riuscita e non ha importato nulla",
+      "timeout": "Ci vuole un po'. Torna tra poco per vedere com'è andata.",
+      "create_error": "Non è stato possibile avviare la migrazione.",
+      "upload_error": "Non è stato possibile caricare il file.",
+      "run_error": "Non è stato possibile eseguire la migrazione.",
+      "new_title": "Nuova migrazione",
+      "source_title": "Da dove arrivano i tuoi dati?"
+    },
+    "toast": {
+      "delete_success": "La migrazione è eliminata.",
+      "delete_error": "Non è stato possibile eliminare la migrazione.",
+      "delete_file_success": "Il file è eliminato.",
+      "delete_file_error": "Non è stato possibile eliminare il file."
+    },
+    "step": {
+      "source": "Fonte",
+      "files": "File",
+      "processing": "Migrazione",
+      "result": "Risultato"
+    }
+  },
+  "notifications": {
+    "label": {
+      "notifications": "Notifiche"
+    },
+    "text": {
+      "empty": "Niente di nuovo."
+    }
+  },
+  "environment": {
+    "dev": "Sviluppo",
+    "test": "Test",
+    "demo": "Demo",
+    "staging": "Staging"
+  }
+}

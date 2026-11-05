@@ -1,0 +1,5 @@
+[run]
+elide-lines = 0
+
+[test]
+preload = ["./test-setup.ts"]

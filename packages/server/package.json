@@ -1,0 +1,32 @@
+{
+  "name": "@usenullish/nullish-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "scripts": {
+    "dev": "NODE_ENV=development bun run --env-file=../../.env.development ./src/index.ts",
+    "build": "NODE_ENV=production bun run ./build.ts",
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@hono/mcp": "^0.3.5",
+    "@hono/swagger-ui": "^0.6.2",
+    "@hono/zod-openapi": "^1.6.3",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@usenullish/nullish-auth": "workspace:*",
+    "@usenullish/nullish-chat": "workspace:*",
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-engine": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-jobs": "workspace:*",
+    "@usenullish/nullish-metering": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "@usenullish/nullish-storage": "workspace:*",
+    "hono": "^4.13.16",
+    "hono-rate-limiter": "^0.5.4",
+    "zod": "^4.6"
+  }
+}

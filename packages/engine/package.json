@@ -1,0 +1,28 @@
+{
+  "name": "@usenullish/nullish-engine",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./core": "./src/core/index.ts",
+    "./billing": "./src/billing/index.ts",
+    "./ledger": "./src/ledger/index.ts",
+    "./metering": "./src/metering/index.ts",
+    "./chat": "./src/chat/index.ts",
+    "./banking": "./src/banking/index.ts",
+    "./migration": "./src/migration/index.ts"
+  },
+  "scripts": {
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-migration": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "@usenullish/nullish-storage": "workspace:*",
+    "zod": "^4.6"
+  }
+}

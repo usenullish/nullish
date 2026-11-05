@@ -1,0 +1,5 @@
+-- VAT rates can overlap. For example, uring a rate transition (like the 2024 net-rate change),
+-- a credit note issued in 2024 for services from
+-- -- 2023 still needs the old rate, even though the new one is already active.
+-- -- Since a rate is always picked explicitly by id (never looked up by date),
+-- -- overlapping validity windows aren't a data error.

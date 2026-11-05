@@ -1,0 +1,29 @@
+{
+  "name": "@usenullish/nullish-schema",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./db": "./src/db/index.ts",
+    "./primitives": "./src/primitives/index.ts",
+    "./server": "./src/server/index.ts",
+    "./records": "./src/records/index.ts",
+    "./views": "./src/views/index.ts",
+    "./composites": "./src/composites/index.ts",
+    "./services": "./src/services/index.ts",
+    "./jobs": "./src/jobs/index.ts",
+    "./storage": "./src/storage/index.ts",
+    "./migration": "./src/migration/index.ts",
+    "./auth": "./src/auth/index.ts",
+    "./reports": "./src/reports/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "zod": "^4.6"
+  }
+}

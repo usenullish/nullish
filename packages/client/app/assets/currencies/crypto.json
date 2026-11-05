@@ -1,0 +1,22 @@
+{
+  "BTC": "Bitcoin",
+  "ETH": "Ether",
+  "USDC": "USD Coin",
+  "USDT": "Tether",
+  "ICP": "ICP",
+  "SOL": "Solana",
+  "XRP": "XRP",
+  "BNB": "BNB",
+  "ADA": "Cardano",
+  "DOGE": "Dogecoin",
+  "LTC": "Litecoin",
+  "BCH": "Bitcoin Cash",
+  "DOT": "Polkadot",
+  "LINK": "Chainlink",
+  "AVAX": "Avalanche",
+  "TRX": "TRON",
+  "XLM": "Stellar",
+  "DAI": "Dai",
+  "XMR": "Monero",
+  "NEAR": "NEAR Protocol"
+}

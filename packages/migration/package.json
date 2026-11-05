@@ -1,0 +1,24 @@
+{
+  "name": "@usenullish/nullish-migration",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "papaparse": "^5.7.0",
+    "read-excel-file": "^9.3.14",
+    "zod": "^4.6"
+  },
+  "devDependencies": {
+    "@types/papaparse": "^5.5.2"
+  }
+}

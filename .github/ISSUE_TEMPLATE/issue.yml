@@ -1,0 +1,10 @@
+name: Issue
+description: A bug or an idea.
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Keep it short. A few sentences about the bug or the idea are enough to start the discussion, details can follow in the comments.
+    validations:
+      required: true

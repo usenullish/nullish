@@ -1,0 +1,53 @@
+{
+  "name": "@usenullish/nullish",
+  "private": true,
+  "author": "David Dal Busco",
+  "workspaces": [
+    "packages/common",
+    "packages/schema",
+    "packages/migration",
+    "packages/env",
+    "packages/storage",
+    "packages/db",
+    "packages/auth",
+    "packages/engine",
+    "packages/jobs",
+    "packages/chat",
+    "packages/metering",
+    "packages/server",
+    "packages/client",
+    "packages/admin",
+    "packages/cli"
+  ],
+  "scripts": {
+    "check": "bun run --filter '*' check",
+    "lint": "bunx oxlint",
+    "lint:fix": "bunx oxlint --fix",
+    "oxfmt:fmt": "bunx oxfmt",
+    "oxfmt:fmt:check": "bunx oxfmt --check",
+    "prettier:fmt": "bunx prettier --write './**/*.sql'",
+    "prettier:fmt:check": "bunx prettier --check './**/*.sql'",
+    "fmt": "bun run oxfmt:fmt && bun run prettier:fmt",
+    "fmt:check": "bun run oxfmt:fmt:check && bun run prettier:fmt:check",
+    "db:run:dev": "./db.run.sh dev",
+    "db:run:test": "./db.run.sh test",
+    "db:generate": "drizzle-kit generate",
+    "db:view": "drizzle-kit studio --port=3100",
+    "llm:run:dev": "./llm.run.sh dev",
+    "server:run:dev": "./server.run.sh prod",
+    "knip": "knip"
+  },
+  "dependencies": {
+    "drizzle-orm": "^1.0.0-rc.4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4",
+    "drizzle-kit": "^1.0.0-rc.4",
+    "knip": "^6.44.1",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-sql": "^0.20.0",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,122 @@
+FROM oven/bun:1.4.4-slim@sha256:1846adf22496bd711036aae8be147e57bdebbaea2e5264e3e0b5af1db187d9a4 AS base
+WORKDIR /usr/src/app
+
+# install dependencies into a temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+
+# nullish-jobs depends on puppeteer; the release stage installs Chromium via
+# apt instead. This flag skips puppeteer's own Chromium download during bun install.
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+COPY packages/common/package.json /temp/dev/packages/common/
+COPY packages/schema/package.json /temp/dev/packages/schema/
+COPY packages/env/package.json /temp/dev/packages/env/
+COPY packages/db/package.json /temp/dev/packages/db/
+COPY packages/engine/package.json /temp/dev/packages/engine/
+COPY packages/jobs/package.json /temp/dev/packages/jobs/
+COPY packages/migration/package.json /temp/dev/packages/migration/
+COPY packages/storage/package.json /temp/dev/packages/storage/
+COPY packages/auth/package.json /temp/dev/packages/auth/
+COPY packages/chat/package.json /temp/dev/packages/chat/
+COPY packages/metering/package.json /temp/dev/packages/metering/
+COPY packages/server/package.json /temp/dev/packages/server/
+COPY packages/admin/package.json /temp/dev/packages/admin/
+COPY packages/cli/package.json /temp/dev/packages/cli/
+
+# --ignore-scripts is required otherwise bullmq, respectively msgpackr-extract,
+# makes the build fail: https://github.com/oven-sh/bun/issues/12919#issuecomment-2322399725
+RUN cd /temp/dev && bun install --frozen-lockfile --ignore-scripts
+
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+COPY packages/common/package.json /temp/prod/packages/common/
+COPY packages/schema/package.json /temp/prod/packages/schema/
+COPY packages/env/package.json /temp/prod/packages/env/
+COPY packages/db/package.json /temp/prod/packages/db/
+COPY packages/engine/package.json /temp/prod/packages/engine/
+COPY packages/jobs/package.json /temp/prod/packages/jobs/
+COPY packages/migration/package.json /temp/prod/packages/migration/
+COPY packages/storage/package.json /temp/prod/packages/storage/
+COPY packages/auth/package.json /temp/prod/packages/auth/
+COPY packages/chat/package.json /temp/prod/packages/chat/
+COPY packages/metering/package.json /temp/prod/packages/metering/
+COPY packages/server/package.json /temp/prod/packages/server/
+COPY packages/admin/package.json /temp/prod/packages/admin/
+COPY packages/cli/package.json /temp/prod/packages/cli/
+
+RUN cd /temp/prod && bun install --frozen-lockfile --ignore-scripts --production
+
+# copy node_modules from the temp directory, then copy the packages the server
+# actually depends on (not client/cli) and build it
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY --from=install /temp/dev/packages/common/node_modules ./packages/common/node_modules
+COPY --from=install /temp/dev/packages/schema/node_modules ./packages/schema/node_modules
+COPY --from=install /temp/dev/packages/env/node_modules ./packages/env/node_modules
+COPY --from=install /temp/dev/packages/db/node_modules ./packages/db/node_modules
+COPY --from=install /temp/dev/packages/engine/node_modules ./packages/engine/node_modules
+COPY --from=install /temp/dev/packages/jobs/node_modules ./packages/jobs/node_modules
+COPY --from=install /temp/dev/packages/migration/node_modules ./packages/migration/node_modules
+COPY --from=install /temp/dev/packages/storage/node_modules ./packages/storage/node_modules
+COPY --from=install /temp/dev/packages/admin/node_modules ./packages/admin/node_modules
+COPY --from=install /temp/dev/packages/auth/node_modules ./packages/auth/node_modules
+COPY --from=install /temp/dev/packages/chat/node_modules ./packages/chat/node_modules
+COPY --from=install /temp/dev/packages/metering/node_modules ./packages/metering/node_modules
+COPY --from=install /temp/dev/packages/server/node_modules ./packages/server/node_modules
+
+COPY package.json package.json
+COPY tsconfig.json tsconfig.json
+COPY bunfig.toml bunfig.toml
+
+COPY packages/common ./packages/common
+COPY packages/schema ./packages/schema
+COPY packages/env ./packages/env
+COPY packages/db ./packages/db
+COPY packages/engine ./packages/engine
+COPY packages/jobs ./packages/jobs
+COPY packages/migration ./packages/migration
+COPY packages/storage ./packages/storage
+COPY packages/admin ./packages/admin
+COPY packages/auth ./packages/auth
+COPY packages/chat ./packages/chat
+COPY packages/metering ./packages/metering
+COPY packages/server ./packages/server
+
+ENV NODE_ENV=production
+RUN bun run --filter @usenullish/nullish-server build
+
+# build final image
+FROM base AS release
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends chromium fonts-liberation \
+  && rm -rf /var/lib/apt/lists/*
+
+ENV NODE_ENV=production \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# Copy resources
+COPY --from=prerelease /usr/src/app/packages/db/migrations ./packages/db/migrations
+
+# We also need to copy bullmq (SQL scripts) from prod node_modules
+# otherwise we cannot start the queues
+# ENOENT: no such file or directory, open '/usr/src/app/node_modules/.bun/bullmq@6.3.6+00a0136bc273dfed/node_modules/bullmq/dist/esm/postgres/migrations/0001_schema.sql'
+COPY --from=install /temp/prod/node_modules ./node_modules
+
+# Copy runtimes
+COPY --from=prerelease /usr/src/app/packages/server/build/index.js ./index.js
+
+COPY LICENSE README.md /
+
+# Grant privileges to the runner user to write in data
+RUN mkdir -p /data && chown -R bun:bun /data
+
+USER bun
+
+EXPOSE 3000
+
+CMD ["bun", "index.js"]

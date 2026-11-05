@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${NULLISH_DB_USERNAME}
+      POSTGRES_PASSWORD: ${NULLISH_DB_PASSWORD}
+      POSTGRES_DB: nullish
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${NULLISH_DB_USERNAME} -d nullish"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    image: usenullish/server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      NULLISH_DB_HOST: postgres
+      NULLISH_DB_PORT: 5432
+      NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
+      NULLISH_DB_PASSWORD: ${NULLISH_DB_PASSWORD}
+      NULLISH_AUTH_SECRET: ${NULLISH_AUTH_SECRET}
+      NULLISH_AUTH_URL: ${NULLISH_AUTH_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      - nullish-data:/data
+
+  client:
+    image: usenullish/client
+    restart: unless-stopped
+    depends_on:
+      - server
+    environment:
+      VITE_API_URL: http://server:3000
+    ports:
+      - "3100:3000"
+
+volumes:
+  postgres-data:
+  nullish-data:

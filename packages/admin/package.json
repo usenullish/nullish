@@ -1,0 +1,23 @@
+{
+  "name": "@usenullish/nullish-admin",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./users": "./src/users/index.ts",
+    "./auth": "./src/auth/index.ts",
+    "./organizations": "./src/organizations/index.ts",
+    "./metering": "./src/metering/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
+    "@usenullish/nullish-db": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "zod": "^4.6"
+  }
+}
