@@ -44,8 +44,29 @@ export const TEST_OTHER_USER_ID =
   "user-11111111-1111-4111-8111-111111111111" as DbStoreInitArgs["userId"];
 export const TEST_MISSING_ID = "99999999-9999-4999-8999-999999999999";
 
-export const resetDb = (db: TestDb): Promise<unknown> =>
-  db.execute(sql`TRUNCATE auth.users, core.organizations, audit.logs CASCADE;`);
+const DEADLOCK_DETECTED = "40P01";
+const RESET_MAX_ATTEMPTS = 5;
+const RESET_RETRY_DELAY_MS = 100;
+
+const isDeadlock = (err: unknown): boolean =>
+  err instanceof Error &&
+  (err.cause as { errno?: unknown } | undefined)?.errno === DEADLOCK_DETECTED;
+
+const truncate = async ({ db, attempt }: { db: TestDb; attempt: number }): Promise<unknown> => {
+  try {
+    return await db.execute(sql`TRUNCATE auth.users, core.organizations, audit.logs CASCADE;`);
+  } catch (err: unknown) {
+    if (!isDeadlock(err) || attempt >= RESET_MAX_ATTEMPTS) {
+      throw err;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, RESET_RETRY_DELAY_MS * attempt));
+
+    return await truncate({ db, attempt: attempt + 1 });
+  }
+};
+
+export const resetDb = (db: TestDb): Promise<unknown> => truncate({ db, attempt: 1 });
 
 type AccountBalanceRow = {
   parentId: string | null;
