@@ -45,7 +45,7 @@ export const ProfileUsage = () => {
     void reload();
   }, [i18n, notifyError]);
 
-  const now = new Date();
+  const [now] = useState(() => new Date());
   const month = new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",

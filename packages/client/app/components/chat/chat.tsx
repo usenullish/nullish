@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { ArrowUp, LoaderCircle } from "lucide-react";
 import { cn } from "cn";
@@ -71,6 +71,7 @@ export const Chat = ({
   );
 
   const [answer, setAnswer] = useState("");
+  const streamedText = useRef("");
   const [thinkingLabel, setThinkingLabel] = useState(() => thinking({ i18n }));
   const [activity, setActivity] = useState<Nullable<string>>(null);
   const [error, setError] = useState<Nullable<string>>(null);
@@ -133,18 +134,18 @@ export const Chat = ({
     setThinkingLabel(thinking({ i18n }));
     setPending(true);
 
-    let text = "";
+    streamedText.current = "";
 
     const commitAnswer = () => {
-      if (text === "") {
+      if (streamedText.current === "") {
         return;
       }
 
-      const answerText = text;
+      const answerText = streamedText.current;
 
       setMessages((current) => [...current, { role: "assistant", content: answerText }]);
       setAnswer("");
-      text = "";
+      streamedText.current = "";
     };
 
     for await (const event of ChatService.create().stream({
@@ -158,8 +159,8 @@ export const Chat = ({
           replaceConversationPath(event.conversationId);
           break;
         case "text":
-          text += event.delta;
-          setAnswer(text);
+          streamedText.current += event.delta;
+          setAnswer(streamedText.current);
           break;
         case "tool_call":
           commitAnswer();

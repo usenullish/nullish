@@ -34,6 +34,7 @@ export const PayInvoiceForm = ({
   const amountId = useId();
   const validOnId = useId();
   const bankRelationId = useId();
+  const [today] = useState(() => toLocalDateString(new Date()));
   const billingSettings = useBillingSettings();
 
   const bankRelationItems = [
@@ -55,7 +56,7 @@ export const PayInvoiceForm = ({
               id={validOnId}
               name="validOn"
               type="date"
-              defaultValue={toLocalDateString(new Date())}
+              defaultValue={today}
             />
           </Field>
 
