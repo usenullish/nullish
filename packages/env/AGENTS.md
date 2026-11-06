@@ -10,4 +10,4 @@ Environment settings of the database, the data dir (for jobs) and the LLM. Read 
 - `envLlmTokenLimit`: an optional usage limit per user (`NULLISH_LLM_TOKEN_LIMIT`, `NULLISH_LLM_TOKEN_LIMIT_PERIOD`).
 - `envSignUp`: `NULLISH_AUTH_SIGN_UP` (`true`, `false` or `invite_only`, the default).
 - `envAuthUrl`, `envAuthSecret`: the base URL and the secret of better-auth (`NULLISH_AUTH_URL`, `NULLISH_AUTH_SECRET`, both required). The server passes them to `createAuth`, so better-auth's own `BETTER_AUTH_*` variables are not used.
-- Every variable of the app starts with `NULLISH_`. The exceptions are `NODE_ENV` and the client's `VITE_API_URL` (Vite only exposes `VITE_*` variables to the browser).
+- Every variable starts with `NULLISH_`, the client's included (`NULLISH_API_URL`, `NULLISH_ENVIRONMENT`, read at runtime by the server-side rendering only). The exceptions are `NODE_ENV`, and `HOST` and `PORT` read by `react-router-serve`.

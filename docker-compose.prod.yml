@@ -21,7 +21,6 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      NODE_ENV: production
       NULLISH_DB_HOST: postgres
       NULLISH_DB_PORT: 5432
       NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
@@ -39,7 +38,7 @@ services:
     depends_on:
       - server
     environment:
-      VITE_API_URL: http://server:3000
+      NULLISH_API_URL: http://server:3000
     ports:
       - "3100:3000"
 
