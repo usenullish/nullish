@@ -52,12 +52,7 @@ export const PayInvoiceForm = ({
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel htmlFor={validOnId}>{i18n.core.label.date}</FieldLabel>
-            <Input
-              id={validOnId}
-              name="validOn"
-              type="date"
-              defaultValue={today}
-            />
+            <Input id={validOnId} name="validOn" type="date" defaultValue={today} />
           </Field>
 
           <Field>
