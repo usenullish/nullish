@@ -19,6 +19,7 @@ import {
   TEST_USER_ID,
 } from "../_test-utils";
 import { PdfInvoiceJob } from "../../src/jobs/pdf-invoices";
+import { PdfGenerator } from "../../src/jobs/workers/pdf-invoices/_helpers/pdf-generator";
 
 const dbUrl = envDbUrl();
 
@@ -61,6 +62,7 @@ describe("PdfInvoiceJob", () => {
 
   afterAll(async () => {
     await job.stop();
+    await PdfGenerator.close();
     await rm(join(envDataDir(), "invoices", invoiceId), { recursive: true, force: true });
     await resetDb({ db });
     await client.close();

@@ -3,7 +3,7 @@
 Background jobs: the generation of the invoice PDFs and the migrations, triggered by callers, and the cleanup of the generated PDFs, run on a schedule.
 
 - Queues run on BullMQ with its PostgreSQL backend, in a dedicated schema (`JOB_QUEUES_SCHEMA`) migrated by `setupJobQueuesDb`. No Redis is needed.
-- `startJobs` (`src/start.ts`) sets up the queues and returns the started `triggered` and `scheduled` jobs. The server passes the triggered jobs to the engine services and stops both on shutdown.
+- `startJobs` (`src/start.ts`) sets up the queues and returns the started `triggered` and `scheduled` jobs, and a `close` that stops both and then closes the browser shared by the jobs that render PDFs. The server passes the triggered jobs to the engine services and calls `close` on shutdown.
 - A job extends `Job` (`src/jobs/_job.ts`) with a payload and a result schema (`nullish-schema/jobs`), and implements `worker`. Results are validated when the worker returns and payloads when read with `getPayload`.
 - Triggered jobs extend `TriggeredJob` and are keyed by `TriggeredJobKey`. `TriggeredJobs` (`src/jobs.triggered.ts`) starts them. Callers `trigger` a job by its key, which validates the payload and returns a job id, then read its state with `getState`.
 - The engine never imports this package: `TriggeredJobKey`, `PdfStoragePath` and the `TriggerJobs` interface, which `TriggeredJobs` implements, live in `nullish-schema/jobs`. Callers that only trigger jobs or read their state type them as `TriggerJobs`. Only the code that starts and stops the jobs (the server's entry point) imports this package. The tests of the engine services that trigger jobs live in `tests/engine/`.

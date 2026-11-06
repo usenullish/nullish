@@ -22,7 +22,7 @@ if (jobsResult.status === "error") {
 
 const { result: db } = dbResult;
 const {
-  result: { triggered: triggeredJobs, scheduled: scheduledJobs },
+  result: { triggered: triggeredJobs, close: closeJobs },
 } = jobsResult;
 
 const { fetch: apiFetch } = defineApi({
@@ -42,8 +42,7 @@ const close = async () => {
     await apiServer.stop();
   } finally {
     // We always close the job queue and DB no matter what
-    await triggeredJobs.stop();
-    await scheduledJobs.stop();
+    await closeJobs();
     await db.close();
   }
 };

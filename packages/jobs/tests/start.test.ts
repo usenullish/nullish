@@ -14,8 +14,7 @@ describe("startJobs", () => {
     expect(result.result.triggered).toBeInstanceOf(TriggeredJobs);
     expect(result.result.scheduled).toBeInstanceOf(ScheduledJobs);
 
-    await result.result.triggered.stop();
-    await result.result.scheduled.stop();
+    await result.result.close();
   }, 15000);
 
   test("stops the started triggered jobs and returns the error when the scheduled jobs cannot start", async () => {

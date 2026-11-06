@@ -22,6 +22,7 @@ const renderToFile = async (
 
 describe("PdfGenerator", () => {
   afterAll(async () => {
+    await PdfGenerator.close();
     await Promise.all(
       outputPaths.map((outputPath) => rm(join(envDataDir(), outputPath), { force: true })),
     );

@@ -5,9 +5,8 @@ import { join } from "node:path";
 import { readdir, rm } from "node:fs/promises";
 import { JobsInvoiceService } from "@usenullish/nullish-engine/billing";
 import { envDataDir, envDbUrl } from "@usenullish/nullish-env";
-import { startJobs } from "../../src/start";
+import { type StartedJobs, startJobs } from "../../src/start";
 import type { TriggeredJobs } from "../../src/jobs.triggered";
-import type { ScheduledJobs } from "../../src/jobs.scheduled";
 import {
   createBankRelation,
   createInvoice,
@@ -37,7 +36,7 @@ describe("JobsInvoiceService", () => {
   let orgId: string;
   let templateId: string;
   let jobs: TriggeredJobs;
-  let scheduledJobs: ScheduledJobs;
+  let closeJobs: StartedJobs["close"];
 
   beforeAll(async () => {
     await resetDb({ db });
@@ -51,12 +50,11 @@ describe("JobsInvoiceService", () => {
       throw started.err;
     }
     jobs = started.result.triggered;
-    scheduledJobs = started.result.scheduled;
+    closeJobs = started.result.close;
   });
 
   afterAll(async () => {
-    await jobs.stop();
-    await scheduledJobs.stop();
+    await closeJobs();
     await resetDb({ db });
     await client.close();
   });

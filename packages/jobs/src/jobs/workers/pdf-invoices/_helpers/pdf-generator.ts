@@ -25,6 +25,18 @@ export class PdfGenerator {
     }
   }
 
+  static async close(): Promise<void> {
+    const instance = PdfGenerator.#instance;
+    PdfGenerator.#instance = null;
+
+    if (isNullish(instance)) {
+      return;
+    }
+
+    const generator = await instance;
+    await generator.#browser.close();
+  }
+
   static async #initInstance(): Promise<PdfGenerator> {
     const browser = await PdfGenerator.#initBrowser();
 
