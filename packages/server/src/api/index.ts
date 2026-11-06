@@ -6,6 +6,7 @@ import { defineAuth } from "./resources/_auth";
 import { loadCallerMiddleware } from "./middlewares/caller";
 import { initResources } from "./resources";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { secureHeaders } from "hono/secure-headers";
 import { name as title } from "../../package.json";
 import { version } from "../../../../package.json";
 import { swaggerUI } from "@hono/swagger-ui";
@@ -20,6 +21,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage }) => {
 
   const resources = initResources({ app });
 
+  app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", loadDbMiddleware({ db }));
   app.use("*", loadAuthMiddleware({ db }));
   app.use("*", loadWorkersMiddleware({ jobs, storage }));
