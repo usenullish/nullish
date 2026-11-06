@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, spyOn, test } from "bun:test";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { type ScheduledJobs, startJobs, type TriggeredJobs } from "@usenullish/nullish-jobs";
+import { type StartedJobs, startJobs, type TriggeredJobs } from "@usenullish/nullish-jobs";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { ApiSchema } from "@usenullish/nullish-schema/server";
 import { DbSchema, MigrationStatus, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
@@ -30,7 +30,7 @@ describe("migrations run", () => {
   let db: PostgresDbInstance;
   let auth: ReturnType<typeof createAuth>;
   let jobs: TriggeredJobs;
-  let scheduledJobs: ScheduledJobs;
+  let closeJobs: StartedJobs["close"];
 
   let owner: { id: string; cookie: string };
   let outsider: { id: string; cookie: string };
@@ -117,7 +117,7 @@ describe("migrations run", () => {
     }
 
     jobs = started.result.triggered;
-    scheduledJobs = started.result.scheduled;
+    closeJobs = started.result.close;
 
     await resetDb(db);
 
@@ -128,8 +128,7 @@ describe("migrations run", () => {
   });
 
   afterAll(async () => {
-    await jobs.stop();
-    await scheduledJobs.stop();
+    await closeJobs();
     await resetDb(db);
     await instance.close();
   });

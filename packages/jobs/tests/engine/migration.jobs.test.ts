@@ -13,9 +13,8 @@ import { MigrationSchema } from "@usenullish/nullish-schema/migration";
 import { EngineError } from "@usenullish/nullish-engine";
 import { JobsMigrationService } from "@usenullish/nullish-engine/migration";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { startJobs } from "../../src/start";
+import { type StartedJobs, startJobs } from "../../src/start";
 import type { TriggeredJobs } from "../../src/jobs.triggered";
-import type { ScheduledJobs } from "../../src/jobs.scheduled";
 import {
   createMigration,
   createOrganization,
@@ -34,7 +33,7 @@ const db = drizzle({ client });
 
 describe("JobsMigrationService", () => {
   let jobs: TriggeredJobs;
-  let scheduledJobs: ScheduledJobs;
+  let closeJobs: StartedJobs["close"];
   let organizationId: string;
   let migrationId: string;
 
@@ -50,12 +49,11 @@ describe("JobsMigrationService", () => {
     }
 
     jobs = started.result.triggered;
-    scheduledJobs = started.result.scheduled;
+    closeJobs = started.result.close;
   });
 
   afterAll(async () => {
-    await jobs.stop();
-    await scheduledJobs.stop();
+    await closeJobs();
     await resetDb({ db });
     await client.close();
   });

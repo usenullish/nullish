@@ -10,6 +10,7 @@ import { DbSchema, DocumentType, LegalForm } from "@usenullish/nullish-schema/db
 import { type Jobs as JobTypes, TriggeredJobKey } from "@usenullish/nullish-schema/jobs";
 import { setupJobQueuesDb } from "../src/_setup";
 import { TriggeredJobs } from "../src/jobs.triggered";
+import { PdfGenerator } from "../src/jobs/workers/pdf-invoices/_helpers/pdf-generator";
 
 const dbUrl = envDbUrl();
 
@@ -115,6 +116,7 @@ describe("TriggeredJobs", () => {
 
   afterAll(async () => {
     await jobs.stop();
+    await PdfGenerator.close();
     await db.execute(sql`TRUNCATE auth.users, core.organizations, audit.logs CASCADE;`);
     await client.close();
   });

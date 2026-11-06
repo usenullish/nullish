@@ -6,9 +6,8 @@ import { rm } from "node:fs/promises";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { JobsInvoiceService, StorageInvoiceService } from "@usenullish/nullish-engine/billing";
 import { envDataDir, envDbUrl } from "@usenullish/nullish-env";
-import { startJobs } from "../../src/start";
+import { type StartedJobs, startJobs } from "../../src/start";
 import type { TriggeredJobs } from "../../src/jobs.triggered";
-import type { ScheduledJobs } from "../../src/jobs.scheduled";
 import {
   createInvoice,
   createOrganization,
@@ -44,7 +43,7 @@ describe("StorageInvoiceService", () => {
   let orgId: string;
   let templateId: string;
   let jobs: TriggeredJobs;
-  let scheduledJobs: ScheduledJobs;
+  let closeJobs: StartedJobs["close"];
 
   beforeAll(async () => {
     await resetDb({ db });
@@ -58,12 +57,11 @@ describe("StorageInvoiceService", () => {
       throw started.err;
     }
     jobs = started.result.triggered;
-    scheduledJobs = started.result.scheduled;
+    closeJobs = started.result.close;
   });
 
   afterAll(async () => {
-    await jobs.stop();
-    await scheduledJobs.stop();
+    await closeJobs();
     await resetDb({ db });
     await client.close();
   });
