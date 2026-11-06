@@ -54,6 +54,7 @@ export const TwoFactorPasswordForm = ({
             id={passwordId}
             type="password"
             autoComplete="current-password"
+            ignorePasswordManagers={false}
             value={password}
             onChange={($event) => setPassword($event.target.value)}
             autoFocus

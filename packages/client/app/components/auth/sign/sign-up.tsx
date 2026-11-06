@@ -96,6 +96,7 @@ export const SignUp = () => {
                   id={emailId}
                   type="email"
                   autoComplete="email"
+                  ignorePasswordManagers={false}
                   placeholder={EMAIL_PLACEHOLDER}
                   value={email}
                   onChange={($event) => setEmail($event.target.value)}
@@ -109,6 +110,7 @@ export const SignUp = () => {
                   id={passwordId}
                   type="password"
                   autoComplete="new-password"
+                  ignorePasswordManagers={false}
                   value={password}
                   onChange={($event) => setPassword($event.target.value)}
                   required
