@@ -59,6 +59,7 @@ export const ChangePassword = ({ closeTo }: { closeTo: string }) => {
             id={currentPasswordId}
             type="password"
             autoComplete="current-password"
+            ignorePasswordManagers={false}
             value={currentPassword}
             onChange={($event) => setCurrentPassword($event.target.value)}
             required
@@ -71,6 +72,7 @@ export const ChangePassword = ({ closeTo }: { closeTo: string }) => {
             id={newPasswordId}
             type="password"
             autoComplete="new-password"
+            ignorePasswordManagers={false}
             value={newPassword}
             onChange={($event) => setNewPassword($event.target.value)}
             required
