@@ -4,7 +4,7 @@ Environment settings of the database, the data dir (for jobs) and the LLM. Read 
 
 - No defaults per environment in code: development values live in `../../.env.development` (not committed), production values in the deployment (`docker-compose.prod.yml`), and the test values are set by the root `test-setup.ts` when missing.
 - `envDbUrl`: builds the PostgreSQL url from `NULLISH_DB_HOST`, `NULLISH_DB_PORT`, `NULLISH_DB_USERNAME`, `NULLISH_DB_PASSWORD` (all required) and `NULLISH_DB_NAME` (defaults to `nullish`).
-- `envDataDir`: where files and generated documents are stored (`NULLISH_DATA_DIR`, falls back to `.nullish/data` in dev and `/data` in production).
+- `envDataDir`: where files and generated documents are stored, `.nullish/data` in dev and `/data` in production (mount a volume there).
 - `envDbMigrationsFolder`: the location of the `db` migrations, computed from the environment since it is a path of the repository, not a setting.
 - `envLlmEnabled`, `envLlmUrl`, `envLlmModel`, `envLlmApiKey`: the OpenAI-compatible endpoint, model and API key of the chat, from `NULLISH_LLM_URL`, `NULLISH_LLM_MODEL` and `NULLISH_LLM_API_KEY`. The chat is optional: it is enabled only when the three are defined.
 - `envLlmTokenLimit`: an optional usage limit per user (`NULLISH_LLM_TOKEN_LIMIT`, `NULLISH_LLM_TOKEN_LIMIT_PERIOD`).

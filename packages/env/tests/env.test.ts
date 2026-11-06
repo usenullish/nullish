@@ -18,7 +18,6 @@ import {
 describe("env", () => {
   const KEYS = [
     "NODE_ENV",
-    "NULLISH_DATA_DIR",
     "NULLISH_DB_NAME",
     "NULLISH_DB_HOST",
     "NULLISH_DB_PORT",
@@ -55,23 +54,11 @@ describe("env", () => {
   });
 
   describe("envDataDir", () => {
-    test("returns NULLISH_DATA_DIR when it is set", () => {
-      process.env.NULLISH_DATA_DIR = "/var/lib/nullish";
-
-      expect(envDataDir()).toBe("/var/lib/nullish");
-    });
-
-    test("falls back to the dev data dir when NULLISH_DATA_DIR is unset", () => {
+    test("returns the dev data dir outside production", () => {
       expect(envDataDir().endsWith(".nullish/data")).toBe(true);
     });
 
-    test("falls back to the dev data dir when NULLISH_DATA_DIR is empty", () => {
-      process.env.NULLISH_DATA_DIR = "";
-
-      expect(envDataDir().endsWith(".nullish/data")).toBe(true);
-    });
-
-    test("falls back to the prod data dir when in production and NULLISH_DATA_DIR is unset", () => {
+    test("returns the prod data dir in production", () => {
       process.env.NODE_ENV = "production";
 
       expect(envDataDir()).toBe("/data");
