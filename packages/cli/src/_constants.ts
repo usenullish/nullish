@@ -1,5 +1,5 @@
 import { grey, yellow } from "./utils/colors";
-import { version } from "../package.json";
+import { version } from "../../../package.json";
 
 export const TITLE_AND_VERSION = `Nullish CLI ${grey(`v${version}`)}`;
 

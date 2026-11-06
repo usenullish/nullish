@@ -4,7 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 // eslint-disable-next-line import/extensions
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { version } from "../../../package.json";
+import { version } from "../../../../../package.json";
 import { StreamableHTTPTransport } from "@hono/mcp";
 import type { Context } from "hono";
 import { type Option, type Result, tryCatch } from "@usenullish/nullish-common";
