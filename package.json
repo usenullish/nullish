@@ -1,5 +1,6 @@
 {
   "name": "@usenullish/nullish",
+  "version": "0.0.1",
   "private": true,
   "author": "David Dal Busco",
   "workspaces": [
