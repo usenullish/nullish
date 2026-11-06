@@ -1,5 +1,5 @@
 import { isNullish, type Option } from "@usenullish/nullish-common";
-import { startTransition, useEffect, useState, ViewTransition } from "react";
+import { startTransition, useEffect, useRef, useState, ViewTransition } from "react";
 import { Check } from "lucide-react";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { InvoicesService } from "~/lib/services/invoices.services";
@@ -21,15 +21,15 @@ export const PdfInvoiceJobState = ({
   const { i18n } = useI18n();
   const [state, setState] = useState<Api["Invoices"]["Client"]["PdfInvoiceJobStateResponse"]>();
   const [timedOut, setTimedOut] = useState(false);
+  const timeout = useRef<Option<ReturnType<typeof setTimeout>>>(undefined);
 
   useEffect(() => {
-    let timeout: Option<ReturnType<typeof setTimeout>> = undefined;
-    let cancelled = false;
+    const controller = new AbortController();
 
     const poll = async (attempt: number) => {
       const result = await InvoicesService.create().getPdfJobState({ invoiceId, jobId });
 
-      if (cancelled) {
+      if (controller.signal.aborted) {
         return;
       }
 
@@ -47,14 +47,14 @@ export const PdfInvoiceJobState = ({
         return;
       }
 
-      timeout = setTimeout(() => void poll(attempt + 1), POLL_INTERVAL_MS);
+      timeout.current = setTimeout(() => void poll(attempt + 1), POLL_INTERVAL_MS);
     };
 
     void poll(1);
 
     return () => {
-      cancelled = true;
-      clearTimeout(timeout);
+      controller.abort();
+      clearTimeout(timeout.current);
     };
   }, [invoiceId, jobId]);
 
