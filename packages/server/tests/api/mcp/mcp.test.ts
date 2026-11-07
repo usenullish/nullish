@@ -87,6 +87,7 @@ const EXPECTED_TOOLS = [
   "get_vat_method",
   "create_vat_method",
   "update_vat_method",
+  "list_vat_method_summaries",
   "list_vat_rates",
   "get_vat_rate",
   "create_vat_rate",
