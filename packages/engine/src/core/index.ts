@@ -9,6 +9,7 @@ export * from "./records/vat-rates";
 export * from "./records/vat-settings";
 export * from "./records/vat-methods";
 export * from "./records/vat-periods";
+export * from "./composites/vat-method-summaries";
 export * from "./records/document-templates";
 export * from "./records/template-contents";
 export * from "./reports/vat-declaration";
