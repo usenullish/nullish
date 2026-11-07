@@ -4,6 +4,7 @@ import * as InvoiceSummariesSchema from "./schemas/invoice-summaries";
 import * as BankRelationSummariesSchema from "./schemas/bank-relation-summaries";
 import * as MovementSummariesSchema from "./schemas/movement-summaries";
 import * as VatMethodSummariesSchema from "./schemas/vat-method-summaries";
+import * as DatasetSummariesSchema from "./schemas/dataset-summaries";
 import * as ChatSchema from "./schemas/chat";
 
 const CompositesSchema = {
@@ -13,6 +14,7 @@ const CompositesSchema = {
   BankRelationSummariesSchema,
   MovementSummariesSchema,
   VatMethodSummariesSchema,
+  DatasetSummariesSchema,
   ChatSchema,
 };
 
