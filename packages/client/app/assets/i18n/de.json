@@ -124,13 +124,16 @@
     }
   },
   "errors": {
+    "action": {
+      "back_home": "Zurück zur Startseite"
+    },
     "label": {
-      "error": "Fehler"
+      "oops": "Hoppla!",
+      "shoot": "Ups!"
     },
     "text": {
-      "oops": "Hoppla!",
       "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
-      "not_found": "Die angeforderte Seite wurde nicht gefunden."
+      "not_found": "Die Seite wurde nicht gefunden."
     }
   },
   "navigation": {

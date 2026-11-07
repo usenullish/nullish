@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   type MiddlewareFunction,
@@ -30,6 +31,9 @@ import { ActiveConversationProvider } from "~/kit/chat/active-conversation-provi
 import { EnvironmentContext } from "~/kit/environment/environment.context";
 import { useNonce } from "~/kit/csp/nonce.context";
 import { notEmptyString } from "@usenullish/nullish-common";
+import { CenteredLayout } from "~/components/layout/centered-layout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/card";
+import { Button } from "~/ui/components/button";
 
 // Server side middlewares
 export const middleware: MiddlewareFunction[] = [authCookieMiddleware];
@@ -136,12 +140,12 @@ export default function App({ loaderData }: Route.ComponentProps) {
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const [, , { i18n }] = useRouteLoaderData<typeof loader>("root") ?? FALLBACK_DATA;
 
-  let message = i18n.errors.text.oops;
+  let title = i18n.errors.label.shoot;
   let details = i18n.errors.text.unexpected;
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : i18n.errors.label.error;
+    title = error.status === 404 ? i18n.errors.label.oops : title;
     details =
       error.status === 404
         ? i18n.errors.text.not_found
@@ -154,14 +158,27 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <CenteredLayout>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-lg">{title}</CardTitle>
+          <CardDescription>{details}</CardDescription>
+        </CardHeader>
+
+        {stack && (
+          <CardContent>
+            <pre className="max-h-64 overflow-auto text-[10px]">
+              <code>{stack}</code>
+            </pre>
+          </CardContent>
+        )}
+
+        <CardContent>
+          <Button className="w-full" nativeButton={false} render={<Link to="/" replace />}>
+            {i18n.errors.action.back_home}
+          </Button>
+        </CardContent>
+      </Card>
+    </CenteredLayout>
   );
 }
