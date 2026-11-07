@@ -29,6 +29,7 @@ import * as TemplateContentsSchema from "./api/document-templates+contents";
 import * as BankRelationsSchema from "./api/bank-relations";
 import * as BankRelationsStatementsImportSchema from "./api/bank-relations+statements+import";
 import * as BankRelationSummariesSchema from "./api/bank-relation-summaries";
+import * as VatMethodSummariesSchema from "./api/vat-method-summaries";
 import * as OrganizationMembersSchema from "./api/organization-members";
 import * as InvitationsSchema from "./api/invitations";
 import * as InvitationsCreateSchema from "./api/invitations+create";
@@ -91,6 +92,7 @@ const ApiSchema = {
   BankRelations: BankRelationsSchema,
   BankRelationsStatementsImport: BankRelationsStatementsImportSchema,
   BankRelationSummaries: BankRelationSummariesSchema,
+  VatMethodSummaries: VatMethodSummariesSchema,
   OrganizationMembers: OrganizationMembersSchema,
   Invitations: InvitationsSchema,
   InvitationsCreate: InvitationsCreateSchema,

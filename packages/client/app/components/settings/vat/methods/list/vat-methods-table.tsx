@@ -15,13 +15,12 @@ import { AccountingPath } from "~/navigation";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { WriteGuard } from "~/components/auth/guards/write-guard";
+import { SortableHeader } from "~/components/core/sortable-header";
 
 export const VatMethodsTable = ({
-  methods,
-  periods,
+  vatMethodSummaries,
 }: {
-  methods: Api["VatMethods"]["Client"]["VatMethod"][];
-  periods: Api["Periods"]["Client"]["Period"][];
+  vatMethodSummaries: Api["VatMethodSummaries"]["Client"]["VatMethodSummary"][];
 }) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
@@ -31,7 +30,7 @@ export const VatMethodsTable = ({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{i18n.periods.label.period}</TableHead>
+          <SortableHeader field="startOn" label={i18n.periods.label.period} />
           <TableHead>{i18n.vat.label.payment_method}</TableHead>
           <TableHead>{i18n.vat.label.remuneration_method}</TableHead>
           <TableHead className="w-px" />
@@ -39,23 +38,17 @@ export const VatMethodsTable = ({
       </TableHeader>
 
       <TableBody>
-        {methods.length === 0 ? (
+        {vatMethodSummaries.length === 0 ? (
           <TableRow>
             <TableCell colSpan={4} className="text-muted-foreground">
               {i18n.vat.text.methods_empty}
             </TableCell>
           </TableRow>
         ) : (
-          methods.map((method) => {
-            const period = periods.find(({ id }) => id === method.periodId);
-
+          vatMethodSummaries.map(({ vatMethod: method, period }) => {
             return (
               <TableRow key={method.id}>
-                <TableCell>
-                  {period === undefined
-                    ? ""
-                    : `${formatDate(period.startOn)} – ${formatDate(period.endOn)}`}
-                </TableCell>
+                <TableCell>{`${formatDate(period.startOn)} – ${formatDate(period.endOn)}`}</TableCell>
                 <TableCell>{i18n.vat.payment_method[method.paymentMethod]}</TableCell>
                 <TableCell>{i18n.vat.remuneration_method[method.remunerationMethod]}</TableCell>
                 <TableCell className="w-px">

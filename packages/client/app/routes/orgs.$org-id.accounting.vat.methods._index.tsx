@@ -1,6 +1,5 @@
 import type { Route } from "./+types/orgs.$org-id.accounting.vat.methods._index";
-import { VatMethodsServer } from "~/context/server/vat+methods.server";
-import { PeriodsServer } from "~/context/server/periods.server";
+import { VatMethodSummariesServer } from "~/context/server/vat-method-summaries.server";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import { useOrganization } from "~/context/contexts/organization.context";
@@ -12,20 +11,16 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { WriteGuard } from "~/components/auth/guards/write-guard";
 
 export const loader = async (args: Route.LoaderArgs) => {
-  const [methods, periods] = await Promise.all([
-    VatMethodsServer.create().listVatMethods(args),
-    PeriodsServer.create().listAllPeriods(args),
-  ]);
+  const vatMethodSummaries = await VatMethodSummariesServer.create().listVatMethodSummaries(args);
 
-  return { methods, periods };
+  return { vatMethodSummaries };
 };
 
 const OrganizationVatMethodsPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const methods = loaderData.methods?.methods ?? [];
-  const periods = loaderData.periods?.periods ?? [];
+  const vatMethodSummaries = loaderData.vatMethodSummaries?.vatMethodSummaries ?? [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -47,9 +42,9 @@ const OrganizationVatMethodsPage = ({ loaderData }: Route.ComponentProps) => {
         </WriteGuard>
       </div>
 
-      <VatMethodsTable methods={methods} periods={periods} />
+      <VatMethodsTable vatMethodSummaries={vatMethodSummaries} />
 
-      <Pagination count={methods.length} />
+      <Pagination count={vatMethodSummaries.length} />
     </div>
   );
 };

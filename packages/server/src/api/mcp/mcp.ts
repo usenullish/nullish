@@ -18,6 +18,7 @@ import { McpToolsAccounts } from "./_accounts";
 import { McpToolsSystemAccounts } from "./_accounts-system";
 import { McpToolsVatSettings } from "./_vat-settings";
 import { McpToolsVatMethods } from "./_vat-methods";
+import { McpToolsVatMethodSummaries } from "./_vat-method-summaries";
 import { McpToolsVatRates } from "./_vat-rates";
 import { McpToolsVatPeriods } from "./_vat-periods";
 import { McpToolsDocumentTemplates } from "./_document-templates";
@@ -68,6 +69,7 @@ export class McpHandler {
       McpToolsSystemAccounts.create({ server, args, readOnly }),
       McpToolsVatSettings.create({ server, args, readOnly }),
       McpToolsVatMethods.create({ server, args, readOnly }),
+      McpToolsVatMethodSummaries.create({ server, args, readOnly }),
       McpToolsVatRates.create({ server, args, readOnly }),
       McpToolsVatPeriods.create({ server, args, readOnly }),
       McpToolsDocumentTemplates.create({ server, args, readOnly }),
