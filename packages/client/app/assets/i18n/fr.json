@@ -124,13 +124,16 @@
     }
   },
   "errors": {
+    "action": {
+      "back_home": "Retour à l'accueil"
+    },
     "label": {
-      "error": "Erreur"
+      "oops": "Oups !",
+      "shoot": "Aïe !"
     },
     "text": {
-      "oops": "Oups !",
       "unexpected": "Une erreur inattendue s'est produite.",
-      "not_found": "La page demandée est introuvable."
+      "not_found": "La page est introuvable."
     }
   },
   "navigation": {

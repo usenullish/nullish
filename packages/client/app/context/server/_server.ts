@@ -9,7 +9,8 @@ import {
 import type * as z from "zod";
 import { authCookieContext } from "~/context/middlewares/cookie";
 import type { Cookie } from "~/lib/schemas/cookie";
-import { type Common, CommonSchema } from "@usenullish/nullish-schema/server";
+import { type Common, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
+import { ApiError } from "~/lib/api/_api";
 import { QUERY_DEFAULT_PAGINATION } from "@usenullish/nullish-schema/db";
 
 // React Router single-fetch param naming the loaders to run
@@ -41,10 +42,11 @@ export abstract class ServerLoader {
 
     if (result.status === "error") {
       console.error(`[${this.#context}]`, result.err);
-      this.#error({
-        status: 500,
-        message: result.err instanceof Error ? result.err.message : errorFallbackMsg,
-      });
+
+      const apiError = result.err instanceof ApiError ? result.err : undefined;
+      const reason = apiError?.code !== ErrorCode.UNEXPECTED ? apiError?.reason : undefined;
+
+      this.#error({ status: apiError?.status ?? 500, message: reason ?? errorFallbackMsg });
     }
 
     return result.result;

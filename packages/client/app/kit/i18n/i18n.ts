@@ -119,8 +119,9 @@ const I18nAuthSchema = z.strictObject({
 });
 
 const I18nErrorsSchema = z.strictObject({
-  label: z.strictObject({ error: z.string() }),
-  text: z.strictObject({ oops: z.string(), unexpected: z.string(), not_found: z.string() }),
+  action: z.strictObject({ back_home: z.string() }),
+  label: z.strictObject({ oops: z.string(), shoot: z.string() }),
+  text: z.strictObject({ unexpected: z.string(), not_found: z.string() }),
 });
 
 const I18nNavigationSchema = z.strictObject({

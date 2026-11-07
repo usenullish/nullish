@@ -2,7 +2,7 @@ import * as z from "zod";
 import { type Common, CommonSchema } from "@usenullish/nullish-schema/server";
 import { nonNullish, type Option } from "@usenullish/nullish-common";
 
-class ApiError extends Error {
+export class ApiError extends Error {
   readonly status: Response["status"];
   readonly code: Option<Common["Error"]["code"]>;
   readonly reason: Option<Common["Error"]["error"]>;
