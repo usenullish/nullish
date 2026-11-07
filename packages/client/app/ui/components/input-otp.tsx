@@ -2,6 +2,7 @@ import * as React from "react";
 import { cn } from "cn";
 import { OTPInput, OTPInputContext } from "input-otp";
 import { MinusIcon } from "lucide-react";
+import { IGNORE_PASSWORD_MANAGERS } from "./input";
 
 function InputOTP({
   className,
@@ -13,6 +14,7 @@ function InputOTP({
   return (
     <OTPInput
       data-slot="input-otp"
+      {...IGNORE_PASSWORD_MANAGERS}
       containerClassName={cn(
         "cn-input-otp flex items-center has-disabled:opacity-50",
         containerClassName,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { cn } from "cn";
 
-const IGNORE_PASSWORD_MANAGERS = {
+export const IGNORE_PASSWORD_MANAGERS = {
   "data-1p-ignore": true,
   "data-bwignore": true,
   "data-lpignore": "true",
