@@ -25,10 +25,12 @@ export const MigrationWizard = ({
   organizationId,
   migration,
   datasets,
+  alreadyImportedDatasets,
 }: {
   organizationId: Api["Organizations"]["Client"]["Organization"]["id"];
   migration: Migration;
   datasets: Dataset[];
+  alreadyImportedDatasets: Api["MigrationDatasetSummaries"]["Client"]["DatasetSummary"][];
 }) => {
   const { i18n } = useI18n();
 
@@ -74,7 +76,14 @@ export const MigrationWizard = ({
         <MigrationFailed migration={migration} jobState={jobState} onStarted={onStarted} />
       )}
 
-      {files && <MigrationFiles migration={migration} datasets={datasets} onStarted={onStarted} />}
+      {files && (
+        <MigrationFiles
+          migration={migration}
+          datasets={datasets}
+          alreadyImportedDatasets={alreadyImportedDatasets}
+          onStarted={onStarted}
+        />
+      )}
     </MigrationStep>
   );
 };
@@ -82,10 +91,12 @@ export const MigrationWizard = ({
 const MigrationFiles = ({
   migration,
   datasets,
+  alreadyImportedDatasets,
   onStarted,
 }: {
   migration: Migration;
   datasets: Dataset[];
+  alreadyImportedDatasets: Api["MigrationDatasetSummaries"]["Client"]["DatasetSummary"][];
   onStarted: (args: { jobId: JobId }) => void;
 }) => {
   const { i18n } = useI18n();
@@ -103,7 +114,11 @@ const MigrationFiles = ({
         <UploadDataset migration={migration} open={uploadOpen} onOpenChange={setUploadOpen} />
       </WriteGuard>
 
-      <DatasetsTable migration={migration} datasets={datasets} />
+      <DatasetsTable
+        migration={migration}
+        datasets={datasets}
+        alreadyImportedDatasets={alreadyImportedDatasets}
+      />
 
       <WriteGuard>
         <RunMigration
