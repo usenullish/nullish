@@ -25,6 +25,7 @@ import { TemplateContentsHandlers } from "./_document-templates+contents";
 import { BankRelationsHandlers } from "./_organizations+bank-relations";
 import { BankRelationsStatementsImportHandlers } from "./_bank-relations+statements+import";
 import { BankRelationSummariesHandlers } from "./_organizations+bank-relation-summaries";
+import { VatMethodSummariesHandlers } from "./_organizations+vat+method-summaries";
 import { OrganizationMembersHandlers } from "./_organizations+members";
 import { MembersDeleteHandlers } from "./_members+delete";
 import { OrganizationsDeleteHandlers } from "./_organizations+delete";
@@ -83,6 +84,7 @@ const RESOURCES = [
   VatMethodsHandlers,
   VatRatesHandlers,
   VatPeriodsHandlers,
+  VatMethodSummariesHandlers,
   AccountingSettingsHandlers,
   BillingSettingsHandlers,
   DocumentTemplatesHandlers,

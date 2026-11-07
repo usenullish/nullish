@@ -657,6 +657,19 @@ interface Api {
       >;
     };
   };
+  VatMethodSummaries: {
+    Server: {
+      GetVatMethodSummariesResponse: z.input<
+        typeof ApiSchema.VatMethodSummaries.GetVatMethodSummariesResponseSchema
+      >;
+    };
+    Client: {
+      VatMethodSummary: z.infer<typeof ApiSchema.VatMethodSummaries.VatMethodSummarySchema>;
+      GetVatMethodSummariesResponse: z.infer<
+        typeof ApiSchema.VatMethodSummaries.GetVatMethodSummariesResponseSchema
+      >;
+    };
+  };
   OrganizationMembers: {
     Server: {
       GetOrganizationMembersResponse: z.input<
