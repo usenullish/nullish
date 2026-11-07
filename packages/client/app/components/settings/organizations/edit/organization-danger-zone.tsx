@@ -3,8 +3,9 @@ import { nonNullish } from "@usenullish/nullish-common";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { DeleteOrganization } from "~/components/settings/organizations/delete/delete-organization";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
+import { DangerZone } from "~/components/core/danger-zone";
 import { Button } from "~/ui/components/button";
-import { Field, FieldDescription, FieldLegend, FieldSet } from "~/ui/components/field";
+import { Field, FieldDescription } from "~/ui/components/field";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
 export const OrganizationDangerZone = ({
@@ -21,8 +22,7 @@ export const OrganizationDangerZone = ({
   }
 
   return (
-    <FieldSet className="mt-14">
-      <FieldLegend>{i18n.organizations.label.danger_zone}</FieldLegend>
+    <DangerZone label={i18n.organizations.label.danger_zone}>
       <FieldDescription>{i18n.organizations.text.danger_zone}</FieldDescription>
 
       <Field>
@@ -36,6 +36,6 @@ export const OrganizationDangerZone = ({
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
       />
-    </FieldSet>
+    </DangerZone>
   );
 };
