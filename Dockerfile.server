@@ -51,7 +51,7 @@ COPY packages/cli/package.json /temp/prod/packages/cli/
 RUN cd /temp/prod && bun install --frozen-lockfile --ignore-scripts --production
 
 # copy node_modules from the temp directory, then copy the packages the server
-# actually depends on (not client/cli) and build it
+# and the CLI depend on (not the client) and build them
 FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY --from=install /temp/dev/packages/common/node_modules ./packages/common/node_modules
@@ -67,6 +67,7 @@ COPY --from=install /temp/dev/packages/auth/node_modules ./packages/auth/node_mo
 COPY --from=install /temp/dev/packages/chat/node_modules ./packages/chat/node_modules
 COPY --from=install /temp/dev/packages/metering/node_modules ./packages/metering/node_modules
 COPY --from=install /temp/dev/packages/server/node_modules ./packages/server/node_modules
+COPY --from=install /temp/dev/packages/cli/node_modules ./packages/cli/node_modules
 
 COPY package.json package.json
 COPY tsconfig.json tsconfig.json
@@ -85,9 +86,11 @@ COPY packages/auth ./packages/auth
 COPY packages/chat ./packages/chat
 COPY packages/metering ./packages/metering
 COPY packages/server ./packages/server
+COPY packages/cli ./packages/cli
 
 ENV NODE_ENV=production
 RUN bun run --filter @usenullish/nullish-server build
+RUN bun run --filter @usenullish/nullish-cli build
 
 # build final image
 FROM base AS release
@@ -109,6 +112,7 @@ COPY --from=install /temp/prod/node_modules ./node_modules
 
 # Copy runtimes
 COPY --from=prerelease /usr/src/app/packages/server/build/index.js ./index.js
+COPY --from=prerelease /usr/src/app/packages/cli/build/cli ./cli
 
 COPY LICENSE README.md /
 
