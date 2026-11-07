@@ -123,9 +123,9 @@ export abstract class Job<
   }: {
     jobId: string;
   }): Promise<z.infer<ReturnType<typeof createScheduledJobStateSchema<ResultSchema>>>> {
-    const job = await this.#getJob({ jobId });
+    const status = await this.#queue.getJobState(jobId);
 
-    const status = await job.getState();
+    const job = await this.#getJob({ jobId });
 
     const stateSchema = createScheduledJobStateSchema({
       schema: this.#resultSchema,
