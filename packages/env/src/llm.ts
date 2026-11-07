@@ -9,7 +9,7 @@ import * as z from "zod";
 export const envLlmEnabled = (): boolean =>
   [
     process.env.NULLISH_LLM_URL,
-    process.env.NULLISH_LLM_MODEL,
+    process.env.NULLISH_LLM_CHAT_MODEL,
     process.env.NULLISH_LLM_API_KEY,
   ].every(notEmptyString);
 
@@ -19,9 +19,9 @@ export const envLlmUrl = (): string => {
   return baseUrl;
 };
 
-export const envLlmModel = (): string => {
-  const model = process.env.NULLISH_LLM_MODEL;
-  assertNotEmptyString(model, "A model for the LLM must be defined.");
+export const envLlmChatModel = (): string => {
+  const model = process.env.NULLISH_LLM_CHAT_MODEL;
+  assertNotEmptyString(model, "A model for the LLM chat must be defined.");
   return model;
 };
 

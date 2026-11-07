@@ -9,7 +9,7 @@ import {
   envLlmApiKey,
   envLlmEnabled,
   envLlmUrl,
-  envLlmModel,
+  envLlmChatModel,
   envLlmTokenLimit,
   envSignUp,
   LlmTokenLimitPeriod,
@@ -24,7 +24,7 @@ describe("env", () => {
     "NULLISH_DB_USERNAME",
     "NULLISH_DB_PASSWORD",
     "NULLISH_LLM_URL",
-    "NULLISH_LLM_MODEL",
+    "NULLISH_LLM_CHAT_MODEL",
     "NULLISH_LLM_API_KEY",
     "NULLISH_LLM_TOKEN_LIMIT",
     "NULLISH_LLM_TOKEN_LIMIT_PERIOD",
@@ -137,7 +137,12 @@ describe("env", () => {
       key: "NULLISH_LLM_URL",
       value: "https://llm.example.com/v1",
     },
-    { name: "envLlmModel", fn: envLlmModel, key: "NULLISH_LLM_MODEL", value: "qwen3.5:9b" },
+    {
+      name: "envLlmChatModel",
+      fn: envLlmChatModel,
+      key: "NULLISH_LLM_CHAT_MODEL",
+      value: "qwen3.5:9b",
+    },
     { name: "envLlmApiKey", fn: envLlmApiKey, key: "NULLISH_LLM_API_KEY", value: "sk-test" },
   ] as const)("$name", ({ fn, key, value }) => {
     test("reads the variable in dev", () => {
@@ -167,7 +172,7 @@ describe("env", () => {
   describe("envLlmEnabled", () => {
     const configure = () => {
       process.env.NULLISH_LLM_URL = "https://llm.example.com/v1";
-      process.env.NULLISH_LLM_MODEL = "qwen3.5:9b";
+      process.env.NULLISH_LLM_CHAT_MODEL = "qwen3.5:9b";
       process.env.NULLISH_LLM_API_KEY = "sk-test";
     };
 
@@ -181,7 +186,7 @@ describe("env", () => {
       expect(envLlmEnabled()).toBeFalse();
     });
 
-    test.each(["NULLISH_LLM_URL", "NULLISH_LLM_MODEL", "NULLISH_LLM_API_KEY"])(
+    test.each(["NULLISH_LLM_URL", "NULLISH_LLM_CHAT_MODEL", "NULLISH_LLM_API_KEY"])(
       "is disabled when %s is missing",
       (key) => {
         configure();
@@ -191,7 +196,7 @@ describe("env", () => {
       },
     );
 
-    test.each(["NULLISH_LLM_URL", "NULLISH_LLM_MODEL", "NULLISH_LLM_API_KEY"])(
+    test.each(["NULLISH_LLM_URL", "NULLISH_LLM_CHAT_MODEL", "NULLISH_LLM_API_KEY"])(
       "is disabled when %s is empty",
       (key) => {
         configure();

@@ -4,7 +4,7 @@ import {
   LlmUsagesService,
 } from "@usenullish/nullish-admin/metering";
 import { isNullish, type Result } from "@usenullish/nullish-common";
-import { envLlmModel, envLlmTokenLimit, LlmTokenLimitPeriod } from "@usenullish/nullish-env";
+import { envLlmChatModel, envLlmTokenLimit, LlmTokenLimitPeriod } from "@usenullish/nullish-env";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 
@@ -81,7 +81,7 @@ export class LlmMeter {
 
     const reserved = await LlmUsageLimitService.create({ db }).reserve({
       userId,
-      model: envLlmModel(),
+      model: envLlmChatModel(),
       from: periodStart({ period: limit.period }),
       limit: limit.tokens,
       reservedTokens,

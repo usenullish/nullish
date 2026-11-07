@@ -14,7 +14,7 @@ import {
   notEmptyString,
   type Result,
 } from "@usenullish/nullish-common";
-import { envLlmApiKey, envLlmUrl, envLlmModel } from "@usenullish/nullish-env";
+import { envLlmApiKey, envLlmUrl, envLlmChatModel } from "@usenullish/nullish-env";
 import { instructions } from "./_instructions";
 import { callTool, listTools } from "./_tools";
 import { domainArgs, filterTools } from "./_domain";
@@ -55,7 +55,7 @@ export class Chat {
 
   private constructor({ mcp }: { mcp: Client }) {
     this.#openai = new OpenAI({ baseURL: envLlmUrl(), apiKey: envLlmApiKey() });
-    this.#model = envLlmModel();
+    this.#model = envLlmChatModel();
     this.#mcp = mcp;
   }
 

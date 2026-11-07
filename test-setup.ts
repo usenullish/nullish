@@ -10,7 +10,7 @@ process.env.NULLISH_DB_PASSWORD ??= "password";
 process.env.NULLISH_AUTH_URL ??= "http://localhost:5173";
 process.env.NULLISH_AUTH_SECRET ??= "nullish-test-secret-nullish-test-secret";
 process.env.NULLISH_LLM_URL ??= "http://localhost:11434/v1";
-process.env.NULLISH_LLM_MODEL ??= "qwen3.5:4b";
+process.env.NULLISH_LLM_CHAT_MODEL ??= "qwen3.5:4b";
 process.env.NULLISH_LLM_API_KEY ??= "ollama";
 
 const client = new SQL(envDbUrl());

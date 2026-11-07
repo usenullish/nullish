@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { eq } from "drizzle-orm";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { DbStoreInitArgs } from "@usenullish/nullish-engine";
-import { envLlmModel } from "@usenullish/nullish-env";
+import { envLlmChatModel } from "@usenullish/nullish-env";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { ErrorCode } from "@usenullish/nullish-schema/server";
 import type { ApiEnv } from "../../../src/api/types/api";
@@ -62,7 +62,7 @@ describe("llm usage", () => {
     await seedUsers(db);
 
     await db.insert(llmUsages).values([
-      { userId: TEST_USER_ID, model: envLlmModel(), inputTokens: 600n, outputTokens: 400n },
+      { userId: TEST_USER_ID, model: envLlmChatModel(), inputTokens: 600n, outputTokens: 400n },
       { userId: TEST_OTHER_USER_ID, model: "other-model", inputTokens: 5000n, outputTokens: 5000n },
     ]);
   });

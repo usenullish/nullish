@@ -1,7 +1,7 @@
 import { gte, sql } from "drizzle-orm";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbUserContext, type DbUserContextArgs } from "@usenullish/nullish-db";
-import { envLlmEnabled, envLlmModel } from "@usenullish/nullish-env";
+import { envLlmEnabled, envLlmChatModel } from "@usenullish/nullish-env";
 import { DbSchema } from "@usenullish/nullish-schema/db";
 import { type Reports, ReportsSchema } from "@usenullish/nullish-schema/reports";
 
@@ -23,7 +23,7 @@ export class LlmUsageReport extends DbUserContext {
       return await this._withAuth(async (tx) => {
         const { from } = ReportsSchema.MeteringSchema.LlmUsageArgsSchema.parse(args);
 
-        const models = envLlmEnabled() ? [envLlmModel()] : [];
+        const models = envLlmEnabled() ? [envLlmChatModel()] : [];
 
         const rows = await tx
           .select({

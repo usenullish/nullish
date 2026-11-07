@@ -1,5 +1,5 @@
 import { encodeWithCodecs } from "@usenullish/nullish-common";
-import { envLlmEnabled, envLlmModel } from "@usenullish/nullish-env";
+import { envLlmEnabled, envLlmChatModel } from "@usenullish/nullish-env";
 import { ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import { Resource, type ResourceArgs, ResourceProvider } from "./_factories/resource";
 import { defineGetRoute } from "./_factories/crud-route-config";
@@ -51,7 +51,7 @@ export class UserAssistant extends Resource {
         schema: ApiSchema.Assistant.GetAssistantResponseSchema,
         value: {
           assistant: {
-            models: envLlmEnabled() ? [{ model: envLlmModel() }] : null,
+            models: envLlmEnabled() ? [{ model: envLlmChatModel() }] : null,
           },
         },
       }),
