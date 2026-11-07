@@ -68,6 +68,18 @@ export const encodeBankRelationSummaryResponse = ({
     : null,
 });
 
+export const encodeVatMethodSummaryResponse = ({
+  vatMethod,
+  period,
+}: Composites["VatMethodSummaries"]["Select"]) => ({
+  vatMethod: encodeAuditFieldsResponse(vatMethod),
+  period: {
+    ...encodeAuditFieldsResponse(period),
+    startOn: encodeWithCodecs({ schema: DateCodec, value: period.startOn }),
+    endOn: encodeWithCodecs({ schema: DateCodec, value: period.endOn }),
+  },
+});
+
 export const encodeJournalResponse = ({ entry, postings }: Composites["Journal"]["Select"]) => ({
   entry: {
     ...encodeAuditFieldsResponse(entry),
