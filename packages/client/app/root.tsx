@@ -29,6 +29,7 @@ import { PrivacyProvider } from "~/kit/privacy/privacy-provider";
 import { ActiveConversationProvider } from "~/kit/chat/active-conversation-provider";
 import { EnvironmentContext } from "~/kit/environment/environment.context";
 import { useNonce } from "~/kit/csp/nonce.context";
+import { notEmptyString } from "@usenullish/nullish-common";
 
 // Server side middlewares
 export const middleware: MiddlewareFunction[] = [authCookieMiddleware];
@@ -141,7 +142,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : i18n.errors.label.error;
-    details = error.status === 404 ? i18n.errors.text.not_found : error.statusText || details;
+    details =
+      error.status === 404
+        ? i18n.errors.text.not_found
+        : typeof error.data === "string" && notEmptyString(error.data)
+          ? error.data
+          : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
