@@ -28,7 +28,7 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare
       - name: Tests
-        run: bun test --only-failures
+        run: bun test --docs
 
   may-merge:
     needs: ["tests"]
