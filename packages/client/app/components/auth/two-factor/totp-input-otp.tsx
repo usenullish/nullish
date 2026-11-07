@@ -27,7 +27,7 @@ export const TotpInputOTP = ({
         <InputOTPSlot
           key={index}
           index={index}
-          className="aspect-square size-auto flex-1 text-sm"
+          className="aspect-square size-auto flex-1 text-xl"
         />
       ))}
     </InputOTPGroup>
