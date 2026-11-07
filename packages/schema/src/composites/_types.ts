@@ -26,6 +26,11 @@ interface Composites {
     Select: z.infer<typeof CompositesSchema.MovementSummariesSchema.SelectMovementSummariesSchema>;
     Filter: z.infer<typeof CompositesSchema.MovementSummariesSchema.FilterMovementSummariesSchema>;
   };
+  VatMethodSummaries: {
+    Select: z.infer<
+      typeof CompositesSchema.VatMethodSummariesSchema.SelectVatMethodSummariesSchema
+    >;
+  };
   Chat: {
     Select: z.infer<typeof CompositesSchema.ChatSchema.SelectChatSchema>;
   };
