@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, VatPaymentMethod, VatRemunerationMethod } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { DbCollectionVatMethodSummaries } from "../../../src/core/composites/vat-method-summaries";
@@ -20,40 +19,8 @@ const periods = DbSchema.Ledger.Periods.PeriodsSchema;
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const seedMethod = async ({
-  organizationId,
-  year,
-}: {
-  organizationId: string;
-  year: number;
-}): Promise<{ vatMethodId: string; periodId: string }> => {
-  const [period] = await db
-    .insert(periods)
-    .values({
-      organizationId,
-      startOn: new Date(`${year}-01-01`),
-      endOn: new Date(`${year}-12-31`),
-    })
-    .returning();
-  assertNonNullish(period);
-
-  const [vatMethod] = await db
-    .insert(vatMethods)
-    .values({
-      organizationId,
-      periodId: period.id,
-      remunerationMethod: VatRemunerationMethod.AGREED,
-      paymentMethod: VatPaymentMethod.NET_RATE,
-    })
-    .returning();
-  assertNonNullish(vatMethod);
-
-  return { vatMethodId: vatMethod.id, periodId: period.id };
-};
-
 describe("DbCollectionVatMethodSummaries", () => {
   let organizationId: string;
-  let methods: { vatMethodId: string; periodId: string }[];
 
   beforeAll(async () => {
     await resetDb(db);
@@ -63,11 +30,25 @@ describe("DbCollectionVatMethodSummaries", () => {
 
     await db.insert(vatSettings).values({ organizationId, vatNumber: "CHE-123.456.789 MWST" });
 
-    methods = [];
+    const rows = await db
+      .insert(periods)
+      .values(
+        [2025, 2023, 2024].map((year) => ({
+          organizationId,
+          startOn: new Date(`${year}-01-01`),
+          endOn: new Date(`${year}-12-31`),
+        })),
+      )
+      .returning();
 
-    for (const year of [2025, 2023, 2024]) {
-      methods.push(await seedMethod({ organizationId, year }));
-    }
+    await db.insert(vatMethods).values(
+      rows.map(({ id }) => ({
+        organizationId,
+        periodId: id,
+        remunerationMethod: VatRemunerationMethod.AGREED,
+        paymentMethod: VatPaymentMethod.NET_RATE,
+      })),
+    );
   });
 
   afterAll(async () => {

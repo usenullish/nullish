@@ -2,7 +2,6 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { asc, desc } from "drizzle-orm";
-import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, VatPaymentMethod, VatRemunerationMethod } from "@usenullish/nullish-schema/db";
 import { listVatMethodSummaries } from "../../../src/core/_helpers/vat-method-summaries";
 import { envDbUrl } from "@usenullish/nullish-env";
@@ -21,24 +20,25 @@ describe("core/_helpers/vat-method-summaries", () => {
 
     await db.insert(vatSettings).values({ organizationId, vatNumber: "CHE-123.456.789 MWST" });
 
-    for (const year of years) {
-      const [period] = await db
-        .insert(periods)
-        .values({
+    const rows = await db
+      .insert(periods)
+      .values(
+        years.map((year) => ({
           organizationId,
           startOn: new Date(`${year}-01-01`),
           endOn: new Date(`${year}-12-31`),
-        })
-        .returning();
-      assertNonNullish(period);
+        })),
+      )
+      .returning();
 
-      await db.insert(vatMethods).values({
+    await db.insert(vatMethods).values(
+      rows.map(({ id }) => ({
         organizationId,
-        periodId: period.id,
+        periodId: id,
         remunerationMethod: VatRemunerationMethod.AGREED,
         paymentMethod: VatPaymentMethod.NET_RATE,
-      });
-    }
+      })),
+    );
 
     return organizationId;
   };
