@@ -54,7 +54,7 @@ export const MigrationSource = ({
       if (next.name === "ready") {
         await navigate(
           OrganizationPath.create({ organizationId }).to({
-            path: `/migrations/${next.result.migration.id}`,
+            path: `/migrations/${next.result.migration.id}/import`,
           }),
         );
       }

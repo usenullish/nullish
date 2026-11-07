@@ -24,6 +24,21 @@ export const MigrationActions = ({
       record={migration}
       items={
         <>
+          {migration.status !== MigrationStatus.SUCCEEDED && (
+            <WriteGuard>
+              <DropdownMenuItem
+                render={
+                  <Link
+                    to={OrganizationPath.create({ organizationId: organization.id }).to({
+                      path: `/migrations/${migration.id}/import`,
+                    })}
+                  />
+                }
+              >
+                {i18n.migrations.action.continue}
+              </DropdownMenuItem>
+            </WriteGuard>
+          )}
           <DropdownMenuItem
             render={
               <Link

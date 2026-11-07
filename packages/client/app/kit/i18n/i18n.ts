@@ -1182,6 +1182,7 @@ const I18nMigrationsSchema = z.strictObject({
   }),
   provider: z.strictObject({ bexio: z.string() }),
   text: z.strictObject({
+    details: z.string(),
     title: z.string(),
     description: z.string(),
     empty: z.string(),

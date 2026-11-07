@@ -1333,6 +1333,7 @@
       "bexio": "Bexio"
     },
     "text": {
+      "details": "Détails de la migration",
       "title": "Migration depuis {provider}",
       "description": "Ajoute les fichiers exportés de {provider}, puis lance la migration.",
       "empty": "Aucune migration pour l'instant.",
