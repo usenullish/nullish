@@ -4,7 +4,7 @@ import { SQL as BunSQL } from "bun";
 import { DbSchema } from "@usenullish/nullish-schema/db";
 import { LlmUsageReport } from "../../../src/metering/reports/llm-usage";
 import type { DbStoreInitArgs } from "../../../src/store";
-import { envDbUrl, envLlmModel } from "@usenullish/nullish-env";
+import { envDbUrl, envLlmChatModel } from "@usenullish/nullish-env";
 import { resetDb, seedUsers, TEST_OTHER_USER_ID, TEST_USER_ID } from "../../_test-utils";
 
 const llmUsages = DbSchema.Metering.LlmUsages.LlmUsagesSchema;
@@ -30,7 +30,7 @@ describe("llm-usage report", () => {
       },
       {
         userId: TEST_USER_ID,
-        model: envLlmModel(),
+        model: envLlmChatModel(),
         inputTokens: 200n,
         outputTokens: 20n,
         loggedAt: new Date("2026-02-15"),
@@ -63,7 +63,7 @@ describe("llm-usage report", () => {
     expect(result).toEqual({
       status: "success",
       result: [
-        { model: envLlmModel(), inputTokens: 200n, outputTokens: 20n },
+        { model: envLlmChatModel(), inputTokens: 200n, outputTokens: 20n },
         { model: "previous-model", inputTokens: 300n, outputTokens: 30n },
       ],
     });
@@ -74,7 +74,7 @@ describe("llm-usage report", () => {
 
     expect(result).toEqual({
       status: "success",
-      result: [{ model: envLlmModel(), inputTokens: 0n, outputTokens: 0n }],
+      result: [{ model: envLlmChatModel(), inputTokens: 0n, outputTokens: 0n }],
     });
   });
 

@@ -5,7 +5,7 @@ import type { ApiEnv } from "../../../src/api/types/api";
 import { assertLlmEnabledMiddleware } from "../../../src/api/middlewares/llm-enabled";
 
 describe("llm enabled", () => {
-  const KEYS = ["NULLISH_LLM_URL", "NULLISH_LLM_MODEL", "NULLISH_LLM_API_KEY"] as const;
+  const KEYS = ["NULLISH_LLM_URL", "NULLISH_LLM_CHAT_MODEL", "NULLISH_LLM_API_KEY"] as const;
 
   const saved = new Map<string, string | undefined>();
 
@@ -38,7 +38,7 @@ describe("llm enabled", () => {
   describe("assertLlmEnabledMiddleware", () => {
     test("lets the request through when the LLM is configured", async () => {
       process.env.NULLISH_LLM_URL = "https://llm.example.com/v1";
-      process.env.NULLISH_LLM_MODEL = "qwen3.5:9b";
+      process.env.NULLISH_LLM_CHAT_MODEL = "qwen3.5:9b";
       process.env.NULLISH_LLM_API_KEY = "sk-test";
 
       const response = await request();
@@ -51,7 +51,7 @@ describe("llm enabled", () => {
       "answers 503 when %s is not defined",
       async (key: string) => {
         process.env.NULLISH_LLM_URL = "https://llm.example.com/v1";
-        process.env.NULLISH_LLM_MODEL = "qwen3.5:9b";
+        process.env.NULLISH_LLM_CHAT_MODEL = "qwen3.5:9b";
         process.env.NULLISH_LLM_API_KEY = "sk-test";
         delete process.env[key];
 
