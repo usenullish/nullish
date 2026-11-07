@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { DeleteUser } from "~/components/user/delete/delete-user";
+import { DangerZone } from "~/components/core/danger-zone";
 import { Button } from "~/ui/components/button";
-import { Field, FieldDescription, FieldLegend, FieldSet } from "~/ui/components/field";
+import { Field, FieldDescription } from "~/ui/components/field";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
 export const ProfileDangerZone = () => {
@@ -9,8 +10,7 @@ export const ProfileDangerZone = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   return (
-    <FieldSet className="mt-14">
-      <FieldLegend>{i18n.profile.label.danger_zone}</FieldLegend>
+    <DangerZone label={i18n.profile.label.danger_zone}>
       <FieldDescription>{i18n.profile.text.danger_zone}</FieldDescription>
 
       <Field>
@@ -20,6 +20,6 @@ export const ProfileDangerZone = () => {
       </Field>
 
       <DeleteUser open={deleteOpen} onOpenChange={setDeleteOpen} />
-    </FieldSet>
+    </DangerZone>
   );
 };
