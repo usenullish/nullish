@@ -15,6 +15,7 @@ import { loadDbMiddleware } from "../../../src/api/middlewares/db";
 import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { MigrationsDatasetsHandlers } from "../../../src/api/resources/_migrations+datasets";
+import { RATE_LIMITS } from "../../../src/api/middlewares/rate-limit";
 import {
   bexioClientsCsv,
   createMigration,
@@ -319,5 +320,76 @@ describe("migrations datasets upload", () => {
     const response = await remove({ id: dataset.id, cookie });
 
     expect(response.status).toBe(204);
+  });
+
+  describe("rate limit", () => {
+    const createApp = (): OpenAPIHono<ApiEnv> => {
+      const app = new OpenAPIHono<ApiEnv>();
+
+      app.use("*", loadDbMiddleware({ db: instance }));
+      app.use("*", loadAuthMiddleware({ db: instance }));
+      app.use("*", loadCallerMiddleware());
+
+      const resource = MigrationsDatasetsHandlers.create({ app });
+      resource.useCustomMiddleware();
+      resource.register();
+
+      return app;
+    };
+
+    const requestTimes = async ({
+      times,
+      request,
+    }: {
+      times: number;
+      request: () => Response | Promise<Response>;
+    }): Promise<number[]> => {
+      const statuses: number[] = [];
+
+      for (const _ of Array.from({ length: times })) {
+        statuses.push((await request()).status);
+      }
+
+      return statuses;
+    };
+
+    test("does not limit listing the datasets", async () => {
+      const app = createApp();
+
+      const statuses = await requestTimes({
+        times: RATE_LIMITS.datasetsUpload + 1,
+        request: () =>
+          app.request(
+            `/migrations/${migrationId}/datasets?limit=100&offset=0&sort=createdAt&direction=asc`,
+            { headers: { Cookie: cookie } },
+          ),
+      });
+
+      expect(statuses.every((status) => status === 200)).toBeTrue();
+    });
+
+    test("limits the uploads", async () => {
+      const app = createApp();
+
+      const statuses = await requestTimes({
+        times: RATE_LIMITS.datasetsUpload + 1,
+        request: () => {
+          const body = new FormData();
+          body.append("file", clients, "clients.csv");
+          body.append("type", "unknown");
+
+          return app.request(`/migrations/${migrationId}/datasets`, {
+            method: "POST",
+            headers: { Cookie: cookie },
+            body,
+          });
+        },
+      });
+
+      expect(
+        statuses.slice(0, RATE_LIMITS.datasetsUpload).every((status) => status === 400),
+      ).toBeTrue();
+      expect(statuses.at(-1)).toBe(429);
+    });
   });
 });

@@ -101,12 +101,14 @@ export class MigrationsDatasetsHandlers extends Resource {
 
   override useCustomMiddleware() {
     [actionRoute.path, replaceRoute.path].forEach((path) => {
-      this.app.use(
+      this.app.on(
+        "POST",
         this._toHonoPath(path),
         userRateLimitMiddleware({ limit: RATE_LIMITS.datasetsUpload }),
       );
 
-      this.app.use(
+      this.app.on(
+        "POST",
         this._toHonoPath(path),
         bodyLimit({
           maxSize: MIGRATION_DATASET_FILE_MAX_SIZE,
