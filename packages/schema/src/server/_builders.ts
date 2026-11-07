@@ -80,6 +80,14 @@ export const encodeVatMethodSummaryResponse = ({
   },
 });
 
+export const encodeDatasetSummaryResponse = ({
+  dataset,
+  migration,
+}: Composites["DatasetSummaries"]["Select"]) => ({
+  dataset: encodeAuditFieldsResponse(dataset),
+  migration: encodeAuditFieldsResponse(migration),
+});
+
 export const encodeJournalResponse = ({ entry, postings }: Composites["Journal"]["Select"]) => ({
   entry: {
     ...encodeAuditFieldsResponse(entry),
