@@ -83,10 +83,9 @@ export const SelectVatPeriodsSchema = createSelectSchema(
   VatPeriodsSchema,
   refineVatPeriodStatusEnums,
 );
-export const InsertVatPeriodsSchema = createInsertSchema(
-  VatPeriodsSchema,
-  refineVatPeriodStatusEnums,
-).omit({
+export const InsertVatPeriodsSchema = createInsertSchema(VatPeriodsSchema, {
+  status: refineVatPeriodStatusEnums.status.optional(),
+}).omit({
   ...ORGANIZATION_ID_OMIT_FIELD,
   ...INSERT_OMIT_FIELDS,
 });
