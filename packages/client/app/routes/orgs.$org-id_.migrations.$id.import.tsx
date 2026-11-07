@@ -4,18 +4,11 @@ import { isNullish } from "@usenullish/nullish-common";
 import { MigrationWizard } from "~/components/settings/migrations/wizard/migration-wizard";
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
-import { MigrationsServer } from "~/context/server/migrations.server";
-import { MigrationDatasetSummariesServer } from "~/context/server/migration-dataset-summaries.server";
+import { loadMigrationImportData } from "~/context/loaders/migration-import.loader.server";
 import { OrganizationPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
-  const [migration, datasets, alreadyImportedDatasets] = await Promise.all([
-    MigrationsServer.create().getMigration(args),
-    MigrationsServer.create().listDatasets(args),
-    MigrationDatasetSummariesServer.create().listAlreadyImportedDatasets(args),
-  ]);
-
-  return { migration, datasets, alreadyImportedDatasets };
+  return await loadMigrationImportData(args);
 };
 
 // /orgs/:orgId/migrations/:id/import
