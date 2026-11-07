@@ -58,6 +58,7 @@ import { UserApiKeysHandlers } from "./_user+api-keys";
 import { UserReportsLlmUsage } from "./_user+reports+llm-usage";
 import { UserAssistant } from "./_user+assistant";
 import { MigrationsHandlers } from "./_organizations+migrations";
+import { MigrationDatasetSummariesHandlers } from "./_organizations+migration-dataset-summaries";
 import { MigrationsDatasetsHandlers } from "./_migrations+datasets";
 import { MigrationsRunHandlers } from "./_migrations+run";
 import { MigrationsRunJobsHandlers } from "./_migrations+run+jobs";
@@ -129,6 +130,7 @@ const RESOURCES = [
   UserReportsLlmUsage,
   UserAssistant,
   MigrationsHandlers,
+  MigrationDatasetSummariesHandlers,
   MigrationsDatasetsHandlers,
   MigrationsRunHandlers,
   MigrationsRunJobsHandlers,

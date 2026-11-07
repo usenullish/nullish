@@ -670,6 +670,22 @@ interface Api {
       >;
     };
   };
+  MigrationDatasetSummaries: {
+    Server: {
+      GetDatasetSummariesResponse: z.input<
+        typeof ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesResponseSchema
+      >;
+    };
+    Client: {
+      DatasetSummary: z.infer<typeof ApiSchema.MigrationDatasetSummaries.DatasetSummarySchema>;
+      GetDatasetSummariesResponse: z.infer<
+        typeof ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesResponseSchema
+      >;
+      GetDatasetSummariesFilters: z.infer<
+        typeof ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesFiltersSchema
+      >;
+    };
+  };
   OrganizationMembers: {
     Server: {
       GetOrganizationMembersResponse: z.input<
