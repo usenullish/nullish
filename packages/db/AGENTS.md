@@ -11,6 +11,7 @@ Database connection, migrations, user contexts and statement helpers.
 
 - Migrations live in `migrations/`. Tests run them through the root `bunfig.toml` preload.
 - Adding a migration follows the [README](README.md): the command, the type prefix of its name, and the four parts of a custom migration (its SQL, a comment detailing the rule, a row in the list, tests). A released migration is never edited.
+- The row of a new migration states its change: `feat` when it adds a rule or a capability, `fix` when it corrects a released one. `genesis` is reserved for the migrations of the first release.
 - A lot of business rules are enforced by triggers and constraints, not only by the engine. The README lists them.
 - **Rule violations.** A trigger that enforces a rule the user can act on (e.g. no period covers the date, the entry does not balance) raises with `USING ERRCODE = 'R0001'`. `R0001` is a custom SQLSTATE of this project: the server answers these errors as rejected with their message (`RULE_VIOLATION` in `packages/server/src/api/_errors.ts`). Any other `RAISE EXCEPTION` is an internal error and is not exposed.
 - **Creating an organization** runs triggers that seed the admin membership, the full chart of accounts of its legal form, the system accounts, the accounting settings, the billing settings and a first period covering the current calendar year. It requires the current user id to be set. The `createOrganization` test helpers delete that period, so each test sets up the periods it needs.
