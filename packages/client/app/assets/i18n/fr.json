@@ -1333,6 +1333,7 @@
       "bexio": "Bexio"
     },
     "text": {
+      "probably_imported": "Probablement déjà importé dans une migration précédente.",
       "details": "Détails de la migration",
       "title": "Migration depuis {provider}",
       "description": "Ajoute les fichiers exportés de {provider}, puis lance la migration.",
