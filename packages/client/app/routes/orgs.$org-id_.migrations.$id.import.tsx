@@ -1,4 +1,4 @@
-import type { Route } from "./+types/orgs.$org-id_.migrations.$id";
+import type { Route } from "./+types/orgs.$org-id_.migrations.$id.import";
 import { Navigate } from "react-router";
 import { isNullish } from "@usenullish/nullish-common";
 import { MigrationWizard } from "~/components/settings/migrations/wizard/migration-wizard";
@@ -16,7 +16,7 @@ export const loader = async (args: Route.LoaderArgs) => {
   return { migration, datasets };
 };
 
-// /orgs/:orgId/migrations/:id
+// /orgs/:orgId/migrations/:id/import
 const MigrationPage = ({ loaderData, params }: Route.ComponentProps) => {
   const organizations = useOrganizations();
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
