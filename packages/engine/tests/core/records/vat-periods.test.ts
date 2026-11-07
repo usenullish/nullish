@@ -218,6 +218,22 @@ describe("vat-periods", () => {
       expect(result.result.version).toBe(1);
     });
 
+    test("creates the period open when no status is given", async () => {
+      const result = await collectionStore.insert({
+        values: {
+          startOn: new Date("2026-07-01"),
+          endOn: new Date("2026-12-31"),
+        },
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.status).toBe(VatPeriodStatus.OPEN);
+    });
+
     test("returns an error Result when the period overlaps an existing one", async () => {
       const result = await collectionStore.insert({
         values: {
