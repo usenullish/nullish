@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { tryCatch } from "@usenullish/nullish-common";
 import { and, eq } from "drizzle-orm";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, VatType } from "@usenullish/nullish-schema/db";
 import type { Migration } from "@usenullish/nullish-schema/migration";
 import {
   MigrateJournalService,
@@ -26,6 +26,7 @@ const db = instance.connection;
 
 const journalEntries = DbSchema.Ledger.Journal.JournalEntriesSchema;
 const postings = DbSchema.Ledger.Journal.PostingsSchema;
+const vatRates = DbSchema.Core.Vat.VatRatesSchema;
 
 const entry = ({
   reference,
@@ -110,6 +111,28 @@ describe("MigrateJournalService", () => {
   test("returns an error Result for unresolvable VAT codes", async () => {
     const result = await migrate({
       journal: [entry({ reference: "R-1", vat: "ZZ99 (8.10%)" })],
+    });
+
+    if (result.status === "success") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    expect(result.err).toBeInstanceOf(MigrateJournalUnknownVatError);
+  });
+
+  test("returns an error Result when the rate of the cell differs from the VAT rate of the code", async () => {
+    await db.insert(vatRates).values({
+      organizationId: orgId,
+      code: "UN81",
+      type: VatType.NET_RATE_TAX,
+      rate: 8.1,
+      netRate: 6.2,
+      startOn: new Date(Date.UTC(2026, 0, 1)),
+    });
+
+    const result = await migrate({
+      journal: [entry({ reference: "R-1", vat: "UN81(SSS1/68) (6.80%)" })],
     });
 
     if (result.status === "success") {

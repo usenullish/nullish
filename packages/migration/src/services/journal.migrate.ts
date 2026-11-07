@@ -9,6 +9,7 @@ import {
   notEmptyString,
 } from "@usenullish/nullish-common";
 import type { Records } from "@usenullish/nullish-schema/records";
+import { VatType } from "@usenullish/nullish-schema/db";
 import type { Migration } from "@usenullish/nullish-schema/migration";
 import { listAccountsByOrgId } from "../_helpers/accounts";
 import { listCurrencies } from "../_helpers/currencies";
@@ -149,9 +150,24 @@ const assertJournalEntriesCurrencies = ({
 
 // Bexio packs the vat code together with extra reference and rate info in one free-text
 // cell (e.g. "UN81(SSS1/68) (6.80%)"), so a exact match is not possible. Instead we look
-// for which of the organization's vat rate codes the cell contains.
-const matchingVatRates = ({ vat, vatRates }: { vat: string; vatRates: VatRate[] }): VatRate[] =>
-  vatRates.filter(({ code }) => vat.startsWith(code));
+// for the organization's vat rates whose code starts the cell and, when the cell ends with a
+// rate, whose rate is that one (the net rate for the net rate tax).
+//
+// For example, say the user has defined a code "UN81" for the organization as net rate tax at
+// 6.20%. If the migration data contains a cell "UN81(SSS1/68) (6.80%)", matching on the code
+// would book the posting at 6.20% incorrectly.
+const VAT_CELL_RATE = /\((\d+(?:\.\d+)?)%\)\s*$/;
+
+const matchingVatRates = ({ vat, vatRates }: { vat: string; vatRates: VatRate[] }): VatRate[] => {
+  const cellRate = VAT_CELL_RATE.exec(vat)?.[1];
+
+  return vatRates.filter(
+    ({ code, type, rate, netRate }) =>
+      vat.startsWith(code) &&
+      (isNullish(cellRate) ||
+        Number(cellRate) === (type === VatType.NET_RATE_TAX ? netRate : rate)),
+  );
+};
 
 const assertJournalEntriesVat = ({
   journal,
