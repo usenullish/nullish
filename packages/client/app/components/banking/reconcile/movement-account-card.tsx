@@ -107,16 +107,6 @@ export const MovementAccountCard = ({
               </Field>
 
               <Field>
-                <FieldLabel htmlFor={vatRateId}>{i18n.bank_movements.label.vat_rate}</FieldLabel>
-                <VatRateSelect
-                  id={vatRateId}
-                  name="vatRateId"
-                  vatRates={validRates}
-                  defaultValue={null}
-                />
-              </Field>
-
-              <Field>
                 <FieldLabel htmlFor={descriptionId}>
                   {i18n.bank_movements.label.description}
                 </FieldLabel>
@@ -124,6 +114,16 @@ export const MovementAccountCard = ({
                   id={descriptionId}
                   name="description"
                   defaultValue={movement.communication ?? movement.description ?? ""}
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor={vatRateId}>{i18n.bank_movements.label.vat_rate}</FieldLabel>
+                <VatRateSelect
+                  id={vatRateId}
+                  name="vatRateId"
+                  vatRates={validRates}
+                  defaultValue={null}
                 />
               </Field>
             </FieldGroup>
