@@ -1,6 +1,7 @@
 import type { Route } from "./+types/orgs.$org-id.accounting.reports.vat.declaration";
 import { isNullish } from "@usenullish/nullish-common";
-import { RATE_DECIMALS } from "@usenullish/nullish-schema/db";
+import { RATE_DECIMALS, VatPeriodStatus } from "@usenullish/nullish-schema/db";
+import { Badge } from "~/ui/components/badge";
 import { ReportPeriodSelect } from "~/components/reports/report-period";
 import { VatDeclarationSection } from "~/components/reports/vat-declaration-section";
 import { useI18n } from "~/kit/i18n/i18n.context";
@@ -23,7 +24,12 @@ const OrganizationVatDeclarationPage = ({ loaderData }: Route.ComponentProps) =>
 
   return (
     <div className="flex flex-col gap-8">
-      <ReportPeriodSelect periods={periods} period={period} name={VAT_PERIOD_ID_KEY} />
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <ReportPeriodSelect periods={periods} period={period} name={VAT_PERIOD_ID_KEY} />
+        <Badge variant={period.status === VatPeriodStatus.OPEN ? "outline" : "secondary"}>
+          {i18n.core.status[period.status]}
+        </Badge>
+      </div>
 
       {!isNullish(declaration) && (
         <>
