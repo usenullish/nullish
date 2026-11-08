@@ -1,17 +1,17 @@
 import { useOrganization } from "~/context/contexts/organization.context";
-import type { Route } from "../../.react-router/types/app/routes/+types/orgs.$org-id.banking.settings_.bank-relations.$id";
+import type { Route } from "./+types/orgs.$org-id.banking.$id_.edit";
 import { BankRelationsServer } from "~/context/server/bank-relations.server";
 import { isNullish } from "@usenullish/nullish-common";
 import { Navigate } from "react-router";
-import { BankRelationEdit } from "~/components/settings/bank-relations/edit/bank-relation-edit";
+import { BankRelationEdit } from "~/components/banking/edit/bank-relation-edit";
 import type { RouteHandle } from "~/kit/router/route-handle";
 import { BankingPath } from "~/navigation";
 
 export const handle: RouteHandle = {
   permission: { write: true },
   breadcrumb: {
-    back: ({ organizationId }) =>
-      BankingPath.create({ organizationId }).toSettings({ path: "/bank-relations" }),
+    back: ({ organizationId, params }) =>
+      BankingPath.create({ organizationId }).to({ path: `/${params.id ?? ""}` }),
     label: ({ i18n }) => i18n.bank_relations.text.edit_title,
   },
 };
@@ -31,5 +31,5 @@ const BankRelationPage = ({ loaderData }: Route.ComponentProps) => {
   return <BankRelationEdit organizationId={organizationId} bankRelation={bankRelation} />;
 };
 
-// /orgs/:orgId/banking/settings/bank-relations/:id
+// /orgs/:orgId/banking/:id/edit
 export default BankRelationPage;

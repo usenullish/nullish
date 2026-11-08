@@ -1006,6 +1006,7 @@
       "reconciliation": "Riconciliazione"
     },
     "text": {
+      "details": "Dettagli del conto",
       "create_title": "Crea un conto bancario",
       "edit_title": "Modifica conto bancario",
       "empty": "Nessun conto bancario per ora.",

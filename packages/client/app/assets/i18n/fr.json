@@ -1006,6 +1006,7 @@
       "reconciliation": "Rapprochement"
     },
     "text": {
+      "details": "Détails du compte",
       "create_title": "Créer un compte bancaire",
       "edit_title": "Modifier le compte bancaire",
       "empty": "Aucun compte bancaire pour le moment.",

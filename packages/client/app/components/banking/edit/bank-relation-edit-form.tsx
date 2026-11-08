@@ -1,7 +1,7 @@
 import type { Api } from "@usenullish/nullish-schema/server";
 import { Button } from "~/ui/components/button";
 import { Field, FieldGroup } from "~/ui/components/field";
-import { BankRelationFields } from "~/components/settings/bank-relations/form/bank-relation-fields";
+import { BankRelationFields } from "~/components/banking/form/bank-relation-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
 
