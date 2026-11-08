@@ -857,6 +857,7 @@
   },
   "vat": {
     "action": {
+      "create_rate_now": "Crée le taux de la dette fiscale nette ici.",
       "settings_create": "Créer les paramètres TVA",
       "methods_create": "Créer les méthodes TVA",
       "period_create": "Créer une période TVA",
@@ -880,6 +881,7 @@
       "no_vat_rate": "Pas de taux de TVA"
     },
     "text": {
+      "net_rate_tax_missing": "Ta configuration TVA est presque complète : il manque le taux que l'administration fiscale t'a accordé.",
       "period_edit": "Modifier la période TVA",
       "rate_edit": "Modifier le taux TVA",
       "method_edit": "Modifier les méthodes TVA",

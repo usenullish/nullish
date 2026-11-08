@@ -6,6 +6,7 @@ import { Field, FieldError, FieldGroup } from "~/ui/components/field";
 import { JournalFields } from "~/components/journal/form/journal-fields";
 import { useJournalDescribed } from "~/components/journal/form/_journal-described.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { NetRateTaxMissing } from "~/components/settings/vat/rates/onboarding/net-rate-tax-missing";
 
 export const NewJournalForm = ({
   onAction,
@@ -27,6 +28,8 @@ export const NewJournalForm = ({
 
   return (
     <form onSubmit={onSubmit} className="mx-auto w-full max-w-5xl py-10">
+      <NetRateTaxMissing vatRates={vatRates} vatMethods={vatMethods} />
+
       <FieldGroup>
         <h1 className="text-xs font-medium">{i18n.journal.text.new}</h1>
 
