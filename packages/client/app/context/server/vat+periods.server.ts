@@ -21,7 +21,7 @@ export class VatPeriodsServer extends ServerLoader {
     return await this._loadListNested({
       args,
       errorFallbackMsg: "Unexpected error while loading the VAT periods",
-      defaultSort: { field: "createdAt", direction: "asc" },
+      defaultSort: { field: "startOn", direction: "desc" },
       filtersSchema: ApiSchema.VatPeriods.GetVatPeriodsFiltersQuerySchema,
       loaderWithOrgIdFn: this.#service.list,
     });
