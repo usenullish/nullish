@@ -857,6 +857,7 @@
   },
   "vat": {
     "action": {
+      "create_rate_now": "Erstelle den Saldosteuersatz hier.",
       "settings_create": "MWST-Einstellungen erstellen",
       "methods_create": "MWST-Methoden erstellen",
       "period_create": "MWST-Periode erstellen",
@@ -880,6 +881,7 @@
       "no_vat_rate": "Kein MWST-Satz"
     },
     "text": {
+      "net_rate_tax_missing": "Deine MWST-Konfiguration ist fast komplett: Es fehlt noch der Satz, den dir die Steuerverwaltung gewährt hat.",
       "period_edit": "MWST-Periode bearbeiten",
       "rate_edit": "MWST-Satz bearbeiten",
       "method_edit": "MWST-Methoden bearbeiten",

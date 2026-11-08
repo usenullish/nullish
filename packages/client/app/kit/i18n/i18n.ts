@@ -781,6 +781,7 @@ const I18nBillingSchema = z.strictObject({
 
 const I18nVatSchema = z.strictObject({
   action: z.strictObject({
+    create_rate_now: z.string(),
     settings_create: z.string(),
     methods_create: z.string(),
     period_create: z.string(),
@@ -801,6 +802,7 @@ const I18nVatSchema = z.strictObject({
     no_vat_rate: z.string(),
   }),
   text: z.strictObject({
+    net_rate_tax_missing: z.string(),
     period_edit: z.string(),
     rate_edit: z.string(),
     method_edit: z.string(),

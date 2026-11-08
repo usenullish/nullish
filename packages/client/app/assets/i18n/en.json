@@ -857,6 +857,7 @@
   },
   "vat": {
     "action": {
+      "create_rate_now": "Create the net rate here.",
       "settings_create": "Create VAT settings",
       "methods_create": "Create VAT methods",
       "period_create": "Create a VAT period",
@@ -880,6 +881,7 @@
       "no_vat_rate": "No VAT rate"
     },
     "text": {
+      "net_rate_tax_missing": "Your VAT configuration is almost complete: it's missing the rate the tax administration granted you.",
       "period_edit": "Edit VAT period",
       "rate_edit": "Edit VAT rate",
       "method_edit": "Edit VAT methods",

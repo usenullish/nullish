@@ -16,6 +16,7 @@ import { CurrencyFields } from "~/components/core/currency-fields";
 import { useBillingSettings } from "~/context/contexts/billing-settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { isInvoiceVatRateUsableOn } from "~/kit/utils/vat-rates.utils";
+import { NetRateTaxMissing } from "~/components/settings/vat/rates/onboarding/net-rate-tax-missing";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
 
 type VatRate = Api["VatRates"]["Client"]["VatRate"];
@@ -73,6 +74,8 @@ export const NewInvoiceForm = ({
 
   return (
     <form onSubmit={buildFormSubmit({ onAction })} className="mx-auto w-full max-w-2xl py-10">
+      <NetRateTaxMissing vatRates={vatRates} vatMethods={vatMethods} />
+
       <FieldGroup>
         <h1 className="text-xs font-medium">{i18n.invoices.action.create}</h1>
 

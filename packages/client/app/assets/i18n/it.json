@@ -857,6 +857,7 @@
   },
   "vat": {
     "action": {
+      "create_rate_now": "Crea qui l'aliquota saldo.",
       "settings_create": "Crea le impostazioni IVA",
       "methods_create": "Crea i metodi IVA",
       "period_create": "Crea un periodo IVA",
@@ -880,6 +881,7 @@
       "no_vat_rate": "Nessuna aliquota IVA"
     },
     "text": {
+      "net_rate_tax_missing": "La tua configurazione IVA è quasi completa: manca ancora l'aliquota che l'amministrazione fiscale ti ha concesso.",
       "period_edit": "Modifica il periodo IVA",
       "rate_edit": "Modifica l'aliquota IVA",
       "method_edit": "Modifica i metodi IVA",
