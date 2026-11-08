@@ -63,6 +63,8 @@ const OrganizationInvoicePage = ({ loaderData }: Route.ComponentProps) => {
       <InvoiceDetails invoice={invoice} />
 
       <div className="flex flex-col gap-4">
+        <h2 className="text-xs font-medium">{i18n.lines.text.title}</h2>
+
         <ListFilters>
           <FilterSelect
             name="type"

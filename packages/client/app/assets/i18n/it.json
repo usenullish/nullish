@@ -413,6 +413,7 @@
       "total": "Totale"
     },
     "text": {
+      "title": "Righe",
       "empty": "Ancora nessuna riga.",
       "delete_title": "Eliminare la riga {name}?",
       "delete_description": "La riga viene rimossa dalla bozza di fattura. Questa azione è irreversibile."

@@ -368,6 +368,7 @@ const I18nLinesSchema = z.strictObject({
   state: z.strictObject({ creating: z.string() }),
   label: z.strictObject({ quantity: z.string(), unit_price: z.string(), total: z.string() }),
   text: z.strictObject({
+    title: z.string(),
     empty: z.string(),
     delete_title: z.string(),
     delete_description: z.string(),

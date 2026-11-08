@@ -413,6 +413,7 @@
       "total": "Total"
     },
     "text": {
+      "title": "Lignes",
       "empty": "Aucune ligne pour l'instant.",
       "delete_title": "Supprimer la ligne {name} ?",
       "delete_description": "La ligne est retirée du brouillon de facture. Cette action est irréversible."
