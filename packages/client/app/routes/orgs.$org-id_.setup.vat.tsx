@@ -1,11 +1,9 @@
 import type { Route } from "./+types/orgs.$org-id_.setup.vat";
-import { useState } from "react";
 import { Navigate } from "react-router";
-import { isNullish, nonNullish, type Option } from "@usenullish/nullish-common";
-import { VatPaymentMethod } from "@usenullish/nullish-schema/db";
+import { isNullish, nonNullish } from "@usenullish/nullish-common";
 import { SetupVat } from "~/components/settings/organizations/setup/setup-vat";
 import { SetupStep } from "~/components/settings/organizations/setup/setup-step";
-import { setupPath, setupSteps } from "~/components/settings/organizations/setup/setup.hooks";
+import { SETUP_STEPS, setupPath } from "~/components/settings/organizations/setup/setup.hooks";
 import { OrganizationsSetupServer } from "~/context/server/organizations+setup.server";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
@@ -16,7 +14,6 @@ export const loader = async (args: Route.LoaderArgs) => {
 // /orgs/:orgId/setup/vat
 const SetupVatPage = ({ loaderData, params }: Route.ComponentProps) => {
   const { i18n } = useI18n();
-  const [paymentMethod, setPaymentMethod] = useState<Option<VatPaymentMethod>>(undefined);
   const organizationId = params["org-id"];
 
   if (isNullish(organizationId)) {
@@ -25,15 +22,10 @@ const SetupVatPage = ({ loaderData, params }: Route.ComponentProps) => {
 
   const ready = setupPath({ organizationId, step: "ready" });
 
-  const next = ({ paymentMethod }: { paymentMethod: Option<VatPaymentMethod> }): string =>
-    paymentMethod === VatPaymentMethod.NET_RATE
-      ? setupPath({ organizationId, step: "vat-rate" })
-      : ready;
-
   const { period, vatSetting, vatMethod } = loaderData;
 
   if (nonNullish(vatMethod)) {
-    return <Navigate to={next(vatMethod)} replace />;
+    return <Navigate to={ready} replace />;
   }
 
   if (isNullish(period)) {
@@ -46,15 +38,14 @@ const SetupVatPage = ({ loaderData, params }: Route.ComponentProps) => {
       setup={loaderData}
       title={i18n.vat.action.settings_create}
       current="vat"
-      steps={setupSteps({ paymentMethod })}
+      steps={SETUP_STEPS}
       skipTo={ready}
     >
       <SetupVat
         organizationId={organizationId}
         period={period}
         vatSetting={vatSetting}
-        onPaymentMethodChange={setPaymentMethod}
-        redirectTo={next({ paymentMethod })}
+        redirectTo={ready}
       />
     </SetupStep>
   );

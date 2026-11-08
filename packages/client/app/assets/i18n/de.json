@@ -215,17 +215,14 @@
   "organizations": {
     "setup": {
       "organization": "Organisation",
-      "vat": "MWST",
-      "vat_rate": "Satz"
+      "vat": "MWST"
     },
     "setup_done": {
       "organization": "Hurra, {name} wurde erstellt",
-      "vat": "Bravo, die MWST ist eingerichtet",
-      "vat_rate": "Perfekt, der Saldosteuersatz ist erfasst"
+      "vat": "Bravo, die MWST ist eingerichtet"
     },
     "setup_next": {
-      "vat": "Ist die Organisation mehrwertsteuerpflichtig?",
-      "vat_rate": "Noch eine Sache: der Saldosteuersatz."
+      "vat": "Ist die Organisation mehrwertsteuerpflichtig?"
     },
     "action": {
       "create": "Organisation erstellen",

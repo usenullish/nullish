@@ -215,17 +215,14 @@
   "organizations": {
     "setup": {
       "organization": "Organisation",
-      "vat": "TVA",
-      "vat_rate": "Taux"
+      "vat": "TVA"
     },
     "setup_done": {
       "organization": "Hourra, {name} est créée",
-      "vat": "Bravo, la TVA est configurée",
-      "vat_rate": "Parfait, le taux de la dette fiscale nette est en place"
+      "vat": "Bravo, la TVA est configurée"
     },
     "setup_next": {
-      "vat": "L'organisation est-elle assujettie à la TVA ?",
-      "vat_rate": "Dernière chose : le taux de la dette fiscale nette."
+      "vat": "L'organisation est-elle assujettie à la TVA ?"
     },
     "action": {
       "create": "Créer une organisation",

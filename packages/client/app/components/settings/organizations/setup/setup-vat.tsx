@@ -1,6 +1,5 @@
 import { useActionState } from "react";
 import type { Api } from "@usenullish/nullish-schema/server";
-import type { VatPaymentMethod } from "@usenullish/nullish-schema/db";
 import { isNullish, type Option } from "@usenullish/nullish-common";
 import { Navigate } from "react-router";
 import { type FormState, INIT_FORM_STATE } from "~/context/form/form";
@@ -18,13 +17,11 @@ export const SetupVat = ({
   organizationId,
   period,
   vatSetting,
-  onPaymentMethodChange,
   redirectTo,
 }: {
   organizationId: Api["Organizations"]["Client"]["Organization"]["id"];
   period: Api["Periods"]["Client"]["Period"];
   vatSetting: Option<Api["VatSettings"]["Client"]["VatSetting"]>;
-  onPaymentMethodChange: (paymentMethod: VatPaymentMethod) => void;
   redirectTo: string;
 }) => {
   const { i18n } = useI18n();
@@ -63,7 +60,7 @@ export const SetupVat = ({
       <FieldGroup>
         {withSettings && <VatSettingFields />}
 
-        <VatMethodSelects onPaymentMethodChange={onPaymentMethodChange} />
+        <VatMethodSelects />
 
         <Field>
           <Button type="submit" disabled={pending}>

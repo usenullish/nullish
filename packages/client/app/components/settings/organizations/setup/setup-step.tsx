@@ -26,7 +26,7 @@ export const SetupStep = ({
   setup: OrganizationSetup;
   title: string;
   current: Exclude<SetupStepKey, "organization">;
-  steps: SetupStepKey[];
+  steps: readonly SetupStepKey[];
   skipTo: string;
   children: React.ReactNode;
 }) => {

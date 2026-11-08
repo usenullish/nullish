@@ -201,9 +201,9 @@ const I18nChatSchema = z.strictObject({
 });
 
 const I18nOrganizationsSchema = z.strictObject({
-  setup: z.strictObject({ organization: z.string(), vat: z.string(), vat_rate: z.string() }),
-  setup_done: z.strictObject({ organization: z.string(), vat: z.string(), vat_rate: z.string() }),
-  setup_next: z.strictObject({ vat: z.string(), vat_rate: z.string() }),
+  setup: z.strictObject({ organization: z.string(), vat: z.string() }),
+  setup_done: z.strictObject({ organization: z.string(), vat: z.string() }),
+  setup_next: z.strictObject({ vat: z.string() }),
   action: z.strictObject({ create: z.string(), lets_go: z.string(), delete: z.string() }),
   state: z.strictObject({ creating: z.string() }),
   label: z.strictObject({

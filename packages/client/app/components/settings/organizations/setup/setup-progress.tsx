@@ -7,7 +7,7 @@ export const SetupProgress = ({
   steps,
 }: {
   current?: SetupStepKey;
-  steps: SetupStepKey[];
+  steps: readonly SetupStepKey[];
 }) => {
   const { i18n } = useI18n();
 
