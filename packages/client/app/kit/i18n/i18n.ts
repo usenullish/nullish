@@ -906,6 +906,7 @@ const I18nBank_relationsSchema = z.strictObject({
     reconciliation: z.string(),
   }),
   text: z.strictObject({
+    details: z.string(),
     create_title: z.string(),
     edit_title: z.string(),
     empty: z.string(),

@@ -125,11 +125,6 @@ export const NAVIGATION: NavigationGroup[] = [
       },
       { title: "billing", path: "/billing/settings/general", match: "/billing/settings" },
       {
-        title: "banking",
-        path: "/banking/settings/bank-relations",
-        match: "/banking/settings",
-      },
-      {
         title: "accounting",
         path: "/accounting/settings/periods",
         match: "/accounting/settings",
@@ -147,10 +142,6 @@ export const ORGANIZATION_TABS: NavigationItem[] = [
 export const BILLING_TABS: NavigationItem[] = [
   { title: "settings", path: "/billing/settings/general" },
   { title: "document_templates", path: "/billing/settings/document-templates" },
-];
-
-export const BANKING_TABS: NavigationItem[] = [
-  { title: "bank_relations", path: "/banking/settings/bank-relations" },
 ];
 
 export const ACCOUNTING_TABS: NavigationItem[] = [

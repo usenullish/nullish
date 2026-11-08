@@ -1006,6 +1006,7 @@
       "reconciliation": "Abgleich"
     },
     "text": {
+      "details": "Kontodetails",
       "create_title": "Bankkonto erstellen",
       "edit_title": "Bankkonto bearbeiten",
       "empty": "Noch kein Bankkonto.",

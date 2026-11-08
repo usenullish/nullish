@@ -1006,6 +1006,7 @@
       "reconciliation": "Reconciliation"
     },
     "text": {
+      "details": "Account details",
       "create_title": "Create a bank account",
       "edit_title": "Edit bank account",
       "empty": "No bank account yet.",

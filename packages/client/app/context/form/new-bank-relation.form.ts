@@ -9,17 +9,22 @@ interface SubmitBankRelationArgs {
   organizationId: Api["Organizations"]["Client"]["Organization"]["id"];
 }
 
+type CreatedBankRelation = Api["BankRelations"]["Client"]["CreateBankRelationResponse"];
+
 export const buildUseNewBankRelationAction = ({
   organizationId,
-}: Pick<SubmitBankRelationArgs, "organizationId">): UseActionStateFn => {
-  const useNewBankRelationAction: UseActionStateFn = async (_prevState, formData) => {
+}: Pick<SubmitBankRelationArgs, "organizationId">): UseActionStateFn<CreatedBankRelation> => {
+  const useNewBankRelationAction: UseActionStateFn<CreatedBankRelation> = async (
+    _prevState,
+    formData,
+  ) => {
     const result = await submitBankRelation({ formData, organizationId });
 
     if (result.status === "error") {
       return { name: "error" as const, err: result.err };
     }
 
-    return { name: "ready" as const, result: undefined };
+    return { name: "ready" as const, result: result.result };
   };
 
   return useNewBankRelationAction;
