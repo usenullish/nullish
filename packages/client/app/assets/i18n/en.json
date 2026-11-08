@@ -215,17 +215,14 @@
   "organizations": {
     "setup": {
       "organization": "Organization",
-      "vat": "VAT",
-      "vat_rate": "Rate"
+      "vat": "VAT"
     },
     "setup_done": {
       "organization": "Hooray, {name} is created",
-      "vat": "Well done, VAT is set up",
-      "vat_rate": "Perfect, the net rate tax is in place"
+      "vat": "Well done, VAT is set up"
     },
     "setup_next": {
-      "vat": "Is the organization subject to VAT?",
-      "vat_rate": "One last thing: the net rate tax."
+      "vat": "Is the organization subject to VAT?"
     },
     "action": {
       "create": "Create organization",

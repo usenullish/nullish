@@ -215,17 +215,14 @@
   "organizations": {
     "setup": {
       "organization": "Organizzazione",
-      "vat": "IVA",
-      "vat_rate": "Aliquota"
+      "vat": "IVA"
     },
     "setup_done": {
       "organization": "Evviva, {name} è stata creata",
-      "vat": "Bravo, l'IVA è configurata",
-      "vat_rate": "Perfetto, l'aliquota saldo è registrata"
+      "vat": "Bravo, l'IVA è configurata"
     },
     "setup_next": {
-      "vat": "L'organizzazione è soggetta all'IVA?",
-      "vat_rate": "Un'ultima cosa: l'aliquota saldo."
+      "vat": "L'organizzazione è soggetta all'IVA?"
     },
     "action": {
       "create": "Crea l'organizzazione",
