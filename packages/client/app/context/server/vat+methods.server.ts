@@ -37,15 +37,4 @@ export class VatMethodsServer extends ServerLoader {
       loaderWithOrgIdFn: this.#service.listAll,
     });
   }
-
-  async listVatMethods(
-    args: LoaderFunctionArgs,
-  ): Promise<Option<Api["VatMethods"]["Client"]["GetVatMethodsResponse"]>> {
-    return await this._loadListNested({
-      args,
-      errorFallbackMsg: "Unexpected error while loading the VAT methods",
-      defaultSort: { field: "createdAt", direction: "asc" },
-      loaderWithOrgIdFn: this.#service.list,
-    });
-  }
 }
