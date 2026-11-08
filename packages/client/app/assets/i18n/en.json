@@ -413,6 +413,7 @@
       "total": "Total"
     },
     "text": {
+      "title": "Lines",
       "empty": "No line yet.",
       "delete_title": "Delete the line {name}?",
       "delete_description": "The line is removed from the draft invoice. This action is irreversible."

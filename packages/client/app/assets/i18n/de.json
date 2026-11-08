@@ -413,6 +413,7 @@
       "total": "Total"
     },
     "text": {
+      "title": "Positionen",
       "empty": "Noch keine Position.",
       "delete_title": "Die Position {name} löschen?",
       "delete_description": "Die Position wird aus dem Rechnungsentwurf entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
