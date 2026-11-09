@@ -9,11 +9,28 @@ export default defineConfig({
       url: "http://localhost:3000/health",
       reuseExistingServer: true,
     },
-    {
-      command: "VITE_E2E=true bun run --filter @usenullish/nullish-client dev",
-      url: "http://localhost:5173",
-      reuseExistingServer: true,
-    },
+    ...(DEV
+      ? [
+          {
+            command: "VITE_E2E=true bun run --filter @usenullish/nullish-client dev",
+            url: "http://localhost:5173",
+            reuseExistingServer: true,
+          },
+        ]
+      : [
+          {
+            command:
+              "PORT=5174 NULLISH_API_URL=http://localhost:5173/api bun run --filter @usenullish/nullish-client start",
+            url: "http://localhost:5174",
+            reuseExistingServer: false,
+          },
+          {
+            command: "bun ./e2e/_client-proxy.ts",
+            url: "http://localhost:5173",
+            reuseExistingServer: false,
+            stdout: "pipe" as const,
+          },
+        ]),
   ],
   testDir: "./e2e",
   snapshotDir: `./${DEV ? "tmp" : "e2e"}/snapshots`,
