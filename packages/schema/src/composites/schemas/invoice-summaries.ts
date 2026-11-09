@@ -17,8 +17,13 @@ export const InvoiceAmountsSchema = z.strictObject({
   balance: InvoiceBalanceSchema,
 });
 
+export const InvoiceClientSchema = RecordsSchema.Billing.ClientsSchema.SelectClientsSchema.pick({
+  name: true,
+});
+
 export const SelectInvoiceSummariesSchema = z.strictObject({
   invoice: RecordsSchema.Billing.InvoicesSchema.SelectInvoicesSchema,
+  client: InvoiceClientSchema,
   amounts: InvoiceAmountsSchema,
 });
 

@@ -29,18 +29,24 @@ export const loadInvoiceSummaries = async ({
   invoices: [Invoice, ...Invoice[]];
 }): Promise<InvoiceSummary[]> => {
   const invoiceIds = invoices.map(({ id }) => id);
+  const clientIds = [...new Set(invoices.map(({ clientId }) => clientId))];
   const vatRateIds = [
     ...new Set(invoices.flatMap(({ vatRateId }) => (isNullish(vatRateId) ? [] : [vatRateId]))),
   ];
 
   const linesTable = DbSchema.Billing.Invoices.LinesSchema;
+  const clientsTable = DbSchema.Billing.Clients.ClientsSchema;
   const ratesTable = DbSchema.Core.Vat.VatRatesSchema;
   const systemAccountsTable = DbSchema.Ledger.SystemAccounts.SystemAccountsSchema;
   const invoiceJournalTable = DbSchema.Billing.InvoiceJournal.InvoiceJournalEntriesSchema;
   const postingsTable = DbSchema.Ledger.Journal.PostingsSchema;
 
-  const [lines, rates, [accountsReceivable]] = await Promise.all([
+  const [lines, clients, rates, [accountsReceivable]] = await Promise.all([
     tx.select().from(linesTable).where(inArray(linesTable.invoiceId, invoiceIds)),
+    tx
+      .select({ id: clientsTable.id, name: clientsTable.name })
+      .from(clientsTable)
+      .where(inArray(clientsTable.id, clientIds)),
     isArrayEmpty(vatRateIds)
       ? []
       : tx
@@ -79,6 +85,7 @@ export const loadInvoiceSummaries = async ({
         );
 
   const ratesById = new Map(rates.map(({ id, rate }) => [id, rate]));
+  const clientsById = new Map(clients.map(({ id, name }) => [id, { name }]));
 
   const summarize = (invoice: Invoice): InvoiceAmounts => {
     const { total: subtotal } = computeLinesTotal({
@@ -109,6 +116,7 @@ export const loadInvoiceSummaries = async ({
   return invoices.map((invoice) =>
     CompositesSchema.InvoiceSummariesSchema.SelectInvoiceSummariesSchema.parse({
       invoice,
+      client: clientsById.get(invoice.clientId),
       amounts: summarize(invoice),
     }),
   );

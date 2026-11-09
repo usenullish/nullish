@@ -1,5 +1,6 @@
 import * as z from "zod";
 import { BigIntCodec } from "@usenullish/nullish-common";
+import { CompositesSchema } from "../../composites";
 import { GetInvoicesFiltersQuerySchema, GetInvoicesFiltersSchema, InvoiceSchema } from "./invoices";
 
 const InvoiceTotalsSchema = z.strictObject({
@@ -15,6 +16,7 @@ const InvoiceBalanceSchema = z.strictObject({
 
 export const InvoiceSummarySchema = z.strictObject({
   invoice: InvoiceSchema,
+  client: CompositesSchema.InvoiceSummariesSchema.InvoiceClientSchema,
   amounts: z.strictObject({
     totals: InvoiceTotalsSchema,
     balance: InvoiceBalanceSchema,
