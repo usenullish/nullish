@@ -5,6 +5,7 @@
   "module": "app/root.tsx",
   "scripts": {
     "build": "react-router build",
+    "build:e2e": "VITE_E2E=true react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
