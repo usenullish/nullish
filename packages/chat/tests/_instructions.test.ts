@@ -177,6 +177,16 @@ describe("instructions", () => {
       expect(instructions({ domain })).toContain("Only perform an action that cannot be undone");
     });
 
+    test("forbids showing an ID to the user", () => {
+      expect(instructions({ domain })).toContain("Never show an ID to the user.");
+    });
+
+    test("tells the model to look up a record to name it", () => {
+      expect(instructions({ domain })).toContain(
+        "When a result only gives an ID, look up the record with its get tool to find it.",
+      );
+    });
+
     test("puts one instruction per line", () => {
       const lines = instructions({ domain }).split("\n");
 
