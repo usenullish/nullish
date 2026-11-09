@@ -8,6 +8,8 @@ import { Field, FieldError } from "~/ui/components/field";
 import { errorReason } from "~/kit/error-drawer/errors.utils";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type RunMigrationResponse = Api["MigrationsRun"]["Client"]["RunMigrationResponse"];
 
@@ -51,7 +53,7 @@ export const RunMigration = ({
   return (
     <form onSubmit={buildFormSubmit({ onAction })}>
       <Field>
-        <Button type="submit" disabled={disabled || pending}>
+        <Button type="submit" disabled={disabled || pending} {...testId(testIds.migration.run)}>
           {pending ? i18n.migrations.state.starting : label}
         </Button>
 

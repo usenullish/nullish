@@ -12,6 +12,8 @@ import {
   SelectValue,
 } from "~/ui/components/select";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type VatRate = Api["VatRates"]["Client"]["VatRate"];
 
@@ -47,7 +49,13 @@ export const VatRateFields = ({
     <>
       <Field>
         <FieldLabel htmlFor={codeId}>{i18n.core.label.code}</FieldLabel>
-        <Input id={codeId} name="code" defaultValue={initial?.code} required />
+        <Input
+          id={codeId}
+          name="code"
+          defaultValue={initial?.code}
+          required
+          {...testId(testIds.vatRate.code)}
+        />
       </Field>
 
       <Field>
@@ -82,6 +90,7 @@ export const VatRateFields = ({
             step="0.001"
             defaultValue={initial?.rate}
             required
+            {...testId(testIds.vatRate.rate)}
           />
         </Field>
 
@@ -95,6 +104,7 @@ export const VatRateFields = ({
             defaultValue={rate?.netRate ?? undefined}
             disabled={!netRateTax}
             required={netRateTax}
+            {...testId(testIds.vatRate.netRate)}
           />
         </Field>
       </div>
@@ -108,6 +118,7 @@ export const VatRateFields = ({
             type="date"
             defaultValue={initial === undefined ? undefined : toLocalDateString(initial.startOn)}
             required
+            {...testId(testIds.vatRate.startOn)}
           />
         </Field>
 

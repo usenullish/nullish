@@ -4,6 +4,8 @@ import { Check } from "lucide-react";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import type { UseNewOrganizationResult } from "~/context/form/new-organization.form";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const NewOrganizationReady = ({ result }: { result: UseNewOrganizationResult }) => {
   const { id, name } = result;
@@ -16,7 +18,11 @@ export const NewOrganizationReady = ({ result }: { result: UseNewOrganizationRes
         <Check className="size-4" />
       </h2>
 
-      <Button nativeButton={false} render={<Link to={`/orgs/${id}`} />}>
+      <Button
+        nativeButton={false}
+        render={<Link to={`/orgs/${id}`} />}
+        {...testId(testIds.newOrganization.ready)}
+      >
         {i18n.organizations.action.lets_go}
       </Button>
     </div>

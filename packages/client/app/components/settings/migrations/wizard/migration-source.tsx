@@ -18,6 +18,8 @@ import {
 import { errorReason } from "~/kit/error-drawer/errors.utils";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type CreateMigrationResponse = Api["Migrations"]["Client"]["CreateMigrationResponse"];
 
@@ -98,7 +100,7 @@ export const MigrationSource = ({
         )}
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.migration.next)}>
             {pending ? i18n.migrations.state.creating : i18n.core.action.next}
           </Button>
         </Field>

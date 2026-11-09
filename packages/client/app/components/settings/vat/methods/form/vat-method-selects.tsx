@@ -11,6 +11,8 @@ import {
   SelectValue,
 } from "~/ui/components/select";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type VatMethod = Api["VatMethods"]["Client"]["VatMethod"];
 
@@ -50,12 +52,20 @@ export const VatMethodSelects = ({
           }}
           required
         >
-          <SelectTrigger id={paymentMethodId} className="w-full">
+          <SelectTrigger
+            id={paymentMethodId}
+            className="w-full"
+            {...testId(testIds.vat.paymentMethod)}
+          >
             <SelectValue placeholder={i18n.vat.label.select_payment_method} />
           </SelectTrigger>
           <SelectContent>
             {paymentMethods.map(({ value, label }) => (
-              <SelectItem key={value} value={value}>
+              <SelectItem
+                key={value}
+                value={value}
+                {...testId(`${testIds.vat.paymentMethod}-${value}`)}
+              >
                 {label}
               </SelectItem>
             ))}
@@ -71,12 +81,20 @@ export const VatMethodSelects = ({
           defaultValue={method?.remunerationMethod ?? null}
           required
         >
-          <SelectTrigger id={remunerationMethodId} className="w-full">
+          <SelectTrigger
+            id={remunerationMethodId}
+            className="w-full"
+            {...testId(testIds.vat.remunerationMethod)}
+          >
             <SelectValue placeholder={i18n.vat.label.select_remuneration_method} />
           </SelectTrigger>
           <SelectContent>
             {remunerationMethods.map(({ value, label }) => (
-              <SelectItem key={value} value={value}>
+              <SelectItem
+                key={value}
+                value={value}
+                {...testId(`${testIds.vat.remunerationMethod}-${value}`)}
+              >
                 {label}
               </SelectItem>
             ))}

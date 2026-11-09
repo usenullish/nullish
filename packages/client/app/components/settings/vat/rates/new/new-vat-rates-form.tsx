@@ -6,6 +6,8 @@ import {
 } from "~/components/settings/vat/rates/form/vat-rate-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const NewVatRateForm = ({
   onAction,
@@ -24,7 +26,7 @@ export const NewVatRateForm = ({
         <VatRateFields defaults={defaults} />
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.vatRate.submit)}>
             {pending ? i18n.vat.state.creating : i18n.vat.action.rate_create}
           </Button>
         </Field>
