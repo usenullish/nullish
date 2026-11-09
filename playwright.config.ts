@@ -20,15 +20,15 @@ export default defineConfig({
       : [
           {
             command:
-              "VITE_E2E=true bun run --filter @usenullish/nullish-client build && PORT=5174 NULLISH_API_URL=http://localhost:3000 bun run --filter @usenullish/nullish-client start",
+              "PORT=5174 NULLISH_API_URL=http://localhost:5173/api bun run --filter @usenullish/nullish-client start",
             url: "http://localhost:5174",
-            timeout: 180_000,
             reuseExistingServer: false,
           },
           {
-            command: "bun ./e2e/_proxy.ts",
+            command: "bun ./e2e/_client-proxy.ts",
             url: "http://localhost:5173",
             reuseExistingServer: false,
+            stdout: "pipe" as const,
           },
         ]),
   ],
