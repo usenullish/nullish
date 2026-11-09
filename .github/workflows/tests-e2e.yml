@@ -32,6 +32,9 @@ jobs:
       - name: Prepare Playwright
         run: bun run e2e:playwright:install
 
+      - name: Build client
+        run: VITE_E2E=true bun run --filter @usenullish/nullish-client build
+
       - name: Run tests
         run: bun run e2e:ci
 
