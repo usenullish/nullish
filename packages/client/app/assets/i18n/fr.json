@@ -187,6 +187,12 @@
       "mulling": "Je cogite…",
       "noodling": "Hmm, voyons voir…",
       "looking_up": "Recherche…",
+      "looking_up_invoices": "Je regarde les factures…",
+      "looking_up_clients": "Je regarde les clients…",
+      "looking_up_accounts": "Je regarde les comptes…",
+      "looking_up_journal": "Je parcours le journal…",
+      "looking_up_bank": "Je regarde la banque…",
+      "looking_up_vat": "Je regarde la TVA…",
       "creating": "Création…",
       "updating": "Mise à jour…",
       "working": "Traitement…"
