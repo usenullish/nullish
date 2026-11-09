@@ -12,7 +12,6 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { authCookieMiddleware } from "~/context/middlewares/cookie";
-import { OrganizationsServer } from "~/context/server/organizations.server";
 import { OrganizationsContext } from "~/context/contexts/organizations.context";
 import { CurrenciesServer } from "~/context/server/currencies.server";
 import { CurrenciesContext } from "~/context/contexts/currencies.context";
@@ -33,9 +32,16 @@ import { notEmptyString } from "@usenullish/nullish-common";
 import { CenteredLayout } from "~/components/layout/centered-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/card";
 import { Button } from "~/ui/components/button";
+import {
+  organizationsLoaderContext,
+  organizationsLoaderMiddleware,
+} from "~/context/middlewares/organizations";
 
 // Server side middlewares
-export const middleware: MiddlewareFunction[] = [authCookieMiddleware];
+export const middleware: MiddlewareFunction[] = [
+  authCookieMiddleware,
+  organizationsLoaderMiddleware,
+];
 
 const TITLE = "nullish";
 const DESCRIPTION = "Open-source Swiss accounting you can self-host. Al ready.";
@@ -104,8 +110,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export const loader = async (args: Route.LoaderArgs) => {
+  const organizationsLoader = args.context.get(organizationsLoaderContext);
+
   return await Promise.all([
-    OrganizationsServer.create().listAllOrganizations(args),
+    organizationsLoader.listAll(),
     CurrenciesServer.create().listAll(args),
     initKit(args),
     UserReportsServer.create().getLlmUsage(args),
