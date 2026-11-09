@@ -14,6 +14,11 @@ const domainInstructions = ({ domain }: { domain: ChatDomain }): string[] =>
     : [
         `The organization of the user has the ID ${domain.organizationId}. The tools that take an organizationId always work on it, without you passing it.`,
         "You only see this organization. For questions about the other organizations of the user, they can use the assistant without selecting an organization.",
+        ...(domain.readOnly
+          ? [
+              "You can only read data, not create, change or delete it. If the user asks to, do not attempt it: tell them that edits are turned off in this chat, and that they can turn them on if their role permits it.",
+            ]
+          : []),
       ];
 
 const AMOUNTS_INSTRUCTIONS = [
