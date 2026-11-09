@@ -26,11 +26,11 @@ export const ChatModel = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="ghost" size="sm" />}>
+      <DropdownMenuTrigger render={<Button variant="outline" size="xs" />}>
         {model}
         <ChevronDown />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-56" align="end">
+      <DropdownMenuContent className="min-w-56" align="start">
         <DropdownMenuItem>
           <span className="flex-1 truncate">{model}</span>
           <CheckIcon />

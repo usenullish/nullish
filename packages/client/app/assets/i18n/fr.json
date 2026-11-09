@@ -192,6 +192,8 @@
       "working": "Traitement…"
     },
     "label": {
+      "read_only": "Lecture seule",
+      "read_write": "Lire et modifier",
       "placeholder_organization": "Pose une question sur {organization}, p. ex. quelles factures sont encore ouvertes ?",
       "placeholder_unscoped": "p. ex. Où ai-je des factures ouvertes ?",
       "history": "Historique",
@@ -199,6 +201,10 @@
       "placeholder_disabled": "L'assistant n'est pas configuré sur cette instance."
     },
     "text": {
+      "switch_to_read_write": "Clique pour que l'assistant puisse modifier.",
+      "switch_to_read_only": "Clique pour remettre l'assistant en lecture seule.",
+      "read_only_unscoped": "Sans organisation, l'assistant peut seulement lire. Choisis-en une pour qu'il puisse aussi modifier.",
+      "read_only_reviewer": "Avec ton rôle de lecteur, l'assistant peut seulement lire.",
       "untitled_conversation": "Conversation sans titre",
       "limit_reached": "Tu as atteint la limite d'utilisation de l'assistant. Réessaie plus tard.",
       "delete_title": "Supprimer {name} ?",

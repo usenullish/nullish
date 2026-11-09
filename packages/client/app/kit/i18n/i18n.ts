@@ -179,6 +179,8 @@ const I18nChatSchema = z.strictObject({
     working: z.string(),
   }),
   label: z.strictObject({
+    read_only: z.string(),
+    read_write: z.string(),
     placeholder_organization: z.string(),
     placeholder_unscoped: z.string(),
     history: z.string(),
@@ -186,6 +188,10 @@ const I18nChatSchema = z.strictObject({
     placeholder_disabled: z.string(),
   }),
   text: z.strictObject({
+    switch_to_read_write: z.string(),
+    switch_to_read_only: z.string(),
+    read_only_unscoped: z.string(),
+    read_only_reviewer: z.string(),
     untitled_conversation: z.string(),
     limit_reached: z.string(),
     delete_title: z.string(),

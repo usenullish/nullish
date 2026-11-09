@@ -192,6 +192,8 @@
       "working": "Working on it…"
     },
     "label": {
+      "read_only": "Read only",
+      "read_write": "Read and edit",
       "placeholder_organization": "Ask about {organization}, e.g. which invoices are still open?",
       "placeholder_unscoped": "e.g. Where do I have open invoices?",
       "history": "History",
@@ -199,6 +201,10 @@
       "placeholder_disabled": "The assistant isn't set up on this instance."
     },
     "text": {
+      "switch_to_read_write": "Click to let the assistant edit.",
+      "switch_to_read_only": "Click to set the assistant back to read only.",
+      "read_only_unscoped": "Without an organization, the assistant can only read. Select one so it can edit too.",
+      "read_only_reviewer": "With your reviewer role, the assistant can only read.",
       "untitled_conversation": "Untitled conversation",
       "limit_reached": "You have reached the usage limit of the assistant. Please try again later.",
       "delete_title": "Delete {name}?",
