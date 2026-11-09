@@ -187,6 +187,12 @@
       "mulling": "Mulling it over…",
       "noodling": "Noodling…",
       "looking_up": "Looking it up…",
+      "looking_up_invoices": "Checking the invoices…",
+      "looking_up_clients": "Checking the clients…",
+      "looking_up_accounts": "Checking the accounts…",
+      "looking_up_journal": "Going through the journal…",
+      "looking_up_bank": "Checking the bank…",
+      "looking_up_vat": "Checking the VAT…",
       "creating": "Creating…",
       "updating": "Updating…",
       "working": "Working on it…"

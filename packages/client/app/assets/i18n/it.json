@@ -187,6 +187,12 @@
       "mulling": "Ci rimugino…",
       "noodling": "Hmm, vediamo…",
       "looking_up": "Ricerca…",
+      "looking_up_invoices": "Guardo le fatture…",
+      "looking_up_clients": "Guardo i clienti…",
+      "looking_up_accounts": "Guardo i conti…",
+      "looking_up_journal": "Sfoglio il giornale…",
+      "looking_up_bank": "Guardo la banca…",
+      "looking_up_vat": "Guardo l'IVA…",
       "creating": "Creazione…",
       "updating": "Aggiornamento…",
       "working": "Elaborazione…"
