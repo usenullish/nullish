@@ -192,6 +192,8 @@
       "working": "Elaborazione…"
     },
     "label": {
+      "read_only": "Solo lettura",
+      "read_write": "Leggere e modificare",
       "placeholder_organization": "Chiedi qualcosa su {organization}, ad es. quali fatture sono ancora aperte?",
       "placeholder_unscoped": "ad es. Dove ho fatture aperte?",
       "history": "Cronologia",
@@ -199,6 +201,10 @@
       "placeholder_disabled": "L'assistente non è configurato su questa istanza."
     },
     "text": {
+      "switch_to_read_write": "Clicca perché l'assistente possa modificare.",
+      "switch_to_read_only": "Clicca per riportare l'assistente in sola lettura.",
+      "read_only_unscoped": "Senza organizzazione, l'assistente può solo leggere. Scegline una perché possa anche modificare.",
+      "read_only_reviewer": "Con il tuo ruolo di lettore, l'assistente può solo leggere.",
       "untitled_conversation": "Conversazione senza titolo",
       "limit_reached": "Hai raggiunto il limite di utilizzo dell'assistente. Riprova più tardi.",
       "delete_title": "Eliminare {name}?",

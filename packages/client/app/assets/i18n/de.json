@@ -192,6 +192,8 @@
       "working": "Wird bearbeitet…"
     },
     "label": {
+      "read_only": "Nur lesen",
+      "read_write": "Lesen und bearbeiten",
       "placeholder_organization": "Frag etwas zu {organization}, z. B. welche Rechnungen noch offen sind?",
       "placeholder_unscoped": "z. B. Wo habe ich offene Rechnungen?",
       "history": "Verlauf",
@@ -199,6 +201,10 @@
       "placeholder_disabled": "Der Assistent ist auf dieser Instanz nicht eingerichtet."
     },
     "text": {
+      "switch_to_read_write": "Klicke, damit der Assistent bearbeiten kann.",
+      "switch_to_read_only": "Klicke, um den Assistenten wieder auf Nur lesen zu stellen.",
+      "read_only_unscoped": "Ohne Organisation kann der Assistent nur lesen. Wähle eine aus, damit er auch bearbeiten kann.",
+      "read_only_reviewer": "Mit deiner Rolle als Leser kann der Assistent nur lesen.",
       "untitled_conversation": "Unterhaltung ohne Titel",
       "limit_reached": "Du hast das Nutzungslimit des Assistenten erreicht. Bitte versuche es später erneut.",
       "delete_title": "{name} löschen?",

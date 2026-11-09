@@ -26,7 +26,7 @@ import {
 import { TextShimmerLoader } from "~/ui/components/loader";
 import { thinking, toolActivity } from "./_chat-activity";
 import { useI18n } from "~/kit/i18n/i18n.context";
-import { ChatModel } from "~/components/chat/chat-model";
+import { ChatReadOnlyToggle } from "~/components/chat/chat-read-only-toggle";
 import { ChatFooter } from "~/components/chat/chat-footer";
 import { useAssistant } from "~/context/contexts/assistant.context";
 import { OrganizationRootPath } from "~/navigation";
@@ -47,6 +47,7 @@ const toChatMessages = (messages: Message[]): ChatMessage[] =>
 
 export const Chat = ({
   domain,
+  canWrite = false,
   chat,
   title,
   children,
@@ -54,6 +55,7 @@ export const Chat = ({
   className,
 }: {
   domain: ChatDomain;
+  canWrite?: boolean;
   chat?: Nullish<Api["Conversations"]["Client"]["Chat"]>;
   title?: string;
   children?: React.ReactNode;
@@ -69,6 +71,8 @@ export const Chat = ({
   const [messages, setMessages] = useState<ChatMessage[]>(() =>
     toChatMessages(chat?.messages ?? []),
   );
+
+  const [readOnly, setReadOnly] = useState(true);
 
   const [answer, setAnswer] = useState("");
   const streamedText = useRef("");
@@ -149,7 +153,8 @@ export const Chat = ({
     };
 
     for await (const event of ChatService.create().stream({
-      domain,
+      domain:
+        domain.type === "organization" ? { ...domain, readOnly: readOnly || !canWrite } : domain,
       conversationId,
       message: content,
     })) {
@@ -242,7 +247,12 @@ export const Chat = ({
         />
 
         <PromptInputActions className="justify-end">
-          <ChatModel />
+          <ChatReadOnlyToggle
+            domain={domain}
+            canWrite={canWrite}
+            readOnly={readOnly}
+            onReadOnlyChange={setReadOnly}
+          />
 
           <PromptInputAction tooltip={pending ? i18n.core.state.thinking : i18n.core.action.send}>
             <Button

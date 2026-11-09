@@ -1,3 +1,4 @@
+import { useCanWrite } from "~/context/hooks/memberships.hooks";
 import { useLocation } from "react-router";
 import type { Nullish } from "@usenullish/nullish-common";
 import { useOrganization } from "~/context/contexts/organization.context";
@@ -21,12 +22,14 @@ export const OrganizationChat = ({
   const greeting = useGreeting({ name: user?.name });
 
   const location = useLocation();
+  const canWrite = useCanWrite({ organizationId: organization.id });
 
   return (
     <Chat
       key={location.key}
       className="mx-auto h-[calc(100svh-5rem)] w-full max-w-3xl"
-      domain={{ type: "organization", organizationId: organization.id, readOnly: false }}
+      domain={{ type: "organization", organizationId: organization.id, readOnly: true }}
+      canWrite={canWrite}
       chat={chat}
       title={greeting ?? ""}
       placeholder={replacePlaceholders(i18n.chat.label.placeholder_organization, {

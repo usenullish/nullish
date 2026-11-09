@@ -3,6 +3,7 @@ import { isNullish, type Nullable } from "@usenullish/nullish-common";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { Button } from "~/ui/components/button";
 import { ChatHistory } from "~/components/chat/chat-history";
+import { ChatModel } from "~/components/chat/chat-model";
 import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
@@ -22,7 +23,7 @@ export const ChatFooter = ({
     : OrganizationPath.create({ organizationId });
 
   return (
-    <div className="flex gap-1">
+    <div className="flex items-center gap-1">
       <ChatHistory organizationId={organizationId} />
 
       {started && (
@@ -30,6 +31,8 @@ export const ChatFooter = ({
           {i18n.chat.action.new_conversation}
         </Button>
       )}
+
+      <ChatModel />
     </div>
   );
 };
