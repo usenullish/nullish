@@ -10,7 +10,7 @@ import {
   envLlmEnabled,
   envLlmUrl,
   envLlmChatModel,
-  envLlmTokenLimit,
+  envLlmChatTokenLimit,
   envSignUp,
   LlmTokenLimitPeriod,
 } from "../src";
@@ -26,8 +26,8 @@ describe("env", () => {
     "NULLISH_LLM_URL",
     "NULLISH_LLM_CHAT_MODEL",
     "NULLISH_LLM_API_KEY",
-    "NULLISH_LLM_TOKEN_LIMIT",
-    "NULLISH_LLM_TOKEN_LIMIT_PERIOD",
+    "NULLISH_LLM_CHAT_TOKEN_LIMIT",
+    "NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD",
     "NULLISH_AUTH_SIGN_UP",
     "NULLISH_AUTH_URL",
     "NULLISH_AUTH_SECRET",
@@ -207,51 +207,51 @@ describe("env", () => {
     );
   });
 
-  describe("envLlmTokenLimit", () => {
-    test("returns no limit when NULLISH_LLM_TOKEN_LIMIT is unset", () => {
-      expect(envLlmTokenLimit()).toBeUndefined();
+  describe("envLlmChatTokenLimit", () => {
+    test("returns no limit when NULLISH_LLM_CHAT_TOKEN_LIMIT is unset", () => {
+      expect(envLlmChatTokenLimit()).toBeUndefined();
     });
 
-    test("returns no limit when NULLISH_LLM_TOKEN_LIMIT is empty", () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "";
+    test("returns no limit when NULLISH_LLM_CHAT_TOKEN_LIMIT is empty", () => {
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "";
 
-      expect(envLlmTokenLimit()).toBeUndefined();
+      expect(envLlmChatTokenLimit()).toBeUndefined();
     });
 
     test("defaults the period to weekly", () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "100000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "100000";
 
-      expect(envLlmTokenLimit()).toEqual({
+      expect(envLlmChatTokenLimit()).toEqual({
         tokens: 100_000n,
         period: LlmTokenLimitPeriod.WEEKLY,
       });
     });
 
     test.each(Object.values(LlmTokenLimitPeriod))("reads the %s period", (period) => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "5000";
-      process.env.NULLISH_LLM_TOKEN_LIMIT_PERIOD = period;
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "5000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD = period;
 
-      expect(envLlmTokenLimit()).toEqual({ tokens: 5000n, period });
+      expect(envLlmChatTokenLimit()).toEqual({ tokens: 5000n, period });
     });
 
     test("applies in production as well", () => {
       process.env.NODE_ENV = "production";
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "5000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "5000";
 
-      expect(envLlmTokenLimit()?.tokens).toBe(5000n);
+      expect(envLlmChatTokenLimit()?.tokens).toBe(5000n);
     });
 
     test.each(["abc", "0", "-10", "1.5"])("throws for the limit %p", (tokens) => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = tokens;
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = tokens;
 
-      expect(() => envLlmTokenLimit()).toThrow();
+      expect(() => envLlmChatTokenLimit()).toThrow();
     });
 
     test("throws for an unknown period", () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "5000";
-      process.env.NULLISH_LLM_TOKEN_LIMIT_PERIOD = "yearly";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "5000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD = "yearly";
 
-      expect(() => envLlmTokenLimit()).toThrow();
+      expect(() => envLlmChatTokenLimit()).toThrow();
     });
   });
 

@@ -70,8 +70,8 @@ describe("llm usage", () => {
   afterEach(async () => {
     await db.delete(llmReservations);
 
-    delete process.env.NULLISH_LLM_TOKEN_LIMIT;
-    delete process.env.NULLISH_LLM_TOKEN_LIMIT_PERIOD;
+    delete process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT;
+    delete process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD;
   });
 
   afterAll(async () => {
@@ -89,7 +89,7 @@ describe("llm usage", () => {
     });
 
     test("lets the request through and reserves while the usage is below the limit", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "1000000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "1000000";
 
       const response = await request();
 
@@ -102,8 +102,8 @@ describe("llm usage", () => {
     });
 
     test("answers 429 with the period once the usage reaches the limit", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "1000";
-      process.env.NULLISH_LLM_TOKEN_LIMIT_PERIOD = "daily";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "1000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD = "daily";
 
       const response = await request();
 
@@ -115,7 +115,7 @@ describe("llm usage", () => {
     });
 
     test("does not count the usage of other users nor of other models", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "1000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "1000";
 
       const response = await request({ userId: TEST_OTHER_USER_ID });
 
@@ -123,7 +123,7 @@ describe("llm usage", () => {
     });
 
     test("answers 429 once the reservations of the running requests reach the limit", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "16000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "16000";
 
       const first = await request({ userId: TEST_OTHER_USER_ID });
       const second = await request({ userId: TEST_OTHER_USER_ID });
@@ -133,7 +133,7 @@ describe("llm usage", () => {
     });
 
     test("lets only one of parallel requests through when one reservation reaches the limit", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "16000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "16000";
 
       const responses = await Promise.all([
         request({ userId: TEST_OTHER_USER_ID }),
@@ -146,7 +146,7 @@ describe("llm usage", () => {
     });
 
     test("ignores the expired reservations", async () => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "16000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "16000";
 
       await db.insert(llmReservations).values({
         userId: TEST_OTHER_USER_ID,

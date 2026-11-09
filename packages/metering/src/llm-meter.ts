@@ -4,7 +4,11 @@ import {
   LlmUsagesService,
 } from "@usenullish/nullish-admin/metering";
 import { isNullish, type Result } from "@usenullish/nullish-common";
-import { envLlmChatModel, envLlmTokenLimit, LlmTokenLimitPeriod } from "@usenullish/nullish-env";
+import {
+  envLlmChatModel,
+  envLlmChatTokenLimit,
+  LlmTokenLimitPeriod,
+} from "@usenullish/nullish-env";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 
@@ -51,7 +55,7 @@ export class LlmMeter {
     Pick<SelectLlmReservations, "reservedTokens"> & {
       expiresInSeconds: number;
     }): Promise<Result<LlmMeter>> {
-    const limit = envLlmTokenLimit();
+    const limit = envLlmChatTokenLimit();
 
     if (isNullish(limit)) {
       return {

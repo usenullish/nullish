@@ -45,14 +45,14 @@ const LlmTokenLimitSchema = z.strictObject({
 
 type LlmTokenLimit = z.infer<typeof LlmTokenLimitSchema>;
 
-export const envLlmTokenLimit = (): Option<LlmTokenLimit> => {
-  const tokens = process.env.NULLISH_LLM_TOKEN_LIMIT;
+export const envLlmChatTokenLimit = (): Option<LlmTokenLimit> => {
+  const tokens = process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT;
 
   if (isEmptyString(tokens)) {
     return undefined;
   }
 
-  const period = process.env.NULLISH_LLM_TOKEN_LIMIT_PERIOD;
+  const period = process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD;
 
   return LlmTokenLimitSchema.parse({
     tokens,
