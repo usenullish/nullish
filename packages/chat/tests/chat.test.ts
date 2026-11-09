@@ -297,12 +297,14 @@ describe("chat", () => {
   });
 
   describe("domains", () => {
-    test("exposes only the read-only tools in the unscoped domain", async () => {
+    test("passes on the tools of the server, but create_organization, in the unscoped domain", async () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 
       await stream({ domain: { type: "unscoped" } });
 
-      expect(toolNames(0)).toEqual(["count_invoices", "echo", "list_organizations"]);
+      expect(toolNames(0)).toEqual(
+        TEST_TOOLS.filter((name) => name !== "create_organization").toSorted(),
+      );
     });
 
     test("tells the model that no organization is selected in the unscoped domain", async () => {
@@ -412,27 +414,24 @@ describe("chat", () => {
         expect(messages.at(-1)?.content).toBe(`invoices of ${ORGANIZATION_ID}`);
       });
 
-      test.each(["count_clients", "create_organization"])(
-        "refuses %s without calling it",
-        async (name) => {
-          fetchSpy = mockLlm([
-            toolCallAnswer({
-              id: "call_1",
-              name,
-              args: JSON.stringify({ values: { name: "Demo" } }),
-            }),
-            textAnswer("Sorry."),
-          ]);
+      test.each(["create_organization"])("refuses %s without calling it", async (name) => {
+        fetchSpy = mockLlm([
+          toolCallAnswer({
+            id: "call_1",
+            name,
+            args: JSON.stringify({ values: { name: "Demo" } }),
+          }),
+          textAnswer("Sorry."),
+        ]);
 
-          const events = await stream({ domain: { type: "unscoped" } });
+        const events = await stream({ domain: { type: "unscoped" } });
 
-          expect(events).toContainEqual(expect.objectContaining({ type: "tool_error", name }));
+        expect(events).toContainEqual(expect.objectContaining({ type: "tool_error", name }));
 
-          const { messages } = requestBody(1);
+        const { messages } = requestBody(1);
 
-          expect(messages.at(-1)?.content).toBe("The tool is not available.");
-        },
-      );
+        expect(messages.at(-1)?.content).toBe("The tool is not available.");
+      });
 
       test("keeps the unscoped domain after a tool call", async () => {
         fetchSpy = mockLlm([

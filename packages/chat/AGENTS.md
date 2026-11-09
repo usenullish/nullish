@@ -11,7 +11,7 @@ LLM chat, e.g. the prompt that serves as the dashboard of the client.
 The chat works either inside one organization or without one, and never switches during a conversation.
 
 - **Inside an organization**, every tool is offered. The chat sets `_organizationId` on each call, so the model cannot pass another one.
-- **Without an organization**, only read-only tools are offered (`readOnlyHint: true`). The model passes `_organizationId` itself, e.g. to answer "where do I have open invoices?" across the user's organizations.
+- **Without an organization**, only read-only tools are offered: the server creates the MCP read-only (`_chat.ts`), the chat passes its tools on. The model passes `_organizationId` itself, e.g. to answer "where do I have open invoices?" across the user's organizations.
 
 Why no writing without an organization: the model picks the organization, and row-level security only keeps it within the user's own ones, not on the one they meant. A wrong read costs a second question. A wrong write leaves a record to find and delete, or a journal entry to reverse. Inside an organization, the page fixes the target. Writing without one would first need the chat to show the chosen organization and wait for a confirmation.
 

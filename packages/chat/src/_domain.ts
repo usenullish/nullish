@@ -33,7 +33,7 @@ const omitOrganizationId = ({ tool }: { tool: ChatTool }): ChatTool => {
   return ChatTool.create({ definition: restrictedTool, annotations: tool.annotations });
 };
 
-export const filterTools = ({
+export const domainTools = ({
   tools,
   domain,
 }: {
@@ -42,9 +42,9 @@ export const filterTools = ({
 }): ChatTool[] => {
   const chatTools = tools.filter(({ name }) => name !== CREATE_ORGANIZATION_TOOL);
 
-  // When not org is selected we use only the read only tools (see AGENTS.md for details)
+  // Without an organization, nothing injects the organizationId: the model passes it itself
   if (domain.type === "unscoped") {
-    return chatTools.filter(({ annotations }) => annotations?.readOnlyHint === true);
+    return chatTools;
   }
 
   return chatTools.map((tool) => omitOrganizationId({ tool }));
