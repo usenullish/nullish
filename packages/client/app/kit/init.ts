@@ -5,12 +5,14 @@ import { initI18n } from "~/kit/i18n/i18n.services";
 import { enI18n, type I18nState } from "~/kit/i18n/i18n.loaders";
 import { DEFAULT_NO_PRIVACY, initPrivacy, type Privacy } from "~/kit/privacy/privacy.services";
 import { Environment, initEnvironment } from "~/kit/environment/environment.services";
+import { DEFAULT_METADATA, initMetadata, type Metadata } from "~/kit/meta/meta.services";
 
 interface Kit {
   theme: Theme;
   i18n: I18nState;
   privacy: Privacy;
   environment: Nullish<Environment>;
+  metadata: Metadata;
 }
 
 export const DEFAULT_KIT: Kit = {
@@ -18,17 +20,19 @@ export const DEFAULT_KIT: Kit = {
   i18n: enI18n(),
   privacy: DEFAULT_NO_PRIVACY,
   environment: undefined,
+  metadata: DEFAULT_METADATA,
 };
 
 export const initKit = async (args: LoaderFunctionArgs): Promise<Kit> => {
   const result = await tryCatch(async () => {
-    const [theme, i18n, privacy, environment] = await Promise.all([
+    const [theme, i18n, privacy, environment, metadata] = await Promise.all([
       initTheme(args),
       initI18n(args),
       initPrivacy(args),
       initEnvironment(),
+      Promise.resolve(initMetadata(args)),
     ]);
-    return { theme, i18n, privacy, environment };
+    return { theme, i18n, privacy, environment, metadata };
   });
 
   // For simplicity reason and to not block the experience we fallback to defaults

@@ -28,7 +28,7 @@ import { PrivacyProvider } from "~/kit/privacy/privacy-provider";
 import { ActiveConversationProvider } from "~/kit/chat/active-conversation-provider";
 import { EnvironmentContext } from "~/kit/environment/environment.context";
 import { useNonce } from "~/kit/csp/nonce.context";
-import { notEmptyString } from "@usenullish/nullish-common";
+import { nonNullish, notEmptyString } from "@usenullish/nullish-common";
 import { CenteredLayout } from "~/components/layout/centered-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/card";
 import { Button } from "~/ui/components/button";
@@ -43,9 +43,6 @@ export const middleware: MiddlewareFunction[] = [
   organizationsLoaderMiddleware,
 ];
 
-const TITLE = "nullish";
-const DESCRIPTION = "Open-source Swiss accounting you can self-host. Al ready.";
-
 const FALLBACK_DATA: Awaited<ReturnType<typeof loader>> = [
   undefined,
   undefined,
@@ -56,11 +53,12 @@ const FALLBACK_DATA: Awaited<ReturnType<typeof loader>> = [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [_, __, kit] = useRouteLoaderData<typeof loader>("root") ?? FALLBACK_DATA;
-  const { theme, i18n } = kit;
+  const {
+    theme,
+    i18n,
+    metadata: { title, description, image: socialImage },
+  } = kit;
   const nonce = useNonce();
-
-  // TODO: derive origin
-  const socialImage = `https://app.nullish.ch/social-image.jpg`;
 
   return (
     <html
@@ -69,22 +67,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
       suppressHydrationWarning={theme === "system"}
     >
       <head>
-        <title>{TITLE}</title>
+        <title>{title}</title>
 
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta name="description" content={DESCRIPTION} />
+        <meta name="description" content={description} />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:image" content={socialImage} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        {nonNullish(socialImage) && <meta property="og:image" content={socialImage} />}
         <meta property="og:type" content="website" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:image" content={socialImage} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {nonNullish(socialImage) && <meta name="twitter:image" content={socialImage} />}
 
         {theme === "system" && (
           <script
