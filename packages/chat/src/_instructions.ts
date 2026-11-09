@@ -41,5 +41,6 @@ export const instructions = ({ domain }: { domain: ChatDomain }): string =>
     "List tools take a query with limit, offset, sort and direction, and optional filters.",
     "Before updating a record, read it with its get tool and pass its version unchanged. Only send the fields you want to change. If the update fails because the record was modified, read it again and retry once.",
     "Only perform an action that cannot be undone, e.g. opening, paying, voiding or writing off an invoice, when the user explicitly asks for it.",
+    "Never show an ID to the user. Refer to records by what the user knows them by, e.g. a client by its name and an invoice by its number. When a result only gives an ID, look up the record with its get tool to find it.",
     "Answer concisely, in the language of the user.",
   ].join("\n");
