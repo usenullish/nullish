@@ -27,6 +27,16 @@ describe("instructions", () => {
       );
     });
 
+    test("tells the model it can only read when edits are off", () => {
+      expect(instructions({ domain: { ...ORGANIZATION_DOMAIN, readOnly: true } })).toContain(
+        "You can only read data, not create, change or delete it.",
+      );
+    });
+
+    test("does not tell the model it can only read when edits are allowed", () => {
+      expect(instructions({ domain: ORGANIZATION_DOMAIN })).not.toContain("You can only read data");
+    });
+
     test("differs only by the organization", () => {
       const other = "22222222-2222-4222-8222-222222222222";
 

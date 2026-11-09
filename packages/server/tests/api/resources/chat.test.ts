@@ -401,6 +401,24 @@ describe("chat", () => {
       expect(names).not.toContain("create_client");
     });
 
+    test("tells the model a reviewer can only read even when the reviewer asks to write", async () => {
+      fetchSpy = mockLlm([textAnswer("Hello.")]);
+
+      const response = await request({
+        role: "reviewer",
+        body: JSON.stringify({
+          domain: { type: "organization", organizationId: orgId, readOnly: false },
+          message: MESSAGE,
+        }),
+      });
+
+      await response.text();
+
+      const { messages } = llmRequestBody({ fetchSpy, call: 0 });
+
+      expect(messages[0]?.content).toContain("You can only read data");
+    });
+
     test("exposes only the read-only tools to a reviewer of the organization", async () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 

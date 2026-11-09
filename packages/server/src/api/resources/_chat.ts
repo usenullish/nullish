@@ -228,7 +228,7 @@ export class ChatHandlers extends Resource {
         };
 
         for await (const $event of Chat.create({ mcp: client }).stream({
-          domain,
+          domain: domain.type === "organization" ? { ...domain, readOnly } : domain,
           history,
           message,
           signal: controller.signal,
