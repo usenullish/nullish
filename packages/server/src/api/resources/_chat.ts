@@ -90,11 +90,13 @@ export class ChatHandlers extends Resource {
 
     const { conversation, history } = initialized.result;
 
-    // Read only in two cases:
+    // Read only in three cases:
     // - without an organization (why: see packages/chat/AGENTS.md);
+    // - in an organization, unless the user asks to write (the domain defaults to read only);
     // - for a reviewer, which the database also enforces through the membership rules.
     const readOnly =
       domain.type === "unscoped" ||
+      domain.readOnly ||
       caller.user.roles?.find(({ organizationId }) => organizationId === domain.organizationId)
         ?.role === "reviewer";
 

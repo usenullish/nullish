@@ -6,7 +6,11 @@ const ORGANIZATION_ID = "11111111-1111-4111-8111-111111111111";
 
 type ChatDomain = Api["Chat"]["Client"]["ChatDomain"];
 
-const ORGANIZATION_DOMAIN: ChatDomain = { type: "organization", organizationId: ORGANIZATION_ID };
+const ORGANIZATION_DOMAIN: ChatDomain = {
+  type: "organization",
+  organizationId: ORGANIZATION_ID,
+  readOnly: false,
+};
 const UNSCOPED_DOMAIN: ChatDomain = { type: "unscoped" };
 
 describe("instructions", () => {
@@ -26,9 +30,9 @@ describe("instructions", () => {
     test("differs only by the organization", () => {
       const other = "22222222-2222-4222-8222-222222222222";
 
-      expect(instructions({ domain: { type: "organization", organizationId: other } })).toBe(
-        instructions({ domain: ORGANIZATION_DOMAIN }).replace(ORGANIZATION_ID, other),
-      );
+      expect(
+        instructions({ domain: { type: "organization", organizationId: other, readOnly: false } }),
+      ).toBe(instructions({ domain: ORGANIZATION_DOMAIN }).replace(ORGANIZATION_ID, other));
     });
   });
 

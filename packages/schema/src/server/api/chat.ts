@@ -10,7 +10,11 @@ export const ChatMessageSchema = z.strictObject({
 
 export const ChatDomainSchema = z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("unscoped") }),
-  z.strictObject({ type: z.literal("organization"), organizationId: OrganizationSchema.shape.id }),
+  z.strictObject({
+    type: z.literal("organization"),
+    organizationId: OrganizationSchema.shape.id,
+    readOnly: z.boolean().default(true),
+  }),
 ]);
 
 const ConversationIdSchema =
