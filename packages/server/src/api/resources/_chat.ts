@@ -90,10 +90,11 @@ export class ChatHandlers extends Resource {
 
     const { conversation, history } = initialized.result;
 
-    // Reviewer readonly mode is asserted at the DB level by rules using memberships
-    // but here it's a cheap way to already set the MCP as such.
+    // Read only in two cases:
+    // - without an organization (why: see packages/chat/AGENTS.md);
+    // - for a reviewer, which the database also enforces through the membership rules.
     const readOnly =
-      domain.type === "organization" &&
+      domain.type === "unscoped" ||
       caller.user.roles?.find(({ organizationId }) => organizationId === domain.organizationId)
         ?.role === "reviewer";
 

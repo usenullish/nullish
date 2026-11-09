@@ -17,7 +17,7 @@ import {
 import { envLlmApiKey, envLlmUrl, envLlmChatModel } from "@usenullish/nullish-env";
 import { instructions } from "./_instructions";
 import { callTool, listTools } from "./_tools";
-import { domainArgs, filterTools } from "./_domain";
+import { domainArgs, domainTools } from "./_domain";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { MAX_OUTPUT_TOKENS, MAX_ROUNDS } from "./_constants";
 import { type ChatHistoryMessage, historyToConversation } from "./_history";
@@ -80,7 +80,7 @@ export class Chat {
       return;
     }
 
-    const tools = filterTools({ tools: allTools.result, domain });
+    const tools = domainTools({ tools: allTools.result, domain });
 
     const conversation: ChatCompletionMessageParam[] = [
       { role: "system", content: instructions({ domain }) },
