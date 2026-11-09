@@ -613,11 +613,11 @@ describe("chat", () => {
       db.select().from(llmReservations).where(eq(llmReservations.userId, userId));
 
     beforeEach(() => {
-      process.env.NULLISH_LLM_TOKEN_LIMIT = "1000000";
+      process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT = "1000000";
     });
 
     afterEach(async () => {
-      delete process.env.NULLISH_LLM_TOKEN_LIMIT;
+      delete process.env.NULLISH_LLM_CHAT_TOKEN_LIMIT;
       await db.delete(llmReservations);
     });
 
