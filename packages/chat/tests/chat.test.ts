@@ -21,7 +21,11 @@ const ORGANIZATION_ID = "11111111-1111-4111-8111-111111111111";
 type ChatEvent = Api["Chat"]["Client"]["ChatEvent"];
 type ChatDomain = Api["Chat"]["Client"]["ChatDomain"];
 
-const ORGANIZATION_DOMAIN: ChatDomain = { type: "organization", organizationId: ORGANIZATION_ID };
+const ORGANIZATION_DOMAIN: ChatDomain = {
+  type: "organization",
+  organizationId: ORGANIZATION_ID,
+  readOnly: false,
+};
 
 const MESSAGE = "How many clients do I have?";
 

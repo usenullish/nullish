@@ -185,6 +185,14 @@ describe("chat", () => {
       expect(response.status).toBe(400);
     });
 
+    test("answers 400 when the unscoped domain asks to write", async () => {
+      const response = await request({
+        body: JSON.stringify({ domain: { type: "unscoped", readOnly: false }, message: MESSAGE }),
+      });
+
+      expect(response.status).toBe(400);
+    });
+
     test("answers 400 when the organization domain has no organization", async () => {
       const response = await request({
         body: JSON.stringify({ domain: { type: "organization" }, message: MESSAGE }),
@@ -332,14 +340,14 @@ describe("chat", () => {
     });
 
     test.each(["admin", "accountant"] as const)(
-      "exposes the write tools to an %s of the organization",
+      "exposes the write tools to an %s of the organization who asks to write",
       async (role) => {
         fetchSpy = mockLlm([textAnswer("Hello.")]);
 
         const response = await request({
           role,
           body: JSON.stringify({
-            domain: { type: "organization", organizationId: orgId },
+            domain: { type: "organization", organizationId: orgId, readOnly: false },
             message: MESSAGE,
           }),
         });
@@ -351,6 +359,47 @@ describe("chat", () => {
         expect(tools.map(({ function: { name } }) => name)).toContain("create_client");
       },
     );
+
+    test("exposes only the read-only tools in an organization by default", async () => {
+      fetchSpy = mockLlm([textAnswer("Hello.")]);
+
+      const response = await request({
+        role: "admin",
+        body: JSON.stringify({
+          domain: { type: "organization", organizationId: orgId },
+          message: MESSAGE,
+        }),
+      });
+
+      await response.text();
+
+      const names = llmRequestBody({ fetchSpy, call: 0 }).tools.map(
+        ({ function: { name } }) => name,
+      );
+
+      expect(names).toContain("list_clients");
+      expect(names.every((name) => name.startsWith("list_") || name.startsWith("get_"))).toBeTrue();
+    });
+
+    test("keeps a reviewer read only even when the reviewer asks to write", async () => {
+      fetchSpy = mockLlm([textAnswer("Hello.")]);
+
+      const response = await request({
+        role: "reviewer",
+        body: JSON.stringify({
+          domain: { type: "organization", organizationId: orgId, readOnly: false },
+          message: MESSAGE,
+        }),
+      });
+
+      await response.text();
+
+      const names = llmRequestBody({ fetchSpy, call: 0 }).tools.map(
+        ({ function: { name } }) => name,
+      );
+
+      expect(names).not.toContain("create_client");
+    });
 
     test("exposes only the read-only tools to a reviewer of the organization", async () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);

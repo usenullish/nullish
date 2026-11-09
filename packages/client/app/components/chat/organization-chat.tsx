@@ -26,7 +26,7 @@ export const OrganizationChat = ({
     <Chat
       key={location.key}
       className="mx-auto h-[calc(100svh-5rem)] w-full max-w-3xl"
-      domain={{ type: "organization", organizationId: organization.id }}
+      domain={{ type: "organization", organizationId: organization.id, readOnly: false }}
       chat={chat}
       title={greeting ?? ""}
       placeholder={replacePlaceholders(i18n.chat.label.placeholder_organization, {
