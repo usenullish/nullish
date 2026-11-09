@@ -2,7 +2,6 @@ import {
   isRouteErrorResponse,
   Link,
   Links,
-  Meta,
   type MiddlewareFunction,
   Outlet,
   Scripts,
@@ -44,6 +43,9 @@ export const middleware: MiddlewareFunction[] = [
   organizationsLoaderMiddleware,
 ];
 
+const TITLE = "nullish";
+const DESCRIPTION = "Open-source Swiss accounting you can self-host. Al ready.";
+
 const FALLBACK_DATA: Awaited<ReturnType<typeof loader>> = [
   undefined,
   undefined,
@@ -57,6 +59,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { theme, i18n } = kit;
   const nonce = useNonce();
 
+  // TODO: derive origin
+  const socialImage = `https://app.nullish.ch/social-image.jpg`;
+
   return (
     <html
       lang={i18n.lang}
@@ -64,10 +69,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
       suppressHydrationWarning={theme === "system"}
     >
       <head>
-        <title>nullish</title>
+        <title>{TITLE}</title>
 
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="description" content={DESCRIPTION} />
+
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:image" content={socialImage} />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:image" content={socialImage} />
+
         {theme === "system" && (
           <script
             nonce={nonce}
@@ -76,7 +94,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           />
         )}
 
-        <Meta />
         <Links />
 
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
