@@ -441,7 +441,9 @@ describe("chat", () => {
 
         await stream({ domain: { type: "unscoped" } });
 
-        expect(toolNames(1)).toEqual(["count_invoices", "echo", "list_organizations"]);
+        expect(toolNames(1)).toEqual(
+          TEST_TOOLS.filter((name) => name !== "create_organization").toSorted(),
+        );
         expect(requestBody(1).messages[0]?.content).toContain(
           "The user has not selected an organization",
         );
