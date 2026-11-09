@@ -33,6 +33,7 @@ import {
 
 const periods = DbSchema.Ledger.Periods.PeriodsSchema;
 const vatRates = DbSchema.Core.Vat.VatRatesSchema;
+const clients = DbSchema.Billing.Clients.ClientsSchema;
 
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
@@ -276,6 +277,38 @@ describe("loadInvoiceSummaries", () => {
       expect(invoice.status).toBe(InvoiceStatus.VOID);
       expect(amounts.totals.total).toBe(1000n);
       expect(amounts.balance.remaining).toBe(0n);
+    });
+  });
+
+  describe("client", () => {
+    test("gives the name of the client of the invoice", async () => {
+      const { orgId, clientId } = await setUpOrg();
+      const invoiceId = await createInvoice({ orgId, clientId, unitPrice: 1000n });
+
+      const { client } = await findAmounts(invoiceId);
+
+      expect(client).toEqual({ name: "Test Client" });
+    });
+
+    test("gives each invoice the name of its own client", async () => {
+      const { orgId, clientId } = await setUpOrg();
+      const [other] = await db
+        .insert(clients)
+        .values({ organizationId: orgId, name: "Other Client" })
+        .returning();
+      assertNonNullish(other);
+
+      const firstId = await createInvoice({ orgId, clientId, unitPrice: 1000n });
+      const secondId = await createInvoice({ orgId, clientId: other.id, unitPrice: 2000n });
+      const thirdId = await createInvoice({ orgId, clientId, unitPrice: 3000n });
+
+      const summaries = await summarize([firstId, secondId, thirdId]);
+
+      expect(summaries.map(({ client: { name } }) => name)).toEqual([
+        "Test Client",
+        "Other Client",
+        "Test Client",
+      ]);
     });
   });
 

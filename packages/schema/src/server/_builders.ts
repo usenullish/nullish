@@ -110,9 +110,11 @@ export const encodeInvoiceResponse = (invoice: Records["Billing"]["Invoices"]["S
 
 export const encodeInvoiceSummaryResponse = ({
   invoice,
+  client,
   amounts,
 }: Composites["InvoiceSummaries"]["Select"]) => ({
   invoice: encodeInvoiceResponse(invoice),
+  client,
   amounts: {
     totals: {
       subtotal: encodeWithCodecs({ schema: BigIntCodec, value: amounts.totals.subtotal }),
