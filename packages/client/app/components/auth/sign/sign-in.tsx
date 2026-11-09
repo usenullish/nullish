@@ -15,6 +15,8 @@ import { AUTH_NAVIGATION } from "~/navigation";
 import { useInvitationToken } from "~/kit/auth/auth-redirect.hook";
 import { useSessionExpired } from "~/kit/auth/sign-out.hook";
 import { useRedirectAfterSignIn } from "~/components/auth/sign/sign-in.hooks";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SignIn = () => {
   const { i18n } = useI18n();
@@ -89,6 +91,7 @@ export const SignIn = () => {
                   value={email}
                   onChange={($event) => setEmail($event.target.value)}
                   required
+                  {...testId(testIds.signIn.email)}
                 />
               </Field>
 
@@ -102,6 +105,7 @@ export const SignIn = () => {
                   value={password}
                   onChange={($event) => setPassword($event.target.value)}
                   required
+                  {...testId(testIds.signIn.password)}
                 />
               </Field>
 
@@ -112,7 +116,7 @@ export const SignIn = () => {
               )}
 
               <Field>
-                <Button type="submit" disabled={pending}>
+                <Button type="submit" disabled={pending} {...testId(testIds.signIn.submit)}>
                   {pending ? i18n.auth.action.signing_in : i18n.auth.action.sign_in}
                 </Button>
 

@@ -36,12 +36,19 @@
     "db:view": "drizzle-kit studio --port=3100",
     "llm:run:dev": "./llm.run.sh dev",
     "server:run:dev": "./server.run.sh prod",
-    "knip": "knip"
+    "knip": "knip",
+    "e2e": "NODE_ENV=development playwright test",
+    "e2e:ci": "playwright test --reporter=html",
+    "e2e:snapshots": "playwright test --update-snapshots --reporter=list",
+    "e2e:snapshots:local": "NODE_ENV=development playwright test --update-snapshots --reporter=list",
+    "e2e:report": "playwright show-report",
+    "e2e:playwright:install": "playwright install chromium --with-deps"
   },
   "dependencies": {
     "drizzle-orm": "^1.0.0-rc.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@types/bun": "^1.4.4",
     "drizzle-kit": "^1.0.0-rc.4",
     "knip": "^6.44.1",
