@@ -4,6 +4,15 @@ const DEV = (process.env.NODE_ENV ?? "production") === "development";
 
 export default defineConfig({
   webServer: [
+    ...(!DEV
+      ? [
+          {
+            command: "bun run db:run:dev",
+            port: 5432,
+            reuseExistingServer: true,
+          },
+        ]
+      : []),
     {
       command: "bun run --filter @usenullish/nullish-server dev",
       url: "http://localhost:3000/health",
