@@ -4,6 +4,8 @@ import { VAT_NUMBER_REGEX } from "@usenullish/nullish-common";
 import { Field, FieldLabel } from "~/ui/components/field";
 import { Input } from "~/ui/components/input";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const VatSettingFields = ({
   setting,
@@ -23,6 +25,7 @@ export const VatSettingFields = ({
         pattern={VAT_NUMBER_REGEX.source}
         defaultValue={setting?.vatNumber}
         required
+        {...testId(testIds.vat.number)}
       />
     </Field>
   );

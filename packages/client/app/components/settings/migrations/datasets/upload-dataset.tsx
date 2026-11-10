@@ -28,6 +28,8 @@ import { errorReason } from "~/kit/error-drawer/errors.utils";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type Migration = Api["Migrations"]["Client"]["Migration"];
 type Dataset = Api["MigrationsDatasets"]["Client"]["Dataset"];
@@ -130,12 +132,16 @@ export const UploadDataset = ({
                   }
                   required
                 >
-                  <SelectTrigger id={typeId} className="w-full">
+                  <SelectTrigger id={typeId} className="w-full" {...testId(testIds.migration.type)}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {types.map(({ value, label }) => (
-                      <SelectItem key={value} value={value}>
+                      <SelectItem
+                        key={value}
+                        value={value}
+                        {...testId(`${testIds.migration.type}-${value}`)}
+                      >
                         {label}
                       </SelectItem>
                     ))}
@@ -149,11 +155,17 @@ export const UploadDataset = ({
             {type === MigrationDatasetType.BALANCES && (
               <Field>
                 <FieldLabel htmlFor={validOnId}>{i18n.migrations.label.valid_on}</FieldLabel>
-                <Input id={validOnId} name="validOn" type="date" required />
+                <Input
+                  id={validOnId}
+                  name="validOn"
+                  type="date"
+                  required
+                  {...testId(testIds.migration.validOn)}
+                />
               </Field>
             )}
 
-            <Field>
+            <Field {...testId(testIds.migration.file)}>
               <FieldLabel htmlFor={fileId}>{i18n.migrations.label.file}</FieldLabel>
               <FileInput id={fileId} name="file" accept=".xlsx,.csv" required />
             </Field>
@@ -165,7 +177,7 @@ export const UploadDataset = ({
             )}
 
             <DialogFooter>
-              <Button type="submit" disabled={pending}>
+              <Button type="submit" disabled={pending} {...testId(testIds.migration.upload)}>
                 {pending
                   ? i18n.migrations.state.uploading
                   : isNullish(dataset)

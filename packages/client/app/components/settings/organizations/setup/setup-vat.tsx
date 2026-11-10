@@ -12,6 +12,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { useNotify } from "~/kit/notifications/notify.hook";
 import { useActionWithNotifyError } from "~/kit/data/form.hooks";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SetupVat = ({
   organizationId,
@@ -63,7 +65,7 @@ export const SetupVat = ({
         <VatMethodSelects />
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.setup.vat)}>
             {pending ? i18n.vat.state.creating : i18n.vat.action.settings_create}
           </Button>
         </Field>

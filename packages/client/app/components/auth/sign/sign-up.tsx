@@ -13,6 +13,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { useAuthErrorMessage } from "~/kit/auth/auth-error.hook";
 import { AUTH_NAVIGATION, InvitationPath } from "~/navigation";
 import { useInvitationToken } from "~/kit/auth/auth-redirect.hook";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SignUp = () => {
   const { i18n } = useI18n();
@@ -87,6 +89,7 @@ export const SignUp = () => {
                   value={name}
                   onChange={($event) => setName($event.target.value)}
                   required
+                  {...testId(testIds.signUp.name)}
                 />
               </Field>
 
@@ -101,6 +104,7 @@ export const SignUp = () => {
                   value={email}
                   onChange={($event) => setEmail($event.target.value)}
                   required
+                  {...testId(testIds.signUp.email)}
                 />
               </Field>
 
@@ -114,6 +118,7 @@ export const SignUp = () => {
                   value={password}
                   onChange={($event) => setPassword($event.target.value)}
                   required
+                  {...testId(testIds.signUp.password)}
                 />
               </Field>
 
@@ -124,7 +129,7 @@ export const SignUp = () => {
               )}
 
               <Field>
-                <Button type="submit" disabled={pending}>
+                <Button type="submit" disabled={pending} {...testId(testIds.signUp.submit)}>
                   {pending ? i18n.auth.action.signing_up : i18n.auth.action.sign_up}
                 </Button>
 

@@ -33,6 +33,8 @@ import { OrganizationRootPath } from "~/navigation";
 import { replaceUrlWithoutNavigation } from "~/kit/utils/history.utils";
 import { useActiveConversation } from "~/kit/chat/active-conversation.context";
 import { useLazyLoadChatMessages } from "~/components/chat/_lazy-load-chat-messages.hook";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type ChatMessage = Api["Chat"]["Client"]["ChatMessage"];
 type ChatDomain = Api["Chat"]["Client"]["ChatDomain"];
@@ -244,6 +246,7 @@ export const Chat = ({
         <PromptInputTextarea
           placeholder={enabled ? placeholder : i18n.chat.label.placeholder_disabled}
           aria-label={enabled ? placeholder : i18n.chat.label.placeholder_disabled}
+          {...testId(testIds.chat.prompt)}
         />
 
         <PromptInputActions className="justify-end">

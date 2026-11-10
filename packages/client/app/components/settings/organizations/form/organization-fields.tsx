@@ -14,6 +14,8 @@ import {
 import { AddressFields } from "~/components/core/address-fields";
 import { CommunicationFields } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const OrganizationFields = ({
   organization,
@@ -48,6 +50,7 @@ export const OrganizationFields = ({
           autoComplete="organization"
           defaultValue={organization?.name}
           required
+          {...testId(testIds.newOrganization.name)}
         />
       </Field>
 

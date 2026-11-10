@@ -15,6 +15,8 @@ import { Alert, AlertDescription, AlertTitle } from "~/ui/components/alert";
 import { Button } from "~/ui/components/button";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type Migration = Api["Migrations"]["Client"]["Migration"];
 type Dataset = Api["MigrationsDatasets"]["Client"]["Dataset"];
@@ -106,7 +108,11 @@ const MigrationFiles = ({
     <div className="flex flex-col gap-4">
       <WriteGuard>
         <div className="flex justify-end">
-          <Button variant="outline" onClick={() => setUploadOpen(true)}>
+          <Button
+            variant="outline"
+            onClick={() => setUploadOpen(true)}
+            {...testId(testIds.migration.addFile)}
+          >
             <Plus />
             {i18n.migrations.action.add_file}
           </Button>
@@ -179,7 +185,11 @@ const MigrationSucceeded = ({ backTo }: { backTo: string }) => {
         </h2>
       </ViewTransition>
 
-      <Button nativeButton={false} render={<Link to={backTo} />}>
+      <Button
+        nativeButton={false}
+        render={<Link to={backTo} />}
+        {...testId(testIds.migration.continue)}
+      >
         {i18n.migrations.action.continue}
       </Button>
     </div>
