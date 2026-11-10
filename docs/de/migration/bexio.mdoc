@@ -1,0 +1,87 @@
+---
+title: Von Bexio migrieren
+description: Bring deine Konten, Kunden, Buchhaltung und Rechnungen aus Bexio mit.
+---
+
+Du wechselst von Bexio? Nimm deine Daten mit, statt bei null anzufangen. Ein paar Dateien aus Bexio exportieren, in nullish einer Migration hinzufügen, ausführen, fertig.
+
+## Was du mitbringen kannst
+
+| Datei            | Aus Bexio als | Was sie mitbringt                                                     |
+| ---------------- | ------------- | --------------------------------------------------------------------- |
+| Kontenplan       | `.xlsx`       | Deine Konten, auch die selbst angelegten.                             |
+| Kunden           | `.csv`        | Deine Kunden und ihre Kontakte.                                       |
+| Eröffnungssalden | `.xlsx`       | Den Saldo jedes Kontos an einem bestimmten Datum.                     |
+| Journal          | `.xlsx`       | Jede einzelne Buchung, die du erfasst hast.                           |
+| Rechnungen       | `.xlsx`       | Deine bezahlten Rechnungen, verknüpft mit ihren Buchungen im Journal. |
+
+Du brauchst nicht alle. Exporte auf Deutsch, Französisch, Italienisch und Englisch funktionieren gleichermassen.
+
+## Eröffnungssalden oder Journal?
+
+Die beiden dienen verschiedenen Zwecken.
+
+**Eröffnungssalden** sind eine Momentaufnahme: der Stand jedes Kontos an einem Stichtag, z. B. am 1. Januar. nullish bucht sie als eine einzige Eröffnungsbuchung. Nimm sie, wenn du ab diesem Datum frisch in nullish starten und die Historie in Bexio lassen willst.
+
+**Das Journal** ist die Historie: jede Buchung, mit Datum, Konten, Beträgen und MWST. Nimm es, wenn du auch frühere Jahre in nullish haben willst, um ihre Berichte anzuschauen, eine Buchung nachzuschlagen oder eine MWST-Abrechnung vorzubereiten.
+
+Meistens brauchst du nur das eine oder das andere.
+
+## Rechnungen für die MWST mitbringen
+
+Importierst du das Journal, kannst du auch deine Rechnungen mitnehmen: nullish braucht sie, damit deine MWST-Abrechnung stimmt.
+
+Importiert werden nur **bezahlte** Rechnungen. Offene Rechnungen lässt du in Bexio, bis sie beglichen sind, oder du erstellst sie neu in nullish.
+
+## Bevor du loslegst
+
+Deine Jahre und die MWST-Einstellungen legt die Migration nicht an. Richte sie also zuerst ein:
+
+- **Perioden**: eine [Periode](/de/accounting/periods/) für jedes Jahr, das dein Journal abdeckt, und für das Datum deiner Eröffnungssalden. Sie müssen offen sein.
+- **MWST**: falls deine Buchungen MWST enthalten, deine [MWST-Nummer und Methoden](/de/accounting/vat/) für jedes dieser Jahre.
+
+Fehlt etwas, sagt dir nullish genau was, z. B. für welche Jahre noch eine Periode fehlt.
+
+## Aus Bexio exportieren
+
+- **Kontenplan**: Geh zu **All settings → Accounting → Chart of accounts** und klicke auf das Symbol **Export as Excel**.
+- **Kunden**: Geh zu **Exports → Contact list**.
+- **Eröffnungssalden**: Geh zu **Accounting → Reports → Balance sheet**, wähle das Datum unter **Balance sheet on** und lass **Only show opening entries** leer.
+- **Journal**: Geh zu **Accounting → Reports**, wähle das **Fiscal year** und klicke auf das Symbol **Download as Excel File**.
+- **Rechnungen**: Geh zu **Sales → Invoices** und klicke auf das Symbol **Export current list**, das aussieht wie ein Download-Knopf.
+
+## Eine Migration ausführen
+
+Das Menü **Migrationen** sehen nur Admins.
+
+{% steps %}
+
+1. Geh zu **Migrationen**, wähle **Migration starten** und wähle **Bexio** als Quelle.
+
+2. Wähle für jeden Export **Datei hinzufügen** und gib den Typ an. Bei den Eröffnungssalden kommt noch der Stichtag dazu.
+
+3. Wähle **Migration ausführen**.
+
+{% /steps %}
+
+Eine Migration gilt ganz oder gar nicht: Entweder wird alles importiert oder nichts, und dann sagt dir nullish, warum. Behebe das Problem, etwa eine fehlende Periode, und wähle **Nochmals ausführen**.
+
+## In Etappen migrieren
+
+Du musst nicht alles auf einmal mitnehmen. Jede Datei darf höchstens 500 KB gross sein, eine lange Historie kommt also meist in mehreren Teilen:
+
+- **Mehrere Journaldateien in einer Migration**: Exportiere das Journal Jahr für Jahr oder Quartal für Quartal und füge alle hinzu.
+- **Mehrere Migrationen nacheinander**: z. B. zuerst Konten und Kunden, dann eine Migration pro Jahr mit seinem Journal und seinen Rechnungen.
+
+Spätere Migrationen bauen auf früheren auf: Bestehende Konten werden wiederverwendet, Kunden über den Namen zugeordnet, und Rechnungen finden ihre Buchungen auch dann, wenn das Journal mit einer früheren Migration kam.
+
+{% aside type="tip" %}
+Heisst eine Journal- oder Eröffnungssaldendatei gleich wie eine aus einer früheren Migration, warnt dich
+nullish, damit du nichts doppelt importierst.
+{% /aside %}
+
+## Nach der Migration
+
+Importierte Buchungen sind als migriert markiert und lassen sich nicht bearbeiten. So bleibt deine Historie genau wie in Bexio.
+
+Sind die Abschlussbuchungen früherer Jahre mit dem Journal gekommen, schliess diese Jahre mit **Nur als abgeschlossen markieren** ab, damit nichts doppelt gebucht wird. Siehe [Perioden und Jahresabschluss](/de/accounting/periods/#nur-als-abgeschlossen-markieren).

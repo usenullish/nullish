@@ -1,0 +1,41 @@
+---
+title: Abgleich
+description: Mach aus deinen Bankbewegungen Buchungen, Rechnungszahlungen inklusive.
+---
+
+Beim Abgleichen sagst du nullish, was hinter jeder Bankbewegung steckt: ein Kunde, der eine Rechnung zahlt, die Miete, ein Software-Abo und so weiter. Jede abgeglichene Bewegung landet als Buchung in deinem Journal.
+
+Öffne ein Bankkonto und wähle **Abgleichen**. Dort siehst du alle Bewegungen, die noch **Abzugleichen** sind.
+
+## Einer Rechnung zugeordnete Zahlungen
+
+Zahlt ein Kunde eine QR-Rechnung, kommt die Zahlung mit der Referenz der Rechnung. nullish erkennt sie und schlägt dir die Rechnung unter **Einer Rechnung zugeordnet** vor.
+
+- Mit **Zahlung verbuchen** erfasst du die Zahlung, und die Rechnung ist bezahlt.
+- Deckt der Betrag nicht die ganze Rechnung, bleibt sie mit dem Rest unter **Noch offen** stehen. Die nächste Zahlung verbuchst du genauso, sobald sie eintrifft.
+- Hat der Kunde zu viel bezahlt, zeigt nullish **Überzahlt** an und verbucht die Differenz.
+- Falsch zugeordnet? Wähle **Nicht diese Rechnung** und verbuche die Bewegung stattdessen auf ein Konto.
+
+## Auf ein Konto zu verbuchende Bewegungen
+
+Alles andere steht unter **Auf ein Konto zu verbuchen**:
+
+1. Wähle das **Konto**, z. B. `6570 Informatikaufwand` für ein Abo.
+2. Pass die **Beschreibung** an, falls nötig. Vorausgefüllt ist die Mitteilung der Bewegung.
+3. Wähle einen **MWST-Satz**, falls MWST anfällt.
+4. Wähle **Verbuchen**.
+
+## Eine Bewegung ignorieren
+
+Nicht jede Bewegung braucht eine Buchung. Mit **Ignorieren** legst du sie beiseite.
+
+{% aside type="caution" %}
+Eine ignorierte Bewegung wird nicht gebucht und lässt sich danach nicht mehr abgleichen. Rückgängig machen geht nicht,
+also überleg es dir gut.
+{% /aside %}
+
+## Gut zu wissen
+
+- Vorerst kannst du nur Bewegungen in der Währung deiner Organisation abgleichen.
+- Eine abgeglichene Bewegung lässt sich nicht nochmals abgleichen. Schau also vor dem Verbuchen genau hin.
+- Ist alles erledigt, siehst du **Nichts abzugleichen.**

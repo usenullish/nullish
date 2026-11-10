@@ -1,0 +1,218 @@
+---
+title: Auto-hébergement
+description: Fais tourner nullish sur ta propre infrastructure avec Docker ou Podman.
+---
+
+nullish est open source : tu peux le faire tourner sur tes propres serveurs. Voici comment, avec Docker ou Podman.
+
+{% aside type="caution" %}
+nullish est en alpha. Attends-toi à des changements incompatibles d'une version à l'autre. Seule la dernière version
+reçoit les correctifs de sécurité.
+{% /aside %}
+
+## Architecture
+
+| Service    | Image               | Rôle                                                     |
+| ---------- | ------------------- | -------------------------------------------------------- |
+| `postgres` | `postgres:18`       | La base de données.                                      |
+| `server`   | `usenullish/server` | L'API. Fait aussi tourner les tâches de fond et les PDF. |
+| `client`   | `usenullish/client` | L'application web.                                       |
+| `caddy`    | `caddy:2`           | Reverse proxy : HTTPS, et `/api` vers le serveur.        |
+
+Les fichiers comme les PDF générés passent un moment dans le volume `/data` du serveur, puis sont supprimés régulièrement. Tout le reste vit dans la base de données.
+
+Les images sont sur Docker Hub pour `linux/amd64` et `linux/arm64`, avec le tag `latest` et des tags par version, p. ex. `0.1.0`, `0.1` ou `0`. Fixe une version : comme ça, c'est toi qui décides quand mettre à jour.
+
+## Prérequis
+
+- Un serveur avec Docker ou Podman.
+- Un domaine qui pointe dessus, p. ex. `nullish.example.com`.
+
+## Mise en place
+
+{% steps %}
+
+1. Crée un dossier avec un fichier `.env` :
+
+   ```sh title=".env"
+   NULLISH_DB_USERNAME=nullish
+   NULLISH_DB_PASSWORD=a-long-random-password
+
+   # openssl rand -base64 32
+   NULLISH_AUTH_SECRET=
+   NULLISH_AUTH_URL=https://nullish.example.com/api
+   NULLISH_AUTH_SIGN_UP=invite_only
+   ```
+
+   {% aside %}
+   Un fichier `.env`, c'est le plus simple, mais tes mots de passe et ton secret y traînent en clair.
+   En production, mieux vaut des secrets chiffrés, p. ex. les secrets Podman ou Docker, ou
+   [sops-nix](https://github.com/Mic92/sops-nix) ou [agenix](https://github.com/ryantm/agenix) si
+   tu es sur Nix.
+   {% /aside %}
+
+2. Ajoute un `docker-compose.yml` :
+
+   ```yaml title="docker-compose.yml"
+   services:
+     postgres:
+       image: postgres:18
+       restart: unless-stopped
+       environment:
+         POSTGRES_USER: ${NULLISH_DB_USERNAME}
+         POSTGRES_PASSWORD: ${NULLISH_DB_PASSWORD}
+         POSTGRES_DB: nullish
+       volumes:
+         - postgres-data:/var/lib/postgresql
+       healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U ${NULLISH_DB_USERNAME} -d nullish"]
+         interval: 5s
+         timeout: 5s
+         retries: 10
+
+     server:
+       image: usenullish/server:0.1.0
+       restart: unless-stopped
+       depends_on:
+         postgres:
+           condition: service_healthy
+       environment:
+         NULLISH_DB_HOST: postgres
+         NULLISH_DB_PORT: 5432
+         NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
+         NULLISH_DB_PASSWORD: ${NULLISH_DB_PASSWORD}
+         NULLISH_AUTH_SECRET: ${NULLISH_AUTH_SECRET}
+         NULLISH_AUTH_URL: ${NULLISH_AUTH_URL}
+         NULLISH_AUTH_SIGN_UP: ${NULLISH_AUTH_SIGN_UP}
+       volumes:
+         - nullish-data:/data
+
+     client:
+       image: usenullish/client:0.1.0
+       restart: unless-stopped
+       depends_on:
+         - server
+       environment:
+         NULLISH_API_URL: http://server:3000
+
+     caddy:
+       image: caddy:2
+       restart: unless-stopped
+       ports:
+         - "80:80"
+         - "443:443"
+       volumes:
+         - ./Caddyfile:/etc/caddy/Caddyfile
+         - caddy-data:/data
+
+   volumes:
+     postgres-data:
+     nullish-data:
+     caddy-data:
+   ```
+
+3. Ajoute un `Caddyfile` :
+
+   ```txt title="Caddyfile"
+   nullish.example.com {
+     handle_path /api/* {
+       reverse_proxy server:3000
+     }
+
+     handle {
+       reverse_proxy client:3000
+     }
+   }
+   ```
+
+   {% aside %}
+   L'application web appelle l'API sous `/api`, sur son propre domaine : d'où le proxy.
+   {% /aside %}
+
+4. Lance le tout :
+
+   ```sh
+   docker compose up -d
+   ```
+
+5. Ouvre ton domaine et inscris-toi. La première inscription passe toujours, quel que soit le réglage d'inscription. Crée ton organisation : tu en es l'admin.
+
+{% /steps %}
+
+## Configuration
+
+### Base de données
+
+| Variable              | Requis | Description                                  |
+| --------------------- | ------ | -------------------------------------------- |
+| `NULLISH_DB_HOST`     | oui    | Hôte de la base de données.                  |
+| `NULLISH_DB_PORT`     | oui    | Port de la base de données.                  |
+| `NULLISH_DB_USERNAME` | oui    | Utilisateur de la base de données.           |
+| `NULLISH_DB_PASSWORD` | oui    | Mot de passe de la base de données.          |
+| `NULLISH_DB_NAME`     | non    | Nom de la base de données. Défaut `nullish`. |
+
+### Authentification
+
+| Variable               | Requis | Description                                                                                                                           |
+| ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `NULLISH_AUTH_SECRET`  | oui    | Au moins 32 caractères. Génère-le avec `openssl rand -base64 32`.                                                                     |
+| `NULLISH_AUTH_URL`     | oui    | URL publique de l'API.                                                                                                                |
+| `NULLISH_AUTH_SIGN_UP` | non    | `true` (tout le monde), `false` (personne) ou `invite_only` (avec une invitation à rejoindre une organisation). Défaut `invite_only`. |
+
+## Activer l'assistant
+
+L'assistant a besoin d'un LLM. N'importe quel endpoint compatible OpenAI fait l'affaire, p. ex. ton propre modèle avec Ollama ou le fournisseur de ton choix. Sans LLM, nullish tourne très bien, simplement sans assistant.
+
+Ajoute les réglages à ton `.env` :
+
+```sh title=".env"
+NULLISH_LLM_URL=http://ollama:11434/v1
+NULLISH_LLM_CHAT_MODEL=qwen3.5:4b
+NULLISH_LLM_API_KEY=ollama
+```
+
+Passe-les au serveur dans `docker-compose.yml` :
+
+```yaml title="docker-compose.yml"
+server:
+  environment:
+    NULLISH_LLM_URL: ${NULLISH_LLM_URL}
+    NULLISH_LLM_CHAT_MODEL: ${NULLISH_LLM_CHAT_MODEL}
+    NULLISH_LLM_API_KEY: ${NULLISH_LLM_API_KEY}
+```
+
+Puis redémarre avec `docker compose up -d`. L'assistant s'active dès que les trois premiers réglages ci-dessous sont définis.
+
+| Variable                              | Requis           | Description                                                                      |
+| ------------------------------------- | ---------------- | -------------------------------------------------------------------------------- |
+| `NULLISH_LLM_URL`                     | pour l'assistant | URL de base de l'endpoint, p. ex. `http://ollama:11434/v1`.                      |
+| `NULLISH_LLM_CHAT_MODEL`              | pour l'assistant | Nom du modèle.                                                                   |
+| `NULLISH_LLM_API_KEY`                 | pour l'assistant | Clé API. Ne doit pas être vide, même pour Ollama.                                |
+| `NULLISH_LLM_CHAT_TOKEN_LIMIT`        | non              | Tokens que chaque utilisateur peut utiliser par période. Illimité si non défini. |
+| `NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD` | non              | `hourly`, `daily`, `weekly` ou `monthly`. Défaut `weekly`.                       |
+
+{% aside %}
+Le modèle a besoin d'un contexte assez grand pour les instructions et les outils de l'assistant. Avec Ollama,
+32k tokens, c'est un bon début.
+{% /aside %}
+
+## Exploitation
+
+- **Mises à jour** : change la version des deux images dans `docker-compose.yml`, puis `docker compose pull && docker compose up -d`. Les migrations tournent au démarrage.
+- **Backups** : sauvegarde la base de données, p. ex. avec `pg_dump`.
+- **Santé** : `GET /api/health` renvoie `{"status":"ok"}`.
+- **Logs** : `docker compose logs -f server`.
+
+### Ligne de commande
+
+L'image du serveur contient une petite CLI :
+
+```sh
+# List users and their organizations
+docker compose exec server ./cli user list
+
+# Permanently delete the organizations marked as deleted
+docker compose exec server ./cli organization delete --dry-run
+```
+
+Les organisations marquées comme supprimées ne disparaissent pour de bon que quand tu lances `organization delete`.

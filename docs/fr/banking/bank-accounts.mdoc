@@ -1,0 +1,38 @@
+---
+title: Comptes bancaires
+description: Ajoute tes comptes bancaires et relie-les à ta comptabilité.
+---
+
+Chaque compte bancaire dans nullish correspond à un compte chez ta banque. C'est là que tu importes tes relevés, et là que tes clients paient tes factures.
+
+## Ajouter un compte bancaire
+
+{% steps %}
+
+1. Va dans **Banque → Comptes bancaires** et choisis **Créer un compte bancaire**.
+
+2. Remplis :
+   - **Nom** : ce qui te parle, p. ex. « PostFinance entreprise ».
+   - **IBAN** : l'IBAN du compte.
+   - **QR-IBAN** : facultatif. Seulement si ta banque t'en a donné un pour les factures QR.
+   - **Devise** : la devise du compte. Par défaut, celle de ton organisation.
+   - **Compte comptable** : le compte de ton plan comptable sur lequel tout ce qui passe par ce compte bancaire est comptabilisé, p. ex. `1020 Banque`.
+
+3. Choisis **Créer un compte bancaire**.
+
+{% /steps %}
+
+{% aside %}
+Le compte comptable doit être un compte d'actif sur lequel on peut comptabiliser, pas un groupe de
+comptes. Chaque IBAN et chaque QR-IBAN ne sert qu'une fois par organisation.
+{% /aside %}
+
+## Il me faut un QR-IBAN ?
+
+Non. Ton IBAN habituel suffit pour les factures QR. Si ta banque t'a donné un QR-IBAN, ajoute-le aussi : nullish l'utilisera sur tes factures.
+
+Dans les deux cas, nullish reconnaît les paiements de tes clients au moment du [rapprochement](/fr/banking/reconciliation/).
+
+## En un coup d'œil
+
+La liste des comptes bancaires affiche le **Solde** de chaque compte et le nombre de mouvements encore à rapprocher, ou **À jour** quand il n'y a plus rien.

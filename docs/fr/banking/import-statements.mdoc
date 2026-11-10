@@ -1,0 +1,43 @@
+---
+title: Importer des relevés bancaires
+description: Fais entrer tes mouvements bancaires dans nullish avec un fichier camt.053.
+---
+
+nullish lit tes relevés bancaires au format **camt.053**, le format XML standard que toutes les banques suisses proposent dans leur e-banking.
+
+## Importer un relevé
+
+{% steps %}
+
+1. Dans ton e-banking, télécharge le relevé au format **camt.053**. C'est un fichier `.xml`.
+
+2. Dans nullish, ouvre le compte bancaire et choisis **Uploader un fichier bancaire**.
+
+3. Sélectionne le fichier et choisis **Uploader un fichier bancaire**.
+
+{% /steps %}
+
+nullish te dit combien de mouvements sont arrivés, puis t'emmène tout droit au [rapprochement](/fr/banking/reconciliation/).
+
+## Relevés qui se chevauchent
+
+Tu as importé deux fois la même période ? Aucun souci. nullish saute les relevés qu'il connaît déjà, et un mouvement présent dans deux fichiers qui se chevauchent n'est importé qu'une seule fois.
+
+## Quand l'import échoue
+
+Si tu vois **Les relevés n'ont pas pu être importés.**, vérifie que :
+
+- le fichier est bien un camt.053, et pas un camt.054, un CSV ou un PDF ;
+- il correspond à ce compte bancaire : même IBAN, même devise ;
+- il ne dépasse pas 2 Mo. Un relevé mensuel pèse en général bien moins de 1 Mo.
+
+{% aside %}
+nullish vérifie aussi que le relevé tombe juste : solde d'ouverture plus mouvements égale solde de
+clôture. Sinon, le fichier est refusé plutôt qu'importé à moitié faux.
+{% /aside %}
+
+## Mouvements
+
+Chaque ligne de ton relevé devient un **mouvement**, avec sa date, son montant, sa contrepartie, sa référence et sa communication. Les entrées sont positives, les sorties négatives.
+
+Un mouvement est **À rapprocher**, **Rapproché** ou **Ignoré**. Filtre la liste par statut pour voir ce qu'il te reste à faire.

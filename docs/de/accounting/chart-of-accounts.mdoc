@@ -1,0 +1,40 @@
+---
+title: Kontenplan
+description: Deine Konten, startklar ab dem ersten Tag, und die Systemkonten, auf die nullish automatisch bucht.
+---
+
+Sobald du eine Organisation erstellst, legt nullish einen vollständigen Kontenplan für ihre Rechtsform an: einen für GmbH und AG, einen für Einzelunternehmen. Du findest ihn unter **Einstellungen → Buchhaltung → Konten**.
+
+## Konten
+
+Jedes Konto hat einen **Code**, einen **Name** und einen **Typ**: **Aktiven**, **Fremdkapital**, **Eigenkapital**, **Ertrag**, **Aufwand** oder **Abschluss**. Konten lassen sich unter einem **Übergeordnetes Konto** gruppieren, z. B. gehört `1020 Bank` zur Gruppe der flüssigen Mittel.
+
+- Gebucht wird nur auf die Konten zuunterst im Baum. Gruppen summieren bloss, was darunter liegt.
+- Lässt du den **Name** leer, gilt der Standardname in deiner Sprache.
+- Dir fehlt ein Konto? Wähle **Konto erstellen**.
+
+{% aside %}
+Damit deine Buchhaltung sauber bleibt, kannst du ein Konto nicht löschen, wenn es Buchungen oder Unterkonten hat
+oder als Systemkonto dient. Und sobald es Buchungen hat, bleibt auch sein Typ fix.
+{% /aside %}
+
+## Systemkonten
+
+Manches bucht nullish von selbst: wenn du eine Rechnung ausstellst, eine Zahlung erfasst, eine Forderung abschreibst oder das Jahr abschliesst. Welches Konto dabei zum Zug kommt, legen die **Systemkonten** fest, unter **Einstellungen → Buchhaltung → Systemkonten**.
+
+Sie sind schon eingerichtet, meist musst du also nichts tun. Diese verwendet nullish heute:
+
+| Systemkonto                   | Standard                              | Verwendet, wenn                                            |
+| ----------------------------- | ------------------------------------- | ---------------------------------------------------------- |
+| Debitoren                     | 1100                                  | eine Rechnung ausgestellt, bezahlt oder abgeschrieben wird |
+| Standard-Ertrag               | 3400                                  | eine Rechnung ausgestellt wird                             |
+| Geschuldete MWST              | 2200                                  | eine Rechnung oder Buchung MWST enthält                    |
+| Bankkonto                     | 1020                                  | eine Zahlung ohne Wahl eines Bankkontos erfasst wird       |
+| Kreditoren                    | 2300                                  | ein Kunde zu viel bezahlt                                  |
+| Debitorenverluste             | 3805                                  | eine Rechnung abgeschrieben wird                           |
+| Rundungsdifferenzen           | 6945                                  | Beträge auf den Rappen gerundet werden müssen              |
+| Kursgewinne / -verluste       | 6999 / 6949                           | eine Zahlung in Fremdwährung von der Rechnung abweicht     |
+| Jahresgewinn oder -verlust    | 9200                                  | das Jahr abgeschlossen wird                                |
+| Jahresergebnis (Eigenkapital) | 2979, oder 2891 für Einzelunternehmen | das Jahr abgeschlossen wird                                |
+
+Willst du ein anderes Konto, etwa ein separates Ertragskonto, wähle **Bearbeiten** und such es aus.

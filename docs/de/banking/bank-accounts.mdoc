@@ -1,0 +1,38 @@
+---
+title: Bankkonten
+description: Erfasse deine Bankkonten und verknüpfe sie mit deiner Buchhaltung.
+---
+
+Jedes Bankkonto in nullish steht für ein Konto bei deiner Bank. Dorthin importierst du deine Kontoauszüge, und dorthin zahlen deine Kunden ihre Rechnungen.
+
+## Ein Bankkonto hinzufügen
+
+{% steps %}
+
+1. Geh zu **Bank → Bankkonten** und wähle **Bankkonto erstellen**.
+
+2. Füll aus:
+   - **Name**: damit du es wiedererkennst, z. B. «PostFinance Geschäft».
+   - **IBAN**: die IBAN des Kontos.
+   - **QR-IBAN**: optional. Nur wenn dir deine Bank eine für QR-Rechnungen zugeteilt hat.
+   - **Währung**: die Währung des Kontos. Vorausgewählt ist die Währung deiner Organisation.
+   - **Buchhaltungskonto**: das Konto im Kontenplan, auf das alles gebucht wird, was über dieses Bankkonto läuft, z. B. `1020 Bank`.
+
+3. Wähle **Bankkonto erstellen**.
+
+{% /steps %}
+
+{% aside %}
+Das Buchhaltungskonto muss ein bebuchbares Aktivkonto sein, keine Kontengruppe. Jede IBAN und
+QR-IBAN gibt es pro Organisation nur einmal.
+{% /aside %}
+
+## Brauche ich eine QR-IBAN?
+
+Nein. Für QR-Rechnungen reicht deine normale IBAN. Hast du von deiner Bank eine QR-IBAN bekommen, trag sie trotzdem ein, dann kommt sie auf deine Rechnungen.
+
+So oder so erkennt nullish die Zahlungen deiner Kunden beim [Abgleich](/de/banking/reconciliation/).
+
+## Auf einen Blick
+
+In der Liste siehst du pro Bankkonto den **Saldo** und wie viele Bewegungen noch abzugleichen sind. Ist nichts mehr offen, steht dort **Aktuell**.

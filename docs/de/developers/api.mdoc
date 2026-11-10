@@ -1,0 +1,43 @@
+---
+title: REST API
+description: Automatisiere nullish mit seiner REST API.
+---
+
+Was du in der App machst, geht auch über die REST API: Kunden, Rechnungen, Kontoauszüge, Journal, MWST und mehr.
+
+- Basis-URL: `https://api.nullish.ch`
+- Referenz: [api.nullish.ch/swagger](https://api.nullish.ch/swagger), mit allen Endpunkten und Schemas. Das OpenAPI-Dokument findest du unter [api.nullish.ch/doc](https://api.nullish.ch/doc).
+
+## API-Schlüssel erstellen
+
+{% steps %}
+
+1. Öffne in nullish das Menü mit deinem Namen, geh zu **API-Schlüssel** und wähle **API-Schlüssel erstellen**.
+
+2. Gib ihm einen **Name**, wähle einen **Ablauf** von 7, 30, 90 oder 365 Tagen und wähle **REST-API** als **Ressource**.
+
+3. Wähle den **Zugriff**: **Lesen** oder **Lesen und schreiben**.
+
+4. Kopiere den Schlüssel. Er beginnt mit `nullish_`, und du siehst ihn nur dieses eine Mal.
+
+{% /steps %}
+
+## Authentifizieren
+
+Schick den Schlüssel als Bearer-Token mit:
+
+```sh
+curl https://api.nullish.ch/organizations \
+  -H "Authorization: Bearer nullish_…"
+```
+
+Ein Schlüssel hat dieselben Rechte wie du, in all deinen Organisationen. Deine [Rolle](/de/team/#rollen) gilt auch hier: Als Leser kannst du nur lesen, egal welchen Zugriff der Schlüssel hat.
+
+{% aside type="caution" %}
+Geh mit einem Schlüssel um wie mit einem Passwort. Gerät er in falsche Hände, lösch ihn unter **API-Schlüssel**, dann ist er
+sofort ungültig.
+{% /aside %}
+
+## Limiten
+
+Pro Schlüssel sind bis zu 120 Anfragen pro Minute erlaubt, pro Benutzer bis zu 300, über alle Schlüssel und Sitzungen zusammen. Für aufwendigere Vorgänge wie PDFs generieren oder Kontoauszüge importieren gelten tiefere Limiten.

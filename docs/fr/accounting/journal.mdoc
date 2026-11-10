@@ -1,0 +1,48 @@
+---
+title: Journal
+description: Saisir des écritures à la main, TVA comprise, et retrouver tout ce que nullish a comptabilisé pour toi.
+---
+
+Le journal liste toutes les écritures de tes livres. nullish s'occupe de la plupart : factures, paiements, mouvements bancaires rapprochés, bouclement annuel. Le reste, tu le saisis toi-même.
+
+## Saisir une écriture
+
+{% steps %}
+
+1. Va dans **Comptabilité → Journal** et crée une nouvelle écriture.
+
+2. Indique la **Date** et, si tu veux, une **Référence**, par exemple un numéro de pièce.
+
+3. Ajoute une ligne par écriture : les comptes au **Débit** et au **Crédit**, une **Description** et le **Montant**.
+
+4. Si la TVA s'applique, choisis un **Taux de TVA**. nullish ajoute les lignes de TVA tout seul.
+
+5. Vérifie que la **Différence** est à zéro, puis enregistre.
+
+{% /steps %}
+
+Une ligne peut aussi n'avoir qu'un compte au débit ou au crédit, pour les écritures sur plusieurs lignes. En devise étrangère, choisis la **Devise** et saisis le **Taux de change**.
+
+{% aside %}
+Une écriture doit être équilibrée, avoir une référence ou une description, et tomber dans une
+[période](/fr/accounting/periods/) ouverte.
+{% /aside %}
+
+## Dupliquer
+
+Tu passes la même écriture chaque mois, comme le loyer ? Ouvre celle du mois dernier et choisis **Dupliquer**. Tu obtiens une nouvelle écriture avec les mêmes lignes : change la date, enregistre, c'est fait.
+
+## Ce qui ne peut pas être modifié
+
+Les écritures sont numérotées automatiquement, à la suite. Certaines sont verrouillées pour que tes livres restent cohérents :
+
+- les écritures d'une facture : annule ou amortis plutôt la [facture](/fr/billing/invoices/) ;
+- les écritures d'un mouvement bancaire rapproché ;
+- les écritures de bouclement annuel, et tout ce qui se trouve dans une période clôturée ;
+- les écritures importées lors d'une migration.
+
+Tout le reste, tu peux le modifier ou le supprimer.
+
+## Retrouver une écriture
+
+Filtre le journal par **Numéro**, par période ou par **Référence**. Chaque écriture indique d'où elle vient, par exemple **Ouverture de facture**, **Paiement de facture** ou **Solde d'ouverture**, avec un lien vers la facture ou le mouvement bancaire concerné.

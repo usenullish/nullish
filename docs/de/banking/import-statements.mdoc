@@ -1,0 +1,43 @@
+---
+title: Kontoauszüge importieren
+description: Bring deine Bankbewegungen mit einer camt.053-Datei in nullish.
+---
+
+nullish liest deine Kontoauszüge als **camt.053**-Datei ein. Das ist das Standard-XML-Format, das dir jede Schweizer Bank im E-Banking anbietet.
+
+## Einen Kontoauszug importieren
+
+{% steps %}
+
+1. Lade den Kontoauszug im E-Banking als **camt.053** herunter. Du bekommst eine `.xml`-Datei.
+
+2. Öffne in nullish das Bankkonto und wähle **Bankdatei hochladen**.
+
+3. Wähle die Datei aus und bestätige mit **Bankdatei hochladen**.
+
+{% /steps %}
+
+nullish zeigt dir, wie viele Bewegungen dazugekommen sind, und führt dich direkt zum [Abgleich](/de/banking/reconciliation/).
+
+## Überlappende Kontoauszüge
+
+Denselben Zeitraum zweimal importiert? Kein Problem. Kontoauszüge, die nullish schon kennt, überspringt es, und Bewegungen, die in zwei Dateien vorkommen, landen nur einmal in nullish.
+
+## Wenn ein Import fehlschlägt
+
+Erscheint **Die Kontoauszüge konnten nicht importiert werden.**, prüfe Folgendes:
+
+- Ist die Datei eine camt.053, also keine camt.054, CSV oder PDF?
+- Gehört sie zu diesem Bankkonto? IBAN und Währung müssen übereinstimmen.
+- Ist sie höchstens 2 MB gross? Ein Monatsauszug hat meist deutlich unter 1 MB.
+
+{% aside %}
+nullish prüft auch, ob der Kontoauszug aufgeht: Anfangssaldo plus Bewegungen muss den Schlusssaldo
+ergeben. Geht eine Datei nicht auf, lehnt nullish sie ab, statt sie halb richtig zu importieren.
+{% /aside %}
+
+## Bewegungen
+
+Aus jeder Zeile deines Kontoauszugs wird eine **Bewegung**, mit Datum, Betrag, Gegenpartei, Referenz und Mitteilung. Eingänge sind positiv, Ausgänge negativ.
+
+Eine Bewegung ist entweder **Abzugleichen**, **Abgeglichen** oder **Ignoriert**. Filtere die Liste nach Status, dann siehst du, was noch ansteht.

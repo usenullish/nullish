@@ -1,0 +1,44 @@
+---
+title: Périodes et clôture annuelle
+description: Les exercices dans nullish, et comment en boucler un.
+---
+
+Une période correspond en général à un exercice. On ne peut saisir des écritures que dans une période ouverte. Tout se gère sous **Paramètres → Comptabilité → Périodes**.
+
+## Périodes
+
+À la création de ton organisation, nullish ouvre l'année civile en cours. Pour ajouter la suivante, choisis **Créer une période** : les dates de l'année d'après sont déjà remplies.
+
+Ton exercice ne colle pas à l'année civile, ou ton premier exercice est plus court ou plus long ? Choisis librement la **Date de début** et la **Date de fin**. Seule règle : les périodes ne se chevauchent pas.
+
+## Clôturer un exercice
+
+Boucler un exercice comptabilise son résultat et reporte tes soldes sur l'exercice suivant.
+
+{% steps %}
+
+1. Clôture les [périodes TVA](/fr/accounting/vat/#périodes-tva) de l'exercice.
+
+2. Vérifie que la période suivante existe. Sinon, crée-la.
+
+3. Sur la période de l'exercice, choisis **Clôturer**.
+
+{% /steps %}
+
+nullish passe alors deux écritures :
+
+- **Résultat de l'exercice**, le dernier jour de l'exercice : le bénéfice ou la perte part dans tes capitaux propres.
+- **Solde d'ouverture**, le premier jour de l'exercice suivant : les soldes de tes actifs, passifs et capitaux propres sont reportés.
+
+Pour une entreprise individuelle, le compte privé et les apports et retraits de capital sont en plus regroupés sur le compte de capital.
+
+{% aside type="caution" %}
+Une fois l'exercice clôturé, plus rien ne peut y être comptabilisé ni modifié. Et on ne peut pas le rouvrir : jette donc
+d'abord un œil à ton bilan.
+{% /aside %}
+
+## Juste la marquer comme clôturée
+
+Si les écritures de bouclement sont déjà dans tes livres, par exemple après une [migration](/fr/migration/bexio/), coche **Juste la marquer comme clôturée**. nullish verrouille l'exercice sans rien comptabiliser.
+
+Les exercices se clôturent dans l'ordre, le plus ancien d'abord.

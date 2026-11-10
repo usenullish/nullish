@@ -1,0 +1,48 @@
+---
+title: Journal
+description: Buchungen von Hand erfassen, mit MWST, und alles wiederfinden, was nullish für dich gebucht hat.
+---
+
+Im Journal steht jede Buchung deiner Buchhaltung. Die meisten macht nullish selbst: Rechnungen, Zahlungen, abgeglichene Bankbewegungen, den Jahresabschluss. Den Rest erfasst du.
+
+## Eine Buchung erfassen
+
+{% steps %}
+
+1. Geh zu **Buchhaltung → Journal** und erstelle eine neue Buchung.
+
+2. Gib das **Datum** ein und, falls du willst, eine **Referenz**, etwa eine Belegnummer.
+
+3. Erfasse pro Buchung eine Zeile: Konto im **Soll** und im **Haben**, eine **Beschreibung** und den **Betrag**.
+
+4. Wähle einen **MWST-Satz**, falls MWST anfällt. Die MWST-Zeilen ergänzt nullish selbst.
+
+5. Steht die **Differenz** auf null, speichere.
+
+{% /steps %}
+
+Für Sammelbuchungen über mehrere Zeilen darf eine Zeile auch nur ein Soll- oder nur ein Habenkonto haben. Bei Fremdwährungen wählst du die **Währung** und gibst den **Wechselkurs** ein.
+
+{% aside %}
+Jede Buchung muss aufgehen, eine Referenz oder Beschreibung haben und in einer offenen
+[Periode](/de/accounting/periods/) liegen.
+{% /aside %}
+
+## Duplizieren
+
+Du buchst jeden Monat dasselbe, zum Beispiel die Miete? Öffne die Buchung vom Vormonat und wähle **Duplizieren**. Du bekommst eine neue Buchung mit denselben Zeilen. Datum anpassen, speichern, fertig.
+
+## Was sich nicht ändern lässt
+
+Buchungen werden automatisch fortlaufend nummeriert. Einige sind gesperrt, damit deine Buchhaltung sauber bleibt:
+
+- Buchungen aus einer Rechnung: Storniere die [Rechnung](/de/billing/invoices/) stattdessen oder schreib sie ab;
+- Buchungen einer abgeglichenen Bankbewegung;
+- Jahresabschlussbuchungen und alles in einer abgeschlossenen Periode;
+- Buchungen aus einer Migration.
+
+Alles andere kannst du bearbeiten oder löschen.
+
+## Eine Buchung finden
+
+Filtere das Journal nach **Nummer**, Zeitraum oder **Referenz**. Bei jeder Buchung siehst du, woher sie kommt, etwa **Rechnungseröffnung**, **Rechnungszahlung** oder **Eröffnungsbilanz**, und ein Klick führt dich zur Rechnung oder Bankbewegung dahinter.

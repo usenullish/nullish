@@ -1,0 +1,54 @@
+---
+title: MCP
+description: Branche ton propre agent IA sur nullish via MCP.
+---
+
+nullish met ses actions à disposition comme outils MCP, les mêmes que ceux de son assistant intégré. Branche n'importe quel agent ou client compatible MCP, que ce soit Claude, ChatGPT ou le tien, et tiens ta compta depuis là.
+
+- Serveur : `https://api.nullish.ch/mcp`
+- Transport : HTTP streamable
+- Authentification : une clé API, comme bearer token
+
+## Créer une clé API
+
+{% steps %}
+
+1. Dans nullish, ouvre le menu à ton nom, va dans **Clés API** et choisis **Créer une clé API**.
+
+2. Donne-lui un **Nom**, choisis une **Expiration** et prends **Serveur MCP** comme **Ressource**.
+
+3. Choisis l'**Accès** : avec **Lecture**, ton agent peut consulter ; avec **Lecture et écriture**, il a tous les outils.
+
+4. Copie la clé. Tu ne la reverras plus.
+
+{% /steps %}
+
+## Brancher ton client
+
+Avec Claude Code :
+
+```sh
+claude mcp add --transport http nullish https://api.nullish.ch/mcp \
+  --header "Authorization: Bearer nullish_…"
+```
+
+Avec les clients qui se configurent en JSON :
+
+```json
+{
+  "mcpServers": {
+    "nullish": {
+      "type": "http",
+      "url": "https://api.nullish.ch/mcp",
+      "headers": {
+        "Authorization": "Bearer nullish_…"
+      }
+    }
+  }
+}
+```
+
+{% aside %}
+Ton agent a les mêmes droits que toi, dans toutes tes organisations, et ton
+[rôle](/fr/team/#rôles) compte toujours. Supprime la clé et il n'a plus accès, tout de suite.
+{% /aside %}

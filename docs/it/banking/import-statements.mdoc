@@ -1,0 +1,43 @@
+---
+title: Importare gli estratti conto
+description: Un file camt.053 e i tuoi movimenti bancari sono in nullish.
+---
+
+nullish legge gli estratti conto in formato **camt.053**, lo standard XML che trovi nell'e-banking di ogni banca svizzera.
+
+## Importare un estratto conto
+
+{% steps %}
+
+1. Dal tuo e-banking scarica l'estratto conto in formato **camt.053**. È un file `.xml`.
+
+2. In nullish apri il conto bancario e scegli **Carica un file bancario**.
+
+3. Seleziona il file e scegli **Carica un file bancario**.
+
+{% /steps %}
+
+nullish ti dice quanti movimenti sono arrivati e ti porta dritto alla [riconciliazione](/it/banking/reconciliation/).
+
+## Estratti conto sovrapposti
+
+Importare due volte lo stesso periodo non è un problema. nullish salta gli estratti che ha già, e i movimenti che compaiono in due file sovrapposti entrano una volta sola.
+
+## Se l'importazione non va
+
+Se compare **Impossibile importare gli estratti conto.**, controlla che:
+
+- il file sia un camt.053, e non un camt.054, un CSV o un PDF;
+- sia di questo conto bancario: IBAN e valuta devono coincidere;
+- non pesi più di 2 MB. Un estratto mensile di solito sta ben sotto 1 MB.
+
+{% aside %}
+nullish controlla anche che l'estratto quadri: saldo iniziale più movimenti deve dare
+il saldo finale. Se i conti non tornano, il file viene rifiutato, invece di finire importato a metà.
+{% /aside %}
+
+## Movimenti
+
+Ogni riga dell'estratto diventa un **movimento**, con data, importo, controparte, riferimento e comunicazione. Le entrate sono in positivo, le uscite in negativo.
+
+Un movimento può essere **Da riconciliare**, **Riconciliato** o **Ignorato**. Filtra l'elenco per stato e vedi subito cosa resta da fare.

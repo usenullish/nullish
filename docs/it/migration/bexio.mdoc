@@ -1,0 +1,87 @@
+---
+title: Migrare da Bexio
+description: Porta da Bexio conti, clienti, contabilità e fatture.
+---
+
+Lasci Bexio? Non ripartire da zero, porta con te i tuoi dati. Esporti qualche file da Bexio, lo aggiungi a una migrazione in nullish e la lanci.
+
+## Cosa puoi portare
+
+| File             | Da Bexio in | Cosa porta                                                             |
+| ---------------- | ----------- | ---------------------------------------------------------------------- |
+| Piano contabile  | `.xlsx`     | I tuoi conti, compresi quelli che hai aggiunto tu.                     |
+| Clienti          | `.csv`      | I tuoi clienti e i loro contatti.                                      |
+| Saldi d'apertura | `.xlsx`     | Il saldo di ogni conto a una data precisa.                             |
+| Giornale         | `.xlsx`     | Ogni registrazione che hai contabilizzato, una per una.                |
+| Fatture          | `.xlsx`     | Le tue fatture pagate, collegate alle loro registrazioni nel giornale. |
+
+Non servono tutti. Vanno bene le esportazioni in tedesco, francese, italiano e inglese.
+
+## Saldi d'apertura o giornale?
+
+Servono a due cose diverse.
+
+I **saldi d'apertura** sono una fotografia: quanto c'era su ogni conto a una certa data, ad esempio il 1° gennaio. nullish li registra come un'unica registrazione di apertura. Sono la scelta giusta se vuoi ripartire pulito in nullish da quella data e lasciare lo storico in Bexio.
+
+**Il giornale** è lo storico: tutte le registrazioni, con data, conti, importi e IVA. Sceglilo se vuoi avere in nullish anche gli esercizi passati, per consultarne i rapporti, ritrovare una registrazione o preparare un rendiconto IVA.
+
+Di solito si sceglie l'uno o l'altro.
+
+## Porta le tue fatture per l'IVA
+
+Se importi il giornale, puoi importare anche le fatture: a nullish servono per calcolare giusto il rendiconto IVA.
+
+Arrivano solo le fatture **pagate**. Quelle aperte lasciale in Bexio finché non sono saldate, oppure creale in nullish.
+
+## Prima di iniziare
+
+La migrazione non crea né gli esercizi né la configurazione IVA: preparali prima.
+
+- **Periodi**: un [periodo](/it/accounting/periods/) per ogni anno del tuo giornale e per la data dei saldi d'apertura. Devono essere aperti.
+- **IVA**: se nelle tue registrazioni c'è IVA, il [numero IVA e i metodi](/it/accounting/vat/) per ciascuno di quegli anni.
+
+Se manca qualcosa, nullish ti dice cosa, ad esempio per quali anni serve un periodo.
+
+## Esportare da Bexio
+
+- **Piano contabile**: vai su **All settings → Accounting → Chart of accounts** e clicca sull'icona **Export as Excel**.
+- **Clienti**: vai su **Exports → Contact list**.
+- **Saldi d'apertura**: vai su **Accounting → Reports → Balance sheet**, scegli la data sotto **Balance sheet on** e lascia **Only show opening entries** senza spunta.
+- **Giornale**: vai su **Accounting → Reports**, seleziona il **Fiscal year** e clicca sull'icona **Download as Excel File**.
+- **Fatture**: vai su **Sales → Invoices** e clicca sull'icona **Export current list**, quella che sembra un pulsante di download.
+
+## Lanciare una migrazione
+
+Il menu **Migrazioni** lo vedono solo gli admin.
+
+{% steps %}
+
+1. Vai su **Migrazioni**, scegli **Avvia una migrazione** e seleziona **Bexio** come fonte.
+
+2. Per ogni esportazione scegli **Aggiungi un file** e indica di che tipo è. Per i saldi d'apertura aggiungi anche la data a cui si riferiscono.
+
+3. Scegli **Esegui la migrazione**.
+
+{% /steps %}
+
+Una migrazione è tutto o niente: o entra tutto, o non entra nulla e nullish ti spiega perché. Sistema il problema, per esempio un periodo che manca, e scegli **Riprova**.
+
+## Migrare a lotti
+
+Non serve portare tutto in un colpo. Ogni file può pesare al massimo 500 KB, quindi uno storico lungo di solito arriva a pezzi:
+
+- **Più file di giornale in una migrazione**: esporta il giornale anno per anno, o trimestre per trimestre, e aggiungi tutti i file.
+- **Più migrazioni, una dopo l'altra**: ad esempio prima conti e clienti, poi una migrazione per ogni anno, con giornale e fatture.
+
+Ogni migrazione riparte da quelle prima: i conti che hai già vengono ripresi, i clienti abbinati per nome e le fatture ritrovano le loro registrazioni anche se il giornale è arrivato con una migrazione precedente.
+
+{% aside type="tip" %}
+Se un file di giornale o di saldi d'apertura ha lo stesso nome di uno già usato in una migrazione precedente,
+nullish te lo segnala: così non lo importi due volte.
+{% /aside %}
+
+## Dopo la migrazione
+
+Le registrazioni importate sono segnate come migrate e non si possono modificare: il tuo storico resta esattamente com'era in Bexio.
+
+Se le registrazioni di chiusura degli esercizi passati sono arrivate con il giornale, chiudi quegli esercizi con **Segna solo come chiuso**: così niente viene registrato due volte. Vedi [periodi e chiusura annuale](/it/accounting/periods/#segna-solo-come-chiuso).

@@ -1,0 +1,40 @@
+---
+title: Assistente
+description: Chiedi quello che vuoi sapere sulla tua organizzazione, invece di cliccare di qua e di là.
+---
+
+In nullish la prima cosa che vedi è l'assistente. Niente dashboard piena di grafici: vuoi sapere qualcosa? Chiedi.
+
+- "Quali fatture sono ancora aperte?"
+- "Quanto resta sul conto bancario?"
+- "Quanta IVA dobbiamo per quest'anno?"
+
+Le conversazioni restano sotto **Cronologia**; con **Nuovo** ne cominci un'altra.
+
+## Solo lettura o lettura e modifica
+
+Di base l'assistente è in **Solo lettura**: cerca le informazioni ma non tocca niente. Se vuoi che crei o aggiorni qualcosa al posto tuo, clicca sull'etichetta per passare a **Leggere e modificare**; un altro clic e torni indietro.
+
+{% aside %}
+L'assistente non può mai fare più di te. Se sei lettore, resta in sola lettura.
+{% /aside %}
+
+## Collega il tuo agente IA
+
+Preferisci la tua IA, tipo Claude o ChatGPT? Collegala a nullish via MCP e tieni la contabilità da lì.
+
+{% steps %}
+
+1. Apri il menu con il tuo nome e vai su **Chiavi API**, poi scegli **Crea chiave API**.
+
+2. Dalle un **Nome**, imposta una **Scadenza** e come **Risorsa** scegli **Server MCP**.
+
+3. Scegli l'**Accesso**: con **Lettura** il tuo agente può cercare informazioni, con **Lettura e scrittura** può anche creare e aggiornare.
+
+4. Copia la chiave: non la rivedrai più.
+
+5. Nel tuo agente IA aggiungi nullish come server MCP con questa chiave. Come si fa lo trovi nella [pagina MCP](/it/developers/mcp/).
+
+{% /steps %}
+
+Il tuo agente ha i tuoi stessi accessi, in tutte le tue organizzazioni, e gli stessi limiti dell'app. Elimini la chiave e l'accesso sparisce subito.

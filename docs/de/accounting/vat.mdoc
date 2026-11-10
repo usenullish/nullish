@@ -1,0 +1,56 @@
+---
+title: MWST
+description: MWST einrichten, Methoden wählen und die MWST-Abrechnung vorbereiten.
+---
+
+Nach der MWST fragt nullish gleich, wenn du deine Organisation erstellst. Hast du das übersprungen oder hat sich etwas geändert? Alles Nötige findest du unter **Einstellungen → MWST**.
+
+## Einstellungen
+
+Gib deine **MWST-Nummer** ein, in der Form `CHE-123.456.789 MWST`.
+
+## Methoden
+
+Unter **Methoden** legst du sie pro Jahr fest:
+
+- **Abrechnungsart**: wann die MWST geschuldet ist.
+  - **Vereinbart**: sobald du die Rechnung stellst. Das ist der Normalfall.
+  - **Vereinnahmt**: sobald dein Kunde bezahlt.
+- **Abrechnungsmethode**: wie die MWST berechnet wird.
+  - **Effektive Methode**: Du rechnest die MWST auf deinem Umsatz ab und ziehst die Vorsteuer auf deinen Einkäufen ab.
+  - **Saldosteuersatz**: Du lieferst einen festen Anteil deines Umsatzes ab, zum Satz, den dir die ESTV bewilligt hat.
+
+Ein neues Jahr übernimmt die Methoden vom Vorjahr. Unsicher, was für dich gilt? Schau ins Registrierungsschreiben der ESTV oder frag deinen Treuhänder.
+
+{% aside %}Sobald in einem Jahr Rechnungen oder Buchungen mit MWST bestehen, sind seine Methoden fix.{% /aside %}
+
+## Sätze
+
+nullish bringt die aktuellen Schweizer Sätze schon mit: bei der effektiven Methode 8,1 %, 2,6 % und 3,8 % für Umsatz- und Vorsteuer, dazu für alle die Sätze für Bezugsteuer und nicht steuerbare Umsätze. Jeder hat einen **Code**, einen **Typ**, einen **Satz (%)** und ein Datum, ab und bis wann er gilt.
+
+Rechnest du mit Saldosteuersatz ab, füge unter **Sätze** den Satz hinzu, den dir die ESTV bewilligt hat. Bis dahin erinnert dich nullish daran, dass bei der MWST noch etwas fehlt.
+
+## MWST-Perioden
+
+nullish teilt jedes Jahr in MWST-Perioden auf: Quartale bei der effektiven Methode, Halbjahre beim Saldosteuersatz. Du findest sie unter **Perioden**.
+
+Ist eine Abrechnung eingereicht, wähle bei der MWST-Periode **Abschliessen**. Danach ist sie nicht mehr änderbar. Erst wenn alle MWST-Perioden eines Jahres abgeschlossen sind, kannst du [das Jahr abschliessen](/de/accounting/periods/).
+
+## MWST-Abrechnung
+
+Wähle unter **Buchhaltung → MWST-Abrechnung** eine MWST-Periode. nullish füllt die Ziffern des ESTV-Formulars aus, vom Umsatz bis zur geschuldeten Steuer. Du überträgst die Zahlen dann ins ePortal der ESTV.
+
+{% aside type="caution" %}
+nullish steckt noch in der Alpha, und ein paar Ziffern rechnet es noch nicht. Brauchst du eine davon? Sag es uns, genau
+dafür suchen wir Tester. Bis dahin trägst du sie im ePortal selbst ein.
+{% /aside %}
+
+| Ziffer | Was sie umfasst                                              |
+| ------ | ------------------------------------------------------------ |
+| 205    | Von der Steuer ausgenommene Leistungen, mit Option           |
+| 221    | Im Ausland erbrachte Leistungen                              |
+| 230    | Ausgenommene Inlandleistungen, ohne Option                   |
+| 235    | Entgeltsminderungen. Nur Debitorenverluste werden berechnet. |
+| 280    | Diverses                                                     |
+| 410    | Einlageentsteuerung                                          |
+| 420    | Vorsteuerkürzungen, z. B. Subventionen                       |

@@ -1,0 +1,78 @@
+---
+title: Fatture
+description: Crea le fatture, stampale con la fattura QR svizzera e seguile fino al pagamento.
+---
+
+## Prima della tua prima fattura
+
+Passa prima da **Impostazioni → Fatturazione**. Tre valori predefiniti ti evitano di riscrivere le stesse cose su ogni fattura:
+
+- **Termine di pagamento (giorni)**: fissa la data di scadenza. Se non lo tocchi, sono 30 giorni.
+- **Aliquota IVA predefinita**: già selezionata sulle nuove fatture.
+- **Conto bancario predefinito**: il conto che compare sulle fatture QR e su cui registri i pagamenti.
+
+Per le fatture QR ti servono anche un [conto bancario](/it/banking/bank-accounts/) e l'indirizzo completo della tua organizzazione sotto **Impostazioni → Dettagli**.
+
+## Crea una fattura
+
+{% steps %}
+
+1. Vai su **Fatturazione → Fatture** e scegli **Crea una fattura**.
+
+2. Scegli il **Cliente** e verifica la **Data di emissione** e la **Data di scadenza**.
+
+3. Scegli l'**Aliquota IVA**. Vale per l'intera fattura.
+
+4. Scegli la **Valuta**. Se è una valuta estera, inserisci il **Tasso di cambio**.
+
+5. Aggiungi le righe con **Aggiungi una riga**: una **Descrizione**, una **Quantità** e un **Prezzo unitario**. Per una riga da togliere dal totale, usa il tipo **Sconto**.
+
+{% /steps %}
+
+La nuova fattura nasce come **Bozza**: puoi ancora aggiungere e togliere righe, o buttarla via del tutto.
+
+## Emettere la fattura
+
+Quando è pronta, scegli **Emetti**. nullish le dà un numero, la registra nel giornale e crea il riferimento di pagamento. Da lì in poi le righe non si toccano più.
+
+{% aside %}
+La numerazione delle fatture va avanti per cliente. I riferimenti di pagamento sono casuali: nessuno può dedurne quante
+fatture mandi.
+{% /aside %}
+
+## Stampare la fattura
+
+Scegli **PDF**, seleziona il **Modello di documento**, la **Lingua** e il **Conto bancario**, poi **Genera PDF**. Qualche secondo e puoi scegliere **Scarica**.
+
+Il PDF contiene la fattura QR svizzera se hai scelto un conto bancario e la fattura è in CHF o EUR. Le bozze escono con la filigrana "Bozza" e senza fattura QR: perfette per un ultimo controllo.
+
+nullish non manda e-mail: scarica il PDF e invialo come fai sempre.
+
+## Incassare
+
+La via più comoda è [importare gli estratti conto](/it/banking/import-statements/): nullish riconosce i pagamenti dal riferimento e ti propone la fattura giusta.
+
+Oppure registri il pagamento a mano: scegli **Paga**, poi inserisci la **Data**, il **Conto bancario** e l'**Importo**.
+
+Comunque tu faccia:
+
+- Con un pagamento parziale la fattura resta **Aperta** per l'importo che manca.
+- Saldato tutto, la fattura passa a **Pagata**.
+- Se un cliente paga troppo, la differenza la registra nullish.
+
+## Quando qualcosa va storto
+
+- **Annulla**: la fattura non doveva esistere, per esempio è finita al cliente sbagliato. Le sue registrazioni vengono stornate. Si può fare solo finché non è arrivato nessun pagamento.
+- **Stralcia**: il cliente non pagherà più. L'importo aperto va a perdita su crediti e la fattura diventa **Inesigibile**.
+
+{% aside type="caution" %}Tutte e due sono definitive: non si torna indietro.{% /aside %}
+
+## Stati
+
+| Stato       | Significato                                       |
+| ----------- | ------------------------------------------------- |
+| Bozza       | Ancora in lavorazione. Niente di registrato.      |
+| Aperta      | Registrata, in attesa del pagamento.              |
+| Pagata      | Pagata fino all'ultimo centesimo.                 |
+| Inesigibile | Stralciata.                                       |
+| Annullata   | Annullata. Le sue registrazioni vengono stornate. |

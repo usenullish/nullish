@@ -1,0 +1,48 @@
+---
+title: Giornale
+description: Registrazioni manuali con IVA, più tutto quello che nullish ha registrato per te.
+---
+
+Nel giornale c'è ogni registrazione della tua contabilità. Gran parte le fa nullish: fatture, pagamenti, movimenti bancari riconciliati, chiusura annuale. Il resto lo aggiungi tu.
+
+## Contabilizzare una registrazione
+
+{% steps %}
+
+1. Vai su **Contabilità → Giornale** e crea una registrazione.
+
+2. Imposta la **Data** e, se vuoi, un **Riferimento**, per esempio il numero della ricevuta.
+
+3. Aggiungi una riga per ogni movimento: i conti **Dare** e **Avere**, una **Descrizione** e l'**Importo**.
+
+4. Se c'è di mezzo l'IVA, scegli un'**Aliquota IVA**: le righe IVA le aggiunge nullish.
+
+5. Controlla che la **Differenza** sia a zero e salva.
+
+{% /steps %}
+
+Per una registrazione ripartita su più righe, una riga può avere solo il conto dare o solo il conto avere. In valuta estera? Scegli la **Valuta** e inserisci il **Tasso di cambio**.
+
+{% aside %}
+Una registrazione deve quadrare, avere un riferimento o una descrizione e cadere in un
+[periodo](/it/accounting/periods/) aperto.
+{% /aside %}
+
+## Duplica
+
+Registri la stessa cosa ogni mese, come l'affitto? Apri quella del mese scorso e scegli **Duplica**. Ti ritrovi una registrazione nuova con le stesse righe: cambia la data e salva.
+
+## Cosa non si può modificare
+
+Le registrazioni si numerano da sole, in ordine. Alcune sono bloccate, perché la contabilità resti coerente:
+
+- quelle di una fattura: in questo caso annulla o stralcia la [fattura](/it/billing/invoices/);
+- quelle di un movimento bancario riconciliato;
+- quelle della chiusura annuale e tutto quello che sta in un periodo chiuso;
+- quelle importate con una migrazione.
+
+Tutto il resto lo puoi modificare o eliminare.
+
+## Trovare una registrazione
+
+Filtra il giornale per **Numero**, intervallo di date o **Riferimento**. Ogni registrazione ti dice da dove arriva, per esempio **Apertura della fattura**, **Pagamento della fattura** o **Bilancio di apertura**, e ti porta alla fattura o al movimento bancario da cui nasce.
