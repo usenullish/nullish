@@ -1,6 +1,19 @@
-# nullish
+<div align="center" style="display:flex;flex-direction:column;">
+  <a href="https://nullish.ch">
+    <img src="https://github.com/usenullish/nullish/raw/main/packages/client/public/social-image.jpg" width="100%" alt="nullish social banner" role="presentation"/>
+  </a>
+</div>
 
-An open source, self-hostable accounting, invoicing and banking software for Swiss businesses, built to work with AI agents.
+<br />
+
+<p align="center">
+  <a href="https://github.com/usenullish/nullish/actions/workflows/checks.yml"><img alt="Checks" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/checks.yml?style=flat-square&label=checks"></a>
+  <a href="https://github.com/usenullish/nullish/actions/workflows/tests.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests.yml?style=flat-square&label=tests"></a>
+  <a href="https://github.com/usenullish/nullish/actions/workflows/tests-e2e.yml"><img alt="E2E Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests-e2e.yml?style=flat-square&label=e2e"></a>
+  <a href="https://github.com/usenullish/nullish"><img src="https://img.shields.io/github/last-commit/usenullish/nullish/main?commit&style=flat-square" alt="Last Commit" /></a>
+</p>
+
+Invoicing, banking and Swiss accounting you can talk to. Open-source, self-hostable.
 
 > [!WARNING]
 > **Status: alpha.** Things move fast, expect breaking changes.
