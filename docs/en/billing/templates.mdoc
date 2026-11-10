@@ -1,0 +1,77 @@
+---
+title: Invoice templates
+description: Design invoices that look like you, with an AI or by hand.
+---
+
+nullish comes with a clean default template in English, German, French and Italian. When you want invoices that look like you, design your own: the whole page is yours, not just a logo and a line of text.
+
+Templates are made with the [nullish templates](https://github.com/usenullish/templates) project. It shows a live preview of your invoice with sample data, so you see every change right away. You can let an AI do the work or edit the template yourself.
+
+## Get the project
+
+{% steps %}
+
+1. Fork [usenullish/templates](https://github.com/usenullish/templates) on GitHub if you want to keep your templates in your own repository, then clone it:
+
+   ```sh
+   git clone https://github.com/usenullish/templates.git
+   cd templates
+   npm install
+   ```
+
+2. Start the preview and open [localhost:4321](http://localhost:4321):
+
+   ```sh
+   npm run dev
+   ```
+
+{% /steps %}
+
+## Design it with an AI
+
+Open the project in a coding assistant such as Claude Code, Cursor or Copilot, and describe what you want:
+
+- "Use my logo from `logo.svg` in the top left corner and our brand color `#1d4ed8` for the headings."
+- "Put our address in the footer and the bank details next to the totals."
+- "Make it look more like this PDF" (with an old invoice attached).
+
+The project describes every piece of invoice data, so the assistant knows what it can use. Keep the preview open next to it and ask for adjustments until it looks right.
+
+## Or edit it yourself
+
+The invoice template lives in `src/templates/invoices/`:
+
+- `Invoice.astro` is the layout: what appears on the page, and where.
+- `i18n.json` holds the texts in English, French, German and Italian.
+
+Style it with plain CSS or Tailwind classes. Sizes are in millimeters, like on paper. The [project's README](https://github.com/usenullish/templates#readme) lists all the invoice data and the template syntax.
+
+{% aside %}
+nullish only stores the HTML, so the template can't load anything from elsewhere. Embed your logo
+as SVG or as a `data:` URI, and do the same for a custom font.
+{% /aside %}
+
+## Upload it to nullish
+
+{% steps %}
+
+1. Build the template:
+
+   ```sh
+   npm run build
+   ```
+
+   You get one file per language in `templates/invoices/`: `en.html`, `fr.html`, `de.html` and `it.html`.
+
+2. In nullish, go to **Settings → Billing → Document templates** and create a template. Give it a **Name**.
+
+3. Choose **Add content** for each language you invoice in: pick the **Language** and upload the matching file, e.g. `fr.html` for French.
+
+{% /steps %}
+
+When you generate an invoice PDF, pick your template under **Document template**. You can keep several, for example one per brand.
+
+{% aside type="tip" %}
+A typo in the data a template uses makes the PDF fail, so you'll notice right away. Check it in
+the preview before uploading.
+{% /aside %}

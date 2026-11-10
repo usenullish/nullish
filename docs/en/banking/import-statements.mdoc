@@ -1,0 +1,43 @@
+---
+title: Import bank statements
+description: Bring your bank movements into nullish with a camt.053 file.
+---
+
+nullish reads your bank statements from a **camt.053** file, the standard XML format every Swiss bank offers in its e-banking.
+
+## Import a statement
+
+{% steps %}
+
+1. In your e-banking, download the statement as **camt.053**. It's an `.xml` file.
+
+2. In nullish, open the bank account and choose **Upload bank file**.
+
+3. Select the file and choose **Upload bank file**.
+
+{% /steps %}
+
+nullish tells you how many movements came in, then takes you straight to [reconciliation](/en/banking/reconciliation/).
+
+## Overlapping statements
+
+Don't worry about importing the same period twice. nullish skips statements it already knows, and movements that appear in two overlapping files are only imported once.
+
+## When an import fails
+
+If you see **The statements could not be imported.**, check that:
+
+- the file is a camt.053, not a camt.054, a CSV or a PDF;
+- it belongs to this bank account: its IBAN and currency must match;
+- it's no bigger than 2 MB. A monthly statement is usually well below 1 MB.
+
+{% aside %}
+nullish also checks that the statement adds up: the opening balance plus the movements must equal
+the closing balance. A file that doesn't is rejected rather than imported half-right.
+{% /aside %}
+
+## Movements
+
+Every line of your statement becomes a **movement**, with its date, amount, counterparty, reference and communication. Money in is positive, money out is negative.
+
+A movement is either **To reconcile**, **Reconciled** or **Ignored**. Filter the list by status to see what's left to do.

@@ -1,0 +1,38 @@
+---
+title: Bank accounts
+description: Add your bank accounts and link them to your books.
+---
+
+Each bank account in nullish mirrors an account at your bank. It's where you import your statements, and where your clients pay your invoices.
+
+## Add a bank account
+
+{% steps %}
+
+1. Go to **Banking → Bank accounts** and choose **Create a bank account**.
+
+2. Fill in:
+   - **Name**: whatever helps you recognize it, e.g. "PostFinance business".
+   - **IBAN**: the account's IBAN.
+   - **QR-IBAN**: optional. Only if your bank gave you one for QR-bills.
+   - **Currency**: the account's currency. It defaults to your organization's currency.
+   - **Ledger account**: the account in your chart of accounts where everything that moves through this bank account is booked, e.g. `1020 Bank`.
+
+3. Choose **Create bank account**.
+
+{% /steps %}
+
+{% aside %}
+The ledger account must be an asset account you can book on, so not a group of accounts. Each IBAN
+and QR-IBAN can only be used once per organization.
+{% /aside %}
+
+## Do I need a QR-IBAN?
+
+No. Your regular IBAN is enough for QR-bills. If your bank gave you a QR-IBAN, add it too and nullish uses it on your invoices.
+
+Either way, nullish recognizes your clients' payments when you [reconcile](/en/banking/reconciliation/).
+
+## At a glance
+
+The bank accounts list shows each account's **Balance** and how many movements are left to reconcile, or **Up to date** when there's nothing left.

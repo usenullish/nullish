@@ -1,0 +1,56 @@
+---
+title: VAT
+description: Set up VAT, pick your methods, and prepare your VAT declaration.
+---
+
+nullish asks about VAT right after you create your organization. If you skipped it, or something changed, you'll find everything under **Settings → VAT**.
+
+## Settings
+
+Enter your **VAT number**, in the form `CHE-123.456.789 MWST`.
+
+## Methods
+
+Your methods are set per year, under **Methods**:
+
+- **Remuneration method**, which decides when VAT is due:
+  - **Agreed**: when you send the invoice. This is the most common one.
+  - **Received**: when your client pays.
+- **Payment method**, which decides how VAT is calculated:
+  - **Effective**: you charge VAT on your sales and deduct the VAT you paid on your purchases.
+  - **Net rate**: you pay a fixed share of your turnover, at the rate the tax administration granted you.
+
+A new year takes over the previous year's methods. Not sure which ones apply to you? Check your registration letter from the tax administration, or ask your accountant.
+
+{% aside %}Once invoices or entries of a year use VAT, its methods can't change anymore.{% /aside %}
+
+## Rates
+
+nullish comes with the current Swiss rates: on the effective method, 8.1 %, 2.6 % and 3.8 % for sales and input tax, plus, for everyone, the rates for acquisition tax and turnover not subject to VAT. Each has a **Code**, a **Type**, a **Rate (%)** and the dates it applies.
+
+On the net rate method, add the rate the tax administration granted you under **Rates**. Until then, nullish reminds you that your VAT configuration is almost complete.
+
+## VAT periods
+
+nullish splits each year into VAT periods for you: quarters with the effective method, half-years with the net rate method. You'll find them under **Periods**.
+
+When you've filed a declaration, **Close** its VAT period. It can't be changed afterwards. All the VAT periods of a year must be closed before you can [close the year](/en/accounting/periods/).
+
+## VAT declaration
+
+Under **Accounting → VAT declaration**, pick a VAT period: nullish fills in the boxes of the tax administration's form, from turnover to the tax payable. Copy the figures into the ESTV ePortal.
+
+{% aside type="caution" %}
+nullish is in alpha, and a few boxes aren't calculated yet. Need one of them? Tell us: that's
+exactly why we're looking for testers. Until then, fill them in yourself in the ePortal.
+{% /aside %}
+
+| Box | What it covers                                        |
+| --- | ----------------------------------------------------- |
+| 205 | Services excluded from the tax, with option           |
+| 221 | Services provided abroad                              |
+| 230 | Excluded domestic services, without option            |
+| 235 | Discounts and rebates. Only bad debts are calculated. |
+| 280 | Miscellaneous                                         |
+| 410 | Subsequent input tax deduction                        |
+| 420 | Input tax reductions, e.g. subsidies                  |

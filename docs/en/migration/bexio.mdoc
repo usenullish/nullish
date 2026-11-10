@@ -1,0 +1,87 @@
+---
+title: Migrate from Bexio
+description: Bring your accounts, clients, books and invoices over from Bexio.
+---
+
+Switching from Bexio? Bring your data along instead of starting from scratch. You export a few files from Bexio, add them to a migration in nullish, and run it.
+
+## What you can bring
+
+| File              | From Bexio as | What it brings                                              |
+| ----------------- | ------------- | ----------------------------------------------------------- |
+| Chart of accounts | `.xlsx`       | Your accounts, including the ones you added yourself.       |
+| Clients           | `.csv`        | Your clients and their contacts.                            |
+| Opening balances  | `.xlsx`       | The balance of each account on a given date.                |
+| Journal           | `.xlsx`       | Every entry you booked, one by one.                         |
+| Invoices          | `.xlsx`       | Your paid invoices, linked to their entries in the journal. |
+
+You don't need all of them. Exports in German, French, Italian and English all work.
+
+## Opening balances or journal?
+
+They answer two different needs.
+
+**Opening balances** are a snapshot: what each account held on one date, e.g. on 1 January. nullish books them as a single opening entry. Choose them when you want to start fresh in nullish from that date and leave the history in Bexio.
+
+**The journal** is the history: every entry, with its date, accounts, amounts and VAT. Choose it when you want your past years in nullish too, to see their reports, look up an entry or prepare a VAT declaration.
+
+Most of the time, you pick one or the other.
+
+## Bring your invoices for VAT
+
+If you import the journal, you could also import your invoices: nullish uses them to calculate your VAT declaration correctly.
+
+Only **paid** invoices are imported. Keep your open invoices in Bexio until they're settled, or create them in nullish.
+
+## Before you start
+
+The migration doesn't create your years or your VAT setup, so prepare them first:
+
+- **Periods**: one [period](/en/accounting/periods/) for each year your journal covers, and for the date of your opening balances. They must be open.
+- **VAT**: if your entries carry VAT, your [VAT number and methods](/en/accounting/vat/) for each of those years.
+
+If something's missing, nullish tells you exactly what, e.g. which years need a period.
+
+## Export from Bexio
+
+- **Chart of accounts**: go to **All settings → Accounting → Chart of accounts** and click the **Export as Excel** icon.
+- **Clients**: go to **Exports → Contact list**.
+- **Opening balances**: go to **Accounting → Reports → Balance sheet**, pick the date under **Balance sheet on** and leave **Only show opening entries** unticked.
+- **Journal**: go to **Accounting → Reports**, select the **Fiscal year** and click the **Download as Excel File** icon.
+- **Invoices**: go to **Sales → Invoices** and click the **Export current list** icon, the one that looks like a download button.
+
+## Run a migration
+
+The **Migrations** menu is only visible to admins.
+
+{% steps %}
+
+1. Go to **Migrations**, choose **Start a migration** and pick **Bexio** as the source.
+
+2. Choose **Add a file** for each export and pick its type. For the opening balances, also enter the date they apply to.
+
+3. Choose **Run the migration**.
+
+{% /steps %}
+
+A migration is all or nothing: either everything is imported, or nothing is and nullish tells you why. Fix the issue, for example a missing period, and choose **Run it again**.
+
+## Migrate in batches
+
+You don't have to bring everything at once. Each file can be up to 500 KB, so a long history usually comes in several pieces:
+
+- **Several journal files in one migration**: export the journal year by year, or quarter by quarter, and add them all.
+- **Several migrations, one after the other**: e.g. accounts and clients first, then one migration per year with its journal and invoices.
+
+Later migrations build on earlier ones: accounts you already have are reused, clients are matched by name, and invoices find their entries even when the journal came in an earlier migration.
+
+{% aside type="tip" %}
+nullish warns you when a journal or opening balances file has the same name as one from an earlier
+migration, so you don't import it twice.
+{% /aside %}
+
+## After the migration
+
+Your imported entries are marked as migrated and can't be edited, so your history stays exactly as it was in Bexio.
+
+If the closing entries of your past years came along in the journal, close those years with **Only mark it as closed**, so nothing is booked twice. See [periods and year-end closing](/en/accounting/periods/#only-mark-it-as-closed).

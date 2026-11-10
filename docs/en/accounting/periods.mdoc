@@ -1,0 +1,44 @@
+---
+title: Periods and year-end closing
+description: Fiscal years in nullish, and how to close one.
+---
+
+A period usually covers one fiscal year. Entries can only be booked in an open period. Manage them under **Settings → Accounting → Periods**.
+
+## Periods
+
+nullish creates the current calendar year when you create your organization. To add the next one, choose **Create a period**: the dates are prefilled for the following year.
+
+Your fiscal year doesn't follow the calendar, or your first year is shorter or longer? Set the **Start date** and **End date** freely. Periods just can't overlap.
+
+## Close a year
+
+Closing a year books its result and carries your balances over to the next year.
+
+{% steps %}
+
+1. Close the year's [VAT periods](/en/accounting/vat/#vat-periods).
+
+2. Make sure the next period exists. Create it if needed.
+
+3. On the year's period, choose **Close**.
+
+{% /steps %}
+
+nullish then books two entries:
+
+- **Annual result**, on the last day of the year: the profit or loss is moved to your equity.
+- **Opening balance**, on the first day of the next year: the balances of your assets, liabilities and equity are carried over.
+
+For a sole proprietorship, the private account and capital contributions and withdrawals are also brought together on the capital account.
+
+{% aside type="caution" %}
+Once closed, nothing can be booked or changed in that year anymore. There's no reopening, so check
+your balance sheet first.
+{% /aside %}
+
+## Only mark it as closed
+
+When the closing entries are already in your books, for example after a [migration](/en/migration/bexio/), tick **Only mark it as closed**. nullish locks the year without booking anything.
+
+Years have to be closed in order, the oldest first.

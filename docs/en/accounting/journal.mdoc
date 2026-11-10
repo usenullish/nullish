@@ -1,0 +1,48 @@
+---
+title: Journal
+description: Book entries by hand, with VAT, and find everything nullish booked for you.
+---
+
+The journal lists every entry in your books. Most of them nullish books for you: invoices, payments, reconciled bank movements, year-end closing. For the rest, you add entries yourself.
+
+## Book an entry
+
+{% steps %}
+
+1. Go to **Accounting → Journal** and create a new entry.
+
+2. Set the **Date** and, if you like, a **Reference**, e.g. a receipt number.
+
+3. Add a line per booking: the **Debit** and **Credit** accounts, a **Description** and the **Amount**.
+
+4. Pick a **VAT rate** if VAT applies. nullish adds the VAT lines for you.
+
+5. Check that **Difference** is zero, then save.
+
+{% /steps %}
+
+A line can also have only a debit or only a credit account, for entries split across several lines. For a foreign currency, pick the **Currency** and enter the **Exchange rate**.
+
+{% aside %}
+An entry must balance, have a reference or a description, and fall in an open
+[period](/en/accounting/periods/).
+{% /aside %}
+
+## Duplicate
+
+Booking the same thing every month, like rent? Open last month's entry and choose **Duplicate**. You get a new entry prefilled with the same lines: adjust the date and save.
+
+## What can't be changed
+
+Entries are numbered automatically, one after the other. Some are locked to keep your books consistent:
+
+- entries booked by an invoice: void or write off the [invoice](/en/billing/invoices/) instead;
+- entries of a reconciled bank movement;
+- year-end closing entries, and everything in a closed period;
+- entries imported by a migration.
+
+Everything else you can edit or delete.
+
+## Find an entry
+
+Filter the journal by **Number**, date range or **Reference**. Each entry shows where it comes from, e.g. **Invoice opening**, **Invoice payment** or **Opening balance**, and links to the invoice or bank movement behind it.
