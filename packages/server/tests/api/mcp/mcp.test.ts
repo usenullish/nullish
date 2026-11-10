@@ -158,6 +158,8 @@ const EXPECTED_TOOLS = [
   "get_account_ledger",
   "get_active_accounts",
   "get_vat_declaration",
+  "list_docs",
+  "get_docs_page",
 ];
 
 const LIST_QUERY = { limit: 100, offset: 0, sort: "createdAt", direction: "asc" };
@@ -1072,6 +1074,121 @@ describe("mcp", () => {
         { accountId: taxPreMaterialId, debit: { __bigint__: "1620" }, credit: { __bigint__: "0" } },
         { accountId: expenseId, debit: { __bigint__: "0" }, credit: { __bigint__: "1620" } },
       ]);
+    });
+  });
+
+  describe("docs", () => {
+    test("lists the pages of the documentation", async () => {
+      const {
+        result: { isError, structuredContent },
+      } = await callTool<{ pages: { slug: string; title: string; content?: string }[] }>({
+        name: "list_docs",
+        args: {},
+      });
+
+      expect(isError).toBeFalsy();
+      expect(structuredContent?.result.pages).toContainEqual(
+        expect.objectContaining({ slug: "accounting/vat", title: "VAT" }),
+      );
+      expect(structuredContent?.result.pages.every(({ content }) => content === undefined)).toBe(
+        true,
+      );
+    });
+
+    test("names an index page after its folder", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ pages: { slug: string }[] }>({ name: "list_docs", args: {} });
+
+      const slugs = structuredContent?.result.pages.map(({ slug }) => slug);
+
+      expect(slugs).toContain("accounting");
+      expect(slugs).not.toContain("accounting/index");
+    });
+
+    test("returns a page with its content without the frontmatter", async () => {
+      const {
+        result: { isError, structuredContent },
+      } = await callTool<{ page?: { slug: string; title: string; content: string } }>({
+        name: "get_docs_page",
+        args: { slug: "accounting/vat" },
+      });
+
+      expect(isError).toBeFalsy();
+      expect(structuredContent?.result.page?.title).toBe("VAT");
+      expect(structuredContent?.result.page?.content).toStartWith("nullish asks about VAT");
+    });
+
+    test("lists the pages in English by default", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ pages: { language: string }[] }>({ name: "list_docs", args: {} });
+
+      expect(structuredContent?.result.pages.every(({ language }) => language === "en")).toBe(true);
+    });
+
+    test("lists the pages in the language", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ pages: { language: string; slug: string; title: string }[] }>({
+        name: "list_docs",
+        args: { language: "de" },
+      });
+
+      expect(structuredContent?.result.pages.every(({ language }) => language === "de")).toBe(true);
+      expect(structuredContent?.result.pages).toContainEqual(
+        expect.objectContaining({ slug: "accounting/vat", title: "MWST" }),
+      );
+    });
+
+    test("lists the pages in English when the language has no documentation", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ pages: { language: string }[] }>({
+        name: "list_docs",
+        args: { language: "es" },
+      });
+
+      expect(structuredContent?.result.pages.length).toBeGreaterThan(0);
+      expect(structuredContent?.result.pages.every(({ language }) => language === "en")).toBe(true);
+    });
+
+    test("returns a page in the language", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ page?: { language: string; title: string } }>({
+        name: "get_docs_page",
+        args: { slug: "accounting/vat", language: "de" },
+      });
+
+      expect(structuredContent?.result.page).toEqual(
+        expect.objectContaining({ language: "de", title: "MWST" }),
+      );
+    });
+
+    test("returns a page in English when the language has no documentation", async () => {
+      const {
+        result: { structuredContent },
+      } = await callTool<{ page?: { language: string; title: string } }>({
+        name: "get_docs_page",
+        args: { slug: "accounting/vat", language: "es" },
+      });
+
+      expect(structuredContent?.result.page).toEqual(
+        expect.objectContaining({ language: "en", title: "VAT" }),
+      );
+    });
+
+    test("returns no page for an unknown slug", async () => {
+      const {
+        result: { isError, structuredContent },
+      } = await callTool<{ page?: unknown }>({
+        name: "get_docs_page",
+        args: { slug: "unknown" },
+      });
+
+      expect(isError).toBeFalsy();
+      expect(structuredContent?.result.page).toBeUndefined();
     });
   });
 

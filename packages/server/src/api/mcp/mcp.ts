@@ -39,6 +39,7 @@ import { McpToolsInvoicesLifecycle } from "./_invoices-lifecycle";
 import { McpToolsInvoicesPdf } from "./_invoices-pdf";
 import { McpToolsJournal } from "./_journal";
 import { McpToolsReports } from "./_reports";
+import { McpToolsDocs } from "./_docs";
 
 type McpHandlerInitArgs = DbStoreInitArgs & { jobs: TriggerJobs; readOnly: boolean };
 
@@ -88,6 +89,7 @@ export class McpHandler {
       McpToolsInvoicesPdf.create({ server, args: { ...args, jobs }, readOnly }),
       McpToolsJournal.create({ server, args, readOnly }),
       McpToolsReports.create({ server, args, readOnly }),
+      McpToolsDocs.create({ server, args, readOnly }),
     ];
 
     tools.forEach((tool) => tool.registerTools());
