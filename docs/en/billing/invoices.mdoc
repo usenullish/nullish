@@ -1,0 +1,78 @@
+---
+title: Invoices
+description: Create invoices, print them with a Swiss QR-bill and follow them until they're paid.
+---
+
+## Before your first invoice
+
+Have a look at **Settings → Billing**. Three defaults save you typing on every invoice:
+
+- **Payment term (days)**: sets the due date. 30 days unless you change it.
+- **Default VAT rate**: preselected on new invoices.
+- **Default bank account**: the account printed on your QR-bills and used when recording payments.
+
+For QR-bills, you also need a [bank account](/en/banking/bank-accounts/) and your organization's full address under **Settings → Details**.
+
+## Create an invoice
+
+{% steps %}
+
+1. Go to **Billing → Invoices** and choose **Create an invoice**.
+
+2. Pick the **Client** and check the **Issue date** and **Due date**.
+
+3. Pick the **VAT rate**. It applies to the whole invoice.
+
+4. Pick the **Currency**. For a foreign currency, enter the **Exchange rate**.
+
+5. Add the lines with **Add a line**: a **Description**, a **Quantity** and a **Unit price**. Use the **Discount** type for a line that's taken off the total.
+
+{% /steps %}
+
+The new invoice is a **Draft**. You can still add and remove lines, or delete it altogether.
+
+## Open it
+
+When it's ready, choose **Open**. nullish gives the invoice its number, books it in your journal and generates its payment reference. From then on its lines can't change.
+
+{% aside %}
+Invoice numbers count up per client. Payment references are random, so they don't reveal how many
+invoices you send.
+{% /aside %}
+
+## Print it
+
+Choose **PDF**, pick the **Document template**, the **Language** and the **Bank account**, then **Generate PDF**. A few seconds later, **Download** it.
+
+The PDF includes a Swiss QR-bill when a bank account is selected and the invoice is in CHF or EUR. Drafts print with a "Draft" watermark and no QR-bill, handy for a last check.
+
+nullish doesn't send emails: download the PDF and send it the way you usually do.
+
+## Get paid
+
+The easiest way is to [import your bank statements](/en/banking/import-statements/): nullish recognizes payments by their reference and suggests the matching invoice.
+
+You can also record a payment by hand: choose **Pay**, then enter the **Date**, the **Bank account** and the **Amount**.
+
+Either way:
+
+- A partial payment leaves the invoice **Open** with what remains due.
+- Once everything's paid, the invoice becomes **Paid**.
+- If a client pays too much, the difference is booked for you.
+
+## When things go wrong
+
+- **Void**: the invoice shouldn't exist, for example it was sent to the wrong client. Its bookings are reversed. Only possible before any payment.
+- **Write off**: the client won't pay. The open amount is booked as a loss on receivables and the invoice becomes **Uncollectible**.
+
+{% aside type="caution" %}Both are final. There's no undo.{% /aside %}
+
+## Statuses
+
+| Status        | Meaning                                   |
+| ------------- | ----------------------------------------- |
+| Draft         | Still being prepared. Nothing booked yet. |
+| Open          | Booked and waiting for payment.           |
+| Paid          | Fully paid.                               |
+| Uncollectible | Written off.                              |
+| Void          | Cancelled. Its bookings are reversed.     |

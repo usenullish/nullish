@@ -1,0 +1,54 @@
+---
+title: MCP
+description: Connect your own AI agent to nullish over MCP.
+---
+
+nullish exposes its actions as MCP tools, the same ones its built-in assistant uses. Connect any MCP-capable agent or client, like Claude, ChatGPT or your own, and do your bookkeeping from there.
+
+- Server: `https://api.nullish.ch/mcp`
+- Transport: streamable HTTP
+- Authentication: an API key, as a bearer token
+
+## Create an API key
+
+{% steps %}
+
+1. In nullish, open the menu with your name and go to **API keys**, then choose **Create API key**.
+
+2. Give it a **Name**, pick an **Expiration**, and choose **MCP server** as the **Resource**.
+
+3. Pick the **Access**: **Read** gives your agent the tools that look things up, **Read and write** gives it all of them.
+
+4. Copy the key. It isn't shown again.
+
+{% /steps %}
+
+## Connect your client
+
+With Claude Code:
+
+```sh
+claude mcp add --transport http nullish https://api.nullish.ch/mcp \
+  --header "Authorization: Bearer nullish_…"
+```
+
+With clients configured in JSON:
+
+```json
+{
+  "mcpServers": {
+    "nullish": {
+      "type": "http",
+      "url": "https://api.nullish.ch/mcp",
+      "headers": {
+        "Authorization": "Bearer nullish_…"
+      }
+    }
+  }
+}
+```
+
+{% aside %}
+Your agent works with your own access, across all your organizations, and your
+[role](/en/team/#roles) still applies. Delete the key and it loses access immediately.
+{% /aside %}

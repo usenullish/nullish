@@ -1,0 +1,40 @@
+---
+title: Chart of accounts
+description: Your accounts, ready from day one, and the system accounts nullish books on for you.
+---
+
+When you create an organization, nullish sets up a complete chart of accounts for its legal form: one for LLCs and corporations, one for sole proprietorships. You'll find it under **Settings → Accounting → Accounts**.
+
+## Accounts
+
+Each account has a **Code**, a **Name** and a **Type**: **Assets**, **Liabilities**, **Equity**, **Income**, **Expenses** or **Closing**. Accounts can be grouped under a **Parent account**, e.g. `1020 Bank` sits in the group of liquid assets.
+
+- You book on the accounts at the bottom of the tree. Groups only add up what's below them.
+- Leave the **Name** empty to keep the standard name, translated into your language.
+- Need an account that isn't there? Choose **Create account**.
+
+{% aside %}
+To keep your books consistent, an account can't be deleted once it has postings or sub-accounts,
+or is used as a system account. Its type can't change once it has postings either.
+{% /aside %}
+
+## System accounts
+
+Some bookings happen automatically: opening an invoice, recording a payment, writing off a debt, closing the year. nullish needs to know which account to use for each of them. That's what **System accounts** are for, under **Settings → Accounting → System accounts**.
+
+They come preset, so you usually don't need to touch them. The ones nullish books on today:
+
+| System account          | Default                                 | Used when                                            |
+| ----------------------- | --------------------------------------- | ---------------------------------------------------- |
+| Debtors                 | 1100                                    | an invoice is opened, paid or written off            |
+| Default income          | 3400                                    | an invoice is opened                                 |
+| VAT due                 | 2200                                    | an invoice or entry carries VAT                      |
+| Bank account            | 1020                                    | a payment is recorded without picking a bank account |
+| Creditors               | 2300                                    | a client pays too much                               |
+| Bad debts               | 3805                                    | an invoice is written off                            |
+| Rounding differences    | 6945                                    | amounts need rounding to the cent                    |
+| Exchange gains / losses | 6999 / 6949                             | a foreign-currency payment differs from the invoice  |
+| Annual profit or loss   | 9200                                    | the year is closed                                   |
+| Annual result (equity)  | 2979, or 2891 for a sole proprietorship | the year is closed                                   |
+
+To use another account, for example a separate income account, choose **Edit** and pick it.

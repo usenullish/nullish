@@ -1,0 +1,41 @@
+---
+title: Reconciliation
+description: Turn your bank movements into bookings, invoice payments included.
+---
+
+Reconciling means telling nullish what each bank movement is: a client paying an invoice, rent, a software subscription, and so on. Each one you reconcile is booked in your journal.
+
+Open a bank account and choose **Reconcile**. You see every movement that's still **To reconcile**.
+
+## Payments matched with an invoice
+
+When a client pays a QR-bill, the payment carries the invoice's reference. nullish recognizes it and suggests the invoice under **Matched with an invoice**.
+
+- Choose **Book payment** to record the payment. The invoice becomes paid.
+- If the amount doesn't cover the whole invoice, it stays open with what **Remains due**. Book the next payment the same way when it arrives.
+- If the client paid too much, nullish shows it as **Overpaid** and books the difference.
+- Wrong match? Choose **Not this invoice** and book the movement on an account instead.
+
+## Movements to book on an account
+
+Everything else is listed under **To book on an account**:
+
+1. Pick the **Account**, e.g. `6570 IT costs` for a subscription.
+2. Adjust the **Description** if you like. It's prefilled with the movement's communication.
+3. Pick a **VAT rate** if VAT applies.
+4. Choose **Book**.
+
+## Ignore a movement
+
+Some movements don't need a booking. Choose **Ignore** to set them aside.
+
+{% aside type="caution" %}
+An ignored movement books nothing and can't be reconciled afterwards. There's no undo, so ignore
+with care.
+{% /aside %}
+
+## Good to know
+
+- Only movements in your organization's currency can be reconciled for now.
+- A reconciled movement can't be reconciled again. Double-check before booking.
+- Once nothing is left, you'll see **Nothing to reconcile.**

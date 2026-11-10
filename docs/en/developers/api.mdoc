@@ -1,0 +1,43 @@
+---
+title: REST API
+description: Automate nullish with its REST API.
+---
+
+Everything you do in the app is also available through the REST API: clients, invoices, bank statements, the journal, VAT and more.
+
+- Base URL: `https://api.nullish.ch`
+- Reference: [api.nullish.ch/swagger](https://api.nullish.ch/swagger), with every endpoint and schema. The OpenAPI document is at [api.nullish.ch/doc](https://api.nullish.ch/doc).
+
+## Create an API key
+
+{% steps %}
+
+1. In nullish, open the menu with your name and go to **API keys**, then choose **Create API key**.
+
+2. Give it a **Name**, pick an **Expiration** of 7, 30, 90 or 365 days, and choose **REST API** as the **Resource**.
+
+3. Pick the **Access**: **Read**, or **Read and write**.
+
+4. Copy the key. It starts with `nullish_` and isn't shown again.
+
+{% /steps %}
+
+## Authenticate
+
+Send the key as a bearer token:
+
+```sh
+curl https://api.nullish.ch/organizations \
+  -H "Authorization: Bearer nullish_…"
+```
+
+A key acts with your own access, across all your organizations. Your [role](/en/team/#roles) still applies: as a reviewer, you can only read, whatever the key's access.
+
+{% aside type="caution" %}
+Treat a key like a password. If one leaks, delete it under **API keys**: it stops working
+immediately.
+{% /aside %}
+
+## Limits
+
+Each key can make up to 120 requests per minute, and each user up to 300 per minute across all their keys and sessions. Some heavier operations, like generating PDFs or importing bank statements, have lower limits.

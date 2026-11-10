@@ -1,0 +1,40 @@
+---
+title: Assistant
+description: Ask questions about your organization instead of clicking around.
+---
+
+The assistant is the first thing you see in nullish. There's no dashboard full of charts: if you want to know something, ask.
+
+- "Which invoices are still open?"
+- "What's left on the bank account?"
+- "How much VAT do we owe for this year?"
+
+Your conversations are kept under **History**, and **New** starts a fresh one.
+
+## Read only or read and edit
+
+By default the assistant is **Read only**: it looks things up but changes nothing. Click the label to switch to **Read and edit** when you want it to create or update things for you, and click again to set it back.
+
+{% aside %}
+The assistant can never do more than you can. If your role is reviewer, it stays read only.
+{% /aside %}
+
+## Connect your own AI agent
+
+Prefer your own AI, like Claude or ChatGPT? Connect it to nullish over MCP and do your bookkeeping from there.
+
+{% steps %}
+
+1. Open the menu with your name and go to **API keys**, then choose **Create API key**.
+
+2. Give it a **Name**, pick an **Expiration**, and choose **MCP server** as the **Resource**.
+
+3. Pick the **Access**: **Read** to let your agent look things up, **Read and write** to let it create and update things too.
+
+4. Copy the key. It isn't shown again.
+
+5. In your AI agent, add nullish as an MCP server with this key. The [MCP page](/en/developers/mcp/) shows how.
+
+{% /steps %}
+
+Your agent works with your own access, across all your organizations, and the same limits apply as in the app. Delete the key and it loses access immediately.
