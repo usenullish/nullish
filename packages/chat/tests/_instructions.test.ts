@@ -167,6 +167,16 @@ describe("instructions", () => {
       );
     });
 
+    test("tells the model to look up how to use the application in the documentation", () => {
+      expect(instructions({ domain })).toContain(
+        "look it up in the documentation with list_docs and get_docs_page",
+      );
+    });
+
+    test("tells the model to read the documentation in the language of the user", () => {
+      expect(instructions({ domain })).toContain("get_docs_page, in the language of the user");
+    });
+
     test("tells to read a record and pass its version before updating it", () => {
       expect(instructions({ domain })).toContain(
         "Before updating a record, read it with its get tool and pass its version unchanged.",
