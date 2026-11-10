@@ -88,6 +88,9 @@ COPY packages/metering ./packages/metering
 COPY packages/server ./packages/server
 COPY packages/cli ./packages/cli
 
+# Bundled into the server at build time for the docs tools of the MCP server
+COPY docs ./docs
+
 ENV NODE_ENV=production
 RUN bun run --filter @usenullish/nullish-server build
 RUN bun run --filter @usenullish/nullish-cli build
