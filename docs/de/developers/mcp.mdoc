@@ -1,0 +1,54 @@
+---
+title: MCP
+description: Verbinde deinen eigenen KI-Agenten über MCP mit nullish.
+---
+
+nullish stellt seine Aktionen als MCP-Tools bereit, genau die, die auch der eingebaute Assistent nutzt. Verbinde einen beliebigen MCP-fähigen Agenten oder Client, etwa Claude, ChatGPT oder einen eigenen, und erledige deine Buchhaltung direkt von dort.
+
+- Server: `https://api.nullish.ch/mcp`
+- Transport: Streamable HTTP
+- Authentifizierung: ein API-Schlüssel, als Bearer-Token
+
+## API-Schlüssel erstellen
+
+{% steps %}
+
+1. Öffne in nullish das Menü mit deinem Namen, geh zu **API-Schlüssel** und wähle **API-Schlüssel erstellen**.
+
+2. Gib ihm einen **Name**, wähle einen **Ablauf** und wähle **MCP-Server** als **Ressource**.
+
+3. Wähle den **Zugriff**: Mit **Lesen** bekommt dein Agent die Tools zum Nachschauen, mit **Lesen und schreiben** alle.
+
+4. Kopiere den Schlüssel. Du siehst ihn nur dieses eine Mal.
+
+{% /steps %}
+
+## Deinen Client verbinden
+
+Mit Claude Code:
+
+```sh
+claude mcp add --transport http nullish https://api.nullish.ch/mcp \
+  --header "Authorization: Bearer nullish_…"
+```
+
+Mit Clients, die per JSON konfiguriert werden:
+
+```json
+{
+  "mcpServers": {
+    "nullish": {
+      "type": "http",
+      "url": "https://api.nullish.ch/mcp",
+      "headers": {
+        "Authorization": "Bearer nullish_…"
+      }
+    }
+  }
+}
+```
+
+{% aside %}
+Dein Agent hat dieselben Rechte wie du, in all deinen Organisationen, und deine
+[Rolle](/de/team/#rollen) gilt auch hier. Löschst du den Schlüssel, ist er sofort ungültig.
+{% /aside %}

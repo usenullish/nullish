@@ -1,0 +1,43 @@
+---
+title: REST API
+description: Automatizza nullish con la REST API.
+---
+
+Quello che fai nell'app lo puoi fare anche con la REST API: clienti, fatture, estratti conto, giornale, IVA e altro ancora.
+
+- URL di base: `https://api.nullish.ch`
+- Riferimento: [api.nullish.ch/swagger](https://api.nullish.ch/swagger), con tutti gli endpoint e gli schemi. Il documento OpenAPI lo trovi su [api.nullish.ch/doc](https://api.nullish.ch/doc).
+
+## Crea una chiave API
+
+{% steps %}
+
+1. In nullish, apri il menu con il tuo nome e vai su **Chiavi API**, poi scegli **Crea chiave API**.
+
+2. Dalle un **Nome**, imposta una **Scadenza** di 7, 30, 90 o 365 giorni e come **Risorsa** scegli **API REST**.
+
+3. Scegli l'**Accesso**: **Lettura** oppure **Lettura e scrittura**.
+
+4. Copia la chiave: inizia con `nullish_` e non la rivedrai più.
+
+{% /steps %}
+
+## Autenticazione
+
+Manda la chiave come bearer token:
+
+```sh
+curl https://api.nullish.ch/organizations \
+  -H "Authorization: Bearer nullish_…"
+```
+
+La chiave ha i tuoi stessi accessi, in tutte le tue organizzazioni. E il tuo [ruolo](/it/team/#ruoli) conta sempre: se sei lettore, puoi solo leggere, qualunque accesso abbia la chiave.
+
+{% aside type="caution" %}
+Una chiave va trattata come una password. Se finisce in giro, eliminala sotto **Chiavi API**: smette subito
+di funzionare.
+{% /aside %}
+
+## Limiti
+
+Ogni chiave può fare al massimo 120 richieste al minuto; ogni utente 300 al minuto, sommando tutte le sue chiavi e sessioni. Le operazioni più pesanti, come generare PDF o importare estratti conto, hanno limiti più bassi.

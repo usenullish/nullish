@@ -1,0 +1,56 @@
+---
+title: TVA
+description: Configurer la TVA, choisir tes méthodes et préparer ton décompte TVA.
+---
+
+nullish te pose ses questions sur la TVA juste après la création de ton organisation. Tu as sauté l'étape, ou quelque chose a changé ? Tout se trouve sous **Paramètres → TVA**.
+
+## Paramètres
+
+Saisis ton **Numéro TVA**, au format `CHE-123.456.789 TVA`.
+
+## Méthodes
+
+Tes méthodes se définissent année par année, sous **Méthodes** :
+
+- **Mode de décompte**, qui fixe le moment où la TVA est due :
+  - **Convenues** : quand tu envoies la facture. C'est le cas le plus fréquent.
+  - **Reçues** : quand ton client paie.
+- **Méthode de calcul**, qui fixe la façon de calculer la TVA :
+  - **Méthode effective** : tu factures la TVA sur tes ventes et tu déduis celle payée sur tes achats.
+  - **Taux de la dette fiscale nette** : tu verses une part fixe de ton chiffre d'affaires, au taux que l'AFC t'a accordé.
+
+Chaque nouvelle année reprend les méthodes de la précédente. Tu ne sais pas lesquelles s'appliquent à toi ? Regarde la lettre d'immatriculation de l'AFC, ou demande à ta fiduciaire.
+
+{% aside %}Dès que des factures ou des écritures d'une année contiennent de la TVA, ses méthodes sont figées.{% /aside %}
+
+## Taux
+
+nullish connaît les taux suisses actuels : avec la méthode effective, 8,1 %, 2,6 % et 3,8 % pour la TVA sur les ventes et l'impôt préalable, et pour tout le monde, les taux de l'impôt sur les acquisitions et du chiffre d'affaires non soumis. Chaque taux a un **Code**, un **Type**, un **Taux (%)** et ses dates de validité.
+
+Avec la méthode des taux de la dette fiscale nette, ajoute sous **Taux** celui que l'AFC t'a accordé. En attendant, nullish te rappelle que ta configuration TVA est presque complète.
+
+## Périodes TVA
+
+nullish découpe chaque année en périodes TVA pour toi : des trimestres avec la méthode effective, des semestres avec les taux de la dette fiscale nette. Elles se trouvent sous **Périodes**.
+
+Une fois le décompte déposé, **Clôture** sa période TVA. Elle ne bouge plus ensuite. Toutes les périodes TVA d'une année doivent être clôturées avant de pouvoir [clôturer l'exercice](/fr/accounting/periods/).
+
+## Décompte TVA
+
+Sous **Comptabilité → Décompte TVA**, choisis une période TVA : nullish remplit les chiffres du formulaire de l'AFC, du chiffre d'affaires jusqu'à l'impôt dû. Il ne te reste qu'à recopier les montants dans l'ePortail de l'AFC.
+
+{% aside type="caution" %}
+nullish est en alpha, et quelques chiffres ne sont pas encore calculés. Il t'en manque un ? Dis-le-nous : c'est
+précisément pour ça qu'on cherche des testeurs. En attendant, remplis-le toi-même dans l'ePortail.
+{% /aside %}
+
+| Chiffre | Ce qu'il couvre                                                                      |
+| ------- | ------------------------------------------------------------------------------------ |
+| 205     | Prestations exclues du champ de l'impôt, avec option                                 |
+| 221     | Prestations fournies à l'étranger                                                    |
+| 230     | Prestations exclues sur le territoire suisse, sans option                            |
+| 235     | Diminutions de la contre-prestation. Seules les pertes sur débiteurs sont calculées. |
+| 280     | Divers                                                                               |
+| 410     | Dégrèvement ultérieur de l'impôt préalable                                           |
+| 420     | Réductions de la déduction de l'impôt préalable, p. ex. subventions                  |

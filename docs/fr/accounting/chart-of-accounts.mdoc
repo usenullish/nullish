@@ -1,0 +1,40 @@
+---
+title: Plan comptable
+description: Tes comptes, prêts dès le premier jour, et les comptes système que nullish utilise pour toi.
+---
+
+Dès que tu crées une organisation, nullish installe un plan comptable complet, taillé pour sa forme juridique : un pour les Sàrl et SA, un autre pour les entreprises individuelles. Il t'attend sous **Paramètres → Comptabilité → Comptes**.
+
+## Comptes
+
+Chaque compte a un **Code**, un **Nom** et un **Type** : **Actifs**, **Capitaux étrangers**, **Capitaux propres**, **Produits**, **Charges** ou **Clôture**. Un compte peut être rangé sous un **Compte parent** : `1020 Banque`, par exemple, fait partie du groupe des liquidités.
+
+- Tu comptabilises sur les comptes tout en bas de l'arborescence. Les groupes se contentent d'additionner ce qu'il y a dessous.
+- Laisse le **Nom** vide pour garder le nom standard, traduit dans ta langue.
+- Un compte te manque ? Choisis **Créer un compte**.
+
+{% aside %}
+Pour que tes livres restent cohérents, un compte qui a des écritures ou des sous-comptes, ou qui sert de compte système,
+ne peut plus être supprimé. Et dès qu'il a des écritures, son type ne bouge plus non plus.
+{% /aside %}
+
+## Comptes système
+
+Certaines écritures se passent de toi : ouvrir une facture, enregistrer un paiement, amortir une créance, boucler l'exercice. nullish doit juste savoir sur quel compte passer chacune. C'est à ça que servent les **Comptes système**, sous **Paramètres → Comptabilité → Comptes système**.
+
+Ils sont déjà configurés, tu n'as en principe pas à y toucher. Voici ceux que nullish utilise aujourd'hui :
+
+| Compte système                  | Par défaut                                     | Utilisé quand                                             |
+| ------------------------------- | ---------------------------------------------- | --------------------------------------------------------- |
+| Débiteurs                       | 1100                                           | une facture est ouverte, payée ou amortie                 |
+| Produits par défaut             | 3400                                           | une facture est ouverte                                   |
+| TVA due                         | 2200                                           | une facture ou une écriture contient de la TVA            |
+| Compte bancaire                 | 1020                                           | un paiement est saisi sans compte bancaire choisi         |
+| Créanciers                      | 2300                                           | un client paie trop                                       |
+| Pertes sur débiteurs            | 3805                                           | une facture est amortie                                   |
+| Différences d'arrondi           | 6945                                           | un montant doit être arrondi au centime                   |
+| Gains / pertes de change        | 6999 / 6949                                    | un paiement en devise étrangère ne colle pas à la facture |
+| Bénéfice ou perte annuel        | 9200                                           | l'exercice est bouclé                                     |
+| Résultat annuel (fonds propres) | 2979, ou 2891 pour une entreprise individuelle | l'exercice est bouclé                                     |
+
+Tu préfères un autre compte, par exemple un compte de produits à part ? Choisis **Modifier** et sélectionne-le.

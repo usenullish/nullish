@@ -1,0 +1,43 @@
+---
+title: REST API
+description: Automatise nullish avec son REST API.
+---
+
+Tout ce que tu fais dans l'app, tu peux aussi le faire par le REST API : clients, factures, relevés bancaires, journal, TVA, et j'en passe.
+
+- URL de base : `https://api.nullish.ch`
+- Référence : [api.nullish.ch/swagger](https://api.nullish.ch/swagger), avec tous les endpoints et schémas. Le document OpenAPI est sur [api.nullish.ch/doc](https://api.nullish.ch/doc).
+
+## Créer une clé API
+
+{% steps %}
+
+1. Dans nullish, ouvre le menu à ton nom, va dans **Clés API** et choisis **Créer une clé API**.
+
+2. Donne-lui un **Nom**, choisis une **Expiration** (7, 30, 90 ou 365 jours) et prends **Rest API** comme **Ressource**.
+
+3. Choisis l'**Accès** : **Lecture** ou **Lecture et écriture**.
+
+4. Copie la clé. Elle commence par `nullish_` et tu ne la reverras plus.
+
+{% /steps %}
+
+## S'authentifier
+
+Envoie la clé comme bearer token :
+
+```sh
+curl https://api.nullish.ch/organizations \
+  -H "Authorization: Bearer nullish_…"
+```
+
+Une clé a les mêmes droits que toi, dans toutes tes organisations. Ton [rôle](/fr/team/#rôles) compte toujours : si tu es réviseur, tu ne peux que lire, peu importe l'accès de la clé.
+
+{% aside type="caution" %}
+Une clé, c'est comme un mot de passe. Si elle fuite, supprime-la sous **Clés API** : elle ne marche
+plus, tout de suite.
+{% /aside %}
+
+## Limites
+
+Une clé peut faire jusqu'à 120 requêtes par minute, et un utilisateur jusqu'à 300 par minute, toutes clés et sessions confondues. Les opérations plus lourdes, comme générer des PDF ou importer des relevés bancaires, sont plus limitées.

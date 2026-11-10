@@ -1,0 +1,44 @@
+---
+title: Periodi e chiusura annuale
+description: Gli esercizi in nullish e come chiuderli.
+---
+
+Di solito un periodo corrisponde a un esercizio, e si può registrare solo nei periodi aperti. Li gestisci sotto **Impostazioni → Contabilità → Periodi**.
+
+## Periodi
+
+Quando crei l'organizzazione, nullish apre già l'anno civile in corso. Per aggiungere quello dopo, scegli **Crea un periodo**: le date dell'anno seguente sono già compilate.
+
+Il tuo esercizio non coincide con l'anno civile, o il primo è più corto o più lungo? Scegli tu **Data di inizio** e **Data di fine**, basta che i periodi non si accavallino.
+
+## Chiudere un esercizio
+
+Quando chiudi un esercizio, nullish ne registra il risultato e riporta i saldi su quello dopo.
+
+{% steps %}
+
+1. Chiudi i [periodi IVA](/it/accounting/vat/#periodi-iva) dell'esercizio.
+
+2. Controlla che il periodo successivo esista, se no crealo.
+
+3. Sul periodo dell'esercizio, scegli **Chiudi**.
+
+{% /steps %}
+
+A quel punto nullish fa due registrazioni:
+
+- **Risultato d'esercizio**, l'ultimo giorno dell'anno: l'utile o la perdita passa al capitale proprio.
+- **Bilancio di apertura**, il primo giorno dell'anno dopo: riporta i saldi di attivi, capitale di terzi e capitale proprio.
+
+Per una ditta individuale, sul conto capitale confluiscono anche il conto privato, gli apporti e i prelevamenti.
+
+{% aside type="caution" %}
+Un esercizio chiuso non accetta più registrazioni né modifiche, e non si riapre. Prima dai
+un'occhiata attenta al bilancio.
+{% /aside %}
+
+## Segna solo come chiuso
+
+Se le registrazioni di chiusura sono già nella tua contabilità, per esempio dopo una [migrazione](/it/migration/bexio/), spunta **Segna solo come chiuso**. nullish blocca l'esercizio senza registrare niente.
+
+Gli esercizi si chiudono in ordine, partendo dal più vecchio.

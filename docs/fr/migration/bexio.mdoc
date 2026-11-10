@@ -1,0 +1,87 @@
+---
+title: Migrer depuis Bexio
+description: Reprends tes comptes, clients, écritures et factures de Bexio.
+---
+
+Tu quittes Bexio ? Emporte tes données plutôt que de repartir de zéro. Tu exportes quelques fichiers de Bexio, tu les ajoutes à une migration dans nullish, et tu la lances.
+
+## Ce que tu peux reprendre
+
+| Fichier            | Export Bexio en | Ce que ça amène                                          |
+| ------------------ | --------------- | -------------------------------------------------------- |
+| Plan comptable     | `.xlsx`         | Tes comptes, y compris ceux que tu as ajoutés toi-même.  |
+| Clients            | `.csv`          | Tes clients et leurs contacts.                           |
+| Soldes d'ouverture | `.xlsx`         | Le solde de chaque compte à une date donnée.             |
+| Journal            | `.xlsx`         | Toutes les écritures comptabilisées, une par une.        |
+| Factures           | `.xlsx`         | Tes factures payées, liées à leurs écritures du journal. |
+
+Pas besoin de tout prendre. Les exports en allemand, français, italien et anglais passent tous.
+
+## Soldes d'ouverture ou journal ?
+
+Les deux ne servent pas à la même chose.
+
+**Les soldes d'ouverture** sont une photo : ce qu'il y avait sur chaque compte à une date, p. ex. au 1er janvier. nullish les comptabilise en une seule écriture d'ouverture. Prends-les si tu veux repartir à neuf dans nullish dès cette date et laisser l'historique chez Bexio.
+
+**Le journal**, c'est l'historique : chaque écriture, avec sa date, ses comptes, ses montants et sa TVA. Prends-le si tu veux aussi tes années passées dans nullish, pour en voir les rapports, retrouver une écriture ou préparer un décompte TVA.
+
+En général, c'est l'un ou l'autre.
+
+## Reprendre tes factures pour la TVA
+
+Si tu importes le journal, tu peux aussi importer tes factures : nullish s'en sert pour calculer juste ton décompte TVA.
+
+Seules les factures **payées** sont importées. Laisse tes factures ouvertes dans Bexio jusqu'à ce qu'elles soient réglées, ou crée-les dans nullish.
+
+## Avant de commencer
+
+La migration ne crée ni tes exercices ni ta configuration TVA. Prépare-les d'abord :
+
+- **Exercices** : un [exercice](/fr/accounting/periods/) pour chaque année de ton journal, et pour la date de tes soldes d'ouverture. Ils doivent être ouverts.
+- **TVA** : si tes écritures contiennent de la TVA, ton [numéro TVA et tes méthodes](/fr/accounting/vat/) pour chacune de ces années.
+
+S'il manque quelque chose, nullish te dit exactement quoi, p. ex. pour quelles années il faut un exercice.
+
+## Exporter depuis Bexio
+
+- **Plan comptable** : va dans **All settings → Accounting → Chart of accounts** et clique sur l'icône **Export as Excel**.
+- **Clients** : va dans **Exports → Contact list**.
+- **Soldes d'ouverture** : va dans **Accounting → Reports → Balance sheet**, choisis la date sous **Balance sheet on** et laisse **Only show opening entries** décoché.
+- **Journal** : va dans **Accounting → Reports**, choisis le **Fiscal year** et clique sur l'icône **Download as Excel File**.
+- **Factures** : va dans **Sales → Invoices** et clique sur l'icône **Export current list**, celle qui a l'air d'un bouton de téléchargement.
+
+## Lancer une migration
+
+Seuls les admins voient le menu **Migrations**.
+
+{% steps %}
+
+1. Va dans **Migrations**, choisis **Lancer une migration** et prends **Bexio** comme source.
+
+2. Choisis **Ajouter un fichier** pour chaque export et indique son type. Pour les soldes d'ouverture, saisis aussi leur date.
+
+3. Choisis **Lancer la migration**.
+
+{% /steps %}
+
+Une migration, c'est tout ou rien : soit tout passe, soit rien ne passe et nullish te dit pourquoi. Corrige le problème, par exemple un exercice manquant, et choisis **Relancer**.
+
+## Migrer par lots
+
+Pas besoin de tout reprendre d'un coup. Un fichier peut faire au plus 500 Ko, alors un long historique arrive souvent en plusieurs morceaux :
+
+- **Plusieurs fichiers de journal dans une migration** : exporte le journal année par année, ou trimestre par trimestre, et ajoute-les tous.
+- **Plusieurs migrations à la suite** : p. ex. d'abord les comptes et les clients, puis une migration par année avec son journal et ses factures.
+
+Chaque migration reprend là où les précédentes se sont arrêtées : les comptes existants sont réutilisés, les clients retrouvés par leur nom, et les factures retrouvent leurs écritures même si le journal est arrivé dans une migration d'avant.
+
+{% aside type="tip" %}
+nullish te prévient quand un fichier de journal ou de soldes d'ouverture porte le même nom qu'un fichier
+d'une migration précédente, pour que tu ne l'importes pas deux fois.
+{% /aside %}
+
+## Après la migration
+
+Tes écritures importées sont marquées comme migrées et ne peuvent pas être modifiées : ton historique reste tel quel, comme dans Bexio.
+
+Si les écritures de bouclement de tes années passées sont arrivées avec le journal, boucle ces années avec **Juste la marquer comme clôturée**, pour ne rien comptabiliser deux fois. Voir [exercices et bouclement annuel](/fr/accounting/periods/#juste-la-marquer-comme-clôturée).

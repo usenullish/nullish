@@ -1,0 +1,54 @@
+---
+title: MCP
+description: Collega il tuo agente IA a nullish via MCP.
+---
+
+nullish mette a disposizione le sue azioni come strumenti MCP, gli stessi che usa l'assistente integrato. Collega l'agente o il client MCP che preferisci, che sia Claude, ChatGPT o uno tuo, e tieni la contabilità da lì.
+
+- Server: `https://api.nullish.ch/mcp`
+- Trasporto: streamable HTTP
+- Autenticazione: una chiave API, come bearer token
+
+## Crea una chiave API
+
+{% steps %}
+
+1. In nullish, apri il menu con il tuo nome e vai su **Chiavi API**, poi scegli **Crea chiave API**.
+
+2. Dalle un **Nome**, imposta una **Scadenza** e come **Risorsa** scegli **Server MCP**.
+
+3. Scegli l'**Accesso**: con **Lettura** il tuo agente ha gli strumenti per cercare informazioni, con **Lettura e scrittura** li ha tutti.
+
+4. Copia la chiave: non la rivedrai più.
+
+{% /steps %}
+
+## Collega il tuo client
+
+Con Claude Code:
+
+```sh
+claude mcp add --transport http nullish https://api.nullish.ch/mcp \
+  --header "Authorization: Bearer nullish_…"
+```
+
+Con i client che si configurano in JSON:
+
+```json
+{
+  "mcpServers": {
+    "nullish": {
+      "type": "http",
+      "url": "https://api.nullish.ch/mcp",
+      "headers": {
+        "Authorization": "Bearer nullish_…"
+      }
+    }
+  }
+}
+```
+
+{% aside %}
+Il tuo agente ha i tuoi stessi accessi, in tutte le tue organizzazioni, e il tuo
+[ruolo](/it/team/#ruoli) conta sempre. Elimini la chiave e l'accesso sparisce subito.
+{% /aside %}

@@ -1,0 +1,40 @@
+---
+title: Assistent
+description: Frag nach, statt dich durchzuklicken.
+---
+
+Der Assistent ist das Erste, was du in nullish siehst. Kein Dashboard voller Diagramme: Willst du etwas wissen, frag einfach.
+
+- «Welche Rechnungen sind noch offen?»
+- «Wie viel ist noch auf dem Bankkonto?»
+- «Wie viel MWST schulden wir für dieses Jahr?»
+
+Frühere Unterhaltungen findest du im **Verlauf**, eine neue startest du mit **Neu**.
+
+## Nur lesen oder lesen und bearbeiten
+
+Standardmässig steht der Assistent auf **Nur lesen**: Er schaut nach, ändert aber nichts. Soll er etwas für dich erstellen oder anpassen, klick auf die Anzeige und wechsle auf **Lesen und bearbeiten**. Ein weiterer Klick, und er ist wieder auf Nur lesen.
+
+{% aside %}
+Der Assistent darf nie mehr als du. Bist du Leser, bleibt er auf Nur lesen.
+{% /aside %}
+
+## Eigenen KI-Agenten verbinden
+
+Arbeitest du lieber mit deiner eigenen KI, etwa Claude oder ChatGPT? Verbinde sie über MCP mit nullish und erledige deine Buchhaltung direkt von dort.
+
+{% steps %}
+
+1. Öffne das Menü mit deinem Namen, geh zu **API-Schlüssel** und wähle **API-Schlüssel erstellen**.
+
+2. Gib ihm einen **Name**, wähle einen **Ablauf** und wähle **MCP-Server** als **Ressource**.
+
+3. Wähle den **Zugriff**: Mit **Lesen** kann dein Agent nachschauen, mit **Lesen und schreiben** auch erstellen und anpassen.
+
+4. Kopiere den Schlüssel. Du siehst ihn nur dieses eine Mal.
+
+5. Füge nullish mit diesem Schlüssel als MCP-Server in deinem KI-Agenten hinzu. Wie das geht, steht auf der [MCP-Seite](/de/developers/mcp/).
+
+{% /steps %}
+
+Dein Agent hat dieselben Rechte wie du, in all deinen Organisationen, und dieselben Limiten wie in der App. Löschst du den Schlüssel, ist er sofort ungültig.

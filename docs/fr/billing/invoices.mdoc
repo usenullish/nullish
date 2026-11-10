@@ -1,0 +1,78 @@
+---
+title: Factures
+description: Crée des factures, imprime-les avec une facture QR suisse et suis-les jusqu'au paiement.
+---
+
+## Avant ta première facture
+
+Passe par **Paramètres → Facturation**. Trois valeurs par défaut t'évitent de tout retaper à chaque facture :
+
+- **Délai de paiement (jours)** : fixe la date d'échéance. 30 jours, sauf si tu le changes.
+- **Taux de TVA par défaut** : présélectionné sur les nouvelles factures.
+- **Compte bancaire par défaut** : le compte imprimé sur tes factures QR et utilisé pour saisir les paiements.
+
+Pour les factures QR, il te faut aussi un [compte bancaire](/fr/banking/bank-accounts/) et l'adresse complète de ton organisation sous **Paramètres → Détails**.
+
+## Créer une facture
+
+{% steps %}
+
+1. Va dans **Facturation → Factures** et choisis **Créer une facture**.
+
+2. Choisis le **Client** et contrôle la **Date d'émission** et la **Date d'échéance**.
+
+3. Choisis le **Taux TVA**. Il vaut pour toute la facture.
+
+4. Choisis la **Devise**. Pour une devise étrangère, indique le **Taux de change**.
+
+5. Ajoute les lignes avec **Ajouter une ligne** : une **Description**, une **Quantité** et un **Prix unitaire**. Le type **Rabais** sert pour une ligne à déduire du total.
+
+{% /steps %}
+
+La nouvelle facture est un **Brouillon**. Tu peux encore ajouter et retirer des lignes, ou la supprimer complètement.
+
+## L'émettre
+
+Quand elle est prête, choisis **Émettre**. nullish lui attribue son numéro, la comptabilise dans ton journal et génère sa référence de paiement. Dès là, ses lignes sont figées.
+
+{% aside %}
+Les numéros de facture se suivent par client. Les références de paiement sont aléatoires : elles ne
+trahissent pas combien de factures tu envoies.
+{% /aside %}
+
+## L'imprimer
+
+Choisis **PDF**, puis le **Modèle de document**, la **Langue** et le **Compte bancaire**, et clique sur **Générer le PDF**. Quelques secondes plus tard, tu peux le **Télécharger**.
+
+Le PDF contient une facture QR suisse si un compte bancaire est choisi et que la facture est en CHF ou en EUR. Les brouillons sortent avec un filigrane « Brouillon » et sans facture QR, pratique pour un dernier contrôle.
+
+nullish n'envoie pas d'e-mails : télécharge le PDF et envoie-le comme d'habitude.
+
+## Se faire payer
+
+Le plus simple, c'est d'[importer tes relevés bancaires](/fr/banking/import-statements/) : nullish reconnaît les paiements à leur référence et te propose la facture qui va avec.
+
+Tu peux aussi saisir un paiement à la main : choisis **Payer**, puis indique la **Date**, le **Compte bancaire** et le **Montant**.
+
+Dans les deux cas :
+
+- Un paiement partiel laisse la facture **Ouverte** avec le solde encore dû.
+- Une fois tout payé, la facture passe à **Payée**.
+- Si un client paie trop, la différence est comptabilisée pour toi.
+
+## Quand ça coince
+
+- **Annuler** : la facture n'aurait jamais dû exister, par exemple envoyée au mauvais client. Ses écritures sont extournées. Possible seulement avant tout paiement.
+- **Passer en perte** : le client ne paiera pas. Le montant ouvert est comptabilisé en perte sur débiteurs et la facture passe à **Irrécouvrable**.
+
+{% aside type="caution" %}Les deux sont définitifs. Pas de retour en arrière.{% /aside %}
+
+## Statuts
+
+| Statut        | Signification                            |
+| ------------- | ---------------------------------------- |
+| Brouillon     | En préparation. Rien n'est comptabilisé. |
+| Ouverte       | Comptabilisée, en attente de paiement.   |
+| Payée         | Payée en entier.                         |
+| Irrécouvrable | Passée en perte.                         |
+| Annulée       | Annulée. Ses écritures sont extournées.  |

@@ -1,0 +1,40 @@
+---
+title: Piano contabile
+description: I tuoi conti, pronti dal primo giorno, e i conti di sistema su cui nullish registra al posto tuo.
+---
+
+Quando crei un'organizzazione, nullish ti prepara un piano contabile completo adatto alla forma giuridica: uno per Sagl e SA, uno per le ditte individuali. È sotto **Impostazioni → Contabilità → Conti**.
+
+## Conti
+
+Ogni conto ha un **Codice**, un **Nome** e un **Tipo**: **Attivi**, **Capitale di terzi**, **Capitale proprio**, **Ricavi**, **Costi** o **Chiusura**. Puoi raggrupparli sotto un **Conto superiore**: `1020 Banca`, per esempio, sta nel gruppo delle liquidità.
+
+- Si registra sui conti in fondo all'albero. I gruppi fanno solo la somma di quello che contengono.
+- Lascia vuoto il **Nome** e tieni quello standard, tradotto nella tua lingua.
+- Manca un conto? Scegli **Crea conto**.
+
+{% aside %}
+Perché la contabilità resti coerente, non puoi eliminare un conto che ha registrazioni o sottoconti,
+o che fa da conto di sistema. E se ha registrazioni, non ne puoi cambiare nemmeno il tipo.
+{% /aside %}
+
+## Conti di sistema
+
+Certe registrazioni partono da sole: quando emetti una fattura, registri un pagamento, stralci un credito o chiudi l'esercizio. Per ognuna nullish deve sapere su che conto andare. Per questo ci sono i **Conti di sistema**, sotto **Impostazioni → Contabilità → Conti di sistema**.
+
+Sono già impostati e di regola non c'è bisogno di toccarli. Ecco quelli che nullish usa oggi:
+
+| Conto di sistema                         | Predefinito                            | Usato quando                                                    |
+| ---------------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| Debitori                                 | 1100                                   | una fattura viene emessa, pagata o stralciata                   |
+| Ricavi predefiniti                       | 3400                                   | una fattura viene emessa                                        |
+| IVA dovuta                               | 2200                                   | una fattura o una registrazione comporta IVA                    |
+| Conto bancario                           | 1020                                   | un pagamento viene registrato senza scegliere un conto bancario |
+| Creditori                                | 2300                                   | un cliente paga troppo                                          |
+| Perdite su crediti                       | 3805                                   | una fattura viene stralciata                                    |
+| Differenze di arrotondamento             | 6945                                   | gli importi vanno arrotondati al centesimo                      |
+| Utili / perdite su cambio                | 6999 / 6949                            | un pagamento in valuta estera differisce dalla fattura          |
+| Utile o perdita d'esercizio              | 9200                                   | l'esercizio viene chiuso                                        |
+| Risultato d'esercizio (capitale proprio) | 2979, o 2891 per una ditta individuale | l'esercizio viene chiuso                                        |
+
+Vuoi usare un altro conto, per esempio un conto ricavi a parte? Scegli **Modifica** e selezionalo.

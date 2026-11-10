@@ -1,0 +1,78 @@
+---
+title: Rechnungen
+description: Rechnungen erstellen, mit Schweizer QR-Rechnung drucken und bis zur Zahlung im Blick behalten.
+---
+
+## Vor deiner ersten Rechnung
+
+Wirf zuerst einen Blick in **Einstellungen → Rechnungsstellung**. Drei Standardwerte ersparen dir bei jeder Rechnung Tipparbeit:
+
+- **Zahlungsfrist (Tage)**: daraus ergibt sich das Fälligkeitsdatum. 30 Tage, ausser du stellst etwas anderes ein.
+- **Standard-MWST-Satz**: ist bei neuen Rechnungen schon gewählt.
+- **Standard-Bankkonto**: dieses Konto steht auf deinen QR-Rechnungen und wird beim Erfassen von Zahlungen verwendet.
+
+Für QR-Rechnungen brauchst du zudem ein [Bankkonto](/de/banking/bank-accounts/) und die vollständige Adresse deiner Organisation unter **Einstellungen → Details**.
+
+## Eine Rechnung erstellen
+
+{% steps %}
+
+1. Geh zu **Rechnungsstellung → Rechnungen** und wähle **Rechnung erstellen**.
+
+2. Wähle den **Kunde** und prüfe **Rechnungsdatum** und **Fälligkeitsdatum**.
+
+3. Wähle den **MWST-Satz**. Er gilt für die ganze Rechnung.
+
+4. Wähle die **Währung**. Für eine Fremdwährung gib den **Wechselkurs** ein.
+
+5. Erfasse die Positionen mit **Position hinzufügen**: **Beschreibung**, **Menge** und **Einzelpreis**. Soll etwas vom Total abgezogen werden, nimm den Typ **Rabatt**.
+
+{% /steps %}
+
+Die neue Rechnung ist ein **Entwurf**. Du kannst noch Positionen hinzufügen und entfernen oder die Rechnung ganz löschen.
+
+## Ausstellen
+
+Ist alles bereit, wähle **Ausstellen**. nullish vergibt die Rechnungsnummer, bucht die Rechnung im Journal und erzeugt die Zahlungsreferenz. Ab dann sind die Positionen fix.
+
+{% aside %}
+Rechnungsnummern zählen pro Kunde hoch. Zahlungsreferenzen sind zufällig, damit niemand daraus ablesen kann, wie viele
+Rechnungen du verschickst.
+{% /aside %}
+
+## Drucken
+
+Wähle **PDF**, dann **Dokumentvorlage**, **Sprache** und **Bankkonto**, und klick auf **PDF generieren**. Ein paar Sekunden später kannst du es **Herunterladen**.
+
+Eine Schweizer QR-Rechnung kommt ins PDF, wenn ein Bankkonto gewählt ist und die Rechnung auf CHF oder EUR lautet. Entwürfe erhalten das Wasserzeichen «Entwurf» und keine QR-Rechnung, praktisch für eine letzte Kontrolle.
+
+nullish verschickt keine E-Mails. Lade das PDF herunter und schick es wie gewohnt.
+
+## Bezahlt werden
+
+Am einfachsten [importierst du deine Kontoauszüge](/de/banking/import-statements/): nullish erkennt Zahlungen an der Referenz und schlägt dir die passende Rechnung vor.
+
+Eine Zahlung kannst du auch von Hand erfassen: Wähle **Bezahlen** und gib **Datum**, **Bankkonto** und **Betrag** ein.
+
+So oder so:
+
+- Nach einer Teilzahlung bleibt die Rechnung mit dem Restbetrag **Offen**.
+- Ist alles beglichen, steht die Rechnung auf **Bezahlt**.
+- Zahlt ein Kunde zu viel, wird die Differenz automatisch verbucht.
+
+## Wenn etwas schiefläuft
+
+- **Stornieren**: Die Rechnung hätte es nie geben sollen, etwa weil sie an den falschen Kunden ging. Ihre Buchungen werden rückgängig gemacht. Geht nur, solange noch nichts bezahlt ist.
+- **Abschreiben**: Der Kunde zahlt nicht mehr. Der offene Betrag wird als Debitorenverlust gebucht, und die Rechnung ist **Uneinbringlich**.
+
+{% aside type="caution" %}Beides ist endgültig und lässt sich nicht rückgängig machen.{% /aside %}
+
+## Status
+
+| Status         | Bedeutung                                 |
+| -------------- | ----------------------------------------- |
+| Entwurf        | In Arbeit. Noch nichts gebucht.           |
+| Offen          | Gebucht, Zahlung ausstehend.              |
+| Bezahlt        | Vollständig bezahlt.                      |
+| Uneinbringlich | Abgeschrieben.                            |
+| Storniert      | Annulliert, Buchungen rückgängig gemacht. |

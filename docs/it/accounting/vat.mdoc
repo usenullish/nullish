@@ -1,0 +1,56 @@
+---
+title: IVA
+description: Imposta l'IVA, scegli i metodi e prepara il rendiconto IVA.
+---
+
+Appena crei l'organizzazione, nullish ti chiede dell'IVA. Hai saltato il passaggio o è cambiato qualcosa? Trovi tutto sotto **Impostazioni → IVA**.
+
+## Impostazioni
+
+Inserisci il tuo **Numero IVA**, nel formato `CHE-123.456.789 IVA`.
+
+## Metodi
+
+I metodi si impostano anno per anno, sotto **Metodi**:
+
+- **Metodo di rendiconto**, cioè quando l'IVA diventa dovuta:
+  - **Convenute**: quando mandi la fattura. È il caso più frequente.
+  - **Ricevute**: quando il cliente paga.
+- **Metodo di calcolo**, cioè come si calcola l'IVA:
+  - **Metodo effettivo**: metti l'IVA sulle vendite e deduci quella pagata sugli acquisti.
+  - **Aliquota saldo**: versi una percentuale fissa della cifra d'affari, all'aliquota che ti ha concesso l'AFC.
+
+Ogni nuovo anno riprende i metodi di quello prima. Non sai quali fanno al caso tuo? Guarda la lettera di registrazione dell'AFC o chiedi al tuo fiduciario.
+
+{% aside %}Appena una fattura o una registrazione dell'anno usa l'IVA, i metodi di quell'anno restano bloccati.{% /aside %}
+
+## Aliquote
+
+In nullish ci sono già le aliquote svizzere in vigore: con il metodo effettivo, 8,1 %, 2,6 % e 3,8 % per le vendite e l'imposta precedente, più, per tutti, quelle per l'imposta sull'acquisto e la cifra d'affari non soggetta all'IVA. Ognuna ha un **Codice**, un **Tipo**, un'**Aliquota (%)** e il periodo in cui vale.
+
+Con l'aliquota saldo, aggiungi sotto **Aliquote** quella che ti ha concesso l'AFC. Finché manca, nullish ti ricorda che la configurazione IVA non è ancora finita.
+
+## Periodi IVA
+
+nullish divide ogni anno in periodi IVA: trimestri con il metodo effettivo, semestri con l'aliquota saldo. Li trovi sotto **Periodi**.
+
+Inoltrato il rendiconto, **Chiudi** il periodo IVA: da lì in poi non si tocca più. Per [chiudere l'esercizio](/it/accounting/periods/) devono essere chiusi tutti i periodi IVA dell'anno.
+
+## Rendiconto IVA
+
+Sotto **Contabilità → Rendiconto IVA**, scegli un periodo IVA: nullish compila le cifre del modulo AFC, dalla cifra d'affari all'imposta dovuta. Tu riporti i valori nell'ePortal dell'AFC.
+
+{% aside type="caution" %}
+nullish è in alpha e alcune cifre non vengono ancora calcolate. Te ne serve una? Faccelo sapere: è proprio
+per questo che cerchiamo tester. Nel frattempo, compilale a mano nell'ePortal.
+{% /aside %}
+
+| Cifra | Cosa comprende                                                                  |
+| ----- | ------------------------------------------------------------------------------- |
+| 205   | Prestazioni escluse dall'imposta, con opzione                                   |
+| 221   | Prestazioni fornite all'estero                                                  |
+| 230   | Prestazioni escluse nel territorio svizzero, senza opzione                      |
+| 235   | Diminuzioni della controprestazione. Solo le perdite su crediti sono calcolate. |
+| 280   | Diversi                                                                         |
+| 410   | Sgravio fiscale successivo                                                      |
+| 420   | Riduzioni della deduzione dell'imposta precedente, ad es. sussidi               |
