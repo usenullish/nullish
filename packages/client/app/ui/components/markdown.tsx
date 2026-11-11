@@ -80,7 +80,10 @@ const INITIAL_COMPONENTS: Partial<Components> = {
     <strong className={cn("font-semibold", className)} {...props} />
   ),
   a: ({ node: _node, className, ...props }) => (
-    <a className={cn("underline underline-offset-4 hover:text-primary", className)} {...props} />
+    <a
+      className={cn("underline underline-offset-4 hover:text-primary-text", className)}
+      {...props}
+    />
   ),
   blockquote: ({ node: _node, className, ...props }) => (
     <blockquote
