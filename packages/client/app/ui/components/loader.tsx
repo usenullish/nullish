@@ -321,7 +321,7 @@ export function TerminalLoader({
 
   return (
     <div className={cn("flex items-center space-x-1", containerSizes[size], className)}>
-      <span className={cn("text-primary font-mono", textSizes[size])}>{">"}</span>
+      <span className={cn("text-primary-text font-mono", textSizes[size])}>{">"}</span>
       <div className={cn("bg-primary animate-[blink_1s_step-end_infinite]", cursorSizes[size])} />
       <span className="sr-only">Loading</span>
     </div>
@@ -403,11 +403,11 @@ export function TextDotsLoader({
 
   return (
     <div className={cn("inline-flex items-center", className)}>
-      <span className={cn("text-primary font-medium", textSizes[size])}>{text}</span>
+      <span className={cn("text-primary-text font-medium", textSizes[size])}>{text}</span>
       <span className="inline-flex">
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.2s]">.</span>
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.4s]">.</span>
-        <span className="text-primary animate-[loading-dots_1.4s_infinite_0.6s]">.</span>
+        <span className="text-primary-text animate-[loading-dots_1.4s_infinite_0.2s]">.</span>
+        <span className="text-primary-text animate-[loading-dots_1.4s_infinite_0.4s]">.</span>
+        <span className="text-primary-text animate-[loading-dots_1.4s_infinite_0.6s]">.</span>
       </span>
     </div>
   );
