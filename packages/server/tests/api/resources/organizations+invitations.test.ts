@@ -110,7 +110,7 @@ describe("organization invitations", () => {
       db,
       env: {
         signUp: true,
-        autoSignIn: true,
+        signIn: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

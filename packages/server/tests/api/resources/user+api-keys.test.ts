@@ -108,7 +108,7 @@ describe("user api-keys", () => {
       db,
       env: {
         signUp: true,
-        autoSignIn: true,
+        signIn: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
