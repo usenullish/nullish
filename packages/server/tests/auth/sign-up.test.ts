@@ -24,7 +24,7 @@ describe("sign-up", () => {
       db,
       env: {
         signUp: mode,
-        signIn: { autoSignIn: true },
+        emailAndPassword: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

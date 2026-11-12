@@ -143,7 +143,7 @@ describe("bank movements reconcile", () => {
       db,
       env: {
         signUp: true,
-        signIn: { autoSignIn: true },
+        emailAndPassword: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

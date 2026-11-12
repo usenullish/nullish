@@ -2,23 +2,23 @@ import type { BetterAuthOptions } from "better-auth";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { AuthMailer } from "./_mail/mailer";
 
-export type SignIn = { mail: SendMail } | { autoSignIn: boolean };
+export type EmailAndPassword = { mail: SendMail } | { autoSignIn: boolean };
 
 export const buildEmailAndPasswordConfig = ({
-  signIn,
+  emailAndPassword,
 }: {
-  signIn: SignIn;
+  emailAndPassword: EmailAndPassword;
 }): Pick<BetterAuthOptions, "emailAndPassword" | "emailVerification"> => {
-  if ("autoSignIn" in signIn) {
+  if ("autoSignIn" in emailAndPassword) {
     return {
       emailAndPassword: {
         enabled: true,
-        autoSignIn: signIn.autoSignIn,
+        autoSignIn: emailAndPassword.autoSignIn,
       },
     };
   }
 
-  const mailer = AuthMailer.create({ mail: signIn.mail });
+  const mailer = AuthMailer.create({ mail: emailAndPassword.mail });
 
   return {
     emailAndPassword: {

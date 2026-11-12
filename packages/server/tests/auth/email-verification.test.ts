@@ -20,7 +20,7 @@ describe("email verification", () => {
       db,
       env: {
         signUp: true,
-        signIn: { mail: { send } },
+        emailAndPassword: { mail: { send } },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

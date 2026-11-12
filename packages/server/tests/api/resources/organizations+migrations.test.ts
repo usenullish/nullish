@@ -91,7 +91,7 @@ describe("organization migrations", () => {
       db,
       env: {
         signUp: true,
-        signIn: { autoSignIn: true },
+        emailAndPassword: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

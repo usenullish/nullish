@@ -19,14 +19,14 @@ const url = "https://nullish.example.com/auth/callback?token=abc";
 describe("buildEmailAndPasswordConfig", () => {
   describe("without mail", () => {
     test.each([true, false])("enables email and password with autoSignIn %p", (autoSignIn) => {
-      expect(buildEmailAndPasswordConfig({ signIn: { autoSignIn } })).toEqual({
+      expect(buildEmailAndPasswordConfig({ emailAndPassword: { autoSignIn } })).toEqual({
         emailAndPassword: { enabled: true, autoSignIn },
       });
     });
 
     test("does not configure the email verification", () => {
       expect(
-        buildEmailAndPasswordConfig({ signIn: { autoSignIn: true } }).emailVerification,
+        buildEmailAndPasswordConfig({ emailAndPassword: { autoSignIn: true } }).emailVerification,
       ).toBeUndefined();
     });
   });
@@ -35,7 +35,10 @@ describe("buildEmailAndPasswordConfig", () => {
     const build = () => {
       const send = mock(async () => {});
 
-      return { send, config: buildEmailAndPasswordConfig({ signIn: { mail: { send } } }) };
+      return {
+        send,
+        config: buildEmailAndPasswordConfig({ emailAndPassword: { mail: { send } } }),
+      };
     };
 
     test("enables email and password with a required email verification", () => {
