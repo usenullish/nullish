@@ -108,6 +108,7 @@
       "sign_up_description": "Erstelle dein Konto, um loszulegen.",
       "no_account": "Noch kein Konto?",
       "has_account": "Hast du bereits ein Konto?",
+      "verify_email_description": "Wir haben dir einen Link an {email} geschickt. Öffne ihn, um deine Adresse zu bestätigen und loszulegen.",
       "session_expired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
       "change_password_title": "Passwort ändern",
       "two_factor_description": "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",
