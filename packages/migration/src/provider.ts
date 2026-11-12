@@ -1,7 +1,6 @@
-import { type Result, tryCatchSync } from "@usenullish/nullish-common";
-import { Bexio } from "./providers/bexio";
+import type { Result } from "@usenullish/nullish-common";
 import type { Migration } from "@usenullish/nullish-schema/migration";
-import { MigrationProvider } from "@usenullish/nullish-schema/db";
+import type { MigrationProvider } from "@usenullish/nullish-schema/db";
 
 export type ForeignAccountingSourceExtension = ".xlsx" | ".csv";
 
@@ -39,21 +38,3 @@ interface Factory<T> {
 }
 
 export function ForeignAccounting(_constructor: Factory<ForeignAccountingProvider>) {}
-
-export const createForeignAccountingProvider = ({
-  provider,
-}: {
-  provider: MigrationProvider;
-}): Result<ForeignAccountingProvider> => {
-  const create = (): ForeignAccountingProvider => {
-    switch (provider) {
-      case MigrationProvider.BEXIO: {
-        return Bexio.create();
-      }
-      default:
-        throw new Error("Unsupported provider.");
-    }
-  };
-
-  return tryCatchSync(create);
-};
