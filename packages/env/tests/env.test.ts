@@ -11,6 +11,10 @@ import {
   envLlmUrl,
   envLlmChatModel,
   envLlmChatTokenLimit,
+  envMailEnabled,
+  envMailFrom,
+  envMailFromName,
+  envMailSmtpUrl,
   envSignUp,
   LlmTokenLimitPeriod,
 } from "../src";
@@ -31,6 +35,9 @@ describe("env", () => {
     "NULLISH_AUTH_SIGN_UP",
     "NULLISH_AUTH_URL",
     "NULLISH_AUTH_SECRET",
+    "NULLISH_MAIL_FROM",
+    "NULLISH_MAIL_FROM_NAME",
+    "NULLISH_MAIL_SMTP_URL",
   ] as const;
 
   const saved = new Map<string, string | undefined>();
@@ -305,6 +312,18 @@ describe("env", () => {
       key: "NULLISH_AUTH_SECRET",
       value: "a-secret-of-at-least-32-characters",
     },
+    {
+      name: "envMailFrom",
+      fn: envMailFrom,
+      key: "NULLISH_MAIL_FROM",
+      value: "hello@nullish.example.com",
+    },
+    {
+      name: "envMailSmtpUrl",
+      fn: envMailSmtpUrl,
+      key: "NULLISH_MAIL_SMTP_URL",
+      value: "smtp://localhost:1025",
+    },
   ] as const)("$name", ({ fn, key, value }) => {
     test("reads the variable", () => {
       process.env[key] = value;
@@ -320,6 +339,73 @@ describe("env", () => {
       process.env[key] = "";
 
       expect(() => fn()).toThrow();
+    });
+  });
+
+  describe("envMailEnabled", () => {
+    test("is enabled when the sender and the SMTP URL are defined", () => {
+      process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
+      process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
+
+      expect(envMailEnabled()).toBe(true);
+    });
+
+    test("is disabled when nothing is defined", () => {
+      expect(envMailEnabled()).toBe(false);
+    });
+
+    test.each(["NULLISH_MAIL_FROM", "NULLISH_MAIL_SMTP_URL"])(
+      "is disabled when %s is empty",
+      (key) => {
+        process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
+        process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
+        process.env[key] = "";
+
+        expect(envMailEnabled()).toBe(false);
+      },
+    );
+  });
+
+  describe("envMailFrom validation", () => {
+    test.each(["nullish <hello@nullish.example.com>", "hello", "hello@"])(
+      "throws for %p",
+      (from) => {
+        process.env.NULLISH_MAIL_FROM = from;
+
+        expect(() => envMailFrom()).toThrow("must be a valid email address");
+      },
+    );
+  });
+
+  describe("envMailFromName", () => {
+    test("returns no name when NULLISH_MAIL_FROM_NAME is unset", () => {
+      expect(envMailFromName()).toBeUndefined();
+    });
+
+    test("returns no name when NULLISH_MAIL_FROM_NAME is empty", () => {
+      process.env.NULLISH_MAIL_FROM_NAME = "";
+
+      expect(envMailFromName()).toBeUndefined();
+    });
+
+    test("reads the variable", () => {
+      process.env.NULLISH_MAIL_FROM_NAME = "nullish";
+
+      expect(envMailFromName()).toBe("nullish");
+    });
+  });
+
+  describe("envMailSmtpUrl validation", () => {
+    test("accepts an smtps URL with credentials", () => {
+      process.env.NULLISH_MAIL_SMTP_URL = "smtps://user:pass@smtp.example.com:465";
+
+      expect(envMailSmtpUrl()).toBe("smtps://user:pass@smtp.example.com:465");
+    });
+
+    test.each(["https://smtp.example.com", "localhost:1025", "smtp"])("throws for %p", (url) => {
+      process.env.NULLISH_MAIL_SMTP_URL = url;
+
+      expect(() => envMailSmtpUrl()).toThrow("must be a valid smtp:// or smtps:// URL");
     });
   });
 
