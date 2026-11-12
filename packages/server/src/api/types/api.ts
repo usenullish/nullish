@@ -1,14 +1,20 @@
 import type { DbInstance } from "@usenullish/nullish-db";
 import type { Hono } from "hono";
-import type { Nullish } from "@usenullish/nullish-common";
+import type { Nullable, Nullish } from "@usenullish/nullish-common";
 import type { Auth as AuthSession } from "@usenullish/nullish-auth/server";
 import type { Auth as AuthTypes } from "@usenullish/nullish-schema/auth";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
+import type { SendMail } from "@usenullish/nullish-schema/mail";
 import { Storage } from "@usenullish/nullish-storage";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { LlmMeter } from "@usenullish/nullish-metering";
 
-export type DefineApi = (args: { db: DbInstance; jobs: TriggerJobs; storage: Storage }) => {
+export type DefineApi = (args: {
+  db: DbInstance;
+  jobs: TriggerJobs;
+  storage: Storage;
+  mail: Nullable<SendMail>;
+}) => {
   fetch: Hono["fetch"];
 };
 

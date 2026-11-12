@@ -38,12 +38,22 @@ describe("createMailProvider", () => {
     }
   });
 
+  const createProvider = () => {
+    const result = createMailProvider();
+
+    if (result.status === "error") {
+      throw result.err;
+    }
+
+    return result.result;
+  };
+
   test("returns the SMTP provider", () => {
-    expect(createMailProvider()).toBeInstanceOf(SmtpMailProvider);
+    expect(createProvider()).toBeInstanceOf(SmtpMailProvider);
   });
 
   test("creates the transport with the SMTP URL", () => {
-    createMailProvider();
+    createProvider();
 
     expect(createTransport).toHaveBeenCalledWith("smtp://localhost:1025");
   });
@@ -53,10 +63,10 @@ describe("createMailProvider", () => {
     ["NULLISH_MAIL_FROM", ""],
     ["NULLISH_MAIL_SMTP_URL", "https://smtp.example.com"],
     ["NULLISH_MAIL_SMTP_URL", ""],
-  ])("throws when %s is %p", (key, value) => {
+  ])("returns an error when %s is %p", (key, value) => {
     process.env[key] = value;
 
-    expect(() => createMailProvider()).toThrow();
+    expect(createMailProvider().status).toBe("error");
   });
 
   describe("send", () => {
@@ -67,7 +77,7 @@ describe("createMailProvider", () => {
     } as const;
 
     test("sends from the name and the address of the sender", async () => {
-      await createMailProvider().send(args);
+      await createProvider().send(args);
 
       expect(sendMail).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -80,7 +90,7 @@ describe("createMailProvider", () => {
     test("sends from the address only when the sender has no name", async () => {
       delete process.env.NULLISH_MAIL_FROM_NAME;
 
-      await createMailProvider().send(args);
+      await createProvider().send(args);
 
       expect(sendMail).toHaveBeenCalledWith(
         expect.objectContaining({ from: "hello@nullish.example.com" }),
@@ -88,7 +98,7 @@ describe("createMailProvider", () => {
     });
 
     test("rejects invalid arguments without sending", async () => {
-      const provider = createMailProvider();
+      const provider = createProvider();
 
       await expect(provider.send({ ...args, to: "user" })).rejects.toThrow();
 
@@ -100,7 +110,7 @@ describe("createMailProvider", () => {
         throw new Error("Connection refused");
       });
 
-      await expect(createMailProvider().send(args)).rejects.toThrow("Connection refused");
+      await expect(createProvider().send(args)).rejects.toThrow("Connection refused");
     });
   });
 });

@@ -1,18 +1,25 @@
 import { createMiddleware } from "hono/factory";
 import type { DbInstance } from "@usenullish/nullish-db";
 import { ErrorCode } from "@usenullish/nullish-schema/server";
+import type { SendMail } from "@usenullish/nullish-schema/mail";
 import type { ApiEnv } from "../types/api";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { isNullish } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
 import { envAuthSecret, envAuthUrl, envSignUp, isProd } from "@usenullish/nullish-env";
 import { errorResponse } from "../_errors";
 
-export const loadAuthMiddleware = ({ db: { connection } }: { db: DbInstance }) => {
+export const loadAuthMiddleware = ({
+  db: { connection },
+  mail,
+}: {
+  db: DbInstance;
+  mail: Nullable<SendMail>;
+}) => {
   const auth = createAuth({
     db: connection,
     env: {
       signUp: envSignUp(),
-      emailAndPassword: { autoSignIn: !isProd() },
+      emailAndPassword: nonNullish(mail) ? { mail } : { autoSignIn: !isProd() },
       baseURL: envAuthUrl(),
       secret: envAuthSecret(),
     },
