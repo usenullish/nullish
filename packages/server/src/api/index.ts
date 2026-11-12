@@ -1,6 +1,7 @@
 import type { ApiEnv, DefineApi } from "./types/api";
 import { loadDbMiddleware } from "./middlewares/db";
 import { defineHealth, healthRoute } from "./resources/_health";
+import { defineSettings, settingsRoute } from "./resources/_settings";
 import { loadAuthMiddleware } from "./middlewares/auth";
 import { defineAuth } from "./resources/_auth";
 import { loadCallerMiddleware } from "./middlewares/caller";
@@ -39,6 +40,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
 
   resources.forEach((resource) => resource.register());
 
+  app.openapi(settingsRoute, defineSettings({ mail }));
   app.openapi(healthRoute, defineHealth);
 
   app.openAPIRegistry.registerComponent("securitySchemes", "ApiKey", {
