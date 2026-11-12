@@ -16,11 +16,11 @@ import { assertSignUpAllowed } from "./_sign-up";
 import { buildCustomSession } from "./_custom-session";
 import { assertDeleteUserAllowed } from "./_delete-user";
 import { twoFactor } from "better-auth/plugins";
-import { buildEmailAndPasswordConfig, type SignIn } from "./_email-and-password";
+import { buildEmailAndPasswordConfig, type EmailAndPassword } from "./_email-and-password";
 
 export const createAuth = ({
   db,
-  env: { signUp, signIn, baseURL, secret },
+  env: { signUp, emailAndPassword, baseURL, secret },
 }: {
   db: PostgresDbInstance;
   env: {
@@ -29,7 +29,7 @@ export const createAuth = ({
     // - In prod: either
     //      a. email with verification + autoSignInAfterVerification: true
     //      b. autoSignIn false
-    signIn: SignIn;
+    emailAndPassword: EmailAndPassword;
     baseURL: string;
     secret: string;
   };
@@ -47,7 +47,7 @@ export const createAuth = ({
       usePlural: true,
       schema: DbSchema.Auth.Auth,
     }),
-    ...buildEmailAndPasswordConfig({ signIn }),
+    ...buildEmailAndPasswordConfig({ emailAndPassword }),
     user: {
       deleteUser: {
         enabled: true,
