@@ -16,8 +16,7 @@ import { assertSignUpAllowed } from "./_sign-up";
 import { buildCustomSession } from "./_custom-session";
 import { assertDeleteUserAllowed } from "./_delete-user";
 import { twoFactor } from "better-auth/plugins";
-import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
-import { sendMail } from "./_mail/send-mail";
+import { buildEmailAndPasswordConfig, type SignIn } from "./_email-and-password";
 
 export const createAuth = ({
   db,
@@ -30,7 +29,7 @@ export const createAuth = ({
     // - In prod: either
     //      a. email with verification + autoSignInAfterVerification: true
     //      b. autoSignIn false
-    signIn: { mail: SendMail } | { autoSignIn: boolean };
+    signIn: SignIn;
     baseURL: string;
     secret: string;
   };
@@ -48,24 +47,7 @@ export const createAuth = ({
       usePlural: true,
       schema: DbSchema.Auth.Auth,
     }),
-    emailAndPassword: {
-      enabled: true,
-      ...("autoSignIn" in signIn && { autoSignIn: signIn.autoSignIn }),
-      ...("mail" in signIn && {
-        requireEmailVerification: true,
-        sendResetPassword: async ({ user: { email }, url }) => {
-          sendMail({ mail: signIn.mail, type: MailType.RESET_PASSWORD, email, url });
-        },
-      }),
-    },
-    ...("mail" in signIn && {
-      emailVerification: {
-        autoSignInAfterVerification: true,
-        sendVerificationEmail: async ({ user: { email }, url }) => {
-          sendMail({ mail: signIn.mail, type: MailType.VERIFY_EMAIL, email, url });
-        },
-      },
-    }),
+    ...buildEmailAndPasswordConfig({ signIn }),
     user: {
       deleteUser: {
         enabled: true,
