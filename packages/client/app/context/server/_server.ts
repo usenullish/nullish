@@ -16,11 +16,39 @@ import { QUERY_DEFAULT_PAGINATION } from "@usenullish/nullish-schema/db";
 // React Router single-fetch param naming the loaders to run
 const ROUTER_PARAMS = ["_routes"];
 
-export abstract class ServerLoader {
+export abstract class Loader {
   readonly #context: string;
 
   protected constructor({ context }: { context: string }) {
     this.#context = context;
+  }
+
+  protected _unwrap<T>({
+    errorFallbackMsg,
+    result,
+  }: {
+    errorFallbackMsg: string;
+    result: Result<T>;
+  }): T {
+    if (result.status === "error") {
+      console.error(`[${this.#context}]`, result.err);
+
+      const apiError = result.err instanceof ApiError ? result.err : undefined;
+      const reason = apiError?.code !== ErrorCode.UNEXPECTED ? apiError?.reason : undefined;
+
+      throw data({
+        status: apiError?.status ?? 500,
+        message: reason ?? errorFallbackMsg,
+      });
+    }
+
+    return result.result;
+  }
+}
+
+export abstract class ServerLoader extends Loader {
+  protected constructor(args: { context: string }) {
+    super(args);
   }
 
   protected async _load<T>({
@@ -40,16 +68,7 @@ export abstract class ServerLoader {
 
     const result = await loaderFn({ cookie });
 
-    if (result.status === "error") {
-      console.error(`[${this.#context}]`, result.err);
-
-      const apiError = result.err instanceof ApiError ? result.err : undefined;
-      const reason = apiError?.code !== ErrorCode.UNEXPECTED ? apiError?.reason : undefined;
-
-      this.#error({ status: apiError?.status ?? 500, message: reason ?? errorFallbackMsg });
-    }
-
-    return result.result;
+    return this._unwrap({ result, errorFallbackMsg });
   }
 
   protected async _loadWithId<T>({
@@ -255,5 +274,23 @@ export abstract class ServerLoader {
 
   #error({ status, message }: { status: number; message: string }): never {
     throw data(message, { status });
+  }
+}
+
+export abstract class PublicServerLoader extends Loader {
+  protected constructor(args: { context: string }) {
+    super(args);
+  }
+
+  protected async _load<T>({
+    errorFallbackMsg,
+    loaderFn,
+  }: {
+    errorFallbackMsg: string;
+    loaderFn: () => Promise<Result<T>>;
+  }): Promise<Option<T>> {
+    const result = await loaderFn();
+
+    return this._unwrap({ result, errorFallbackMsg });
   }
 }
