@@ -10,3 +10,10 @@ services:
       - "5432:5432"
     volumes:
       - ./.nullish/db:/var/lib/postgresql
+
+  mailpit:
+    image: axllent/mailpit:v1.30.5@sha256:b868afa176bfd6cce2323ea316cd99ccad77915e51e595748f6d786700ecf109
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
