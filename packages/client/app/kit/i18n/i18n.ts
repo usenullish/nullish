@@ -104,6 +104,7 @@ const I18nAuthSchema = z.strictObject({
     sign_up_description: z.string(),
     no_account: z.string(),
     has_account: z.string(),
+    verify_email_description: z.string(),
     session_expired: z.string(),
     change_password_title: z.string(),
     two_factor_description: z.string(),

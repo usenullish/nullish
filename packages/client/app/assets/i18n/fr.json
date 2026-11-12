@@ -108,6 +108,7 @@
       "sign_up_description": "Crée ton compte pour commencer.",
       "no_account": "Pas encore inscrit ?",
       "has_account": "Tu as déjà un compte ?",
+      "verify_email_description": "On t'a envoyé un lien à {email}. Ouvre-le pour confirmer ton adresse et commencer.",
       "session_expired": "Ta session a expiré. Reconnecte-toi.",
       "change_password_title": "Changer ton mot de passe",
       "two_factor_description": "Saisis le code à 6 chiffres de ton app d'authentification.",

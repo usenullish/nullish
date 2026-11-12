@@ -108,6 +108,7 @@
       "sign_up_description": "Create your account to get started.",
       "no_account": "Not signed up yet?",
       "has_account": "Already have an account?",
+      "verify_email_description": "We sent a link to {email}. Open it to verify your address and get started.",
       "session_expired": "Your session has expired. Please sign in again.",
       "change_password_title": "Change your password",
       "two_factor_description": "Enter the 6-digit code from your authenticator app.",

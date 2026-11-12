@@ -1,6 +1,6 @@
 import { type FormEvent, startTransition, useId, useState, ViewTransition } from "react";
 import { Link, useNavigate, useRevalidator } from "react-router";
-import { nonNullish, type Nullable } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
 import { authClient, INVITATION_TOKEN_HEADER } from "@usenullish/nullish-auth/client";
 import { Button } from "~/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader } from "~/ui/components/card";
@@ -31,6 +31,10 @@ export const SignUp = () => {
 
   const invitationToken = useInvitationToken();
 
+  const callbackURL = nonNullish(invitationToken)
+    ? InvitationPath.create({ token: invitationToken }).toAccept()
+    : "/orgs/new";
+
   const navigate = useNavigate();
   const { revalidate } = useRevalidator();
 
@@ -44,6 +48,7 @@ export const SignUp = () => {
         email,
         password,
         name,
+        callbackURL,
       },
       {
         ...(nonNullish(invitationToken) && {
@@ -52,14 +57,14 @@ export const SignUp = () => {
         onRequest: (_ctx) => {
           setPending(true);
         },
-        onSuccess: async (_ctx) => {
+        onSuccess: async ({ data }) => {
+          if (isNullish(data?.token)) {
+            await navigate(AUTH_NAVIGATION.signUpVerifyEmail, { state: { email }, replace: true });
+            return;
+          }
+
           await revalidate();
-          await navigate(
-            nonNullish(invitationToken)
-              ? InvitationPath.create({ token: invitationToken }).toAccept()
-              : "/orgs/new",
-            { replace: true },
-          );
+          await navigate(callbackURL, { replace: true });
         },
         onError: (ctx) => {
           setPending(false);

@@ -46,10 +46,12 @@ export const AUTH_NAVIGATION: {
   signIn: RelativePath;
   signInTwoFactor: RelativePath;
   signUp: RelativePath;
+  signUpVerifyEmail: RelativePath;
 } = {
   signIn: "/sign-in",
   signInTwoFactor: "/sign-in/two-factor",
   signUp: "/sign-up",
+  signUpVerifyEmail: "/sign-up/verify-email",
 };
 
 export const INVITATION_ACCEPT_PATH = "/invitations/accept";
