@@ -30,6 +30,7 @@ export const buildEmailAndPasswordConfig = ({
     },
     emailVerification: {
       autoSignInAfterVerification: true,
+      sendOnSignIn: true,
       sendVerificationEmail: async ({ user: { email }, url }) => {
         mailer.send({ type: MailType.VERIFY_EMAIL, email, url });
       },
