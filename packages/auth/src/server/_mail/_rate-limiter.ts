@@ -1,5 +1,5 @@
 import type { Mail } from "@usenullish/nullish-schema/mail";
-import { MAIL_RATE_LIMITS } from "../_constants";
+import { MAIL_RATE_LIMITS } from "../../_constants";
 
 type Email = Mail["Send"]["Args"]["to"];
 type ReservedAt = ReturnType<typeof Date.now>;

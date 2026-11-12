@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
-import { sendMail } from "../../src/server/_send-mail";
+import { sendMail } from "../../src/server/_mail/send-mail";
 
 describe("sendMail", () => {
   const args = {

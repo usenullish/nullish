@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, setSystemTime, test } from "bun:test";
 import { MAIL_RATE_LIMITS } from "../../src/_constants";
-import { MailRateLimiter, MailReservationType } from "../../src/server/_mail-rate-limiter";
+import { MailRateLimiter, MailReservationType } from "../../src/server/_mail/_rate-limiter";
 
 const { burst, daily } = MAIL_RATE_LIMITS;
 

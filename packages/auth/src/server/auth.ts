@@ -17,7 +17,7 @@ import { buildCustomSession } from "./_custom-session";
 import { assertDeleteUserAllowed } from "./_delete-user";
 import { twoFactor } from "better-auth/plugins";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
-import { sendMail } from "./_send-mail";
+import { sendMail } from "./_mail/send-mail";
 
 export const createAuth = ({
   db,
