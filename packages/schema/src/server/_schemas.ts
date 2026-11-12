@@ -57,6 +57,7 @@ import * as MessagesSchema from "./api/chat+conversations+messages";
 import * as UserApiKeysSchema from "./api/user+api-keys";
 import * as LlmUsageSchema from "./api/user+reports+llm-usage";
 import * as AssistantSchema from "./api/user+assistant";
+import * as SettingsSchema from "./api/settings";
 import * as MigrationsSchema from "./api/migrations";
 import * as MigrationsDatasetsSchema from "./api/migrations+datasets";
 import * as MigrationsRunSchema from "./api/migrations+run";
@@ -118,6 +119,7 @@ const ApiSchema = {
   UserApiKeys: UserApiKeysSchema,
   LlmUsage: LlmUsageSchema,
   Assistant: AssistantSchema,
+  Settings: SettingsSchema,
   Migrations: MigrationsSchema,
   MigrationsDatasets: MigrationsDatasetsSchema,
   MigrationsRun: MigrationsRunSchema,

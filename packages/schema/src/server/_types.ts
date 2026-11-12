@@ -830,6 +830,15 @@ interface Api {
       GetAssistantResponse: z.infer<typeof ApiSchema.Assistant.GetAssistantResponseSchema>;
     };
   };
+  Settings: {
+    Server: {
+      GetSettingsResponse: z.input<typeof ApiSchema.Settings.GetSettingsResponseSchema>;
+    };
+    Client: {
+      Settings: z.infer<typeof ApiSchema.Settings.SettingsSchema>;
+      GetSettingsResponse: z.infer<typeof ApiSchema.Settings.GetSettingsResponseSchema>;
+    };
+  };
   UserApiKeys: {
     Server: {
       CreateApiKeyRequest: typeof ApiSchema.UserApiKeys.CreateApiKeyRequestSchema;
