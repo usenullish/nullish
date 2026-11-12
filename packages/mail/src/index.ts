@@ -1,2 +1,1 @@
-export type { MailProvider } from "./provider";
-export { createMailProvider } from "./factory";
+export { createMailProvider } from "./provider";

@@ -11,6 +11,7 @@
     "check": "tsc"
   },
   "dependencies": {
+    "@usenullish/nullish-common": "workspace:*",
     "@usenullish/nullish-env": "workspace:*",
     "@usenullish/nullish-schema": "workspace:*",
     "nodemailer": "^10.5.0"

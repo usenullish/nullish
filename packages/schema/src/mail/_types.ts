@@ -1,4 +1,5 @@
 import type { MailSchema } from "./_schemas";
+import type { SendMail } from "./_send";
 import type { z } from "zod";
 
 interface Mail {
@@ -7,4 +8,4 @@ interface Mail {
   };
 }
 
-export type { Mail };
+export type { Mail, SendMail };
