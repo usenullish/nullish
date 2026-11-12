@@ -19,16 +19,16 @@ export default defineConfig({
         ]
       : [
           {
+            command: "bun ./e2e/_client-proxy.ts",
+            url: "http://localhost:5173/api/health",
+            reuseExistingServer: false,
+            stdout: "pipe" as const,
+          },
+          {
             command:
               "PORT=5174 NULLISH_API_URL=http://localhost:5173/api bun run --filter @usenullish/nullish-client start",
             url: "http://localhost:5174",
             reuseExistingServer: false,
-          },
-          {
-            command: "bun ./e2e/_client-proxy.ts",
-            url: "http://localhost:5173",
-            reuseExistingServer: false,
-            stdout: "pipe" as const,
           },
         ]),
   ],
