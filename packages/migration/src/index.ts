@@ -1,4 +1,5 @@
 export * from "./provider";
+export * from "./factory";
 export * from "./migration";
 export * from "./services/accounts.migrate";
 export * from "./services/balances.migrate";
