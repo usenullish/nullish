@@ -55,7 +55,7 @@ export const DeleteUser = ({
         },
         onError: (ctx) => {
           setPending(false);
-          startTransition(() => setError(authErrorMessage(ctx.error.message)));
+          startTransition(() => setError(authErrorMessage(ctx.error)));
         },
       },
     );

@@ -121,7 +121,20 @@
       "sign_up_disabled": "Die Registrierung ist deaktiviert.",
       "sign_up_invitation_only": "Die Registrierung ist nur auf Einladung möglich.",
       "user_has_organizations": "Verlasse oder lösche deine Organisationen, bevor du dein Konto löschst.",
-      "user_has_api_keys": "Lösche deine API-Schlüssel, bevor du dein Konto löschst."
+      "user_has_api_keys": "Lösche deine API-Schlüssel, bevor du dein Konto löschst.",
+      "email_not_verified": "Deine E-Mail-Adresse ist noch nicht bestätigt. Wir haben dir einen neuen Link geschickt.",
+      "invalid_email_or_password": "E-Mail-Adresse oder Passwort ungültig.",
+      "password_too_short": "Dein Passwort ist zu kurz.",
+      "password_too_long": "Dein Passwort ist zu lang.",
+      "invalid_email": "Diese E-Mail-Adresse ist ungültig.",
+      "invalid_password": "Dein Passwort ist falsch.",
+      "session_expired": "Deine Sitzung ist abgelaufen. Melde dich erneut an, um das zu tun.",
+      "invalid_token": "Dieser Link ist ungültig.",
+      "token_expired": "Dieser Link ist abgelaufen.",
+      "invalid_code": "Dieser Code ist ungültig.",
+      "invalid_backup_code": "Dieser Backup-Code ist ungültig.",
+      "account_temporarily_locked": "Zu viele Fehlversuche. Dein Konto ist vorübergehend gesperrt, versuche es später erneut.",
+      "invalid_two_factor_cookie": "Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an."
     }
   },
   "errors": {
