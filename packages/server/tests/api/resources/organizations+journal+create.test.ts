@@ -136,7 +136,7 @@ describe("journal create", () => {
       db,
       env: {
         signUp: true,
-        autoSignIn: true,
+        signIn: { autoSignIn: true },
         baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },

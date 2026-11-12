@@ -4,7 +4,7 @@ Authentication with better-auth: the server configuration, the React client and 
 
 ## Layout
 
-- `server`: `createAuth({ db, env: { signUp, autoSignIn, baseURL, secret } })`, the better-auth instance used by the server (email and password, drizzle adapter on the `auth` schema).
+- `server`: `createAuth({ db, env: { signUp, signIn, baseURL, secret } })`, the better-auth instance used by the server (email and password, drizzle adapter on the `auth` schema). `signIn` is either `{ mail }`, which requires the email to be verified and sends the verification and reset emails, or `{ autoSignIn }` when emails are not enabled.
 - `client`: `authClient` for the app, and `getAuthCookie` that reads the session cookie of a request for the SSR loaders.
 - `_constants.ts`: base path, cookie names, the API key and the two-factor configurations.
 

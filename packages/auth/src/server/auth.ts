@@ -16,24 +16,21 @@ import { assertSignUpAllowed } from "./_sign-up";
 import { buildCustomSession } from "./_custom-session";
 import { assertDeleteUserAllowed } from "./_delete-user";
 import { twoFactor } from "better-auth/plugins";
+import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
+import { sendMail } from "./_send-mail";
 
 export const createAuth = ({
   db,
-  env: { signUp, autoSignIn, baseURL, secret },
+  env: { signUp, signIn, baseURL, secret },
 }: {
   db: PostgresDbInstance;
   env: {
     signUp: boolean | "invite_only";
-    // TODO: to be enhanced once we enable email verification
-    // i.e.
     // - In dev: no email verification and autoSignIn: true
     // - In prod: either
-    //      a. email verification + autoSignInAfterVerification: true
+    //      a. email with verification + autoSignInAfterVerification: true
     //      b. autoSignIn false
-    // Note: not enabling email verification and autoSignIn set to true leads to a minor
-    // privacy leak - one can try to sign-up with an existing email and get to know if already used
-    // or not.
-    autoSignIn: boolean;
+    signIn: { mail: SendMail } | { autoSignIn: boolean };
     baseURL: string;
     secret: string;
   };
@@ -53,8 +50,22 @@ export const createAuth = ({
     }),
     emailAndPassword: {
       enabled: true,
-      autoSignIn,
+      ...("autoSignIn" in signIn && { autoSignIn: signIn.autoSignIn }),
+      ...("mail" in signIn && {
+        requireEmailVerification: true,
+        sendResetPassword: async ({ user: { email }, url }) => {
+          sendMail({ mail: signIn.mail, type: MailType.RESET_PASSWORD, email, url });
+        },
+      }),
     },
+    ...("mail" in signIn && {
+      emailVerification: {
+        autoSignInAfterVerification: true,
+        sendVerificationEmail: async ({ user: { email }, url }) => {
+          sendMail({ mail: signIn.mail, type: MailType.VERIFY_EMAIL, email, url });
+        },
+      },
+    }),
     user: {
       deleteUser: {
         enabled: true,

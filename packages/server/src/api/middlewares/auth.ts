@@ -12,7 +12,7 @@ export const loadAuthMiddleware = ({ db: { connection } }: { db: DbInstance }) =
     db: connection,
     env: {
       signUp: envSignUp(),
-      autoSignIn: !isProd(),
+      signIn: { autoSignIn: !isProd() },
       baseURL: envAuthUrl(),
       secret: envAuthSecret(),
     },
