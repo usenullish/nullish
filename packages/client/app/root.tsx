@@ -21,6 +21,7 @@ import { LlmUsageContext } from "~/context/contexts/llm-usage.context";
 import { AssistantContext } from "~/context/contexts/assistant.context";
 import { SettingsServer } from "~/context/server/settings.server";
 import { SettingsContext } from "~/context/contexts/settings.context";
+import { DEFAULT_SETTINGS } from "~/context/constants/settings.constants";
 import { SYSTEM_THEME_SCRIPT } from "~/kit/theme/theme.services";
 import { ThemeProvider } from "~/kit/theme/theme-provider";
 import { DEFAULT_KIT, initKit } from "~/kit/init";
@@ -51,7 +52,7 @@ const FALLBACK_DATA: Awaited<ReturnType<typeof loader>> = [
   DEFAULT_KIT,
   undefined,
   undefined,
-  undefined,
+  DEFAULT_SETTINGS,
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -142,7 +143,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
     DEFAULT_KIT,
     undefined,
     undefined,
-    undefined,
+    DEFAULT_SETTINGS,
   ];
 
   const { theme, i18n, privacy, environment } = kit;
