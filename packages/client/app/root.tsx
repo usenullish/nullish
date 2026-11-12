@@ -19,6 +19,9 @@ import { UserReportsServer } from "~/context/server/user+reports.server";
 import { UserAssistantServer } from "~/context/server/user+assistant.server";
 import { LlmUsageContext } from "~/context/contexts/llm-usage.context";
 import { AssistantContext } from "~/context/contexts/assistant.context";
+import { SettingsServer } from "~/context/server/settings.server";
+import { SettingsContext } from "~/context/contexts/settings.context";
+import { DEFAULT_SETTINGS } from "~/context/constants/settings.constants";
 import { SYSTEM_THEME_SCRIPT } from "~/kit/theme/theme.services";
 import { ThemeProvider } from "~/kit/theme/theme-provider";
 import { DEFAULT_KIT, initKit } from "~/kit/init";
@@ -49,6 +52,7 @@ const FALLBACK_DATA: Awaited<ReturnType<typeof loader>> = [
   DEFAULT_KIT,
   undefined,
   undefined,
+  DEFAULT_SETTINGS,
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -118,6 +122,7 @@ export const loader = async (args: Route.LoaderArgs) => {
     initKit(args),
     UserReportsServer.create().getLlmUsage(args),
     UserAssistantServer.create().getAssistant(args),
+    SettingsServer.create().get(),
   ]);
 };
 
@@ -125,14 +130,21 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ currentUrl, nextUrl
   currentUrl.href === nextUrl.href;
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const [organizationsResult, currenciesResult, kit, llmUsageResult, assistantResult] =
-    loaderData ?? [
-      { organizations: undefined },
-      { currencies: undefined },
-      DEFAULT_KIT,
-      undefined,
-      undefined,
-    ];
+  const [
+    organizationsResult,
+    currenciesResult,
+    kit,
+    llmUsageResult,
+    assistantResult,
+    settingsResult,
+  ] = loaderData ?? [
+    { organizations: undefined },
+    { currencies: undefined },
+    DEFAULT_KIT,
+    undefined,
+    undefined,
+    DEFAULT_SETTINGS,
+  ];
 
   const { theme, i18n, privacy, environment } = kit;
 
@@ -142,17 +154,19 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <I18nProvider initialI18n={i18n}>
           <PrivacyProvider initialPrivacy={privacy}>
             <EnvironmentContext.Provider value={environment}>
-              <ActiveConversationProvider>
-                <OrganizationsContext.Provider value={organizationsResult?.organizations}>
-                  <CurrenciesContext.Provider value={currenciesResult?.currencies}>
-                    <LlmUsageContext.Provider value={llmUsageResult?.llmUsage}>
-                      <AssistantContext.Provider value={assistantResult?.assistant}>
-                        <Outlet />
-                      </AssistantContext.Provider>
-                    </LlmUsageContext.Provider>
-                  </CurrenciesContext.Provider>
-                </OrganizationsContext.Provider>
-              </ActiveConversationProvider>
+              <SettingsContext.Provider value={settingsResult?.settings}>
+                <ActiveConversationProvider>
+                  <OrganizationsContext.Provider value={organizationsResult?.organizations}>
+                    <CurrenciesContext.Provider value={currenciesResult?.currencies}>
+                      <LlmUsageContext.Provider value={llmUsageResult?.llmUsage}>
+                        <AssistantContext.Provider value={assistantResult?.assistant}>
+                          <Outlet />
+                        </AssistantContext.Provider>
+                      </LlmUsageContext.Provider>
+                    </CurrenciesContext.Provider>
+                  </OrganizationsContext.Provider>
+                </ActiveConversationProvider>
+              </SettingsContext.Provider>
             </EnvironmentContext.Provider>
           </PrivacyProvider>
         </I18nProvider>
