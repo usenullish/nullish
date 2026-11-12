@@ -1,0 +1,22 @@
+{
+  "name": "@usenullish/nullish-mail",
+  "private": true,
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./smtp": "./src/smtp/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-schema": "workspace:*",
+    "nodemailer": "^7.0"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^7.0"
+  }
+}

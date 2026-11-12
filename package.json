@@ -9,6 +9,7 @@
     "packages/migration",
     "packages/env",
     "packages/storage",
+    "packages/mail",
     "packages/db",
     "packages/auth",
     "packages/engine",
