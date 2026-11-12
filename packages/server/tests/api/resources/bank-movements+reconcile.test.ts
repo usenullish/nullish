@@ -73,7 +73,7 @@ describe("bank movements reconcile", () => {
     const app = new OpenAPIHono<ApiEnv>();
 
     app.use("*", loadDbMiddleware({ db: instance }));
-    app.use("*", loadAuthMiddleware({ db: instance }));
+    app.use("*", loadAuthMiddleware({ db: instance, mail: null }));
     app.use("*", loadCallerMiddleware());
 
     const resource = BankMovementsReconcileHandlers.create({ app });

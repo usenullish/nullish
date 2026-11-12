@@ -51,7 +51,7 @@ describe("organization members", () => {
     const app = new OpenAPIHono<ApiEnv>();
 
     app.use("*", loadDbMiddleware({ db: instance }));
-    app.use("*", loadAuthMiddleware({ db: instance }));
+    app.use("*", loadAuthMiddleware({ db: instance, mail: null }));
     app.use("*", loadCallerMiddleware());
 
     OrganizationMembersHandlers.create({ app }).register();

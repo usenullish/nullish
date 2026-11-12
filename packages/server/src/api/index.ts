@@ -16,14 +16,14 @@ import { llmUsageLimitMiddleware } from "./middlewares/llm-usage";
 import { assertLlmEnabledMiddleware } from "./middlewares/llm-enabled";
 import { RATE_LIMITS, userRateLimitMiddleware } from "./middlewares/rate-limit";
 
-export const defineApi: DefineApi = ({ db, jobs, storage }) => {
+export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
   const app = new OpenAPIHono<ApiEnv>();
 
   const resources = initResources({ app });
 
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", loadDbMiddleware({ db }));
-  app.use("*", loadAuthMiddleware({ db }));
+  app.use("*", loadAuthMiddleware({ db, mail }));
   app.use("*", loadWorkersMiddleware({ jobs, storage }));
   app.use("*", loadCallerMiddleware());
   app.use("*", userRateLimitMiddleware({ limit: RATE_LIMITS.api }));

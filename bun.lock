@@ -219,6 +219,7 @@
         "@usenullish/nullish-engine": "workspace:*",
         "@usenullish/nullish-env": "workspace:*",
         "@usenullish/nullish-jobs": "workspace:*",
+        "@usenullish/nullish-mail": "workspace:*",
         "@usenullish/nullish-metering": "workspace:*",
         "@usenullish/nullish-schema": "workspace:*",
         "@usenullish/nullish-storage": "workspace:*",
