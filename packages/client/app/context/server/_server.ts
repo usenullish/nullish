@@ -288,7 +288,7 @@ export abstract class PublicServerLoader extends Loader {
   }: {
     errorFallbackMsg: string;
     loaderFn: () => Promise<Result<T>>;
-  }): Promise<Option<T>> {
+  }): Promise<T> {
     const result = await loaderFn();
 
     return this._unwrap({ result, errorFallbackMsg });
