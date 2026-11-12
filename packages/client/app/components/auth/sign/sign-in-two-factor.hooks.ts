@@ -20,9 +20,9 @@ export const useVerifyTwoFactor = () => {
     onSuccess: async () => {
       await onSignedIn();
     },
-    onError: ({ error: { message } }: { error: { message: string } }) => {
+    onError: ({ error }: { error: { code?: string; message: string } }) => {
       setPending(false);
-      startTransition(() => setError(authErrorMessage(message)));
+      startTransition(() => setError(authErrorMessage(error)));
     },
   };
 

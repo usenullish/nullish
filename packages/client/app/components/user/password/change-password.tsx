@@ -44,7 +44,7 @@ export const ChangePassword = ({ closeTo }: { closeTo: string }) => {
         },
         onError: (ctx) => {
           setPending(false);
-          startTransition(() => setError(authErrorMessage(ctx.error.message)));
+          startTransition(() => setError(authErrorMessage(ctx.error)));
         },
       },
     );
