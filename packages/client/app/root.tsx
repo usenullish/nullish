@@ -19,7 +19,6 @@ import { UserReportsServer } from "~/context/server/user+reports.server";
 import { UserAssistantServer } from "~/context/server/user+assistant.server";
 import { LlmUsageContext } from "~/context/contexts/llm-usage.context";
 import { AssistantContext } from "~/context/contexts/assistant.context";
-import { SettingsServer } from "~/context/server/settings.server";
 import { SettingsContext } from "~/context/contexts/settings.context";
 import { DEFAULT_SETTINGS } from "~/context/constants/settings.constants";
 import { SYSTEM_THEME_SCRIPT } from "~/kit/theme/theme.services";
@@ -39,6 +38,7 @@ import {
   organizationsLoaderContext,
   organizationsLoaderMiddleware,
 } from "~/context/middlewares/organizations";
+import { SettingsCache } from "~/context/caches/settings.cache";
 
 // Server side middlewares
 export const middleware: MiddlewareFunction[] = [
@@ -122,7 +122,7 @@ export const loader = async (args: Route.LoaderArgs) => {
     initKit(args),
     UserReportsServer.create().getLlmUsage(args),
     UserAssistantServer.create().getAssistant(args),
-    SettingsServer.create().get(),
+    SettingsCache.getInstance().get(),
   ]);
 };
 
