@@ -62,6 +62,12 @@ describe("buildEmailAndPasswordConfig", () => {
       expect(config.emailVerification?.autoSignInAfterVerification).toBeTrue();
     });
 
+    test("sends the verify email again on sign-in when the email is not verified", () => {
+      const { config } = build();
+
+      expect(config.emailVerification?.sendOnSignIn).toBeTrue();
+    });
+
     test("sends the reset password email", async () => {
       const { send, config } = build();
 
