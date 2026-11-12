@@ -38,6 +38,17 @@ export const API_KEY_CONFIG: ApiKeyConfigurationOptions = {
   },
 };
 
+export const MAIL_RATE_LIMITS = {
+  burst: {
+    timeWindow: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 5,
+  },
+  daily: {
+    timeWindow: 24 * 60 * 60 * 1000, // A day
+    maxRequests: 10,
+  },
+} as const;
+
 export const SESSION: Required<
   Pick<NonNullable<BetterAuthOptions["session"]>, "expiresIn" | "updateAge">
 > = {
