@@ -108,6 +108,7 @@
       "sign_up_description": "Crea il tuo account per iniziare.",
       "no_account": "Non sei ancora registrato?",
       "has_account": "Hai già un account?",
+      "verify_email_description": "Ti abbiamo inviato un link a {email}. Aprilo per confermare il tuo indirizzo e iniziare.",
       "session_expired": "La sessione è scaduta. Accedi di nuovo.",
       "change_password_title": "Cambia la tua password",
       "two_factor_description": "Inserisci il codice a 6 cifre della tua app di autenticazione.",
@@ -120,7 +121,20 @@
       "sign_up_disabled": "Le registrazioni sono chiuse.",
       "sign_up_invitation_only": "La registrazione è solo su invito.",
       "user_has_organizations": "Lascia o elimina le tue organizzazioni prima di eliminare il tuo account.",
-      "user_has_api_keys": "Elimina le tue chiavi API prima di eliminare il tuo account."
+      "user_has_api_keys": "Elimina le tue chiavi API prima di eliminare il tuo account.",
+      "email_not_verified": "Il tuo indirizzo email non è ancora confermato. Ti abbiamo inviato un nuovo link.",
+      "invalid_email_or_password": "Email o password non validi.",
+      "password_too_short": "La tua password è troppo corta.",
+      "password_too_long": "La tua password è troppo lunga.",
+      "invalid_email": "Questo indirizzo email non è valido.",
+      "invalid_password": "La tua password non è corretta.",
+      "session_expired": "La tua sessione è scaduta. Accedi di nuovo per farlo.",
+      "invalid_token": "Questo link non è valido.",
+      "token_expired": "Questo link è scaduto.",
+      "invalid_code": "Questo codice non è valido.",
+      "invalid_backup_code": "Questo codice di backup non è valido.",
+      "account_temporarily_locked": "Troppi tentativi falliti. Il tuo account è temporaneamente bloccato, riprova più tardi.",
+      "invalid_two_factor_cookie": "Il tuo accesso è scaduto. Accedi di nuovo."
     }
   },
   "errors": {

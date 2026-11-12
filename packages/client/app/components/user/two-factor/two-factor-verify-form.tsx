@@ -65,9 +65,9 @@ export const TwoFactorVerifyForm = ({
         onSuccess: () => {
           onVerified();
         },
-        onError: ({ error: { message } }) => {
+        onError: ({ error }) => {
           setPending(false);
-          startTransition(() => setError(authErrorMessage(message)));
+          startTransition(() => setError(authErrorMessage(error)));
         },
       },
     );

@@ -108,6 +108,7 @@
       "sign_up_description": "Crée ton compte pour commencer.",
       "no_account": "Pas encore inscrit ?",
       "has_account": "Tu as déjà un compte ?",
+      "verify_email_description": "On t'a envoyé un lien à {email}. Ouvre-le pour confirmer ton adresse et commencer.",
       "session_expired": "Ta session a expiré. Reconnecte-toi.",
       "change_password_title": "Changer ton mot de passe",
       "two_factor_description": "Saisis le code à 6 chiffres de ton app d'authentification.",
@@ -120,7 +121,20 @@
       "sign_up_disabled": "Les inscriptions sont fermées.",
       "sign_up_invitation_only": "L'inscription se fait uniquement sur invitation.",
       "user_has_organizations": "Quitte ou supprime tes organisations avant de supprimer ton compte.",
-      "user_has_api_keys": "Supprime tes clés API avant de supprimer ton compte."
+      "user_has_api_keys": "Supprime tes clés API avant de supprimer ton compte.",
+      "email_not_verified": "Ton adresse e-mail n'est pas encore confirmée. On t'a envoyé un nouveau lien.",
+      "invalid_email_or_password": "E-mail ou mot de passe invalide.",
+      "password_too_short": "Ton mot de passe est trop court.",
+      "password_too_long": "Ton mot de passe est trop long.",
+      "invalid_email": "Cette adresse e-mail n'est pas valide.",
+      "invalid_password": "Ton mot de passe est incorrect.",
+      "session_expired": "Ta session a expiré. Reconnecte-toi pour faire ceci.",
+      "invalid_token": "Ce lien n'est pas valide.",
+      "token_expired": "Ce lien a expiré.",
+      "invalid_code": "Ce code n'est pas valide.",
+      "invalid_backup_code": "Ce code de secours n'est pas valide.",
+      "account_temporarily_locked": "Trop de tentatives échouées. Ton compte est temporairement bloqué, réessaie plus tard.",
+      "invalid_two_factor_cookie": "Ta connexion a expiré. Reconnecte-toi."
     }
   },
   "errors": {

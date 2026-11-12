@@ -108,6 +108,7 @@
       "sign_up_description": "Create your account to get started.",
       "no_account": "Not signed up yet?",
       "has_account": "Already have an account?",
+      "verify_email_description": "We sent a link to {email}. Open it to verify your address and get started.",
       "session_expired": "Your session has expired. Please sign in again.",
       "change_password_title": "Change your password",
       "two_factor_description": "Enter the 6-digit code from your authenticator app.",
@@ -120,7 +121,20 @@
       "sign_up_disabled": "Sign-up is disabled.",
       "sign_up_invitation_only": "Sign-up is by invitation only.",
       "user_has_organizations": "Leave or delete your organizations before deleting your account.",
-      "user_has_api_keys": "Delete your API keys before deleting your account."
+      "user_has_api_keys": "Delete your API keys before deleting your account.",
+      "email_not_verified": "Your email is not verified yet. We sent you a new link.",
+      "invalid_email_or_password": "Invalid email or password.",
+      "password_too_short": "Your password is too short.",
+      "password_too_long": "Your password is too long.",
+      "invalid_email": "This email address is not valid.",
+      "invalid_password": "Your password is incorrect.",
+      "session_expired": "Your session has expired. Sign in again to do this.",
+      "invalid_token": "This link is invalid.",
+      "token_expired": "This link has expired.",
+      "invalid_code": "This code is invalid.",
+      "invalid_backup_code": "This backup code is invalid.",
+      "account_temporarily_locked": "Too many failed attempts. Your account is temporarily locked, try again later.",
+      "invalid_two_factor_cookie": "Your sign-in has expired. Please sign in again."
     }
   },
   "errors": {
