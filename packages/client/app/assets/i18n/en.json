@@ -1280,6 +1280,7 @@
       "create_title": "Invite a member",
       "created_title": "Invitation link",
       "created_description": "Copy this link now and share it with {email}, it will not be shown again. It can only be accepted by signing in with this email, until {date}.",
+      "created_sent_description": "We sent this link to {email}. You can also share it yourself, it will not be shown again. It can only be accepted by signing in with this email, until {date}.",
       "delete_title": "Revoke the invitation of {email}?",
       "delete_description": "The link stops working. This action is irreversible.",
       "invited": "You've been invited to join {organization}.",

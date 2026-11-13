@@ -2,7 +2,7 @@ import { useId } from "react";
 import { Info } from "lucide-react";
 import { CopyIcon } from "~/components/core/copy-icon";
 import { Link } from "react-router";
-import type { Api } from "@usenullish/nullish-schema/server";
+import { type Api, InvitationMailStatus } from "@usenullish/nullish-schema/server";
 import { Button } from "~/ui/components/button";
 import { Alert, AlertDescription } from "~/ui/components/alert";
 import { Field, FieldGroup, FieldLabel } from "~/ui/components/field";
@@ -13,14 +13,14 @@ import {
   InputGroupInput,
 } from "~/ui/components/input-group";
 import { useOrganization } from "~/context/contexts/organization.context";
-import { INVITATION_ACCEPT_PATH, OrganizationPath } from "~/navigation";
+import { OrganizationPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useCopy } from "~/kit/utils/copy.hook";
 
 export const InvitationCreated = ({
-  created: { invitation, token },
+  created: { invitation, link, mail },
 }: {
   created: Api["InvitationsCreate"]["Client"]["CreateInvitationResponse"];
 }) => {
@@ -31,7 +31,14 @@ export const InvitationCreated = ({
 
   const { copy: copyToClipboard, copied } = useCopy();
 
-  const link = `${window.location.origin}${INVITATION_ACCEPT_PATH}#${token}`;
+  const description =
+    mail === InvitationMailStatus.SENT
+      ? i18n.invitations.text.created_sent_description
+      : i18n.invitations.text.created_description;
+
+  const [before, after] = description
+    .split("{email}")
+    .map((text) => replacePlaceholders(text, { "{date}": formatDate(invitation.expiresAt) }));
 
   const copy = async () => {
     await copyToClipboard(link);
@@ -55,10 +62,9 @@ export const InvitationCreated = ({
         <Alert>
           <Info />
           <AlertDescription>
-            {replacePlaceholders(i18n.invitations.text.created_description, {
-              "{email}": invitation.email,
-              "{date}": formatDate(invitation.expiresAt),
-            })}
+            {before}
+            <span className="font-medium text-foreground">{invitation.email}</span>
+            {after}
           </AlertDescription>
         </Alert>
 
