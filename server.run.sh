@@ -13,7 +13,7 @@ COMPOSE_FILE="docker-compose.${ENV}.yml"
 
 export NULLISH_DB_USERNAME="${NULLISH_DB_USERNAME:-username}"
 export NULLISH_DB_PASSWORD="${NULLISH_DB_PASSWORD:-password}"
-export NULLISH_APP_URL="${NULLISH_APP_URL:-http://localhost:3000}"
+export NULLISH_APP_URL="${NULLISH_APP_URL:-http://localhost:5173}"
 export NULLISH_AUTH_SECRET="${NULLISH_AUTH_SECRET:-WexvaJiG7MqSIy8Rn8q2qIfeJ0bqkXE6vmJOu71s+38=}" # openssl rand -base64 32
 
 echo "***************** DEV ONLY *****************"
