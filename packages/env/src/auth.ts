@@ -1,8 +1,4 @@
-import {
-  assertNotEmptyString,
-  isEmptyString,
-  NotEmptyStringSchema,
-} from "@usenullish/nullish-common";
+import { isEmptyString, NotEmptyStringSchema } from "@usenullish/nullish-common";
 import * as z from "zod";
 
 const SignUpSchema = z
@@ -17,12 +13,6 @@ export type SignUp = z.infer<typeof SignUpSchema>;
 export const envSignUp = (): SignUp => {
   const signUp = process.env.NULLISH_AUTH_SIGN_UP;
   return SignUpSchema.parse(isEmptyString(signUp) ? undefined : signUp);
-};
-
-export const envAuthUrl = (): string => {
-  const url = process.env.NULLISH_AUTH_URL;
-  assertNotEmptyString(url, "A base URL for the authentication must be defined.");
-  return url;
 };
 
 const AuthSecretSchema = NotEmptyStringSchema.min(32, {

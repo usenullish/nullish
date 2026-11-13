@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { join } from "node:path";
 import {
   envAuthSecret,
-  envAuthUrl,
+  envAppUrl,
   envDataDir,
   envDbMigrationsFolder,
   envDbUrl,
@@ -33,7 +33,7 @@ describe("env", () => {
     "NULLISH_LLM_CHAT_TOKEN_LIMIT",
     "NULLISH_LLM_CHAT_TOKEN_LIMIT_PERIOD",
     "NULLISH_AUTH_SIGN_UP",
-    "NULLISH_AUTH_URL",
+    "NULLISH_APP_URL",
     "NULLISH_AUTH_SECRET",
     "NULLISH_MAIL_FROM",
     "NULLISH_MAIL_FROM_NAME",
@@ -301,9 +301,9 @@ describe("env", () => {
 
   describe.each([
     {
-      name: "envAuthUrl",
-      fn: envAuthUrl,
-      key: "NULLISH_AUTH_URL",
+      name: "envAppUrl",
+      fn: envAppUrl,
+      key: "NULLISH_APP_URL",
       value: "https://nullish.example.com",
     },
     {
