@@ -5,7 +5,7 @@ const DEV = (process.env.NODE_ENV ?? "production") === "development";
 export default defineConfig({
   webServer: [
     {
-      command: "bun run --filter @usenullish/nullish-server dev",
+      command: `bun run --filter @usenullish/nullish-server ${process.env.CI ? "e2e" : "dev"}`,
       url: "http://localhost:3000/health",
       reuseExistingServer: true,
     },

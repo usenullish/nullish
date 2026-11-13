@@ -5,6 +5,7 @@
   "module": "src/index.ts",
   "scripts": {
     "dev": "NODE_ENV=development bun run --env-file=../../.env.development ./src/index.ts",
+    "e2e": "NODE_ENV=development bun run --env-file=../../.env.e2e ./src/index.ts",
     "build": "NODE_ENV=production bun run ./build.ts",
     "test": "bun test",
     "check": "tsc"

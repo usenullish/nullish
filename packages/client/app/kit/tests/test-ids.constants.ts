@@ -53,4 +53,10 @@ export const testIds = {
   chat: {
     prompt: "input-chat-prompt",
   },
+  invitations: {
+    email: "input-invitation-email",
+    submit: "btn-invitation-create",
+    signUp: "btn-invitation-sign-up",
+    accept: "btn-invitation-accept",
+  },
 } as const satisfies TestIds;

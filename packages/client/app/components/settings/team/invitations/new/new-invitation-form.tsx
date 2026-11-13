@@ -13,6 +13,8 @@ import {
 import { EMAIL_PLACEHOLDER } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 const ROLES = ApiSchema.InvitationsCreate.CreateInvitationRequestSchema.shape.role.options;
 
@@ -44,6 +46,7 @@ export const NewInvitationForm = ({
             autoComplete="off"
             placeholder={EMAIL_PLACEHOLDER}
             required
+            {...testId(testIds.invitations.email)}
           />
         </Field>
 
@@ -64,7 +67,7 @@ export const NewInvitationForm = ({
         </Field>
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.invitations.submit)}>
             {pending ? i18n.invitations.state.creating : i18n.invitations.action.create}
           </Button>
         </Field>
