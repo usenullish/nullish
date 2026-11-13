@@ -91,6 +91,7 @@ const I18nAuthSchema = z.strictObject({
     use_backup_code: z.string(),
     use_authenticator: z.string(),
     send_link: z.string(),
+    forgot_password: z.string(),
     sending_link: z.string(),
   }),
   label: z.strictObject({
