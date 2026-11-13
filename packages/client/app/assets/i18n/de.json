@@ -96,6 +96,9 @@
       "use_authenticator": "Deine Authenticator-App verwenden",
       "send_link": "Link senden",
       "forgot_password": "Passwort vergessen?",
+      "reset_password": "Passwort zurücksetzen",
+      "resetting_password": "Wird zurückgesetzt…",
+      "request_new_link": "Neuen Link anfordern",
       "sending_link": "Wird gesendet…"
     },
     "label": {
@@ -114,6 +117,8 @@
       "verify_email_description": "Wir haben dir einen Link an {email} geschickt. Öffne ihn, um deine Adresse zu bestätigen und loszulegen.",
       "forgot_password_description": "Gib deine E-Mail-Adresse ein und wir schicken dir einen Link, um dein Passwort zurückzusetzen.",
       "forgot_password_sent": "Wir haben dir einen Link an {email} geschickt, um dein Passwort zurückzusetzen.",
+      "reset_password_description": "Wähle ein neues Passwort.",
+      "password_reset": "Dein Passwort ist geändert. Melde dich mit dem neuen an.",
       "session_expired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
       "change_password_title": "Passwort ändern",
       "two_factor_description": "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",

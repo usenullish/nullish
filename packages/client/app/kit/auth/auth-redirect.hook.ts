@@ -21,3 +21,12 @@ export const useAuthEmail = (): Option<string> => {
   const { state } = useLocation();
   return AuthEmailStateSchema.safeParse(state).data?.email;
 };
+
+const PasswordResetStateSchema = z.object({
+  passwordReset: z.literal(true),
+});
+
+export const usePasswordReset = (): boolean => {
+  const { state } = useLocation();
+  return PasswordResetStateSchema.safeParse(state).success;
+};
