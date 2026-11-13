@@ -68,7 +68,7 @@ export const ResetPassword = () => {
           setPending(true);
         },
         onSuccess: async (_ctx) => {
-          await navigate(AUTH_NAVIGATION.signIn, { state: { passwordReset: true }, replace: true });
+          await navigate(AUTH_NAVIGATION.resetPasswordDone, { replace: true });
         },
         onError: (ctx) => {
           setPending(false);

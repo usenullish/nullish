@@ -118,7 +118,7 @@
       "forgot_password_description": "Inserisci il tuo indirizzo email e ti inviamo un link per reimpostare la password.",
       "forgot_password_sent": "Ti abbiamo inviato un link a {email} per reimpostare la password.",
       "reset_password_description": "Scegli una nuova password.",
-      "password_reset": "La tua password è cambiata. Accedi con quella nuova.",
+      "password_reset": "La tua password è cambiata.",
       "session_expired": "La sessione è scaduta. Accedi di nuovo.",
       "change_password_title": "Cambia la tua password",
       "two_factor_description": "Inserisci il codice a 6 cifre della tua app di autenticazione.",

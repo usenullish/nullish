@@ -118,7 +118,7 @@
       "forgot_password_description": "Gib deine E-Mail-Adresse ein und wir schicken dir einen Link, um dein Passwort zurückzusetzen.",
       "forgot_password_sent": "Wir haben dir einen Link an {email} geschickt, um dein Passwort zurückzusetzen.",
       "reset_password_description": "Wähle ein neues Passwort.",
-      "password_reset": "Dein Passwort ist geändert. Melde dich mit dem neuen an.",
+      "password_reset": "Dein Passwort ist geändert.",
       "session_expired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
       "change_password_title": "Passwort ändern",
       "two_factor_description": "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",

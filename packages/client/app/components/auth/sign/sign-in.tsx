@@ -12,7 +12,7 @@ import { EMAIL_PLACEHOLDER } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { useAuthErrorMessage } from "~/kit/auth/auth-error.hook";
 import { AUTH_NAVIGATION } from "~/navigation";
-import { useInvitationToken, usePasswordReset } from "~/kit/auth/auth-redirect.hook";
+import { useInvitationToken } from "~/kit/auth/auth-redirect.hook";
 import { useSessionExpired } from "~/kit/auth/sign-out.hook";
 import { useRedirectAfterSignIn } from "~/components/auth/sign/sign-in.hooks";
 import { useSettings } from "~/context/contexts/settings.context";
@@ -33,7 +33,6 @@ export const SignIn = () => {
   const settings = useSettings();
 
   const expired = useSessionExpired();
-  const passwordReset = usePasswordReset();
   const invitationToken = useInvitationToken();
 
   const message = error ?? (expired ? i18n.auth.text.session_expired : null);
@@ -78,9 +77,8 @@ export const SignIn = () => {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <EnvironmentTag className="mb-3 justify-self-end" />
-          <CardDescription>
-            {passwordReset ? i18n.auth.text.password_reset : i18n.auth.text.sign_in_description}
-          </CardDescription>
+
+          <CardDescription>{i18n.auth.text.sign_in_description}</CardDescription>
         </CardHeader>
 
         <CardContent>

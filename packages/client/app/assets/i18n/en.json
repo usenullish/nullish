@@ -118,7 +118,7 @@
       "forgot_password_description": "Enter your email and we'll send you a link to reset your password.",
       "forgot_password_sent": "We sent a link to {email} to reset your password.",
       "reset_password_description": "Choose a new password.",
-      "password_reset": "Your password is changed. Sign in with your new one.",
+      "password_reset": "Your password is changed.",
       "session_expired": "Your session has expired. Please sign in again.",
       "change_password_title": "Change your password",
       "two_factor_description": "Enter the 6-digit code from your authenticator app.",
