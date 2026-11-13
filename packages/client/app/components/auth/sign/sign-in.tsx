@@ -77,6 +77,7 @@ export const SignIn = () => {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <EnvironmentTag className="mb-3 justify-self-end" />
+
           <CardDescription>{i18n.auth.text.sign_in_description}</CardDescription>
         </CardHeader>
 

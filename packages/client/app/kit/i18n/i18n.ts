@@ -92,6 +92,9 @@ const I18nAuthSchema = z.strictObject({
     use_authenticator: z.string(),
     send_link: z.string(),
     forgot_password: z.string(),
+    reset_password: z.string(),
+    resetting_password: z.string(),
+    request_new_link: z.string(),
     sending_link: z.string(),
   }),
   label: z.strictObject({
@@ -110,6 +113,8 @@ const I18nAuthSchema = z.strictObject({
     verify_email_description: z.string(),
     forgot_password_description: z.string(),
     forgot_password_sent: z.string(),
+    reset_password_description: z.string(),
+    password_reset: z.string(),
     session_expired: z.string(),
     change_password_title: z.string(),
     two_factor_description: z.string(),

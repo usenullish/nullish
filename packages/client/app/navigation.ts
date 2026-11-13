@@ -50,6 +50,7 @@ export const AUTH_NAVIGATION: {
   forgotPassword: RelativePath;
   forgotPasswordSent: RelativePath;
   resetPassword: RelativePath;
+  resetPasswordDone: RelativePath;
 } = {
   signIn: "/sign-in",
   signInTwoFactor: "/sign-in/two-factor",
@@ -58,6 +59,7 @@ export const AUTH_NAVIGATION: {
   forgotPassword: "/forgot-password",
   forgotPasswordSent: "/forgot-password/sent",
   resetPassword: "/reset-password",
+  resetPasswordDone: "/reset-password/done",
 };
 
 export const INVITATION_ACCEPT_PATH = "/invitations/accept";

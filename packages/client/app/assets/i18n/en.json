@@ -96,6 +96,9 @@
       "use_authenticator": "Use your authenticator app",
       "send_link": "Send link",
       "forgot_password": "Forgot password?",
+      "reset_password": "Reset password",
+      "resetting_password": "Resetting…",
+      "request_new_link": "Request a new link",
       "sending_link": "Sending…"
     },
     "label": {
@@ -114,6 +117,8 @@
       "verify_email_description": "We sent a link to {email}. Open it to verify your address and get started.",
       "forgot_password_description": "Enter your email and we'll send you a link to reset your password.",
       "forgot_password_sent": "We sent a link to {email} to reset your password.",
+      "reset_password_description": "Choose a new password.",
+      "password_reset": "Your password is changed.",
       "session_expired": "Your session has expired. Please sign in again.",
       "change_password_title": "Change your password",
       "two_factor_description": "Enter the 6-digit code from your authenticator app.",
