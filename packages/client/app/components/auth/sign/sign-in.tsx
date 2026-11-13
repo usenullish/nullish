@@ -92,7 +92,6 @@ export const SignIn = () => {
                   autoComplete="email"
                   ignorePasswordManagers={false}
                   placeholder={EMAIL_PLACEHOLDER}
-                  tabIndex={1}
                   value={email}
                   onChange={($event) => setEmail($event.target.value)}
                   required
@@ -101,29 +100,29 @@ export const SignIn = () => {
               </Field>
 
               <Field>
-                <div className="flex items-center">
+                <div className="grid grid-cols-[1fr_auto] items-center gap-2">
                   <FieldLabel htmlFor={passwordId}>{i18n.auth.label.password}</FieldLabel>
 
+                  <Input
+                    className="col-span-2 row-start-2"
+                    id={passwordId}
+                    type="password"
+                    autoComplete="current-password"
+                    ignorePasswordManagers={false}
+                    value={password}
+                    onChange={($event) => setPassword($event.target.value)}
+                    required
+                    {...testId(testIds.signIn.password)}
+                  />
+
                   {settings?.mail.enabled === true && (
-                    <FieldDescription className="ml-auto [&>a:hover]:text-foreground">
-                      <Link to={AUTH_NAVIGATION.forgotPassword} tabIndex={3}>
+                    <FieldDescription className="col-start-2 row-start-1 [&>a:hover]:text-foreground">
+                      <Link to={AUTH_NAVIGATION.forgotPassword}>
                         {i18n.auth.action.forgot_password}
                       </Link>
                     </FieldDescription>
                   )}
                 </div>
-
-                <Input
-                  id={passwordId}
-                  type="password"
-                  autoComplete="current-password"
-                  ignorePasswordManagers={false}
-                  tabIndex={2}
-                  value={password}
-                  onChange={($event) => setPassword($event.target.value)}
-                  required
-                  {...testId(testIds.signIn.password)}
-                />
               </Field>
 
               {nonNullish(message) && (
@@ -133,12 +132,7 @@ export const SignIn = () => {
               )}
 
               <Field>
-                <Button
-                  type="submit"
-                  disabled={pending}
-                  tabIndex={4}
-                  {...testId(testIds.signIn.submit)}
-                >
+                <Button type="submit" disabled={pending} {...testId(testIds.signIn.submit)}>
                   {pending ? i18n.auth.action.signing_in : i18n.auth.action.sign_in}
                 </Button>
 
