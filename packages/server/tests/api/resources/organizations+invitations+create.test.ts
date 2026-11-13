@@ -1,14 +1,24 @@
-import { afterAll, beforeAll, describe, expect, spyOn, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, mock, spyOn, test } from "bun:test";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
+import {
+  ApiSchema,
+  CommonSchema,
+  ErrorCode,
+  INVITATION_ACCEPT_PATH,
+  InvitationMailStatus,
+} from "@usenullish/nullish-schema/server";
+import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
+import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
+import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
-import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
+import { assertNonNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
 import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
+import { loadWorkersMiddleware } from "../../../src/api/middlewares/workers";
 import { InvitationsCreateHandlers } from "../../../src/api/resources/_organizations+invitations+create";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
 import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
@@ -41,16 +51,22 @@ describe("create invitation", () => {
     cookie,
     email,
     role = "accountant",
+    mail = null,
   }: {
     cookie?: string;
     email: string;
     role?: "admin" | "accountant" | "reviewer";
+    mail?: Nullable<SendMail>;
   }): Promise<Response> => {
     const app = new OpenAPIHono<ApiEnv>();
 
     app.use("*", loadDbMiddleware({ db: instance }));
     app.use("*", loadAuthMiddleware({ db: instance, mail: null }));
     app.use("*", loadCallerMiddleware());
+    app.use(
+      "*",
+      loadWorkersMiddleware({ jobs: {} as TriggerJobs, storage: FsStorageProvider.create(), mail }),
+    );
 
     InvitationsCreateHandlers.create({ app }).register();
 
@@ -127,6 +143,34 @@ describe("create invitation", () => {
     expect(invitation.expiresAt).toBeInstanceOf(Date);
     expect(invitation).not.toHaveProperty("tokenHash");
     expect(token.length).toBeGreaterThan(0);
+  });
+
+  test("returns the link to accept the invitation and no mail status without a mail provider", async () => {
+    const response = await invite({ cookie: admin.cookie, email: "no-mail@test.local" });
+
+    const { token, link, mail } = await parseCreated(response);
+
+    expect(link).toBe(`${envAuthUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
+    expect(mail).toBeNull();
+  });
+
+  test("sends the invitation email with a mail provider", async () => {
+    const send = mock(async () => {});
+
+    const response = await invite({
+      cookie: admin.cookie,
+      email: "mailed@test.local",
+      mail: { send },
+    });
+
+    const { link, mail } = await parseCreated(response);
+
+    expect(send).toHaveBeenCalledWith({
+      type: MailType.INVITATION,
+      to: "mailed@test.local",
+      url: link,
+    });
+    expect(mail).toBe(InvitationMailStatus.SENT);
   });
 
   test("answers 400 to an invalid email", async () => {

@@ -42,7 +42,12 @@ export class CreateInvitationService extends ServiceContext {
   }
 
   create(): Promise<
-    Result<{ invitation: Invitation; token: string; link: string; mail: Nullable<InvitationMailStatus> }>
+    Result<{
+      invitation: Invitation;
+      token: string;
+      link: string;
+      mail: Nullable<InvitationMailStatus>;
+    }>
   > {
     return tryCatch(async () => {
       const { token, link } = this.#prepare();

@@ -436,6 +436,7 @@ describe("mcp", () => {
         userId: TEST_USER_ID,
         organizationId: orgId,
         values: { email: "mcp-invited@test.dev", role: "reviewer" },
+        mail: null,
       }).create();
 
       if (created.status === "error") {

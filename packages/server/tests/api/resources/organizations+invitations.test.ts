@@ -80,6 +80,7 @@ describe("organization invitations", () => {
       userId: admin.id,
       organizationId,
       values: { email, role: "accountant" },
+      mail: null,
     }).create();
 
     if (result.status === "error") {

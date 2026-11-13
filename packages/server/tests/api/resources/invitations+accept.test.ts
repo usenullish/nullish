@@ -70,6 +70,7 @@ describe("accept invitation", () => {
       userId: admin.id,
       organizationId,
       values: { email, role: "reviewer" },
+      mail: null,
     }).create();
 
     if (result.status === "error") {

@@ -25,7 +25,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", loadDbMiddleware({ db }));
   app.use("*", loadAuthMiddleware({ db, mail }));
-  app.use("*", loadWorkersMiddleware({ jobs, storage }));
+  app.use("*", loadWorkersMiddleware({ jobs, storage, mail }));
   app.use("*", loadCallerMiddleware());
   app.use("*", userRateLimitMiddleware({ limit: RATE_LIMITS.api }));
 

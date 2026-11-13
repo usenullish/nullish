@@ -34,7 +34,7 @@ export type ApiCaller =
 export type ApiEnv = {
   Variables: {
     db: { connection: PostgresDbInstance };
-    workers: { jobs: TriggerJobs; storage: Storage };
+    workers: { jobs: TriggerJobs; storage: Storage; mail: Nullable<SendMail> };
     auth: AuthSession;
     caller: Nullish<ApiCaller>;
     llm: { meter: LlmMeter };

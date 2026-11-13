@@ -49,6 +49,7 @@ describe("sign-up", () => {
       userId,
       organizationId,
       values: { email, role: "reviewer" },
+      mail: null,
     }).create();
 
     if (result.status === "error") {
