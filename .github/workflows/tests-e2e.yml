@@ -20,6 +20,12 @@ jobs:
           --health-cmd "pg_isready -U username -d nullish"
           --health-interval 5s
 
+      mailpit:
+        image: axllent/mailpit:v1.30.5@sha256:b868afa176bfd6cce2323ea316cd99ccad77915e51e595748f6d786700ecf109
+        ports:
+          - 1025:1025
+          - 8025:8025
+
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

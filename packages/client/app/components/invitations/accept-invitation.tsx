@@ -22,6 +22,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useNotify } from "~/kit/notifications/notify.hook";
 import type { AuthRedirectState } from "~/kit/auth/auth-redirect.hook";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type Invitation = Api["InvitationsPreview"]["Client"]["PreviewInvitationResponse"];
 
@@ -59,6 +61,7 @@ export const AcceptInvitation = () => {
             variant="outline"
             nativeButton={false}
             render={<Link to={AUTH_NAVIGATION.signUp} state={state} />}
+            {...testId(testIds.invitations.signUp)}
           >
             {i18n.auth.action.sign_up}
           </Button>
@@ -176,7 +179,11 @@ const InvitationPrompt = ({ token }: { token: string }) => {
       )}
 
       <Field>
-        <Button onClick={accept} disabled={nonNullish(pending)}>
+        <Button
+          onClick={accept}
+          disabled={nonNullish(pending)}
+          {...testId(testIds.invitations.accept)}
+        >
           {pending === "accept" ? i18n.invitations.state.accepting : i18n.invitations.action.accept}
         </Button>
         <Button variant="outline" onClick={decline} disabled={nonNullish(pending)}>

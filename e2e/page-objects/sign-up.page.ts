@@ -1,6 +1,7 @@
 import { AppPage } from "./app.page";
 import { expect } from "@playwright/test";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
+import { consumeLink } from "../_mailpit";
 
 export class SignUpPage extends AppPage {
   override async goto(): Promise<void> {
@@ -21,6 +22,10 @@ export class SignUpPage extends AppPage {
     await this.page.getByTestId(testIds.signUp.password).fill(password);
 
     await this.click(testIds.signUp.submit);
+
+    await expect(this.page).toHaveURL("/sign-up/verify-email");
+
+    await this.page.goto(await consumeLink({ to: email }));
   }
 
   async assertNewOrganizationVisible(): Promise<void> {
