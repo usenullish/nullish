@@ -1,9 +1,6 @@
-import {
-  assertNotEmptyString,
-  isEmptyString,
-  NotEmptyStringSchema,
-} from "@usenullish/nullish-common";
+import { isEmptyString, NotEmptyStringSchema } from "@usenullish/nullish-common";
 import * as z from "zod";
+import { envAppUrl } from "./app";
 
 const SignUpSchema = z
   .union([
@@ -19,11 +16,7 @@ export const envSignUp = (): SignUp => {
   return SignUpSchema.parse(isEmptyString(signUp) ? undefined : signUp);
 };
 
-export const envAuthUrl = (): string => {
-  const url = process.env.NULLISH_AUTH_URL;
-  assertNotEmptyString(url, "A base URL for the authentication must be defined.");
-  return url;
-};
+export const envAuthUrl = (): string => envAppUrl();
 
 const AuthSecretSchema = NotEmptyStringSchema.min(32, {
   error: "The secret for the authentication must be at least 32 characters long.",

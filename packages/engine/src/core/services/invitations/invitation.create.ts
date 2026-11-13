@@ -7,7 +7,7 @@ import {
   type Result,
   tryCatch,
 } from "@usenullish/nullish-common";
-import { envAuthUrl } from "@usenullish/nullish-env";
+import { envAppUrl } from "@usenullish/nullish-env";
 import { DbSchema } from "@usenullish/nullish-schema/db";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
@@ -70,8 +70,7 @@ export class CreateInvitationService extends ServiceContext {
 
     return {
       token,
-      // TODO: rename envAuthUrl to envAppUrl
-      link: `${envAuthUrl()}${INVITATION_ACCEPT_PATH}#${token}`,
+      link: `${envAppUrl()}${INVITATION_ACCEPT_PATH}#${token}`,
     };
   }
 
