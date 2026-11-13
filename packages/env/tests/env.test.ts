@@ -15,6 +15,11 @@ import {
   envMailEnabled,
   envMailFrom,
   envMailFromName,
+  envMailAwsSesAccessKeyId,
+  envMailAwsSesEnabled,
+  envMailAwsSesRegion,
+  envMailAwsSesSecretAccessKey,
+  envMailSmtpEnabled,
   envMailSmtpUrl,
   envSignUp,
   LlmTokenLimitPeriod,
@@ -39,6 +44,9 @@ describe("env", () => {
     "NULLISH_MAIL_FROM",
     "NULLISH_MAIL_FROM_NAME",
     "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_SES_REGION",
+    "NULLISH_MAIL_SES_ACCESS_KEY_ID",
+    "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
   ] as const;
 
   const saved = new Map<string, string | undefined>();
@@ -325,6 +333,24 @@ describe("env", () => {
       key: "NULLISH_MAIL_SMTP_URL",
       value: "smtp://localhost:1025",
     },
+    {
+      name: "envMailAwsSesRegion",
+      fn: envMailAwsSesRegion,
+      key: "NULLISH_MAIL_SES_REGION",
+      value: "eu-central-2",
+    },
+    {
+      name: "envMailAwsSesAccessKeyId",
+      fn: envMailAwsSesAccessKeyId,
+      key: "NULLISH_MAIL_SES_ACCESS_KEY_ID",
+      value: "access-key-id",
+    },
+    {
+      name: "envMailAwsSesSecretAccessKey",
+      fn: envMailAwsSesSecretAccessKey,
+      key: "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
+      value: "secret-access-key",
+    },
   ] as const)("$name", ({ fn, key, value }) => {
     test("reads the variable", () => {
       process.env[key] = value;
@@ -355,6 +381,53 @@ describe("env", () => {
     });
   });
 
+  describe("envMailSmtpEnabled", () => {
+    test("is enabled when the SMTP URL is defined", () => {
+      process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
+
+      expect(envMailSmtpEnabled()).toBe(true);
+    });
+
+    test("is disabled when the SMTP URL is unset", () => {
+      expect(envMailSmtpEnabled()).toBe(false);
+    });
+
+    test("is disabled when the SMTP URL is empty", () => {
+      process.env.NULLISH_MAIL_SMTP_URL = "";
+
+      expect(envMailSmtpEnabled()).toBe(false);
+    });
+  });
+
+  describe("envMailAwsSesEnabled", () => {
+    const setSes = () => {
+      process.env.NULLISH_MAIL_SES_REGION = "eu-central-2";
+      process.env.NULLISH_MAIL_SES_ACCESS_KEY_ID = "access-key-id";
+      process.env.NULLISH_MAIL_SES_SECRET_ACCESS_KEY = "secret-access-key";
+    };
+
+    test("is enabled when the region and the credentials are defined", () => {
+      setSes();
+
+      expect(envMailAwsSesEnabled()).toBe(true);
+    });
+
+    test("is disabled when nothing is defined", () => {
+      expect(envMailAwsSesEnabled()).toBe(false);
+    });
+
+    test.each([
+      "NULLISH_MAIL_SES_REGION",
+      "NULLISH_MAIL_SES_ACCESS_KEY_ID",
+      "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
+    ])("is disabled when %s is empty", (key) => {
+      setSes();
+      process.env[key] = "";
+
+      expect(envMailAwsSesEnabled()).toBe(false);
+    });
+  });
+
   describe("envMailEnabled", () => {
     test("is enabled when the sender and the SMTP URL are defined", () => {
       process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
@@ -363,7 +436,22 @@ describe("env", () => {
       expect(envMailEnabled()).toBe(true);
     });
 
+    test("is enabled when the sender and SES are defined", () => {
+      process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
+      process.env.NULLISH_MAIL_SES_REGION = "eu-central-2";
+      process.env.NULLISH_MAIL_SES_ACCESS_KEY_ID = "access-key-id";
+      process.env.NULLISH_MAIL_SES_SECRET_ACCESS_KEY = "secret-access-key";
+
+      expect(envMailEnabled()).toBe(true);
+    });
+
     test("is disabled when nothing is defined", () => {
+      expect(envMailEnabled()).toBe(false);
+    });
+
+    test("is disabled when only the sender is defined", () => {
+      process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
+
       expect(envMailEnabled()).toBe(false);
     });
 
