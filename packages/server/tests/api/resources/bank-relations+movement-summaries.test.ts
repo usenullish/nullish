@@ -22,7 +22,7 @@ import {
   randomDedupeHash,
   resetDb,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 const periods = DbSchema.Ledger.Periods.PeriodsSchema;
 const invoices = DbSchema.Billing.Invoices.InvoicesSchema;
@@ -137,7 +137,7 @@ describe("bank relation movement summaries", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

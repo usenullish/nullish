@@ -18,7 +18,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { JournalCreateHandlers } from "../../../src/api/resources/_organizations+journal+create";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 const periods = DbSchema.Ledger.Periods.PeriodsSchema;
 const systemAccounts = DbSchema.Ledger.SystemAccounts.SystemAccountsSchema;
@@ -137,7 +137,7 @@ describe("journal create", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

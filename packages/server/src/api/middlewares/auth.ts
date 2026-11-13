@@ -5,7 +5,7 @@ import type { SendMail } from "@usenullish/nullish-schema/mail";
 import type { ApiEnv } from "../types/api";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { isNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
-import { envAuthSecret, envAuthUrl, envSignUp, isProd } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl, envSignUp, isProd } from "@usenullish/nullish-env";
 import { errorResponse } from "../_errors";
 
 export const loadAuthMiddleware = ({
@@ -20,7 +20,7 @@ export const loadAuthMiddleware = ({
     env: {
       signUp: envSignUp(),
       emailAndPassword: nonNullish(mail) ? { mail } : { autoSignIn: !isProd() },
-      baseURL: envAuthUrl(),
+      baseURL: envAppUrl(),
       secret: envAuthSecret(),
     },
   });

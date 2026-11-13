@@ -22,7 +22,7 @@ import {
   createOrganization,
   resetDb,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 describe("migrations datasets upload", () => {
   let instance: DbInstance;
@@ -159,7 +159,7 @@ describe("migrations datasets upload", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

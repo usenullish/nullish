@@ -17,7 +17,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { MigrationsHandlers } from "../../../src/api/resources/_organizations+migrations";
 import { createMigration, createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 const migrations = DbSchema.Migration.Migrations.MigrationsSchema;
 
@@ -92,7 +92,7 @@ describe("organization migrations", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

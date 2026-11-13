@@ -13,7 +13,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { UserApiKeysHandlers } from "../../../src/api/resources/_user+api-keys";
 import { resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 type ApiKeys = Api["UserApiKeys"]["Server"]["GetApiKeysResponse"];
 type CreatedApiKey = Api["UserApiKeys"]["Server"]["CreateApiKeyResponse"];
@@ -109,7 +109,7 @@ describe("user api-keys", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

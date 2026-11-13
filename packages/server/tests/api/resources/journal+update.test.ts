@@ -21,7 +21,7 @@ import { JournalUpdateHandlers } from "../../../src/api/resources/_journal+updat
 import { CreateJournalService } from "@usenullish/nullish-engine/ledger";
 import type { Composites } from "@usenullish/nullish-schema/composites";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 type SelectJournal = Composites["Journal"]["Select"];
 
@@ -196,7 +196,7 @@ describe("journal update", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

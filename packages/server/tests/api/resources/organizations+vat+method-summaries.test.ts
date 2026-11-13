@@ -16,7 +16,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { VatMethodSummariesHandlers } from "../../../src/api/resources/_organizations+vat+method-summaries";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 const vatSettings = DbSchema.Core.Vat.VatSettingsSchema;
 const vatMethods = DbSchema.Core.Vat.VatMethodsSchema;
@@ -83,7 +83,7 @@ describe("organization VAT method summaries", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });

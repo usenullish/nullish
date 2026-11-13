@@ -21,7 +21,7 @@ import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { loadWorkersMiddleware } from "../../../src/api/middlewares/workers";
 import { InvitationsCreateHandlers } from "../../../src/api/resources/_organizations+invitations+create";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 
@@ -97,7 +97,7 @@ describe("create invitation", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });
@@ -150,7 +150,7 @@ describe("create invitation", () => {
 
     const { token, link, mail } = await parseCreated(response);
 
-    expect(link).toBe(`${envAuthUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
+    expect(link).toBe(`${envAppUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
     expect(mail).toBeNull();
   });
 

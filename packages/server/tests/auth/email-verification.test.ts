@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, mock, test } from "bun:test";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { MailType } from "@usenullish/nullish-schema/mail";
 import { resetDb } from "../../../engine/tests/_test-utils";
@@ -21,7 +21,7 @@ describe("email verification", () => {
       env: {
         signUp: true,
         emailAndPassword: { mail: { send } },
-        baseURL: envAuthUrl(),
+        baseURL: envAppUrl(),
         secret: envAuthSecret(),
       },
     });
