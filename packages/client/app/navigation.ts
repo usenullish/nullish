@@ -1,3 +1,4 @@
+import { INVITATION_ACCEPT_PATH } from "@usenullish/nullish-schema/server";
 import {
   BookOpen,
   DatabaseArrowUp,
@@ -61,8 +62,6 @@ export const AUTH_NAVIGATION: {
   resetPassword: "/reset-password",
   resetPasswordDone: "/reset-password/done",
 };
-
-export const INVITATION_ACCEPT_PATH = "/invitations/accept";
 
 // Only shown to the admins of the organization.
 export const TEAM_NAVIGATION_GROUP: NavigationGroup = {

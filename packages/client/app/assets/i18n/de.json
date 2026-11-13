@@ -1280,6 +1280,7 @@
       "create_title": "Mitglied einladen",
       "created_title": "Einladungslink",
       "created_description": "Kopiere diesen Link jetzt und teile ihn mit {email}, er wird nicht mehr angezeigt. Er kann nur bis zum {date} angenommen werden, indem man sich mit dieser E-Mail anmeldet.",
+      "created_sent_description": "Wir haben diesen Link an {email} geschickt. Du kannst ihn auch selbst teilen, er wird nicht mehr angezeigt. Er kann nur bis zum {date} angenommen werden, indem man sich mit dieser E-Mail anmeldet.",
       "delete_title": "Einladung von {email} widerrufen?",
       "delete_description": "Der Link funktioniert nicht mehr. Diese Aktion kann nicht rückgängig gemacht werden.",
       "invited": "Du wurdest eingeladen, {organization} beizutreten.",

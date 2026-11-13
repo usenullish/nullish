@@ -1280,6 +1280,7 @@
       "create_title": "Inviter un membre",
       "created_title": "Lien d'invitation",
       "created_description": "Copie ce lien maintenant et partage-le avec {email}, il ne sera plus affiché. Il ne peut être accepté qu'en se connectant avec cet e-mail, jusqu'au {date}.",
+      "created_sent_description": "On a envoyé ce lien à {email}. Tu peux aussi le partager toi-même, il ne sera plus affiché. Il ne peut être accepté qu'en se connectant avec cet e-mail, jusqu'au {date}.",
       "delete_title": "Révoquer l'invitation de {email} ?",
       "delete_description": "Le lien cesse de fonctionner. Cette action est irréversible.",
       "invited": "Tu es invité à rejoindre {organization}.",

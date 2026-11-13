@@ -1136,6 +1136,7 @@ const I18nInvitationsSchema = z.strictObject({
     create_title: z.string(),
     created_title: z.string(),
     created_description: z.string(),
+    created_sent_description: z.string(),
     delete_title: z.string(),
     delete_description: z.string(),
     invited: z.string(),
