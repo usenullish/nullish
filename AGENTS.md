@@ -56,6 +56,7 @@ The app is split into modules: core (no prefix), accounting, billing and banking
 - **Classes.** Resources, stores, services and loaders are classes with a private constructor and a static `create()`.
 - **Comments.** None by default. Only when the code alone cannot explain a non-obvious why (a race, a workaround, a business rule), never to restate what the code does.
 - **Scope.** Keep diffs minimal and focused. Do not refactor code or change another package as a side effect. Ask first.
+- **Documentation.** After a feature or change visible to users or self-hosters (a page, a flow, an environment variable), update the docs in `docs/` in the four languages, in a separate PR.
 
 ## Domain rules
 
