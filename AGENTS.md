@@ -23,7 +23,7 @@ Dependencies flow top to bottom. A package never imports from a package below it
 | `engine`          | Stores, services (invoice lifecycle, jobs, storage), reports, `EngineError`                                                                                       |
 | `admin`           | Admin services, run without a user (only when no other chocie!): the CLI's tooling, the sign-up check and the LLM metering                                        |
 | `auth`            | better-auth server and client, session with the user's roles, API keys for the MCP server                                                                         |
-| `mail`            | Sending emails behind a provider interface (SMTP, later Amazon SES)                                                                                               |
+| `mail`            | Sending emails behind a provider interface (SMTP or Amazon SES)                                                                                                   |
 | `jobs`, `storage` | Background jobs (PDF generation) and file storage                                                                                                                 |
 | `chat`            | LLM chat: the `openai` client and the tool loop over an MCP client, with no access to the engine or the database                                                  |
 | `metering`        | LLM usage limits: reserves, releases and records the usage through the admin services, for the server                                                             |

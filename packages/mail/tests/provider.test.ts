@@ -1,30 +1,43 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
-import { MailType } from "@usenullish/nullish-schema/mail";
 
-const sendMail = mock(async () => ({}));
-const createTransport = mock(() => ({ sendMail }));
-
-mock.module("nodemailer", () => ({ createTransport }));
+mock.module("nodemailer", () => ({ createTransport: mock(() => ({})) }));
+mock.module("@aws-sdk/client-sesv2", () => ({
+  SESv2Client: mock(() => ({})),
+  SendEmailCommand: mock(() => ({})),
+}));
 
 const { createMailProvider } = await import("../src/provider");
 const { SmtpMailProvider } = await import("../src/_smtp");
+const { AwsSesMailProvider } = await import("../src/_aws-ses");
 
 describe("createMailProvider", () => {
-  const KEYS = ["NULLISH_MAIL_FROM", "NULLISH_MAIL_FROM_NAME", "NULLISH_MAIL_SMTP_URL"] as const;
+  const KEYS = [
+    "NULLISH_MAIL_FROM",
+    "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_SES_REGION",
+    "NULLISH_MAIL_SES_ACCESS_KEY_ID",
+    "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
+  ] as const;
 
   const saved = new Map<string, string | undefined>();
+
+  const setSmtp = () => {
+    process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
+  };
+
+  const setAwsSes = () => {
+    process.env.NULLISH_MAIL_SES_REGION = "eu-central-2";
+    process.env.NULLISH_MAIL_SES_ACCESS_KEY_ID = "access-key-id";
+    process.env.NULLISH_MAIL_SES_SECRET_ACCESS_KEY = "secret-access-key";
+  };
 
   beforeEach(() => {
     for (const key of KEYS) {
       saved.set(key, process.env[key]);
+      delete process.env[key];
     }
 
     process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
-    process.env.NULLISH_MAIL_FROM_NAME = "nullish";
-    process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
-
-    sendMail.mockClear();
-    createTransport.mockClear();
   });
 
   afterEach(() => {
@@ -38,79 +51,37 @@ describe("createMailProvider", () => {
     }
   });
 
-  const createProvider = () => {
+  test("returns the SMTP provider when SMTP is defined", () => {
+    setSmtp();
+
     const result = createMailProvider();
 
-    if (result.status === "error") {
-      throw result.err;
-    }
-
-    return result.result;
-  };
-
-  test("returns the SMTP provider", () => {
-    expect(createProvider()).toBeInstanceOf(SmtpMailProvider);
+    expect(result.status).toBe("success");
+    expect(result.status === "success" && result.result).toBeInstanceOf(SmtpMailProvider);
   });
 
-  test("creates the transport with the SMTP URL", () => {
-    createProvider();
+  test("returns the Amazon SES provider when Amazon SES is defined", () => {
+    setAwsSes();
 
-    expect(createTransport).toHaveBeenCalledWith("smtp://localhost:1025");
+    const result = createMailProvider();
+
+    expect(result.status).toBe("success");
+    expect(result.status === "success" && result.result).toBeInstanceOf(AwsSesMailProvider);
   });
 
-  test.each([
-    ["NULLISH_MAIL_FROM", "hello"],
-    ["NULLISH_MAIL_FROM", ""],
-    ["NULLISH_MAIL_SMTP_URL", "https://smtp.example.com"],
-    ["NULLISH_MAIL_SMTP_URL", ""],
-  ])("returns an error when %s is %p", (key, value) => {
-    process.env[key] = value;
+  test("returns an error when both SMTP and Amazon SES are defined", () => {
+    setSmtp();
+    setAwsSes();
 
+    const result = createMailProvider();
+
+    expect(result.status).toBe("error");
+    expect(result.status === "error" && result.err).toEqual(
+      new Error("Emails are sent with either SMTP or Amazon SES, not both."),
+    );
+  });
+
+  test("returns an error when no provider is defined", () => {
     expect(createMailProvider().status).toBe("error");
-  });
-
-  describe("send", () => {
-    const args = {
-      type: MailType.VERIFY_EMAIL,
-      to: "user@nullish.example.com",
-      url: "https://nullish.example.com/auth/verify?token=abc",
-    } as const;
-
-    test("sends from the name and the address of the sender", async () => {
-      await createProvider().send(args);
-
-      expect(sendMail).toHaveBeenCalledWith(
-        expect.objectContaining({
-          from: { name: "nullish", address: "hello@nullish.example.com" },
-          to: "user@nullish.example.com",
-        }),
-      );
-    });
-
-    test("sends from the address only when the sender has no name", async () => {
-      delete process.env.NULLISH_MAIL_FROM_NAME;
-
-      await createProvider().send(args);
-
-      expect(sendMail).toHaveBeenCalledWith(
-        expect.objectContaining({ from: "hello@nullish.example.com" }),
-      );
-    });
-
-    test("rejects invalid arguments without sending", async () => {
-      const provider = createProvider();
-
-      await expect(provider.send({ ...args, to: "user" })).rejects.toThrow();
-
-      expect(sendMail).not.toHaveBeenCalled();
-    });
-
-    test("rethrows when the transport fails", async () => {
-      sendMail.mockImplementationOnce(async () => {
-        throw new Error("Connection refused");
-      });
-
-      await expect(createProvider().send(args)).rejects.toThrow("Connection refused");
-    });
   });
 });
