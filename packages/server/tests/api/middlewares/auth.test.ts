@@ -2,7 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, mock, test } from "b
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { Nullable } from "@usenullish/nullish-common";
-import { envAppUrl } from "@usenullish/nullish-env";
+import { envAuthUrl } from "@usenullish/nullish-env";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
@@ -24,7 +24,7 @@ describe("auth middleware", () => {
 
     const response = await app.request("/auth/sign-up/email", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Origin: envAppUrl() },
+      headers: { "Content-Type": "application/json", Origin: envAuthUrl() },
       body: JSON.stringify({ email, password: "password-1234", name: email }),
     });
 
