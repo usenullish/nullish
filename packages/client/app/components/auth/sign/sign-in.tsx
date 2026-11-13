@@ -15,6 +15,7 @@ import { AUTH_NAVIGATION } from "~/navigation";
 import { useInvitationToken } from "~/kit/auth/auth-redirect.hook";
 import { useSessionExpired } from "~/kit/auth/sign-out.hook";
 import { useRedirectAfterSignIn } from "~/components/auth/sign/sign-in.hooks";
+import { useSettings } from "~/context/contexts/settings.context";
 import { testId } from "~/kit/tests/test.utils";
 import { testIds } from "~/kit/tests/test-ids.constants";
 
@@ -28,6 +29,8 @@ export const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<Nullable<string>>(null);
   const [pending, setPending] = useState(false);
+
+  const settings = useSettings();
 
   const expired = useSessionExpired();
   const invitationToken = useInvitationToken();
@@ -96,7 +99,18 @@ export const SignIn = () => {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor={passwordId}>{i18n.auth.label.password}</FieldLabel>
+                <div className="flex items-center">
+                  <FieldLabel htmlFor={passwordId}>{i18n.auth.label.password}</FieldLabel>
+
+                  {settings?.mail.enabled === true && (
+                    <FieldDescription className="ml-auto [&>a:hover]:text-foreground">
+                      <Link to={AUTH_NAVIGATION.forgotPassword}>
+                        {i18n.auth.action.forgot_password}
+                      </Link>
+                    </FieldDescription>
+                  )}
+                </div>
+
                 <Input
                   id={passwordId}
                   type="password"
