@@ -16,6 +16,8 @@ const user = {
 
 const url = "https://nullish.example.com/auth/callback?token=abc";
 
+const publicUrl = "https://nullish.example.com/api/auth/callback?token=abc";
+
 describe("buildEmailAndPasswordConfig", () => {
   describe("without mail", () => {
     test.each([true, false])("enables email and password with autoSignIn %p", (autoSignIn) => {
@@ -76,7 +78,7 @@ describe("buildEmailAndPasswordConfig", () => {
       expect(send).toHaveBeenCalledWith({
         type: MailType.RESET_PASSWORD,
         to: "test@test.dev",
-        url,
+        url: publicUrl,
       });
     });
 
@@ -88,8 +90,32 @@ describe("buildEmailAndPasswordConfig", () => {
       expect(send).toHaveBeenCalledWith({
         type: MailType.VERIFY_EMAIL,
         to: "test@test.dev",
-        url,
+        url: publicUrl,
       });
+    });
+
+    test.each([
+      [
+        "reset password",
+        (config: ReturnType<typeof buildEmailAndPasswordConfig>) =>
+          config.emailAndPassword?.sendResetPassword?.({ user, url: "invalid", token: "abc" }),
+      ],
+      [
+        "verify email",
+        (config: ReturnType<typeof buildEmailAndPasswordConfig>) =>
+          config.emailVerification?.sendVerificationEmail?.({ user, url: "invalid", token: "abc" }),
+      ],
+    ])("does not send the %s email when its link is invalid", async (_, sendFn) => {
+      const consoleError = spyOn(console, "error").mockImplementation(() => {});
+
+      const { send, config } = build();
+
+      await sendFn(config);
+
+      expect(send).not.toHaveBeenCalled();
+      expect(consoleError).toHaveBeenCalledTimes(1);
+
+      consoleError.mockRestore();
     });
 
     test("shares the rate limit of an address between the reset and the verify emails", async () => {
