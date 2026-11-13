@@ -12,3 +12,12 @@ export const useInvitationToken = (): Option<string> => {
   const { state } = useLocation();
   return AuthRedirectStateSchema.safeParse(state).data?.invitationToken;
 };
+
+const AuthEmailStateSchema = z.object({
+  email: z.email(),
+});
+
+export const useAuthEmail = (): Option<string> => {
+  const { state } = useLocation();
+  return AuthEmailStateSchema.safeParse(state).data?.email;
+};

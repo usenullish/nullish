@@ -93,7 +93,9 @@
       "verify": "Verifica",
       "verifying": "Verifica in corso…",
       "use_backup_code": "Usa un codice di backup",
-      "use_authenticator": "Usa la tua app di autenticazione"
+      "use_authenticator": "Usa la tua app di autenticazione",
+      "send_link": "Invia link",
+      "sending_link": "Invio…"
     },
     "label": {
       "password": "Password",
@@ -109,6 +111,8 @@
       "no_account": "Non sei ancora registrato?",
       "has_account": "Hai già un account?",
       "verify_email_description": "Ti abbiamo inviato un link a {email}. Aprilo per confermare il tuo indirizzo e iniziare.",
+      "forgot_password_description": "Inserisci il tuo indirizzo email e ti inviamo un link per reimpostare la password.",
+      "forgot_password_sent": "Ti abbiamo inviato un link a {email} per reimpostare la password.",
       "session_expired": "La sessione è scaduta. Accedi di nuovo.",
       "change_password_title": "Cambia la tua password",
       "two_factor_description": "Inserisci il codice a 6 cifre della tua app di autenticazione.",

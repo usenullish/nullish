@@ -5,11 +5,11 @@ import { EnvironmentTag } from "~/components/core/environment-tag";
 import { CenteredLayout } from "~/components/layout/centered-layout";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { AUTH_NAVIGATION } from "~/navigation";
-import { useSignUpEmail } from "~/components/auth/sign/sign-up-verify-email.hooks";
+import { useAuthEmail } from "~/kit/auth/auth-redirect.hook";
 
 export const SignUpVerifyEmail = () => {
   const { i18n } = useI18n();
-  const email = useSignUpEmail();
+  const email = useAuthEmail();
 
   if (isNullish(email)) {
     return <Navigate to={AUTH_NAVIGATION.signUp} replace />;

@@ -93,7 +93,9 @@
       "verify": "Bestätigen",
       "verifying": "Wird geprüft…",
       "use_backup_code": "Backup-Code verwenden",
-      "use_authenticator": "Deine Authenticator-App verwenden"
+      "use_authenticator": "Deine Authenticator-App verwenden",
+      "send_link": "Link senden",
+      "sending_link": "Wird gesendet…"
     },
     "label": {
       "password": "Passwort",
@@ -109,6 +111,8 @@
       "no_account": "Noch kein Konto?",
       "has_account": "Hast du bereits ein Konto?",
       "verify_email_description": "Wir haben dir einen Link an {email} geschickt. Öffne ihn, um deine Adresse zu bestätigen und loszulegen.",
+      "forgot_password_description": "Gib deine E-Mail-Adresse ein und wir schicken dir einen Link, um dein Passwort zurückzusetzen.",
+      "forgot_password_sent": "Wir haben dir einen Link an {email} geschickt, um dein Passwort zurückzusetzen.",
       "session_expired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
       "change_password_title": "Passwort ändern",
       "two_factor_description": "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",

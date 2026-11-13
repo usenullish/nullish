@@ -93,7 +93,9 @@
       "verify": "Verify",
       "verifying": "Verifying…",
       "use_backup_code": "Use a backup code",
-      "use_authenticator": "Use your authenticator app"
+      "use_authenticator": "Use your authenticator app",
+      "send_link": "Send link",
+      "sending_link": "Sending…"
     },
     "label": {
       "password": "Password",
@@ -109,6 +111,8 @@
       "no_account": "Not signed up yet?",
       "has_account": "Already have an account?",
       "verify_email_description": "We sent a link to {email}. Open it to verify your address and get started.",
+      "forgot_password_description": "Enter your email and we'll send you a link to reset your password.",
+      "forgot_password_sent": "We sent a link to {email} to reset your password.",
       "session_expired": "Your session has expired. Please sign in again.",
       "change_password_title": "Change your password",
       "two_factor_description": "Enter the 6-digit code from your authenticator app.",
