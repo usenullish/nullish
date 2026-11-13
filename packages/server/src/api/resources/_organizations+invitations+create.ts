@@ -3,9 +3,10 @@ import {
   ApiSchema,
   CommonSchema,
   encodeInvitationResponse,
+  type InvitationMailStatus,
 } from "@usenullish/nullish-schema/server";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { isInvalidUuid } from "@usenullish/nullish-common";
+import { isInvalidUuid, type Nullable } from "@usenullish/nullish-common";
 import { Resource, type ResourceArgs, ResourceProvider } from "./_factories/resource";
 import { definePostRoute } from "./_factories/crud-route-config";
 import { _defineCreateHandler } from "../handlers/_create";
@@ -44,7 +45,15 @@ export class InvitationsCreateHandlers extends Resource {
     this.registerRoute({ route: createRoute, handler: this.#create });
   }
 
-  readonly #create = _defineCreateHandler<CreateRoute, { invitation: Invitation; token: string }>({
+  readonly #create = _defineCreateHandler<
+    CreateRoute,
+    {
+      invitation: Invitation;
+      token: string;
+      link: string;
+      mail: Nullable<InvitationMailStatus>;
+    }
+  >({
     insert: async ({ db, userId, context, values }) => {
       const parentId = context.req.param("parentId");
 
@@ -52,17 +61,26 @@ export class InvitationsCreateHandlers extends Resource {
         return { status: "error", err: new Error("Bad Request") };
       }
 
+      const {
+        var: {
+          workers: { mail },
+        },
+      } = context;
+
       return await CreateInvitationService.create({
         db,
         userId,
         organizationId: parentId,
         values,
+        mail,
       }).create();
     },
     resourceKey: "invitation",
-    build: ({ result: { invitation, token } }) => ({
+    build: ({ result: { invitation, token, link, mail } }) => ({
       invitation: encodeInvitationResponse(invitation),
       token,
+      link,
+      mail,
     }),
   });
 }
