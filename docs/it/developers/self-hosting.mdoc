@@ -40,7 +40,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
 
    # openssl rand -base64 32
    NULLISH_AUTH_SECRET=
-   NULLISH_AUTH_URL=https://nullish.example.com/api
+   NULLISH_APP_URL=https://nullish.example.com/api
    NULLISH_AUTH_SIGN_UP=invite_only
    ```
 
@@ -82,7 +82,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
          NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
          NULLISH_DB_PASSWORD: ${NULLISH_DB_PASSWORD}
          NULLISH_AUTH_SECRET: ${NULLISH_AUTH_SECRET}
-         NULLISH_AUTH_URL: ${NULLISH_AUTH_URL}
+         NULLISH_APP_URL: ${NULLISH_APP_URL}
          NULLISH_AUTH_SIGN_UP: ${NULLISH_AUTH_SIGN_UP}
        volumes:
          - nullish-data:/data
@@ -156,7 +156,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
 | Variabile              | Obbligatoria | Descrizione                                                                                                               |
 | ---------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | `NULLISH_AUTH_SECRET`  | sì           | Almeno 32 caratteri. Generalo con `openssl rand -base64 32`.                                                              |
-| `NULLISH_AUTH_URL`     | sì           | URL pubblico dell'API.                                                                                                    |
+| `NULLISH_APP_URL`      | sì           | URL pubblico dell'API.                                                                                                    |
 | `NULLISH_AUTH_SIGN_UP` | no           | `true` (chiunque), `false` (nessuno) o `invite_only` (con un invito a unirsi a un'organizzazione). Default `invite_only`. |
 
 ## Attivare l'assistente

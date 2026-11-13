@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL, CryptoHasher } from "bun";
 import { DbSchema } from "@usenullish/nullish-schema/db";
-import { envAuthUrl, envDbUrl } from "@usenullish/nullish-env";
+import { envAppUrl, envDbUrl } from "@usenullish/nullish-env";
 import type { Nullable } from "@usenullish/nullish-common";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { INVITATION_ACCEPT_PATH, InvitationMailStatus } from "@usenullish/nullish-schema/server";
@@ -154,7 +154,7 @@ describe("CreateInvitationService", () => {
 
       const { link, token } = result.result;
 
-      expect(link).toBe(`${envAuthUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
+      expect(link).toBe(`${envAppUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
     });
   });
 

@@ -40,7 +40,7 @@ Die Images liegen auf Docker Hub, für `linux/amd64` und `linux/arm64`, getaggt 
 
    # openssl rand -base64 32
    NULLISH_AUTH_SECRET=
-   NULLISH_AUTH_URL=https://nullish.example.com/api
+   NULLISH_APP_URL=https://nullish.example.com/api
    NULLISH_AUTH_SIGN_UP=invite_only
    ```
 
@@ -82,7 +82,7 @@ Die Images liegen auf Docker Hub, für `linux/amd64` und `linux/arm64`, getaggt 
          NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
          NULLISH_DB_PASSWORD: ${NULLISH_DB_PASSWORD}
          NULLISH_AUTH_SECRET: ${NULLISH_AUTH_SECRET}
-         NULLISH_AUTH_URL: ${NULLISH_AUTH_URL}
+         NULLISH_APP_URL: ${NULLISH_APP_URL}
          NULLISH_AUTH_SIGN_UP: ${NULLISH_AUTH_SIGN_UP}
        volumes:
          - nullish-data:/data
@@ -156,7 +156,7 @@ Die Images liegen auf Docker Hub, für `linux/amd64` und `linux/arm64`, getaggt 
 | Variable               | Pflicht | Beschreibung                                                                                                            |
 | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `NULLISH_AUTH_SECRET`  | ja      | Mindestens 32 Zeichen. Generiere es mit `openssl rand -base64 32`.                                                      |
-| `NULLISH_AUTH_URL`     | ja      | Öffentliche URL der API.                                                                                                |
+| `NULLISH_APP_URL`      | ja      | Öffentliche URL der API.                                                                                                |
 | `NULLISH_AUTH_SIGN_UP` | nein    | `true` (alle), `false` (niemand) oder `invite_only` (mit einer Einladung in eine Organisation). Standard `invite_only`. |
 
 ## Den Assistenten aktivieren
