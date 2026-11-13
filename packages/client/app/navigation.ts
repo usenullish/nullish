@@ -47,11 +47,17 @@ export const AUTH_NAVIGATION: {
   signInTwoFactor: RelativePath;
   signUp: RelativePath;
   signUpVerifyEmail: RelativePath;
+  forgotPassword: RelativePath;
+  forgotPasswordSent: RelativePath;
+  resetPassword: RelativePath;
 } = {
   signIn: "/sign-in",
   signInTwoFactor: "/sign-in/two-factor",
   signUp: "/sign-up",
   signUpVerifyEmail: "/sign-up/verify-email",
+  forgotPassword: "/forgot-password",
+  forgotPasswordSent: "/forgot-password/sent",
+  resetPassword: "/reset-password",
 };
 
 export const INVITATION_ACCEPT_PATH = "/invitations/accept";

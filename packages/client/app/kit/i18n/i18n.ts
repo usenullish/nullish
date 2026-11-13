@@ -90,6 +90,8 @@ const I18nAuthSchema = z.strictObject({
     verifying: z.string(),
     use_backup_code: z.string(),
     use_authenticator: z.string(),
+    send_link: z.string(),
+    sending_link: z.string(),
   }),
   label: z.strictObject({
     password: z.string(),
@@ -105,6 +107,8 @@ const I18nAuthSchema = z.strictObject({
     no_account: z.string(),
     has_account: z.string(),
     verify_email_description: z.string(),
+    forgot_password_description: z.string(),
+    forgot_password_sent: z.string(),
     session_expired: z.string(),
     change_password_title: z.string(),
     two_factor_description: z.string(),

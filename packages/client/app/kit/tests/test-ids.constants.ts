@@ -12,6 +12,10 @@ export const testIds = {
     password: "input-sign-up-password",
     submit: "btn-sign-up",
   },
+  forgotPassword: {
+    email: "input-forgot-password-email",
+    submit: "btn-forgot-password",
+  },
   newOrganization: {
     name: "input-organization-name",
     submit: "btn-new-organization",
