@@ -156,7 +156,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
 | Variabile              | Obbligatoria | Descrizione                                                                                                               |
 | ---------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | `NULLISH_AUTH_SECRET`  | sì           | Almeno 32 caratteri. Generalo con `openssl rand -base64 32`.                                                              |
-| `NULLISH_APP_URL`      | sì           | URL pubblico dell'app, ad esempio `https://nullish.example.com`. Serve anche per i link nelle e-mail.                                                                                                    |
+| `NULLISH_APP_URL`      | sì           | URL pubblico dell'app, ad esempio `https://nullish.example.com`. Serve anche per i link nelle e-mail.                     |
 | `NULLISH_AUTH_SIGN_UP` | no           | `true` (chiunque), `false` (nessuno) o `invite_only` (con un invito a unirsi a un'organizzazione). Default `invite_only`. |
 
 ## Attivare l'assistente
@@ -220,11 +220,11 @@ server:
 
 Poi riavvia con `docker compose up -d`. Appena mittente e server SMTP sono definiti, le e-mail partono.
 
-| Variabile                | Obbligatoria   | Descrizione                                                              |
-| ------------------------ | -------------- | ------------------------------------------------------------------------ |
-| `NULLISH_MAIL_FROM`      | per le e-mail  | Indirizzo del mittente, ad esempio `hello@nullish.example.com`.          |
-| `NULLISH_MAIL_FROM_NAME` | no             | Nome del mittente, ad esempio `nullish`.                                 |
-| `NULLISH_MAIL_SMTP_URL`  | per le e-mail  | Server SMTP, `smtp://` o `smtps://`, con le credenziali se servono.      |
+| Variabile                | Obbligatoria  | Descrizione                                                         |
+| ------------------------ | ------------- | ------------------------------------------------------------------- |
+| `NULLISH_MAIL_FROM`      | per le e-mail | Indirizzo del mittente, ad esempio `hello@nullish.example.com`.     |
+| `NULLISH_MAIL_FROM_NAME` | no            | Nome del mittente, ad esempio `nullish`.                            |
+| `NULLISH_MAIL_SMTP_URL`  | per le e-mail | Server SMTP, `smtp://` o `smtps://`, con le credenziali se servono. |
 
 {% aside %}
 Con le e-mail attive, i nuovi account confermano l'indirizzo prima di poter accedere.

@@ -156,7 +156,7 @@ Die Images liegen auf Docker Hub, für `linux/amd64` und `linux/arm64`, getaggt 
 | Variable               | Pflicht | Beschreibung                                                                                                            |
 | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `NULLISH_AUTH_SECRET`  | ja      | Mindestens 32 Zeichen. Generiere es mit `openssl rand -base64 32`.                                                      |
-| `NULLISH_APP_URL`      | ja      | Öffentliche URL der App, z. B. `https://nullish.example.com`. Wird auch für die Links in den E-Mails verwendet.                                                                                                |
+| `NULLISH_APP_URL`      | ja      | Öffentliche URL der App, z. B. `https://nullish.example.com`. Wird auch für die Links in den E-Mails verwendet.         |
 | `NULLISH_AUTH_SIGN_UP` | nein    | `true` (alle), `false` (niemand) oder `invite_only` (mit einer Einladung in eine Organisation). Standard `invite_only`. |
 
 ## Den Assistenten aktivieren
@@ -220,11 +220,11 @@ server:
 
 Dann neu starten mit `docker compose up -d`. Sobald Absender und SMTP-Server gesetzt sind, verschickt nullish E-Mails.
 
-| Variable                 | Pflicht      | Beschreibung                                                           |
-| ------------------------ | ------------ | ---------------------------------------------------------------------- |
-| `NULLISH_MAIL_FROM`      | für E-Mails  | Absenderadresse, z. B. `hello@nullish.example.com`.                    |
-| `NULLISH_MAIL_FROM_NAME` | nein         | Absendername, z. B. `nullish`.                                         |
-| `NULLISH_MAIL_SMTP_URL`  | für E-Mails  | SMTP-Server, `smtp://` oder `smtps://`, bei Bedarf mit Zugangsdaten.   |
+| Variable                 | Pflicht     | Beschreibung                                                         |
+| ------------------------ | ----------- | -------------------------------------------------------------------- |
+| `NULLISH_MAIL_FROM`      | für E-Mails | Absenderadresse, z. B. `hello@nullish.example.com`.                  |
+| `NULLISH_MAIL_FROM_NAME` | nein        | Absendername, z. B. `nullish`.                                       |
+| `NULLISH_MAIL_SMTP_URL`  | für E-Mails | SMTP-Server, `smtp://` oder `smtps://`, bei Bedarf mit Zugangsdaten. |
 
 {% aside %}
 Sobald E-Mails aktiv sind, bestätigen neue Konten ihre Adresse, bevor sie sich anmelden können.
