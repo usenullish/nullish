@@ -92,6 +92,7 @@ export const SignIn = () => {
                   autoComplete="email"
                   ignorePasswordManagers={false}
                   placeholder={EMAIL_PLACEHOLDER}
+                  tabIndex={1}
                   value={email}
                   onChange={($event) => setEmail($event.target.value)}
                   required
@@ -105,7 +106,7 @@ export const SignIn = () => {
 
                   {settings?.mail.enabled === true && (
                     <FieldDescription className="ml-auto [&>a:hover]:text-foreground">
-                      <Link to={AUTH_NAVIGATION.forgotPassword}>
+                      <Link to={AUTH_NAVIGATION.forgotPassword} tabIndex={3}>
                         {i18n.auth.action.forgot_password}
                       </Link>
                     </FieldDescription>
@@ -117,6 +118,7 @@ export const SignIn = () => {
                   type="password"
                   autoComplete="current-password"
                   ignorePasswordManagers={false}
+                  tabIndex={2}
                   value={password}
                   onChange={($event) => setPassword($event.target.value)}
                   required
@@ -131,7 +133,12 @@ export const SignIn = () => {
               )}
 
               <Field>
-                <Button type="submit" disabled={pending} {...testId(testIds.signIn.submit)}>
+                <Button
+                  type="submit"
+                  disabled={pending}
+                  tabIndex={4}
+                  {...testId(testIds.signIn.submit)}
+                >
                   {pending ? i18n.auth.action.signing_in : i18n.auth.action.sign_in}
                 </Button>
 
