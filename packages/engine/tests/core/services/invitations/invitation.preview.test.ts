@@ -29,6 +29,7 @@ const invite = async ({
     userId: TEST_USER_ID,
     organizationId,
     values: { email, role: "reviewer" },
+    mail: null,
   }).create();
 
   if (result.status === "error") {
