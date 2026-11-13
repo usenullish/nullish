@@ -40,7 +40,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
 
    # openssl rand -base64 32
    NULLISH_AUTH_SECRET=
-   NULLISH_AUTH_URL=https://nullish.example.com/api
+   NULLISH_APP_URL=https://nullish.example.com
    NULLISH_AUTH_SIGN_UP=invite_only
    ```
 
@@ -82,7 +82,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
          NULLISH_DB_USERNAME: ${NULLISH_DB_USERNAME}
          NULLISH_DB_PASSWORD: ${NULLISH_DB_PASSWORD}
          NULLISH_AUTH_SECRET: ${NULLISH_AUTH_SECRET}
-         NULLISH_AUTH_URL: ${NULLISH_AUTH_URL}
+         NULLISH_APP_URL: ${NULLISH_APP_URL}
          NULLISH_AUTH_SIGN_UP: ${NULLISH_AUTH_SIGN_UP}
        volumes:
          - nullish-data:/data
@@ -156,7 +156,7 @@ Le immagini sono su Docker Hub per `linux/amd64` e `linux/arm64`, con il tag `la
 | Variabile              | Obbligatoria | Descrizione                                                                                                               |
 | ---------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | `NULLISH_AUTH_SECRET`  | sì           | Almeno 32 caratteri. Generalo con `openssl rand -base64 32`.                                                              |
-| `NULLISH_AUTH_URL`     | sì           | URL pubblico dell'API.                                                                                                    |
+| `NULLISH_APP_URL`      | sì           | URL pubblico dell'app, ad esempio `https://nullish.example.com`. Serve anche per i link nelle e-mail.                                                                                                    |
 | `NULLISH_AUTH_SIGN_UP` | no           | `true` (chiunque), `false` (nessuno) o `invite_only` (con un invito a unirsi a un'organizzazione). Default `invite_only`. |
 
 ## Attivare l'assistente
@@ -194,6 +194,40 @@ Poi riavvia con `docker compose up -d`. Appena le prime tre impostazioni qui sot
 {% aside %}
 Il modello deve avere un contesto abbastanza ampio da starci le istruzioni e gli strumenti dell'assistente. Con Ollama,
 32k token sono un buon punto di partenza.
+{% /aside %}
+
+## Inviare e-mail
+
+nullish invia e-mail per confermare l'indirizzo dei nuovi account, reimpostare le password dimenticate e recapitare gli inviti. Serve un server SMTP. Senza, nullish funziona lo stesso: i nuovi account non confermano l'indirizzo, la password si cambia solo da connessi e i link d'invito li condividi tu.
+
+Aggiungi le impostazioni nel tuo `.env`:
+
+```sh title=".env"
+NULLISH_MAIL_FROM=hello@nullish.example.com
+NULLISH_MAIL_FROM_NAME=nullish
+NULLISH_MAIL_SMTP_URL=smtps://user:password@smtp.example.com:465
+```
+
+Passale al server in `docker-compose.yml`:
+
+```yaml title="docker-compose.yml"
+server:
+  environment:
+    NULLISH_MAIL_FROM: ${NULLISH_MAIL_FROM}
+    NULLISH_MAIL_FROM_NAME: ${NULLISH_MAIL_FROM_NAME}
+    NULLISH_MAIL_SMTP_URL: ${NULLISH_MAIL_SMTP_URL}
+```
+
+Poi riavvia con `docker compose up -d`. Appena mittente e server SMTP sono definiti, le e-mail partono.
+
+| Variabile                | Obbligatoria   | Descrizione                                                              |
+| ------------------------ | -------------- | ------------------------------------------------------------------------ |
+| `NULLISH_MAIL_FROM`      | per le e-mail  | Indirizzo del mittente, ad esempio `hello@nullish.example.com`.          |
+| `NULLISH_MAIL_FROM_NAME` | no             | Nome del mittente, ad esempio `nullish`.                                 |
+| `NULLISH_MAIL_SMTP_URL`  | per le e-mail  | Server SMTP, `smtp://` o `smtps://`, con le credenziali se servono.      |
+
+{% aside %}
+Con le e-mail attive, i nuovi account confermano l'indirizzo prima di poter accedere.
 {% /aside %}
 
 ## Manutenzione
