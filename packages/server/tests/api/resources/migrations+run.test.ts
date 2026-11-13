@@ -21,7 +21,7 @@ import {
   resetDb,
   waitFor,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const migrations = DbSchema.Migration.Migrations.MigrationsSchema;
 
@@ -105,7 +105,7 @@ describe("migrations run", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import {
   envAuthSecret,
   envAppUrl,
+  envAuthUrl,
   envDataDir,
   envDbMigrationsFolder,
   envDbUrl,
@@ -339,6 +340,18 @@ describe("env", () => {
       process.env[key] = "";
 
       expect(() => fn()).toThrow();
+    });
+  });
+
+  describe("envAuthUrl", () => {
+    test("returns the app URL", () => {
+      process.env.NULLISH_APP_URL = "https://nullish.example.com";
+
+      expect(envAuthUrl()).toBe(envAppUrl());
+    });
+
+    test("throws when the app URL is missing", () => {
+      expect(() => envAuthUrl()).toThrow();
     });
   });
 

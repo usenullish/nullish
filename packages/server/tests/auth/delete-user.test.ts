@@ -5,7 +5,7 @@ import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { eq } from "drizzle-orm";
 import { createOrganization, resetDb } from "../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const users = DbSchema.Auth.Auth.users;
 
@@ -58,7 +58,7 @@ describe("delete user", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

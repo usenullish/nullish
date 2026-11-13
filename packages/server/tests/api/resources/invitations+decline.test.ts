@@ -13,7 +13,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { InvitationsDeclineHandlers } from "../../../src/api/resources/_invitations+decline";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 
@@ -107,7 +107,7 @@ describe("decline invitation", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

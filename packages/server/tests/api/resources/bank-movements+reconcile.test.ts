@@ -28,7 +28,7 @@ import {
   randomDedupeHash,
   resetDb,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const periods = DbSchema.Ledger.Periods.PeriodsSchema;
 const invoices = DbSchema.Billing.Invoices.InvoicesSchema;
@@ -144,7 +144,7 @@ describe("bank movements reconcile", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

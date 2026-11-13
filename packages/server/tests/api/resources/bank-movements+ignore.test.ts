@@ -23,7 +23,7 @@ import {
   randomDedupeHash,
   resetDb,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const movements = DbSchema.Banking.Movements.MovementsSchema;
 
@@ -123,7 +123,7 @@ describe("bank movements ignore", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

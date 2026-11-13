@@ -17,7 +17,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { MigrationDatasetSummariesHandlers } from "../../../src/api/resources/_organizations+migration-dataset-summaries";
 import { createMigration, createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const datasets = DbSchema.Migration.Datasets.DatasetsSchema;
 const migrations = DbSchema.Migration.Migrations.MigrationsSchema;
@@ -73,7 +73,7 @@ describe("organization migration dataset summaries", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

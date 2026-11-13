@@ -21,7 +21,7 @@ import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { loadWorkersMiddleware } from "../../../src/api/middlewares/workers";
 import { InvitationsCreateHandlers } from "../../../src/api/resources/_organizations+invitations+create";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAppUrl, envAuthUrl } from "@usenullish/nullish-env";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 
@@ -97,7 +97,7 @@ describe("create invitation", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

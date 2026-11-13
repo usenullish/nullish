@@ -21,7 +21,7 @@ import {
   createOrganization,
   resetDb,
 } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const UBS_IBAN = "CH710023023099999999R";
 
@@ -89,7 +89,7 @@ describe("bank-relations statements import", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });

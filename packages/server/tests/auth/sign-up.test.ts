@@ -5,7 +5,7 @@ import { nonNullish } from "@usenullish/nullish-common";
 import { CreateInvitationService } from "@usenullish/nullish-engine/core";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { createOrganization, resetDb } from "../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 describe("sign-up", () => {
   let instance: DbInstance;
@@ -25,7 +25,7 @@ describe("sign-up", () => {
       env: {
         signUp: mode,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     }).api.signUpEmail({

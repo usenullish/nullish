@@ -13,7 +13,7 @@ import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { InvitationsHandlers } from "../../../src/api/resources/_organizations+invitations";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
-import { envAuthSecret, envAppUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 const invitations = DbSchema.Core.Invitations.InvitationsSchema;
@@ -112,7 +112,7 @@ describe("organization invitations", () => {
       env: {
         signUp: true,
         emailAndPassword: { autoSignIn: true },
-        baseURL: envAppUrl(),
+        baseURL: envAuthUrl(),
         secret: envAuthSecret(),
       },
     });
