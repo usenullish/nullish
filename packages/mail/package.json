@@ -11,6 +11,7 @@
     "check": "tsc"
   },
   "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.1168.0",
     "@usenullish/nullish-common": "workspace:*",
     "@usenullish/nullish-env": "workspace:*",
     "@usenullish/nullish-schema": "workspace:*",
