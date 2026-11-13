@@ -13,7 +13,14 @@ export const SendResetPasswordArgsSchema = z.strictObject({
   url: z.url(),
 });
 
+export const SendInvitationArgsSchema = z.strictObject({
+  type: z.literal(MailType.INVITATION),
+  to: z.email(),
+  url: z.url(),
+});
+
 export const SendMailArgsSchema = z.discriminatedUnion("type", [
   SendVerifyEmailArgsSchema,
   SendResetPasswordArgsSchema,
+  SendInvitationArgsSchema,
 ]);

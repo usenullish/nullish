@@ -1,9 +1,12 @@
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, mock, spyOn, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL, CryptoHasher } from "bun";
 import { DbSchema } from "@usenullish/nullish-schema/db";
-import { envDbUrl } from "@usenullish/nullish-env";
+import { envAuthUrl, envDbUrl } from "@usenullish/nullish-env";
+import type { Nullable } from "@usenullish/nullish-common";
+import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
+import { INVITATION_ACCEPT_PATH, InvitationMailStatus } from "@usenullish/nullish-schema/server";
 import { CreateInvitationService } from "../../../../src/core/services/invitations/invitation.create";
 import {
   createOrganization,
@@ -23,16 +26,19 @@ const invite = ({
   userId = TEST_USER_ID,
   organizationId,
   email,
+  mail = null,
 }: {
   userId?: string;
   organizationId: string;
   email: string;
+  mail?: Nullable<SendMail>;
 }) =>
   CreateInvitationService.create({
     db,
     userId,
     organizationId,
     values: { email, role: "accountant" },
+    mail,
   }).create();
 
 describe("CreateInvitationService", () => {
@@ -135,5 +141,85 @@ describe("CreateInvitationService", () => {
     });
 
     expect(result.status).toBe("error");
+  });
+
+  describe("link", () => {
+    test("returns the link to accept the invitation", async () => {
+      const result = await invite({ organizationId, email: "link@test.dev" });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      const { link, token } = result.result;
+
+      expect(link).toBe(`${envAuthUrl()}${INVITATION_ACCEPT_PATH}#${token}`);
+    });
+  });
+
+  describe("mail", () => {
+    test("sends the invitation email with the link", async () => {
+      const send = mock(async () => {});
+
+      const result = await invite({ organizationId, email: "mailed@test.dev", mail: { send } });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(send).toHaveBeenCalledWith({
+        type: MailType.INVITATION,
+        to: "mailed@test.dev",
+        url: result.result.link,
+      });
+      expect(result.result.mail).toBe(InvitationMailStatus.SENT);
+    });
+
+    test("returns no mail status without a mail provider", async () => {
+      const result = await invite({ organizationId, email: "disabled@test.dev" });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.mail).toBeNull();
+    });
+
+    test("does not send the email when the invitation fails", async () => {
+      const send = mock(async () => {});
+
+      const result = await invite({
+        userId: TEST_OTHER_USER_ID,
+        organizationId,
+        email: "not-sent@test.dev",
+        mail: { send },
+      });
+
+      expect(result.status).toBe("error");
+      expect(send).not.toHaveBeenCalled();
+    });
+
+    test("creates the invitation with the mail as failed when the email fails", async () => {
+      const consoleError = spyOn(console, "error").mockImplementation(() => {});
+
+      const send = mock(async () => {
+        throw new Error("Connection refused");
+      });
+
+      const result = await invite({ organizationId, email: "failed@test.dev", mail: { send } });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.mail).toBe(InvitationMailStatus.FAILED);
+      expect(consoleError).toHaveBeenCalledTimes(1);
+
+      consoleError.mockRestore();
+    });
   });
 });
