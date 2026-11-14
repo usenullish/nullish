@@ -222,15 +222,15 @@ Puis redémarre avec `docker compose up -d`. Les e-mails s'activent dès que l'e
 
 Pour envoyer avec Amazon SES, laisse `NULLISH_MAIL_SMTP_URL` de côté et définis les trois variables `NULLISH_MAIL_SES_*`. Si tu définis les deux, le serveur ne démarre pas.
 
-| Variable                             | Requis          | Description                                                             |
-| ------------------------------------ | --------------- | ----------------------------------------------------------------------- |
+| Variable                             | Requis           | Description                                                             |
+| ------------------------------------ | ---------------- | ----------------------------------------------------------------------- |
 | `NULLISH_MAIL_FROM`                  | pour les e-mails | Adresse de l'expéditeur, p. ex. `hello@nullish.example.com`.            |
-| `NULLISH_MAIL_FROM_NAME`             | non             | Nom de l'expéditeur, p. ex. `nullish`.                                  |
-| `NULLISH_MAIL_SMTP_URL`              | pour SMTP       | Serveur SMTP, `smtp://` ou `smtps://`, avec ses identifiants si besoin. |
-| `NULLISH_MAIL_SES_REGION`            | pour Amazon SES | Région d'Amazon SES, p. ex. `eu-central-2`.                             |
-| `NULLISH_MAIL_SES_ACCESS_KEY_ID`     | pour Amazon SES | ID de clé d'accès d'un utilisateur IAM autorisé à envoyer des e-mails.  |
-| `NULLISH_MAIL_SES_SECRET_ACCESS_KEY` | pour Amazon SES | Sa clé d'accès secrète.                                                 |
-| `NULLISH_MAIL_TEMPLATES_DIR`         | non             | Dossier de tes propres modèles d'e-mails, voir plus bas.                |
+| `NULLISH_MAIL_FROM_NAME`             | non              | Nom de l'expéditeur, p. ex. `nullish`.                                  |
+| `NULLISH_MAIL_SMTP_URL`              | pour SMTP        | Serveur SMTP, `smtp://` ou `smtps://`, avec ses identifiants si besoin. |
+| `NULLISH_MAIL_SES_REGION`            | pour Amazon SES  | Région d'Amazon SES, p. ex. `eu-central-2`.                             |
+| `NULLISH_MAIL_SES_ACCESS_KEY_ID`     | pour Amazon SES  | ID de clé d'accès d'un utilisateur IAM autorisé à envoyer des e-mails.  |
+| `NULLISH_MAIL_SES_SECRET_ACCESS_KEY` | pour Amazon SES  | Sa clé d'accès secrète.                                                 |
+| `NULLISH_MAIL_TEMPLATES_DIR`         | non              | Dossier de tes propres modèles d'e-mails, voir plus bas.                |
 
 {% aside %}
 Une fois les e-mails activés, les nouveaux comptes confirment leur adresse avant de pouvoir se
