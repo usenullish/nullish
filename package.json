@@ -8,6 +8,7 @@
     "packages/schema",
     "packages/migration",
     "packages/env",
+    "packages/templates",
     "packages/storage",
     "packages/mail",
     "packages/db",

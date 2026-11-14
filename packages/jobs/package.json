@@ -19,6 +19,7 @@
     "@usenullish/nullish-migration": "workspace:*",
     "@usenullish/nullish-schema": "workspace:*",
     "@usenullish/nullish-storage": "workspace:*",
+    "@usenullish/nullish-templates": "workspace:*",
     "bullmq": "^6.7.0",
     "liquidjs": "^10.30.1",
     "pg": "^8.23.1",

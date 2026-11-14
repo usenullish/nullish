@@ -152,6 +152,7 @@
         "@usenullish/nullish-migration": "workspace:*",
         "@usenullish/nullish-schema": "workspace:*",
         "@usenullish/nullish-storage": "workspace:*",
+        "@usenullish/nullish-templates": "workspace:*",
         "bullmq": "^6.7.0",
         "liquidjs": "^10.30.1",
         "pg": "^8.23.1",
@@ -236,6 +237,12 @@
         "@usenullish/nullish-env": "workspace:*",
         "@usenullish/nullish-schema": "workspace:*",
         "zod": "^4.6",
+      },
+    },
+    "packages/templates": {
+      "name": "@usenullish/nullish-templates",
+      "dependencies": {
+        "@usenullish/nullish-schema": "workspace:*",
       },
     },
   },
@@ -867,6 +874,8 @@
     "@usenullish/nullish-server": ["@usenullish/nullish-server@workspace:packages/server"],
 
     "@usenullish/nullish-storage": ["@usenullish/nullish-storage@workspace:packages/storage"],
+
+    "@usenullish/nullish-templates": ["@usenullish/nullish-templates@workspace:packages/templates"],
 
     "@vitejs/plugin-react": ["@vitejs/plugin-react@6.2.1", "", { "dependencies": { "@rolldown/pluginutils": "^1.0.1" }, "peerDependencies": { "@rolldown/plugin-babel": "^0.1.7 || ^0.2.0 || ^0.3.0", "babel-plugin-react-compiler": "^1.0.0", "oxc-transform-react": ">=0.152.0 <0.157.0", "vite": "^8.0.0" }, "optionalPeers": ["@rolldown/plugin-babel", "babel-plugin-react-compiler", "oxc-transform-react"] }, "sha512-9KyWCij3r0+qLG3Q62vBmv0VyevmYibAtxaCIVK9o0k6CXgaajZRIe8tpfchQcdZArJ5b/7OrIz4W3b2uxVRDA=="],
 

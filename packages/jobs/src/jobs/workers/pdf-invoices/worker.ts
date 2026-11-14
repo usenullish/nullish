@@ -6,7 +6,7 @@ import { InvoiceStatus } from "@usenullish/nullish-schema/db";
 import { withDbContext } from "../../../_db";
 import { buildQrBill } from "./_helpers/qr-bill";
 import { buildInvoiceTemplateData } from "./_data";
-import { DEFAULT_TEMPLATES } from "./_templates";
+import { DEFAULT_TEMPLATES } from "@usenullish/nullish-templates";
 import {
   DbClients,
   DbCollectionLines,

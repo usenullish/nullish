@@ -1,5 +1,5 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["packages/jobs/templates"],
+  "ignorePatterns": ["packages/templates/documents"],
   "associations": [{ "files": ["**/*.mdoc"], "language": "markdown" }]
 }
