@@ -16,7 +16,6 @@ export const NotificationsIndicator = () => {
 
   const [latest] = notifications;
 
-  const [mountedId] = useState<Option<Notification["id"]>>(latest?.id);
   const [flashedId, setFlashedId] = useState<Option<Notification["id"]>>(undefined);
 
   useEffect(() => {
@@ -30,10 +29,7 @@ export const NotificationsIndicator = () => {
   }, [latest]);
 
   const flashing =
-    nonNullish(latest) &&
-    latest.level !== NotificationLevel.ERROR &&
-    latest.id !== mountedId &&
-    latest.id !== flashedId;
+    nonNullish(latest) && latest.level !== NotificationLevel.ERROR && latest.id !== flashedId;
 
   const unreadErrors = notifications.filter(
     ({ level, read }) => level === NotificationLevel.ERROR && !read,
