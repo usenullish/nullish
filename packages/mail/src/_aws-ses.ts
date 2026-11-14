@@ -7,15 +7,18 @@ import {
   envMailFrom,
   envMailFromName,
 } from "@usenullish/nullish-env";
-import { MailSchema, type Mail as MailTypes, type SendMail } from "@usenullish/nullish-schema/mail";
 import { MailFactory } from "./_factory";
+import type { Mail as MailTypes } from "@usenullish/nullish-schema/mail";
+import { MailProvider } from "./_mail-provider";
 
 @MailFactory
-export class AwsSesMailProvider implements SendMail {
+export class AwsSesMailProvider extends MailProvider {
   readonly #client: SESv2Client;
   readonly #from: string;
 
-  private constructor() {
+  protected constructor() {
+    super();
+
     this.#client = new SESv2Client({
       region: envMailAwsSesRegion(),
       credentials: {
@@ -34,17 +37,15 @@ export class AwsSesMailProvider implements SendMail {
     return new this();
   }
 
-  async send(args: MailTypes["Send"]["Args"]): Promise<void> {
-    const { type, to, url } = MailSchema.SendMailArgsSchema.parse(args);
-
+  override async deliver({ to, subject, html, text }: MailTypes["Deliver"]["Args"]): Promise<void> {
     await this.#client.send(
       new SendEmailCommand({
         FromEmailAddress: this.#from,
         Destination: { ToAddresses: [to] },
         Content: {
           Simple: {
-            Subject: { Data: type },
-            Body: { Text: { Data: url }, Html: { Data: url } },
+            Subject: { Data: subject },
+            Body: { Text: { Data: text }, Html: { Data: html } },
           },
         },
       }),

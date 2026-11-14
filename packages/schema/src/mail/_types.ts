@@ -6,6 +6,9 @@ interface Mail {
   Send: {
     Args: z.infer<typeof MailSchema.SendMailArgsSchema>;
   };
+  Deliver: {
+    Args: z.infer<typeof MailSchema.DeliverMailArgsSchema>;
+  };
 }
 
 export type { Mail, SendMail };

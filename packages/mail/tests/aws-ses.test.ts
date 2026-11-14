@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { MailType } from "@usenullish/nullish-schema/mail";
 
 const send = mock(async () => ({}));
@@ -72,10 +73,11 @@ describe("AwsSesMailProvider", () => {
     const args = {
       type: MailType.VERIFY_EMAIL,
       to: "user@nullish.example.com",
+      lang: DefaultTemplateLanguage.EN,
       url: "https://nullish.example.com/auth/verify?token=abc",
     } as const;
 
-    test("sends from the name and the address of the sender", async () => {
+    test("sends the rendered email from the name and the address of the sender", async () => {
       await AwsSesMailProvider.create().send(args);
 
       expect(SendEmailCommand).toHaveBeenCalledWith({
@@ -83,8 +85,11 @@ describe("AwsSesMailProvider", () => {
         Destination: { ToAddresses: ["user@nullish.example.com"] },
         Content: {
           Simple: {
-            Subject: { Data: MailType.VERIFY_EMAIL },
-            Body: { Text: { Data: args.url }, Html: { Data: args.url } },
+            Subject: { Data: "Verify your email address" },
+            Body: {
+              Text: { Data: expect.stringContaining(args.url) },
+              Html: { Data: expect.stringContaining(args.url) },
+            },
           },
         },
       });
