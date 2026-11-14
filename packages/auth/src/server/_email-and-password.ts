@@ -36,7 +36,7 @@ export const buildEmailAndPasswordConfig = ({
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: true,
-      sendResetPassword: async ({ user: { email }, url }) => {
+      sendResetPassword: async ({ user: { email }, url }, request) => {
         const linkResult = buildApiPrefixedUrl({ url });
 
         if (linkResult.status === "error") {
@@ -44,13 +44,13 @@ export const buildEmailAndPasswordConfig = ({
           return;
         }
 
-        mailer.send({ type: MailType.RESET_PASSWORD, email, url: linkResult.result });
+        mailer.send({ type: MailType.RESET_PASSWORD, email, url: linkResult.result, request });
       },
     },
     emailVerification: {
       autoSignInAfterVerification: true,
       sendOnSignIn: true,
-      sendVerificationEmail: async ({ user: { email }, url }) => {
+      sendVerificationEmail: async ({ user: { email }, url }, request) => {
         const linkResult = buildApiPrefixedUrl({ url });
 
         if (linkResult.status === "error") {
@@ -58,7 +58,7 @@ export const buildEmailAndPasswordConfig = ({
           return;
         }
 
-        mailer.send({ type: MailType.VERIFY_EMAIL, email, url: linkResult.result });
+        mailer.send({ type: MailType.VERIFY_EMAIL, email, url: linkResult.result, request });
       },
     },
   };

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
-import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
+import { type Mail, MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { MAIL_RATE_LIMITS } from "../../src/_constants";
 import { AuthMailer } from "../../src/server/_mail/mailer";
 
@@ -8,7 +9,8 @@ describe("AuthMailer", () => {
     type: MailType.VERIFY_EMAIL,
     email: "test@test.dev",
     url: "https://nullish.example.com/auth/verify-email?token=abc",
-  };
+    request: undefined,
+  } as const;
 
   let consoleError: ReturnType<typeof spyOn>;
   let consoleWarn: ReturnType<typeof spyOn>;
@@ -31,7 +33,39 @@ describe("AuthMailer", () => {
     expect(send).toHaveBeenCalledWith({
       type: MailType.VERIFY_EMAIL,
       to: "test@test.dev",
+      lang: DefaultTemplateLanguage.EN,
       url: "https://nullish.example.com/auth/verify-email?token=abc",
+    });
+  });
+
+  describe("language", () => {
+    const sentLang = (request: Request | undefined) => {
+      const send = mock(async (_args: Mail["Send"]["Args"]) => {});
+
+      AuthMailer.create({ mail: { send } }).send({ ...args, request });
+
+      return send.mock.calls[0]?.[0].lang;
+    };
+
+    const request = (acceptLanguage: string) =>
+      new Request("https://nullish.example.com", {
+        headers: { "Accept-Language": acceptLanguage },
+      });
+
+    test.each([
+      ["fr-CH,fr;q=0.9,en;q=0.8", DefaultTemplateLanguage.FR],
+      ["de", DefaultTemplateLanguage.DE],
+      ["es-ES,it;q=0.9", DefaultTemplateLanguage.IT],
+    ] as const)("sends in the preferred language of %p", (acceptLanguage, lang) => {
+      expect(sentLang(request(acceptLanguage))).toBe(lang);
+    });
+
+    test("sends in English when no language of the request is supported", () => {
+      expect(sentLang(request("es-ES,ja"))).toBe(DefaultTemplateLanguage.EN);
+    });
+
+    test("sends in English without request", () => {
+      expect(sentLang(undefined)).toBe(DefaultTemplateLanguage.EN);
     });
   });
 
