@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { DbSchema } from "@usenullish/nullish-schema/db";
-import { DbOrganizationMembers } from "../../../src/core/composites/organization-members";
+import { DbOrganizationMembers } from "../../../src/core/_helpers/organization-members";
 import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
 import {
