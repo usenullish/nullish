@@ -3,7 +3,11 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
-import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  DefaultTemplateLanguage,
+  type PostgresDbInstance,
+} from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
 import { CreateInvitationService } from "@usenullish/nullish-engine/core";
 import type { ApiEnv } from "../../../src/api/types/api";
@@ -68,9 +72,8 @@ describe("preview invitation", () => {
       db,
       userId: admin.id,
       organizationId,
-      values: { email, role: "reviewer" },
       mail: null,
-    }).create();
+    }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
 
     if (result.status === "error") {
       throw result.err;

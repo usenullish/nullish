@@ -1,4 +1,5 @@
 import { describe, expect, mock, spyOn, test } from "bun:test";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { MailType } from "@usenullish/nullish-schema/mail";
 import { MAIL_RATE_LIMITS } from "../../src/_constants";
 import { buildEmailAndPasswordConfig } from "../../src/server/_email-and-password";
@@ -78,6 +79,7 @@ describe("buildEmailAndPasswordConfig", () => {
       expect(send).toHaveBeenCalledWith({
         type: MailType.RESET_PASSWORD,
         to: "test@test.dev",
+        lang: DefaultTemplateLanguage.EN,
         url: publicUrl,
       });
     });
@@ -90,6 +92,7 @@ describe("buildEmailAndPasswordConfig", () => {
       expect(send).toHaveBeenCalledWith({
         type: MailType.VERIFY_EMAIL,
         to: "test@test.dev",
+        lang: DefaultTemplateLanguage.EN,
         url: publicUrl,
       });
     });

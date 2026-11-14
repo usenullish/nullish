@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { envDbUrl } from "@usenullish/nullish-env";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { PreviewInvitationService } from "../../../../src/core/services/invitations/invitation.preview";
 import { CreateInvitationService } from "../../../../src/core/services/invitations/invitation.create";
 import {
@@ -28,9 +29,8 @@ const invite = async ({
     db,
     userId: TEST_USER_ID,
     organizationId,
-    values: { email, role: "reviewer" },
     mail: null,
-  }).create();
+  }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
 
   if (result.status === "error") {
     throw result.err;
