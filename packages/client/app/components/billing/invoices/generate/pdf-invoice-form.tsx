@@ -1,7 +1,6 @@
 import { useId, useState } from "react";
 import { type Nullable } from "@usenullish/nullish-common";
 import type { Api } from "@usenullish/nullish-schema/server";
-import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { Button } from "~/ui/components/button";
 import { Field, FieldGroup, FieldLabel } from "~/ui/components/field";
 import {
@@ -13,7 +12,7 @@ import {
 } from "~/ui/components/select";
 import { useBillingSettings } from "~/context/contexts/billing-settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
-import { useFormatLanguage } from "~/kit/format/language.hooks";
+import { useDefaultTemplateLanguages, useFormatLanguage } from "~/kit/format/language.hooks";
 import { DEFAULT_TEMPLATE } from "~/context/constants/templates.constants";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
 
@@ -35,6 +34,7 @@ export const PdfInvoiceForm = ({
   const { i18n } = useI18n();
   const billingSettings = useBillingSettings();
   const formatLanguage = useFormatLanguage();
+  const defaultLanguages = useDefaultTemplateLanguages();
   const templateId = useId();
   const contentId = useId();
   const bankRelationId = useId();
@@ -59,10 +59,7 @@ export const PdfInvoiceForm = ({
   const templateContents = contents.filter((content) => content.templateId === selectedTemplateId);
 
   const contentItems = isDefaultTemplate
-    ? Object.values(DefaultTemplateLanguage).map((defaultLanguage) => ({
-        value: defaultLanguage,
-        label: formatLanguage(defaultLanguage),
-      }))
+    ? defaultLanguages
     : templateContents.map((content) => ({
         value: content.id,
         label: formatLanguage(content.language),

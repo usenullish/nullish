@@ -36,6 +36,7 @@ const submitInvitation = async ({
   const invitation = ApiSchema.InvitationsCreate.CreateInvitationRequestSchema.parse({
     email: formData.get("email"),
     role: formData.get("role"),
+    language: formData.get("language") ?? undefined,
   });
 
   return await InvitationsService.create().submit({ organizationId, invitation });
