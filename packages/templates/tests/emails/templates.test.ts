@@ -44,9 +44,10 @@ describe("EMAILS_TEMPLATES", () => {
       expect(Object.keys(EMAILS_TEMPLATES[type]).sort()).toEqual([...LANGUAGES].sort());
     });
 
-    test.each(LANGUAGES)("has an HTML and a text version in %s", (language) => {
-      const { html, text } = EMAILS_TEMPLATES[type][language];
+    test.each(LANGUAGES)("has a subject, an HTML and a text version in %s", (language) => {
+      const { subject, html, text } = EMAILS_TEMPLATES[type][language];
 
+      expect(subject.trim().length).toBeGreaterThan(0);
       expect(html).toContain(`lang="${language}"`);
       expect(text.length).toBeGreaterThan(0);
     });
@@ -92,6 +93,23 @@ describe("EMAILS_TEMPLATES", () => {
 
       expect(renderedHtml).toContain("Acme &amp; Co");
       expect(renderedText).toContain("Acme & Co");
+    });
+
+    test("renders the subject of the invitation with the name of the organization", async () => {
+      const { subject } = EMAILS_TEMPLATES[MailType.INVITATION][language];
+
+      await expect(
+        renderTextTemplate({ template: subject, data: invitationData }),
+      ).resolves.toContain("Acme & Co");
+    });
+
+    test.each([
+      [MailType.VERIFY_EMAIL, verifyEmailData],
+      [MailType.RESET_PASSWORD, resetPasswordData],
+    ] as const)("renders the subject of %s", async (type, data) => {
+      const { subject } = EMAILS_TEMPLATES[type][language];
+
+      await expect(renderTextTemplate({ template: subject, data })).resolves.toBe(subject);
     });
   });
 });
