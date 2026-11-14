@@ -15,15 +15,31 @@ import {
 } from "../../_test-utils";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
+const users = DbSchema.Auth.Auth.users;
+
+const TEST_OUTSIDER_ID = "user-22222222-2222-4222-8222-222222222222";
 
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const asUser = <T>({ userId, fn }: { userId: string; fn: (tx: Tx) => Promise<T> }) =>
+const get = ({
+  userId,
+  organizationId,
+  memberId,
+}: {
+  userId: string;
+  organizationId: string;
+  memberId: string;
+}) =>
   db.transaction(async (tx) => {
     await tx.execute(sql`SET LOCAL ROLE authenticated_user`);
     await tx.execute(sql`SELECT auth.set_current_user_id(${userId})`);
-    return await fn(tx as unknown as Tx);
+
+    return await getOrganizationMember({
+      tx: tx as unknown as Tx,
+      organizationId,
+      userId: memberId,
+    });
   });
 
 describe("core/_helpers/organization-members", () => {
@@ -34,8 +50,16 @@ describe("core/_helpers/organization-members", () => {
     await resetDb(db);
     await seedUsers(db);
 
+    await db.insert(users).values({
+      id: TEST_OUTSIDER_ID,
+      name: TEST_OUTSIDER_ID,
+      email: `${TEST_OUTSIDER_ID}@test.dev`,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
     organizationId = await createOrganization(db, TEST_USER_ID);
-    otherOrganizationId = await createOrganization(db, TEST_OTHER_USER_ID);
+    otherOrganizationId = await createOrganization(db, TEST_OUTSIDER_ID);
 
     await db
       .insert(memberships)
@@ -49,62 +73,52 @@ describe("core/_helpers/organization-members", () => {
 
   describe("getOrganizationMember", () => {
     test("returns a member of the organization with their name and email to its admin", async () => {
-      const member = await asUser({
+      const member = await get({
         userId: TEST_USER_ID,
-        fn: (tx) => getOrganizationMember({ tx, organizationId, userId: TEST_OTHER_USER_ID }),
+        organizationId,
+        memberId: TEST_OTHER_USER_ID,
       });
 
-      expect(member.userId).toBe(TEST_OTHER_USER_ID);
-      expect(member.role).toBe("accountant");
-      expect(member.name).toBe(TEST_OTHER_USER_ID);
-      expect(member.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
+      expect(member?.userId).toBe(TEST_OTHER_USER_ID);
+      expect(member?.role).toBe("accountant");
+      expect(member?.name).toBe(TEST_OTHER_USER_ID);
+      expect(member?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
     });
 
     test("returns the admin to themselves", async () => {
-      const member = await asUser({
+      const member = await get({ userId: TEST_USER_ID, organizationId, memberId: TEST_USER_ID });
+
+      expect(member?.role).toBe("admin");
+    });
+
+    test("returns no member for a user who is not a member", async () => {
+      const member = await get({
         userId: TEST_USER_ID,
-        fn: (tx) => getOrganizationMember({ tx, organizationId, userId: TEST_USER_ID }),
+        organizationId,
+        memberId: TEST_OUTSIDER_ID,
       });
 
-      expect(member.role).toBe("admin");
-      expect(member.email).toBe(`${TEST_USER_ID}@test.dev`);
+      expect(member).toBeUndefined();
     });
 
-    test("rejects for a member who is not an admin", async () => {
-      await expect(
-        asUser({
-          userId: TEST_OTHER_USER_ID,
-          fn: (tx) => getOrganizationMember({ tx, organizationId, userId: TEST_OTHER_USER_ID }),
-        }),
-      ).rejects.toThrow();
+    test("returns no member to a member who is not an admin", async () => {
+      const member = await get({
+        userId: TEST_OTHER_USER_ID,
+        organizationId,
+        memberId: TEST_USER_ID,
+      });
+
+      expect(member).toBeUndefined();
     });
 
-    test("rejects for a user who is not a member of the organization", async () => {
-      await expect(
-        asUser({
-          userId: TEST_USER_ID,
-          fn: (tx) =>
-            getOrganizationMember({
-              tx,
-              organizationId: otherOrganizationId,
-              userId: TEST_OTHER_USER_ID,
-            }),
-        }),
-      ).rejects.toThrow();
-    });
+    test("returns no member of an organization the user does not own", async () => {
+      const member = await get({
+        userId: TEST_USER_ID,
+        organizationId: otherOrganizationId,
+        memberId: TEST_OUTSIDER_ID,
+      });
 
-    test("rejects for an organization the user does not administer", async () => {
-      await expect(
-        asUser({
-          userId: TEST_USER_ID,
-          fn: (tx) =>
-            getOrganizationMember({
-              tx,
-              organizationId: otherOrganizationId,
-              userId: TEST_USER_ID,
-            }),
-        }),
-      ).rejects.toThrow();
+      expect(member).toBeUndefined();
     });
   });
 });
