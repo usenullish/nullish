@@ -16,6 +16,7 @@ export const NotificationsIndicator = () => {
 
   const [latest] = notifications;
 
+  const [mountedId] = useState<Option<Notification["id"]>>(latest?.id);
   const [flashedId, setFlashedId] = useState<Option<Notification["id"]>>(undefined);
 
   useEffect(() => {
@@ -23,13 +24,7 @@ export const NotificationsIndicator = () => {
       return;
     }
 
-    const remaining = FLASH_DURATION_MS - (Date.now() - latest.date.getTime());
-
-    if (remaining <= 0) {
-      return;
-    }
-
-    const timeout = setTimeout(() => setFlashedId(latest.id), remaining);
+    const timeout = setTimeout(() => setFlashedId(latest.id), FLASH_DURATION_MS);
 
     return () => clearTimeout(timeout);
   }, [latest]);
@@ -37,8 +32,8 @@ export const NotificationsIndicator = () => {
   const flashing =
     nonNullish(latest) &&
     latest.level !== NotificationLevel.ERROR &&
-    latest.id !== flashedId &&
-    Date.now() - latest.date.getTime() < FLASH_DURATION_MS;
+    latest.id !== mountedId &&
+    latest.id !== flashedId;
 
   const unreadErrors = notifications.filter(
     ({ level, read }) => level === NotificationLevel.ERROR && !read,
