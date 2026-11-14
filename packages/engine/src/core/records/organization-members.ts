@@ -1,6 +1,6 @@
-import { and, eq, getColumns } from "drizzle-orm";
+import { eq, getColumns } from "drizzle-orm";
 import { DbUserContext, selectMany } from "@usenullish/nullish-db";
-import { type Option, type Result, tryCatch } from "@usenullish/nullish-common";
+import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbView, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type Views, ViewsSchema } from "@usenullish/nullish-schema/views";
@@ -29,25 +29,6 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
     args: DbCollectionStoreInitArgs<SelectOrganizations["id"]>,
   ): DbCollectionOrganizationMembers {
     return new this(args);
-  }
-
-  find({
-    userId,
-  }: {
-    userId: OrganizationMember["userId"];
-  }): Promise<Result<Option<OrganizationMember>>> {
-    return tryCatch(async () => {
-      return await this._withAuth(async (tx) => {
-        const [member] = await selectMany({
-          tx,
-          table: view,
-          schema: ViewsSchema.Core.OrganizationMembersView.SelectOrganizationMembersView,
-          where: and(eq(view.organizationId, this.#organizationId), eq(view.userId, userId)),
-        });
-
-        return member;
-      });
-    });
   }
 
   list({ pagination, sort }: DbListArgs<string>): Promise<Result<OrganizationMember[]>> {
