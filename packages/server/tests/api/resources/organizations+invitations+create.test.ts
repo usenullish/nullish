@@ -12,7 +12,11 @@ import {
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
-import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  DefaultTemplateLanguage,
+  type PostgresDbInstance,
+} from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
@@ -51,11 +55,13 @@ describe("create invitation", () => {
     cookie,
     email,
     role = "accountant",
+    language,
     mail = null,
   }: {
     cookie?: string;
     email: string;
     role?: "admin" | "accountant" | "reviewer";
+    language?: string;
     mail?: Nullable<SendMail>;
   }): Promise<Response> => {
     const app = new OpenAPIHono<ApiEnv>();
@@ -76,7 +82,7 @@ describe("create invitation", () => {
         "Content-Type": "application/json",
         ...(nonNullish(cookie) && { Cookie: cookie }),
       },
-      body: JSON.stringify({ email, role }),
+      body: JSON.stringify({ email, role, language }),
     });
   };
 
@@ -160,21 +166,45 @@ describe("create invitation", () => {
     const response = await invite({
       cookie: admin.cookie,
       email: "mailed@test.local",
+      language: DefaultTemplateLanguage.FR,
       mail: { send },
     });
 
     const { link, mail } = await parseCreated(response);
 
-    expect(send).toHaveBeenCalledWith({
-      type: MailType.INVITATION,
-      to: "mailed@test.local",
-      url: link,
-    });
+    expect(send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: MailType.INVITATION,
+        to: "mailed@test.local",
+        lang: DefaultTemplateLanguage.FR,
+        url: link,
+        invitedBy: expect.objectContaining({
+          name: "invitations-admin@test.local",
+          email: "invitations-admin@test.local",
+        }),
+      }),
+    );
     expect(mail).toBe(InvitationMailStatus.SENT);
   });
 
   test("answers 400 to an invalid email", async () => {
     const response = await invite({ cookie: admin.cookie, email: "not-an-email" });
+
+    expect(response.status).toBe(400);
+  });
+
+  test("sends the invitation email in English without language", async () => {
+    const send = mock(async () => {});
+
+    await invite({ cookie: admin.cookie, email: "english@test.local", mail: { send } });
+
+    expect(send).toHaveBeenCalledWith(
+      expect.objectContaining({ lang: DefaultTemplateLanguage.EN }),
+    );
+  });
+
+  test.each(["", "es", "EN"])("answers 400 to the language %p", async (language) => {
+    const response = await invite({ cookie: admin.cookie, email: "language@test.local", language });
 
     expect(response.status).toBe(400);
   });

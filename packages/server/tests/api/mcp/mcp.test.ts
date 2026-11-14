@@ -8,6 +8,7 @@ import { and, eq } from "drizzle-orm";
 import {
   AccountType,
   DbSchema,
+  DefaultTemplateLanguage,
   EXCHANGE_RATE_ONE,
   type PostgresDbInstance,
   SystemAccountPurpose,
@@ -435,9 +436,11 @@ describe("mcp", () => {
         db,
         userId: TEST_USER_ID,
         organizationId: orgId,
-        values: { email: "mcp-invited@test.dev", role: "reviewer" },
         mail: null,
-      }).create();
+      }).create({
+        invitation: { email: "mcp-invited@test.dev", role: "reviewer" },
+        language: DefaultTemplateLanguage.EN,
+      });
 
       if (created.status === "error") {
         throw created.err;

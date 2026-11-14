@@ -3,7 +3,7 @@ import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth, INVITATION_TOKEN_HEADER } from "@usenullish/nullish-auth/server";
 import { nonNullish } from "@usenullish/nullish-common";
 import { CreateInvitationService } from "@usenullish/nullish-engine/core";
-import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { DefaultTemplateLanguage, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { createOrganization, resetDb } from "../../../engine/tests/_test-utils";
 import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 
@@ -48,9 +48,8 @@ describe("sign-up", () => {
       db,
       userId,
       organizationId,
-      values: { email, role: "reviewer" },
       mail: null,
-    }).create();
+    }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
 
     if (result.status === "error") {
       throw result.err;

@@ -54,7 +54,7 @@ export class InvitationsCreateHandlers extends Resource {
       mail: Nullable<InvitationMailStatus>;
     }
   >({
-    insert: async ({ db, userId, context, values }) => {
+    insert: async ({ db, userId, context, values: { language, ...invitation } }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -71,9 +71,8 @@ export class InvitationsCreateHandlers extends Resource {
         db,
         userId,
         organizationId: parentId,
-        values,
         mail,
-      }).create();
+      }).create({ invitation, language });
     },
     resourceKey: "invitation",
     build: ({ result: { invitation, token, link, mail } }) => ({
