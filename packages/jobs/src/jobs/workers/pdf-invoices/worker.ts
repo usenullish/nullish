@@ -1,12 +1,11 @@
 import type { Jobs } from "@usenullish/nullish-schema/jobs";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { type InvoiceTemplateData } from "./_schema";
 import { assertNonNullish, isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import { InvoiceStatus } from "@usenullish/nullish-schema/db";
 import { withDbContext } from "../../../_db";
 import { buildQrBill } from "./_helpers/qr-bill";
 import { buildInvoiceTemplateData } from "./_data";
-import { DEFAULT_TEMPLATES } from "@usenullish/nullish-templates";
+import { PDF_INVOICES_TEMPLATES, type InvoiceTemplateData } from "@usenullish/nullish-templates";
 import {
   DbClients,
   DbCollectionLines,
@@ -249,7 +248,7 @@ export class PdfInvoicesWorker {
   }): Promise<Result<Template>> {
     if (this.#template.type === "default") {
       const { language } = this.#template;
-      return { status: "success", result: { html: DEFAULT_TEMPLATES[language], language } };
+      return { status: "success", result: { html: PDF_INVOICES_TEMPLATES[language], language } };
     }
 
     const { id } = this.#template;

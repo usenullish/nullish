@@ -154,7 +154,6 @@
         "@usenullish/nullish-storage": "workspace:*",
         "@usenullish/nullish-templates": "workspace:*",
         "bullmq": "^6.7.0",
-        "liquidjs": "^10.30.1",
         "pg": "^8.23.1",
         "puppeteer": "^25.16.0",
         "swissqrbill": "^4.4.4",
@@ -243,6 +242,8 @@
       "name": "@usenullish/nullish-templates",
       "dependencies": {
         "@usenullish/nullish-schema": "workspace:*",
+        "liquidjs": "^10.30.1",
+        "zod": "^4.6",
       },
     },
   },

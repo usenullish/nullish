@@ -7,9 +7,13 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "generate:schema": "bun run ./scripts/template-schema.ts && bunx oxfmt ./tmp/invoices/schema.json",
+    "test": "bun test",
     "check": "tsc"
   },
   "dependencies": {
-    "@usenullish/nullish-schema": "workspace:*"
+    "@usenullish/nullish-schema": "workspace:*",
+    "liquidjs": "^10.30.1",
+    "zod": "^4.6"
   }
 }

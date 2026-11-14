@@ -10,7 +10,7 @@ import {
 import type { Composites } from "@usenullish/nullish-schema/composites";
 import { CurrencyType, QUANTITY_DECIMALS, RATE_DECIMALS } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { type InvoiceTemplateData, InvoiceTemplateDataSchema } from "./_schema";
+import { type InvoiceTemplateData, InvoiceTemplateDataSchema } from "@usenullish/nullish-templates";
 
 type Invoice = Records["Billing"]["Invoices"]["Select"];
 type Line = Records["Billing"]["Lines"]["Select"];
