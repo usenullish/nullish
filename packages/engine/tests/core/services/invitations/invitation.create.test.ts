@@ -2,9 +2,9 @@ import { afterAll, beforeAll, describe, expect, mock, spyOn, test } from "bun:te
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL, CryptoHasher } from "bun";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { envAppUrl, envDbUrl } from "@usenullish/nullish-env";
-import type { Nullable } from "@usenullish/nullish-common";
+import type { Nullable, Option } from "@usenullish/nullish-common";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
 import { INVITATION_ACCEPT_PATH, InvitationMailStatus } from "@usenullish/nullish-schema/server";
 import { CreateInvitationService } from "../../../../src/core/services/invitations/invitation.create";
@@ -26,20 +26,21 @@ const invite = ({
   userId = TEST_USER_ID,
   organizationId,
   email,
+  language = DefaultTemplateLanguage.FR,
   mail = null,
 }: {
   userId?: string;
   organizationId: string;
   email: string;
+  language?: Option<DefaultTemplateLanguage>;
   mail?: Nullable<SendMail>;
 }) =>
   CreateInvitationService.create({
     db,
     userId,
     organizationId,
-    values: { email, role: "accountant" },
     mail,
-  }).create();
+  }).create({ invitation: { email, role: "accountant" }, language });
 
 describe("CreateInvitationService", () => {
   let organizationId: string;
@@ -172,9 +173,31 @@ describe("CreateInvitationService", () => {
       expect(send).toHaveBeenCalledWith({
         type: MailType.INVITATION,
         to: "mailed@test.dev",
+        lang: DefaultTemplateLanguage.FR,
         url: result.result.link,
+        organization: expect.objectContaining({ name: `Org ${TEST_USER_ID}` }),
+        invitation: { expiresAt: result.result.invitation.expiresAt },
+        invitedBy: expect.objectContaining({
+          name: TEST_USER_ID,
+          email: `${TEST_USER_ID}@test.dev`,
+        }),
       });
       expect(result.result.mail).toBe(InvitationMailStatus.SENT);
+    });
+
+    test("sends the invitation email in English without language", async () => {
+      const send = mock(async () => {});
+
+      await CreateInvitationService.create({
+        db,
+        userId: TEST_USER_ID,
+        organizationId,
+        mail: { send },
+      }).create({ invitation: { email: "english@test.dev", role: "accountant" } });
+
+      expect(send).toHaveBeenCalledWith(
+        expect.objectContaining({ lang: DefaultTemplateLanguage.EN }),
+      );
     });
 
     test("returns no mail status without a mail provider", async () => {

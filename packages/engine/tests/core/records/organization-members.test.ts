@@ -76,6 +76,82 @@ describe("organization-members", () => {
     await client.close();
   });
 
+  describe("find", () => {
+    const find = ({
+      userId,
+      organizationId,
+      memberId,
+    }: {
+      userId: string;
+      organizationId: string;
+      memberId: string;
+    }) =>
+      DbCollectionOrganizationMembers.create({
+        db: db as unknown as DbStoreInitArgs["db"],
+        userId,
+        foreignKeyId: organizationId,
+      }).find({ userId: memberId });
+
+    test("returns a member of the organization to its admin", async () => {
+      const result = await find({
+        userId: TEST_USER_ID,
+        organizationId,
+        memberId: TEST_OTHER_USER_ID,
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result?.userId).toBe(TEST_OTHER_USER_ID);
+      expect(result.result?.role).toBe("accountant");
+      expect(result.result?.name).toBe(TEST_OTHER_USER_ID);
+      expect(result.result?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
+    });
+
+    test("returns the admin to themselves", async () => {
+      const result = await find({ userId: TEST_USER_ID, organizationId, memberId: TEST_USER_ID });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result?.role).toBe("admin");
+    });
+
+    test("returns no member for a user who is not a member", async () => {
+      const result = await find({
+        userId: TEST_USER_ID,
+        organizationId,
+        memberId: TEST_OUTSIDER_ID,
+      });
+
+      expect(result).toEqual({ status: "success", result: undefined });
+    });
+
+    test("returns no member to a member who is not an admin", async () => {
+      const result = await find({
+        userId: TEST_OTHER_USER_ID,
+        organizationId,
+        memberId: TEST_USER_ID,
+      });
+
+      expect(result).toEqual({ status: "success", result: undefined });
+    });
+
+    test("returns no member of an organization the user does not own", async () => {
+      const result = await find({
+        userId: TEST_USER_ID,
+        organizationId: otherOrganizationId,
+        memberId: TEST_OUTSIDER_ID,
+      });
+
+      expect(result).toEqual({ status: "success", result: undefined });
+    });
+  });
+
   describe("list", () => {
     test("returns the members of an organization to its admin", async () => {
       const result = await list({ userId: TEST_USER_ID, organizationId });
