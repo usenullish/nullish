@@ -24,29 +24,33 @@ import verifyEmailTextDe from "../../emails/verify-email/text/de.txt" with { typ
 import verifyEmailTextEn from "../../emails/verify-email/text/en.txt" with { type: "text" };
 import verifyEmailTextFr from "../../emails/verify-email/text/fr.txt" with { type: "text" };
 import verifyEmailTextIt from "../../emails/verify-email/text/it.txt" with { type: "text" };
+import invitationSubject from "../../emails/invitation/subject.json";
+import resetPasswordSubject from "../../emails/reset-password/subject.json";
+import verifyEmailSubject from "../../emails/verify-email/subject.json";
 
 interface EmailTemplate {
+  subject: string;
   html: string;
   text: string;
 }
 
 export const EMAILS_TEMPLATES = {
   [MailType.VERIFY_EMAIL]: {
-    de: { html: verifyEmailHtmlDe, text: verifyEmailTextDe },
-    en: { html: verifyEmailHtmlEn, text: verifyEmailTextEn },
-    fr: { html: verifyEmailHtmlFr, text: verifyEmailTextFr },
-    it: { html: verifyEmailHtmlIt, text: verifyEmailTextIt },
+    de: { subject: verifyEmailSubject.de, html: verifyEmailHtmlDe, text: verifyEmailTextDe },
+    en: { subject: verifyEmailSubject.en, html: verifyEmailHtmlEn, text: verifyEmailTextEn },
+    fr: { subject: verifyEmailSubject.fr, html: verifyEmailHtmlFr, text: verifyEmailTextFr },
+    it: { subject: verifyEmailSubject.it, html: verifyEmailHtmlIt, text: verifyEmailTextIt },
   },
   [MailType.RESET_PASSWORD]: {
-    de: { html: resetPasswordHtmlDe, text: resetPasswordTextDe },
-    en: { html: resetPasswordHtmlEn, text: resetPasswordTextEn },
-    fr: { html: resetPasswordHtmlFr, text: resetPasswordTextFr },
-    it: { html: resetPasswordHtmlIt, text: resetPasswordTextIt },
+    de: { subject: resetPasswordSubject.de, html: resetPasswordHtmlDe, text: resetPasswordTextDe },
+    en: { subject: resetPasswordSubject.en, html: resetPasswordHtmlEn, text: resetPasswordTextEn },
+    fr: { subject: resetPasswordSubject.fr, html: resetPasswordHtmlFr, text: resetPasswordTextFr },
+    it: { subject: resetPasswordSubject.it, html: resetPasswordHtmlIt, text: resetPasswordTextIt },
   },
   [MailType.INVITATION]: {
-    de: { html: invitationHtmlDe, text: invitationTextDe },
-    en: { html: invitationHtmlEn, text: invitationTextEn },
-    fr: { html: invitationHtmlFr, text: invitationTextFr },
-    it: { html: invitationHtmlIt, text: invitationTextIt },
+    de: { subject: invitationSubject.de, html: invitationHtmlDe, text: invitationTextDe },
+    en: { subject: invitationSubject.en, html: invitationHtmlEn, text: invitationTextEn },
+    fr: { subject: invitationSubject.fr, html: invitationHtmlFr, text: invitationTextFr },
+    it: { subject: invitationSubject.it, html: invitationHtmlIt, text: invitationTextIt },
   },
 } as unknown as Record<MailType, Record<DefaultTemplateLanguage, EmailTemplate>>;
