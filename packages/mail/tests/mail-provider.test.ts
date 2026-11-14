@@ -1,4 +1,7 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { type Mail as MailTypes, MailType } from "@usenullish/nullish-schema/mail";
@@ -10,7 +13,11 @@ mock.module("nodemailer", () => ({ createTransport: mock(() => ({ sendMail })) }
 const { SmtpMailProvider } = await import("../src/_smtp");
 
 describe("MailProvider", () => {
-  const KEYS = ["NULLISH_MAIL_FROM", "NULLISH_MAIL_SMTP_URL"] as const;
+  const KEYS = [
+    "NULLISH_MAIL_FROM",
+    "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_TEMPLATES_DIR",
+  ] as const;
 
   const saved = new Map<string, string | undefined>();
 
@@ -36,6 +43,7 @@ describe("MailProvider", () => {
   beforeEach(() => {
     for (const key of KEYS) {
       saved.set(key, process.env[key]);
+      delete process.env[key];
     }
 
     process.env.NULLISH_MAIL_FROM = "hello@nullish.example.com";
@@ -118,5 +126,103 @@ describe("MailProvider", () => {
     ).rejects.toThrow();
 
     expect(sendMail).not.toHaveBeenCalled();
+  });
+
+  describe("templates folder", () => {
+    const args = {
+      type: MailType.INVITATION,
+      to,
+      lang: DefaultTemplateLanguage.FR,
+      url: "https://nullish.example.com/invitations/accept#abc",
+      organization: { name: "Acme" },
+      invitation: { expiresAt: new Date("2026-03-31T10:00:00Z") },
+      invitedBy: { name: "Jane Doe", email: "jane@acme.test" },
+    } as const;
+
+    let dir: string;
+
+    beforeEach(async () => {
+      dir = await mkdtemp(join(tmpdir(), "nullish-mail-templates-"));
+
+      await mkdir(join(dir, MailType.INVITATION, "html"), { recursive: true });
+      await mkdir(join(dir, MailType.INVITATION, "text"), { recursive: true });
+
+      await writeFile(
+        join(dir, MailType.INVITATION, "subject.json"),
+        JSON.stringify({ fr: "Rejoins [[ nullish.organization.name ]]" }),
+      );
+      await writeFile(
+        join(dir, MailType.INVITATION, "html", "fr.html"),
+        "<p>[[ nullish.invitation.invitedBy.name ]] [[ nullish.invitation.url ]]</p>",
+      );
+      await writeFile(
+        join(dir, MailType.INVITATION, "text", "fr.txt"),
+        "[[ nullish.invitation.invitedBy.name ]] [[ nullish.invitation.url ]]",
+      );
+
+      process.env.NULLISH_MAIL_TEMPLATES_DIR = dir;
+    });
+
+    afterEach(async () => {
+      await rm(dir, { recursive: true, force: true });
+    });
+
+    test("uses the subject, the HTML and the text of the folder", async () => {
+      await SmtpMailProvider.create().send(args);
+
+      const { subject, html, text } = delivered();
+
+      expect(subject).toBe("Rejoins Acme");
+      expect(html).toBe(`<p>Jane Doe ${args.url}</p>`);
+      expect(text).toBe(`Jane Doe ${args.url}`);
+    });
+
+    test.each([
+      ["an empty HTML", "html/fr.html", ""],
+      ["an empty text", "text/fr.txt", "   "],
+      ["a subject.json that is not JSON", "subject.json", "{"],
+      ["an empty subject", "subject.json", JSON.stringify({ fr: "" })],
+      ["a subject that is not text", "subject.json", JSON.stringify({ fr: 42 })],
+    ])("rejects without delivering for %s", async (_name, file, content) => {
+      await writeFile(join(dir, MailType.INVITATION, file), content);
+
+      await expect(SmtpMailProvider.create().send(args)).rejects.toThrow();
+
+      expect(sendMail).not.toHaveBeenCalled();
+    });
+
+    test("uses the built-in template when a file of the folder is missing", async () => {
+      await rm(join(dir, MailType.INVITATION, "text", "fr.txt"));
+
+      await SmtpMailProvider.create().send(args);
+
+      const { subject, html } = delivered();
+
+      expect(subject).not.toBe("Rejoins Acme");
+      expect(html).toContain('lang="fr"');
+    });
+
+    test("uses the built-in template of a language the folder has no subject for", async () => {
+      await writeFile(join(dir, MailType.INVITATION, "html", "en.html"), "<p>custom</p>");
+      await writeFile(join(dir, MailType.INVITATION, "text", "en.txt"), "custom");
+
+      await SmtpMailProvider.create().send({ ...args, lang: DefaultTemplateLanguage.EN });
+
+      const { subject, html } = delivered();
+
+      expect(subject).toContain("Acme");
+      expect(html).toContain('lang="en"');
+    });
+
+    test("uses the built-in templates of an email the folder has none for", async () => {
+      await SmtpMailProvider.create().send({
+        type: MailType.VERIFY_EMAIL,
+        to,
+        lang: DefaultTemplateLanguage.FR,
+        url: "https://nullish.example.com/a",
+      });
+
+      expect(delivered().subject).toBe("Confirme ton adresse e-mail");
+    });
   });
 });

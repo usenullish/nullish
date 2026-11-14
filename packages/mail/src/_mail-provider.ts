@@ -1,4 +1,7 @@
-import { formatDate } from "@usenullish/nullish-common";
+import { join } from "node:path";
+import { formatDate, isNullish, type Option } from "@usenullish/nullish-common";
+import { envMailTemplatesDir } from "@usenullish/nullish-env";
+import type { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import {
   MailSchema,
   MailType,
@@ -7,6 +10,8 @@ import {
 } from "@usenullish/nullish-schema/mail";
 import {
   EMAILS_TEMPLATES,
+  EmailSubjectsSchema,
+  EmailTemplateSchema,
   type InvitationTemplateData,
   type ResetPasswordTemplateData,
   type VerifyEmailTemplateData,
@@ -25,7 +30,7 @@ export abstract class MailProvider implements SendMail {
       subject: templateSubject,
       html: templateHtml,
       text: templateText,
-    } = EMAILS_TEMPLATES[type][lang];
+    } = (await this.#customTemplate({ type, lang })) ?? EMAILS_TEMPLATES[type][lang];
 
     const data = this.#templateData(parsedArgs);
 
@@ -36,6 +41,41 @@ export abstract class MailProvider implements SendMail {
     ]);
 
     await this.deliver({ to, subject, html, text });
+  }
+
+  async #customTemplate({
+    type,
+    lang,
+  }: Pick<MailTypes["Send"]["Args"], "type" | "lang">): Promise<
+    Option<(typeof EMAILS_TEMPLATES)[MailType][DefaultTemplateLanguage]>
+  > {
+    const dir = envMailTemplatesDir();
+
+    if (isNullish(dir)) {
+      return undefined;
+    }
+
+    const folder = join(dir, type);
+
+    const subjectFile = Bun.file(join(folder, "subject.json"));
+    const htmlFile = Bun.file(join(folder, "html", `${lang}.html`));
+    const textFile = Bun.file(join(folder, "text", `${lang}.txt`));
+
+    const exist = await Promise.all([subjectFile.exists(), htmlFile.exists(), textFile.exists()]);
+
+    if (exist.includes(false)) {
+      return undefined;
+    }
+
+    const [subjects, html, text] = await Promise.all([
+      subjectFile.json(),
+      htmlFile.text(),
+      textFile.text(),
+    ]);
+
+    const subject = EmailSubjectsSchema.parse(subjects)[lang];
+
+    return isNullish(subject) ? undefined : EmailTemplateSchema.parse({ subject, html, text });
   }
 
   #templateData(

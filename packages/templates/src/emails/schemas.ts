@@ -1,8 +1,22 @@
 import * as z from "zod";
 import { RecordsSchema } from "@usenullish/nullish-schema/records";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 
 const { SelectOrganizationsSchema } = RecordsSchema.Core.OrganizationsSchema;
 const { SelectUsersSchema } = RecordsSchema.Auth.UsersSchema;
+
+const EmailContentSchema = z.string().trim().min(1);
+
+export const EmailSubjectsSchema = z.partialRecord(
+  z.enum(DefaultTemplateLanguage),
+  EmailContentSchema,
+);
+
+export const EmailTemplateSchema = z.strictObject({
+  subject: EmailContentSchema,
+  html: EmailContentSchema,
+  text: EmailContentSchema,
+});
 
 export const VerifyEmailTemplateDataSchema = z.strictObject({
   nullish: z.strictObject({
