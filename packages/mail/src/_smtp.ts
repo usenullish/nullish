@@ -1,15 +1,18 @@
 import { createTransport, type SendMailOptions, type Transporter } from "nodemailer";
 import { isNullish } from "@usenullish/nullish-common";
 import { envMailFrom, envMailFromName, envMailSmtpUrl } from "@usenullish/nullish-env";
-import { MailSchema, type Mail as MailTypes, type SendMail } from "@usenullish/nullish-schema/mail";
 import { MailFactory } from "./_factory";
+import type { Mail as MailTypes } from "@usenullish/nullish-schema/mail";
+import { MailProvider } from "./_mail-provider";
 
 @MailFactory
-export class SmtpMailProvider implements SendMail {
+export class SmtpMailProvider extends MailProvider {
   readonly #transporter: Transporter;
   readonly #from: SendMailOptions["from"];
 
-  private constructor() {
+  protected constructor() {
+    super();
+
     this.#transporter = createTransport(envMailSmtpUrl());
 
     const address = envMailFrom();
@@ -22,9 +25,13 @@ export class SmtpMailProvider implements SendMail {
     return new this();
   }
 
-  async send(args: MailTypes["Send"]["Args"]): Promise<void> {
-    const { type, to, url } = MailSchema.SendMailArgsSchema.parse(args);
-
-    await this.#transporter.sendMail({ from: this.#from, to, subject: type, text: url, html: url });
+  override async deliver({ to, subject, html, text }: MailTypes["Deliver"]["Args"]): Promise<void> {
+    await this.#transporter.sendMail({
+      from: this.#from,
+      to,
+      subject,
+      text,
+      html,
+    });
   }
 }
