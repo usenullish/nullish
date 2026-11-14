@@ -198,7 +198,7 @@ The model needs a large enough context to fit the assistant's instructions and t
 
 ## Send emails
 
-nullish sends emails to confirm the address of new accounts, to reset forgotten passwords and to deliver invitations. It needs an SMTP server. Without one, nullish works fine: new accounts don't confirm their address, passwords can only be changed once signed in, and you share the invitation links yourself.
+nullish sends emails to confirm the address of new accounts, to reset forgotten passwords and to deliver invitations. It needs an SMTP server or Amazon SES. Without one, nullish works fine: new accounts don't confirm their address, passwords can only be changed once signed in, and you share the invitation links yourself.
 
 Add the settings to your `.env`:
 
@@ -218,17 +218,53 @@ server:
     NULLISH_MAIL_SMTP_URL: ${NULLISH_MAIL_SMTP_URL}
 ```
 
-Then restart with `docker compose up -d`. Emails are enabled once the sender and the SMTP server are set.
+Then restart with `docker compose up -d`. Emails are enabled once the sender and an SMTP server or Amazon SES are set.
 
-| Variable                 | Required   | Description                                                           |
-| ------------------------ | ---------- | --------------------------------------------------------------------- |
-| `NULLISH_MAIL_FROM`      | for emails | Sender address, e.g. `hello@nullish.example.com`.                     |
-| `NULLISH_MAIL_FROM_NAME` | no         | Sender name, e.g. `nullish`.                                          |
-| `NULLISH_MAIL_SMTP_URL`  | for emails | SMTP server, `smtp://` or `smtps://`, with its credentials if needed. |
+To send with Amazon SES instead, leave `NULLISH_MAIL_SMTP_URL` out and set the three `NULLISH_MAIL_SES_*` variables. Setting both stops the server.
+
+| Variable                             | Required       | Description                                                           |
+| ------------------------------------ | -------------- | --------------------------------------------------------------------- |
+| `NULLISH_MAIL_FROM`                  | for emails     | Sender address, e.g. `hello@nullish.example.com`.                     |
+| `NULLISH_MAIL_FROM_NAME`             | no             | Sender name, e.g. `nullish`.                                          |
+| `NULLISH_MAIL_SMTP_URL`              | for SMTP       | SMTP server, `smtp://` or `smtps://`, with its credentials if needed. |
+| `NULLISH_MAIL_SES_REGION`            | for Amazon SES | Region of Amazon SES, e.g. `eu-central-2`.                            |
+| `NULLISH_MAIL_SES_ACCESS_KEY_ID`     | for Amazon SES | Access key ID of an IAM user allowed to send emails.                  |
+| `NULLISH_MAIL_SES_SECRET_ACCESS_KEY` | for Amazon SES | Its secret access key.                                                |
+| `NULLISH_MAIL_TEMPLATES_DIR`         | no             | Folder of your own email templates, see below.                        |
 
 {% aside %}
 Once emails are enabled, new accounts confirm their address before they can sign in.
 {% /aside %}
+
+### Languages
+
+Emails exist in English, French, German and Italian. The emails of an account go out in the language of the person's browser, in English if it's none of the four. An invitation goes out in the language chosen when inviting.
+
+### Your own templates
+
+Emails are built from templates. To use your own, mount a folder in the server and point `NULLISH_MAIL_TEMPLATES_DIR` to it:
+
+```yaml title="docker-compose.yml"
+server:
+  environment:
+    NULLISH_MAIL_TEMPLATES_DIR: /templates
+  volumes:
+    - ./templates:/templates:ro
+```
+
+The folder has one subfolder per email, each with its subject per language and its HTML and text version per language:
+
+```txt
+templates/
+  invitation/
+    subject.json
+    html/fr.html
+    text/fr.txt
+  reset-password/
+  verify-email/
+```
+
+The built-in templates, a good start, are in `packages/templates/emails` of the nullish repository. An email uses yours when its subject, HTML and text exist for its language and aren't empty. Otherwise it falls back to the built-in one and logs why. Changes apply to the next email, without a restart.
 
 ## Operate it
 

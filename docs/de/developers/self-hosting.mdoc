@@ -198,7 +198,7 @@ Tokens ein guter Startwert.
 
 ## E-Mails versenden
 
-nullish verschickt E-Mails, um die Adresse neuer Konten zu bestätigen, vergessene Passwörter zurückzusetzen und Einladungen zuzustellen. Dafür braucht es einen SMTP-Server. Ohne läuft nullish problemlos: Neue Konten bestätigen ihre Adresse nicht, Passwörter lassen sich nur angemeldet ändern, und Einladungslinks teilst du selbst.
+nullish verschickt E-Mails, um die Adresse neuer Konten zu bestätigen, vergessene Passwörter zurückzusetzen und Einladungen zuzustellen. Dafür braucht es einen SMTP-Server oder Amazon SES. Ohne läuft nullish problemlos: Neue Konten bestätigen ihre Adresse nicht, Passwörter lassen sich nur angemeldet ändern, und Einladungslinks teilst du selbst.
 
 Ergänze deine `.env` um diese Einstellungen:
 
@@ -218,17 +218,53 @@ server:
     NULLISH_MAIL_SMTP_URL: ${NULLISH_MAIL_SMTP_URL}
 ```
 
-Dann neu starten mit `docker compose up -d`. Sobald Absender und SMTP-Server gesetzt sind, verschickt nullish E-Mails.
+Dann neu starten mit `docker compose up -d`. Sobald Absender und SMTP-Server oder Amazon SES gesetzt sind, verschickt nullish E-Mails.
 
-| Variable                 | Pflicht     | Beschreibung                                                         |
-| ------------------------ | ----------- | -------------------------------------------------------------------- |
-| `NULLISH_MAIL_FROM`      | für E-Mails | Absenderadresse, z. B. `hello@nullish.example.com`.                  |
-| `NULLISH_MAIL_FROM_NAME` | nein        | Absendername, z. B. `nullish`.                                       |
-| `NULLISH_MAIL_SMTP_URL`  | für E-Mails | SMTP-Server, `smtp://` oder `smtps://`, bei Bedarf mit Zugangsdaten. |
+Für den Versand über Amazon SES lässt du `NULLISH_MAIL_SMTP_URL` weg und setzt die drei Variablen `NULLISH_MAIL_SES_*`. Setzt du beides, startet der Server nicht.
+
+| Variable                             | Pflicht        | Beschreibung                                                         |
+| ------------------------------------ | -------------- | -------------------------------------------------------------------- |
+| `NULLISH_MAIL_FROM`                  | für E-Mails    | Absenderadresse, z. B. `hello@nullish.example.com`.                  |
+| `NULLISH_MAIL_FROM_NAME`             | nein           | Absendername, z. B. `nullish`.                                       |
+| `NULLISH_MAIL_SMTP_URL`              | für SMTP       | SMTP-Server, `smtp://` oder `smtps://`, bei Bedarf mit Zugangsdaten. |
+| `NULLISH_MAIL_SES_REGION`            | für Amazon SES | Region von Amazon SES, z. B. `eu-central-2`.                         |
+| `NULLISH_MAIL_SES_ACCESS_KEY_ID`     | für Amazon SES | Zugriffsschlüssel-ID eines IAM-Benutzers, der E-Mails senden darf.   |
+| `NULLISH_MAIL_SES_SECRET_ACCESS_KEY` | für Amazon SES | Sein geheimer Zugriffsschlüssel.                                     |
+| `NULLISH_MAIL_TEMPLATES_DIR`         | nein           | Ordner mit deinen eigenen E-Mail-Vorlagen, siehe unten.              |
 
 {% aside %}
 Sobald E-Mails aktiv sind, bestätigen neue Konten ihre Adresse, bevor sie sich anmelden können.
 {% /aside %}
+
+### Sprachen
+
+Die E-Mails gibt es auf Englisch, Französisch, Deutsch und Italienisch. Die E-Mails eines Kontos gehen in der Sprache des Browsers der Person raus, auf Englisch, wenn es keine der vier ist. Eine Einladung geht in der Sprache raus, die beim Einladen gewählt wurde.
+
+### Deine eigenen Vorlagen
+
+Die E-Mails entstehen aus Vorlagen. Für deine eigenen bindest du einen Ordner in den Server ein und gibst ihn mit `NULLISH_MAIL_TEMPLATES_DIR` an:
+
+```yaml title="docker-compose.yml"
+server:
+  environment:
+    NULLISH_MAIL_TEMPLATES_DIR: /templates
+  volumes:
+    - ./templates:/templates:ro
+```
+
+Der Ordner hat einen Unterordner pro E-Mail, jeweils mit dem Betreff pro Sprache und der HTML- und Textversion pro Sprache:
+
+```txt
+templates/
+  invitation/
+    subject.json
+    html/fr.html
+    text/fr.txt
+  reset-password/
+  verify-email/
+```
+
+Die eingebauten Vorlagen, ein guter Startpunkt, liegen in `packages/templates/emails` im nullish-Repository. Eine E-Mail nimmt deine, wenn Betreff, HTML und Text für ihre Sprache vorhanden und nicht leer sind. Sonst nimmt sie die eingebaute und schreibt den Grund ins Log. Änderungen gelten ab der nächsten E-Mail, ohne Neustart.
 
 ## Betrieb
 
