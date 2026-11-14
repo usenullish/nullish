@@ -1,0 +1,11 @@
+RÉINITIALISE TON MOT DE PASSE
+
+On a reçu une demande de réinitialisation du mot de passe de ton compte nullish. Utilise le bouton ci-dessous pour en choisir un nouveau.
+
+Réinitialiser le mot de passe [[ nullish.passwordReset.url ]]
+
+----------------------------------------
+
+Si tu n'as pas fait cette demande, tu peux simplement ignorer cet e-mail. Ton mot de passe reste inchangé.
+
+nullish https://nullish.ch · Ta compta suisse, presque sans effort

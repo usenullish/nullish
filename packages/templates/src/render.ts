@@ -1,21 +1,32 @@
-import { Liquid } from "liquidjs";
+import { Liquid, type LiquidOptions } from "liquidjs";
 
-// TODO: duplicated in the templates app for preview mode
-const liquid = new Liquid({
+const OPTIONS: LiquidOptions = {
   outputDelimiterLeft: "[[",
   outputDelimiterRight: "]]",
   tagDelimiterLeft: "[%",
   tagDelimiterRight: "%]",
-  outputEscape: "escape",
   strictVariables: true,
   lenientIf: true,
   templates: {},
-});
+};
 
-export const renderTemplate = ({
+// TODO: duplicated in the templates app for preview mode
+const liquidHtml = new Liquid({ ...OPTIONS, outputEscape: "escape" });
+
+const liquidText = new Liquid(OPTIONS);
+
+export const renderHtmlTemplate = ({
   template,
   data,
 }: {
   template: string;
   data: object;
-}): Promise<string> => liquid.parseAndRender(template, data);
+}): Promise<string> => liquidHtml.parseAndRender(template, data);
+
+export const renderTextTemplate = ({
+  template,
+  data,
+}: {
+  template: string;
+  data: object;
+}): Promise<string> => liquidText.parseAndRender(template, data);

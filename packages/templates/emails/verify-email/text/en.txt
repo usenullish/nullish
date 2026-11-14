@@ -1,0 +1,11 @@
+VERIFY YOUR EMAIL ADDRESS
+
+Confirm that this email address belongs to you to start using nullish.
+
+Verify email [[ nullish.emailVerification.url ]]
+
+----------------------------------------
+
+If you did not create an account on nullish, you can safely ignore this email.
+
+nullish https://nullish.ch · Swiss accounting, almost effortless

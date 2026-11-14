@@ -1,0 +1,13 @@
+DU WURDEST EINGELADEN
+
+[[ nullish.invitation.invitedBy.name ]] ([[ nullish.invitation.invitedBy.email ]]) hat dich eingeladen, [[ nullish.organization.name ]] auf nullish beizutreten.
+
+Um sie anzunehmen, melde dich mit dieser E-Mail-Adresse an oder erstelle dein Konto damit.
+
+Einladung ansehen [[ nullish.invitation.url ]]
+
+----------------------------------------
+
+Diese Einladung läuft am [[ nullish.invitation.expiresOn ]] ab. Falls du sie nicht erwartet hast, kannst du diese E-Mail einfach ignorieren.
+
+nullish https://nullish.ch · Schweizer Buchhaltung, fast ohne Aufwand

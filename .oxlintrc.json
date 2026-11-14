@@ -23,7 +23,14 @@
     "import/extensions": [
       "error",
       "never",
-      { "astro": "always", "json": "always", "css": "always", "svg": "always", "html": "always" }
+      {
+        "astro": "always",
+        "json": "always",
+        "css": "always",
+        "svg": "always",
+        "html": "always",
+        "txt": "always"
+      }
     ],
     "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/aria-role": ["error", { "ignoreNonDOM": true }],
