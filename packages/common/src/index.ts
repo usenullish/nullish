@@ -10,6 +10,7 @@ export * from "./format/date";
 export * from "./format/decimal";
 export * from "./format/iban";
 export * from "./utils/json";
+export * from "./utils/language";
 export * from "./asserts/strings";
 export * from "./asserts/nullish";
 export * from "./asserts/arrays";
