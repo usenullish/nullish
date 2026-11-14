@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
 export const useFormatLanguage = (): ((code: string) => string) => {
@@ -10,4 +11,20 @@ export const useFormatLanguage = (): ((code: string) => string) => {
   );
 
   return useCallback((code) => names.of(code) ?? code, [names]);
+};
+
+export const useDefaultTemplateLanguages = (): {
+  value: DefaultTemplateLanguage;
+  label: string;
+}[] => {
+  const formatLanguage = useFormatLanguage();
+
+  return useMemo(
+    () =>
+      Object.values(DefaultTemplateLanguage).map((language) => ({
+        value: language,
+        label: formatLanguage(language),
+      })),
+    [formatLanguage],
+  );
 };

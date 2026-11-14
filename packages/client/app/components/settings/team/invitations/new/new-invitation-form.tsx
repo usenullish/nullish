@@ -12,6 +12,8 @@ import {
 } from "~/ui/components/select";
 import { EMAIL_PLACEHOLDER } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { useDefaultTemplateLanguages } from "~/kit/format/language.hooks";
+import { useSettings } from "~/context/contexts/settings.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
 import { testId } from "~/kit/tests/test.utils";
 import { testIds } from "~/kit/tests/test-ids.constants";
@@ -26,12 +28,14 @@ export const NewInvitationForm = ({
   pending: boolean;
 }) => {
   const { i18n } = useI18n();
+  const settings = useSettings();
+  const languages = useDefaultTemplateLanguages();
 
   const emailId = useId();
   const roleId = useId();
+  const languageId = useId();
 
   const roles = ROLES.map((role) => ({ value: role, label: i18n.team.role[role] }));
-
   return (
     <form onSubmit={buildFormSubmit({ onAction })} className="mx-auto w-full max-w-2xl py-10">
       <FieldGroup>
@@ -65,6 +69,24 @@ export const NewInvitationForm = ({
             </SelectContent>
           </Select>
         </Field>
+
+        {settings?.mail.enabled === true && (
+          <Field>
+            <FieldLabel htmlFor={languageId}>{i18n.core.label.language}</FieldLabel>
+            <Select items={languages} name="language" defaultValue={i18n.lang} required>
+              <SelectTrigger id={languageId} className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {languages.map(({ value, label }) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+        )}
 
         <Field>
           <Button type="submit" disabled={pending} {...testId(testIds.invitations.submit)}>
