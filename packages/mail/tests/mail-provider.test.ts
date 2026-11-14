@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -177,31 +177,18 @@ describe("MailProvider", () => {
       expect(text).toBe(`Jane Doe ${args.url}`);
     });
 
-    describe("invalid", () => {
-      let consoleError: ReturnType<typeof spyOn>;
+    test.each([
+      ["an empty HTML", "html/fr.html", ""],
+      ["an empty text", "text/fr.txt", "   "],
+      ["a subject.json that is not JSON", "subject.json", "{"],
+      ["an empty subject", "subject.json", JSON.stringify({ fr: "" })],
+      ["a subject that is not text", "subject.json", JSON.stringify({ fr: 42 })],
+    ])("rejects without delivering for %s", async (_name, file, content) => {
+      await writeFile(join(dir, MailType.INVITATION, file), content);
 
-      beforeEach(() => {
-        consoleError = spyOn(console, "error").mockImplementation(() => {});
-      });
+      await expect(SmtpMailProvider.create().send(args)).rejects.toThrow();
 
-      afterEach(() => {
-        consoleError.mockRestore();
-      });
-
-      test.each([
-        ["an empty HTML", "html/fr.html", ""],
-        ["an empty text", "text/fr.txt", "   "],
-        ["a subject.json that is not JSON", "subject.json", "{"],
-        ["an empty subject", "subject.json", JSON.stringify({ fr: "" })],
-        ["a subject that is not text", "subject.json", JSON.stringify({ fr: 42 })],
-      ])("uses the built-in template and logs for %s", async (_name, file, content) => {
-        await writeFile(join(dir, MailType.INVITATION, file), content);
-
-        await SmtpMailProvider.create().send(args);
-
-        expect(delivered().subject).not.toBe("Rejoins Acme");
-        expect(consoleError).toHaveBeenCalledTimes(1);
-      });
+      expect(sendMail).not.toHaveBeenCalled();
     });
 
     test("uses the built-in template when a file of the folder is missing", async () => {

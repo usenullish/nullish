@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { formatDate, isNullish, type Option, tryCatch } from "@usenullish/nullish-common";
+import { formatDate, isNullish, type Option } from "@usenullish/nullish-common";
 import { envMailTemplatesDir } from "@usenullish/nullish-env";
 import type { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
 import {
@@ -67,24 +67,15 @@ export abstract class MailProvider implements SendMail {
       return undefined;
     }
 
-    const result = await tryCatch(async () => {
-      const [subjects, html, text] = await Promise.all([
-        subjectFile.json(),
-        htmlFile.text(),
-        textFile.text(),
-      ]);
+    const [subjects, html, text] = await Promise.all([
+      subjectFile.json(),
+      htmlFile.text(),
+      textFile.text(),
+    ]);
 
-      const subject = EmailSubjectsSchema.parse(subjects)[lang];
+    const subject = EmailSubjectsSchema.parse(subjects)[lang];
 
-      return isNullish(subject) ? undefined : EmailTemplateSchema.parse({ subject, html, text });
-    });
-
-    if (result.status === "error") {
-      console.error(`The custom email templates of ${folder} are invalid.`, result.err);
-      return undefined;
-    }
-
-    return result.result;
+    return isNullish(subject) ? undefined : EmailTemplateSchema.parse({ subject, html, text });
   }
 
   #templateData(
