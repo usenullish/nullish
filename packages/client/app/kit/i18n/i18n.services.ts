@@ -1,8 +1,7 @@
 import { createCookie, type LoaderFunctionArgs } from "react-router";
 import { type Languages, LanguagesSchema } from "~/kit/i18n/lang";
 import { type I18nState, loadLanguage } from "~/kit/i18n/i18n.loaders";
-import { acceptedLang } from "~/kit/i18n/lang.utils";
-import { type Result, tryCatch } from "@usenullish/nullish-common";
+import { preferredLanguage, type Result, tryCatch } from "@usenullish/nullish-common";
 
 const languageCookie = createCookie("nullish-lang", {
   maxAge: 31_536_000, // a year
@@ -16,7 +15,7 @@ export const initI18n = async ({ request }: LoaderFunctionArgs): Promise<I18nSta
   const cookie = await languageCookie.parse(cookieHeader);
 
   const { data } = LanguagesSchema.safeParse(cookie);
-  const lang = data ?? acceptedLang({ request }) ?? "en";
+  const lang = data ?? preferredLanguage({ request, languages: LanguagesSchema }) ?? "en";
 
   return await loadLanguage({ lang });
 };
