@@ -4,8 +4,7 @@ import { X } from "lucide-react";
 import { nonNullish } from "@usenullish/nullish-common";
 import { Button } from "~/ui/components/button";
 import { Separator } from "~/ui/components/separator";
-import { ThemeToggle } from "~/components/core/theme-toggle";
-import { EnvironmentTag } from "~/components/core/environment-tag";
+import { HeaderActions } from "~/components/layout/header-actions";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
@@ -60,8 +59,7 @@ export const WizardLayout = ({
               })}
             </span>
           )}
-          <EnvironmentTag />
-          <ThemeToggle />
+          <HeaderActions />
         </div>
       </header>
 

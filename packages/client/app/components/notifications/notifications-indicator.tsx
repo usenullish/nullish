@@ -53,7 +53,11 @@ export const NotificationsIndicator = () => {
         {flashing && latest.level === NotificationLevel.SUCCESS ? (
           <DrawnCheck key={latest.id} />
         ) : (
-          <Bell className="animate-in duration-300 fade-in zoom-in-75" />
+          <Bell
+            className={
+              nonNullish(flashedId) ? "animate-in duration-300 fade-in zoom-in-75" : undefined
+            }
+          />
         )}
         {unreadErrors > 0 && unreadErrors}
       </Button>
