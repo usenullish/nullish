@@ -13,7 +13,11 @@ mock.module("nodemailer", () => ({ createTransport: mock(() => ({ sendMail })) }
 const { SmtpMailProvider } = await import("../src/_smtp");
 
 describe("MailProvider", () => {
-  const KEYS = ["NULLISH_MAIL_FROM", "NULLISH_MAIL_SMTP_URL", "NULLISH_MAIL_TEMPLATES_DIR"] as const;
+  const KEYS = [
+    "NULLISH_MAIL_FROM",
+    "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_TEMPLATES_DIR",
+  ] as const;
 
   const saved = new Map<string, string | undefined>();
 
