@@ -10,7 +10,7 @@ export const CreateInvitationRequestSchema =
       .enum(DefaultTemplateLanguage)
       .optional()
       .describe(
-        "The language of the invitation email sent to the invited person, English if omitted",
+        "The language of the invitation email sent to the invited person when emails are enabled, English if omitted",
       ),
   });
 export const CreateInvitationResponseSchema = z.strictObject({
