@@ -164,6 +164,8 @@ export class CreateInvitationService extends ServiceContext {
         userId: this.#userId,
       });
 
+      assertNonNullish(invitedBy);
+
       return { organization, invitedBy };
     });
   }
