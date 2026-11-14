@@ -3,7 +3,7 @@
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import * as z from "zod";
-import { InvoiceTemplateDataSchema } from "../src/jobs/workers/pdf-invoices/_schema";
+import { InvoiceTemplateDataSchema } from "../src/documents/schemas";
 import { mkdir } from "node:fs/promises";
 
 const PATH_TO_OUTPUT = join(process.cwd(), "tmp", "invoices", "schema.json");

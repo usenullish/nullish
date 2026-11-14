@@ -8,25 +8,13 @@ import {
   TriggeredJobKey,
 } from "@usenullish/nullish-schema/jobs";
 import { PdfGenerator } from "./workers/pdf-invoices/_helpers/pdf-generator";
-import { Liquid } from "liquidjs";
+import { renderTemplate } from "@usenullish/nullish-templates";
 import { join } from "node:path";
 import { PdfInvoicesWorker } from "./workers/pdf-invoices/worker";
 import { TriggeredJob } from "./_job.triggered";
 
 const PdfInvoiceJobPayloadSchema = JobsSchema.PdfInvoicesSchema.PdfInvoicePayloadSchema;
 const PdfInvoiceJobResultSchema = JobsSchema.PdfInvoicesSchema.PdfInvoiceResultSchema;
-
-// TODO: duplicated in the templates app for preview mode
-const liquid = new Liquid({
-  outputDelimiterLeft: "[[",
-  outputDelimiterRight: "]]",
-  tagDelimiterLeft: "[%",
-  tagDelimiterRight: "%]",
-  outputEscape: "escape",
-  strictVariables: true,
-  lenientIf: true,
-  templates: {},
-});
 
 @JobFactory
 export class PdfInvoiceJob extends TriggeredJob<
@@ -55,7 +43,7 @@ export class PdfInvoiceJob extends TriggeredJob<
       payload: { invoiceId, ...rest },
     }).prepare();
 
-    const invoiceHtml = await liquid.parseAndRender(html, data);
+    const invoiceHtml = await renderTemplate({ template: html, data });
 
     const documentId = crypto.randomUUID();
 
