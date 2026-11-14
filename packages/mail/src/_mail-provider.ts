@@ -21,7 +21,11 @@ export abstract class MailProvider implements SendMail {
     const parsedArgs = MailSchema.SendMailArgsSchema.parse(args);
     const { type, to, lang } = parsedArgs;
 
-    const {subject: templateSubject, html: templateHtml, text: templateText} = EMAILS_TEMPLATES[type][lang];
+    const {
+      subject: templateSubject,
+      html: templateHtml,
+      text: templateText,
+    } = EMAILS_TEMPLATES[type][lang];
 
     const data = this.#templateData(parsedArgs);
 

@@ -90,7 +90,9 @@ describe("SendMailArgsSchema", () => {
   test("rejects a missing language", () => {
     const { lang: _, ...args } = valid;
 
-    expect(SendMailArgsSchema.safeParse({ ...args, type: MailType.VERIFY_EMAIL }).success).toBeFalse();
+    expect(
+      SendMailArgsSchema.safeParse({ ...args, type: MailType.VERIFY_EMAIL }).success,
+    ).toBeFalse();
   });
 
   test("rejects unknown fields", () => {
@@ -101,16 +103,17 @@ describe("SendMailArgsSchema", () => {
   });
 
   describe("invitation", () => {
-    test.each(["organization", "invitation", "invitedBy"] as const)("rejects a missing %s", (key) => {
-      const { [key]: _, ...args } = invitation;
+    test.each(["organization", "invitation", "invitedBy"] as const)(
+      "rejects a missing %s",
+      (key) => {
+        const { [key]: _, ...args } = invitation;
 
-      expect(SendMailArgsSchema.safeParse(args).success).toBeFalse();
-    });
+        expect(SendMailArgsSchema.safeParse(args).success).toBeFalse();
+      },
+    );
 
     test("rejects an invitation without expiry", () => {
-      expect(
-        SendMailArgsSchema.safeParse({ ...invitation, invitation: {} }).success,
-      ).toBeFalse();
+      expect(SendMailArgsSchema.safeParse({ ...invitation, invitation: {} }).success).toBeFalse();
     });
 
     test("rejects an inviter without email", () => {
