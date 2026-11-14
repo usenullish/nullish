@@ -23,13 +23,22 @@ export const NotificationsIndicator = () => {
       return;
     }
 
-    const timeout = setTimeout(() => setFlashedId(latest.id), FLASH_DURATION_MS);
+    const remaining = FLASH_DURATION_MS - (Date.now() - latest.date.getTime());
+
+    if (remaining <= 0) {
+      return;
+    }
+
+    const timeout = setTimeout(() => setFlashedId(latest.id), remaining);
 
     return () => clearTimeout(timeout);
   }, [latest]);
 
   const flashing =
-    nonNullish(latest) && latest.level !== NotificationLevel.ERROR && latest.id !== flashedId;
+    nonNullish(latest) &&
+    latest.level !== NotificationLevel.ERROR &&
+    latest.id !== flashedId &&
+    Date.now() - latest.date.getTime() < FLASH_DURATION_MS;
 
   const unreadErrors = notifications.filter(
     ({ level, read }) => level === NotificationLevel.ERROR && !read,
@@ -53,7 +62,11 @@ export const NotificationsIndicator = () => {
         {flashing && latest.level === NotificationLevel.SUCCESS ? (
           <DrawnCheck key={latest.id} />
         ) : (
-          <Bell className="animate-in duration-300 fade-in zoom-in-75" />
+          <Bell
+            className={
+              nonNullish(flashedId) ? "animate-in duration-300 fade-in zoom-in-75" : undefined
+            }
+          />
         )}
         {unreadErrors > 0 && unreadErrors}
       </Button>
