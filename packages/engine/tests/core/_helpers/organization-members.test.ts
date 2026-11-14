@@ -1,10 +1,11 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
+import type { Tx } from "@usenullish/nullish-db";
 import { DbSchema } from "@usenullish/nullish-schema/db";
-import { DbOrganizationMembers } from "../../../src/core/composites/organization-members";
-import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
+import { getOrganizationMember } from "../../../src/core/_helpers/organization-members";
 import {
   createOrganization,
   resetDb,
@@ -21,7 +22,7 @@ const TEST_OUTSIDER_ID = "user-22222222-2222-4222-8222-222222222222";
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const find = ({
+const get = ({
   userId,
   organizationId,
   memberId,
@@ -30,12 +31,18 @@ const find = ({
   organizationId: string;
   memberId: string;
 }) =>
-  DbOrganizationMembers.create({
-    db: db as unknown as DbStoreInitArgs["db"],
-    userId,
-  }).find({ organizationId, userId: memberId });
+  db.transaction(async (tx) => {
+    await tx.execute(sql`SET LOCAL ROLE authenticated_user`);
+    await tx.execute(sql`SELECT auth.set_current_user_id(${userId})`);
 
-describe("DbOrganizationMembers", () => {
+    return await getOrganizationMember({
+      tx: tx as unknown as Tx,
+      organizationId,
+      userId: memberId,
+    });
+  });
+
+describe("core/_helpers/organization-members", () => {
   let organizationId: string;
   let otherOrganizationId: string;
 
@@ -64,64 +71,54 @@ describe("DbOrganizationMembers", () => {
     await client.close();
   });
 
-  describe("find", () => {
-    test("returns a member of the organization to its admin", async () => {
-      const result = await find({
+  describe("getOrganizationMember", () => {
+    test("returns a member of the organization with their name and email to its admin", async () => {
+      const member = await get({
         userId: TEST_USER_ID,
         organizationId,
         memberId: TEST_OTHER_USER_ID,
       });
 
-      if (result.status === "error") {
-        expect(true).toBeFalse();
-        return;
-      }
-
-      expect(result.result?.userId).toBe(TEST_OTHER_USER_ID);
-      expect(result.result?.role).toBe("accountant");
-      expect(result.result?.name).toBe(TEST_OTHER_USER_ID);
-      expect(result.result?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
+      expect(member?.userId).toBe(TEST_OTHER_USER_ID);
+      expect(member?.role).toBe("accountant");
+      expect(member?.name).toBe(TEST_OTHER_USER_ID);
+      expect(member?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
     });
 
     test("returns the admin to themselves", async () => {
-      const result = await find({ userId: TEST_USER_ID, organizationId, memberId: TEST_USER_ID });
+      const member = await get({ userId: TEST_USER_ID, organizationId, memberId: TEST_USER_ID });
 
-      if (result.status === "error") {
-        expect(true).toBeFalse();
-        return;
-      }
-
-      expect(result.result?.role).toBe("admin");
+      expect(member?.role).toBe("admin");
     });
 
     test("returns no member for a user who is not a member", async () => {
-      const result = await find({
+      const member = await get({
         userId: TEST_USER_ID,
         organizationId,
         memberId: TEST_OUTSIDER_ID,
       });
 
-      expect(result).toEqual({ status: "success", result: undefined });
+      expect(member).toBeUndefined();
     });
 
     test("returns no member to a member who is not an admin", async () => {
-      const result = await find({
+      const member = await get({
         userId: TEST_OTHER_USER_ID,
         organizationId,
         memberId: TEST_USER_ID,
       });
 
-      expect(result).toEqual({ status: "success", result: undefined });
+      expect(member).toBeUndefined();
     });
 
     test("returns no member of an organization the user does not own", async () => {
-      const result = await find({
+      const member = await get({
         userId: TEST_USER_ID,
         organizationId: otherOrganizationId,
         memberId: TEST_OUTSIDER_ID,
       });
 
-      expect(result).toEqual({ status: "success", result: undefined });
+      expect(member).toBeUndefined();
     });
   });
 });
