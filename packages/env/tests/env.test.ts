@@ -21,6 +21,7 @@ import {
   envMailAwsSesSecretAccessKey,
   envMailSmtpEnabled,
   envMailSmtpUrl,
+  envMailTemplatesDir,
   envSignUp,
   LlmTokenLimitPeriod,
 } from "../src";
@@ -44,6 +45,7 @@ describe("env", () => {
     "NULLISH_MAIL_FROM",
     "NULLISH_MAIL_FROM_NAME",
     "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_TEMPLATES_DIR",
     "NULLISH_MAIL_SES_REGION",
     "NULLISH_MAIL_SES_ACCESS_KEY_ID",
     "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
@@ -476,6 +478,24 @@ describe("env", () => {
         expect(() => envMailFrom()).toThrow("must be a valid email address");
       },
     );
+  });
+
+  describe("envMailTemplatesDir", () => {
+    test("returns no folder when NULLISH_MAIL_TEMPLATES_DIR is unset", () => {
+      expect(envMailTemplatesDir()).toBeUndefined();
+    });
+
+    test("returns no folder when NULLISH_MAIL_TEMPLATES_DIR is empty", () => {
+      process.env.NULLISH_MAIL_TEMPLATES_DIR = "";
+
+      expect(envMailTemplatesDir()).toBeUndefined();
+    });
+
+    test("reads the variable", () => {
+      process.env.NULLISH_MAIL_TEMPLATES_DIR = "/templates";
+
+      expect(envMailTemplatesDir()).toBe("/templates");
+    });
   });
 
   describe("envMailFromName", () => {

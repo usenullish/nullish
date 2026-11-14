@@ -34,6 +34,11 @@ export const envMailFromName = (): Option<string> => {
   return isEmptyString(name) ? undefined : name;
 };
 
+export const envMailTemplatesDir = (): Option<string> => {
+  const dir = process.env.NULLISH_MAIL_TEMPLATES_DIR;
+  return isEmptyString(dir) ? undefined : dir;
+};
+
 export const envMailSmtpUrl = (): string =>
   MailSmtpUrlSchema.parse(process.env.NULLISH_MAIL_SMTP_URL);
 
