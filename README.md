@@ -44,7 +44,7 @@ bun install --frozen-lockfile
 Run the database:
 
 ```bash
-bun run db:run:dev
+bun run en:run:dev
 ```
 
 Run the API:
