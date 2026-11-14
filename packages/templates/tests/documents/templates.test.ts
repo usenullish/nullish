@@ -6,7 +6,7 @@ import {
 } from "@usenullish/nullish-schema/db";
 import { InvoiceTemplateDataSchema } from "../../src/documents/schemas";
 import { PDF_INVOICES_TEMPLATES } from "../../src/documents/templates";
-import { renderTemplate } from "../../src/render";
+import { renderHtmlTemplate } from "../../src/render";
 
 const data = InvoiceTemplateDataSchema.parse({
   nullish: {
@@ -111,7 +111,7 @@ describe("PDF_INVOICES_TEMPLATES", () => {
     });
 
     test("renders the invoice", async () => {
-      const html = await renderTemplate({ template, data });
+      const html = await renderHtmlTemplate({ template, data });
 
       expect(html).toContain("Acme Inc.");
       expect(html).toContain("Client LLC");
@@ -121,7 +121,7 @@ describe("PDF_INVOICES_TEMPLATES", () => {
     });
 
     test("renders a draft without optional data", async () => {
-      const html = await renderTemplate({ template, data: minimalData });
+      const html = await renderHtmlTemplate({ template, data: minimalData });
 
       expect(html).toContain("Acme Inc.");
       expect(html).not.toContain("data-qr-bill");

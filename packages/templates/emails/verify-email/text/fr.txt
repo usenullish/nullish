@@ -1,0 +1,11 @@
+CONFIRME TON ADRESSE E-MAIL
+
+Confirme que cette adresse e-mail t'appartient pour commencer avec nullish.
+
+Confirmer l'adresse e-mail [[ nullish.emailVerification.url ]]
+
+----------------------------------------
+
+Si tu n'as pas créé de compte sur nullish, tu peux simplement ignorer cet e-mail.
+
+nullish https://nullish.ch · Ta compta suisse, presque sans effort

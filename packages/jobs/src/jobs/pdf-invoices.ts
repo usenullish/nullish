@@ -8,7 +8,7 @@ import {
   TriggeredJobKey,
 } from "@usenullish/nullish-schema/jobs";
 import { PdfGenerator } from "./workers/pdf-invoices/_helpers/pdf-generator";
-import { renderTemplate } from "@usenullish/nullish-templates";
+import { renderHtmlTemplate } from "@usenullish/nullish-templates";
 import { join } from "node:path";
 import { PdfInvoicesWorker } from "./workers/pdf-invoices/worker";
 import { TriggeredJob } from "./_job.triggered";
@@ -43,7 +43,7 @@ export class PdfInvoiceJob extends TriggeredJob<
       payload: { invoiceId, ...rest },
     }).prepare();
 
-    const invoiceHtml = await renderTemplate({ template: html, data });
+    const invoiceHtml = await renderHtmlTemplate({ template: html, data });
 
     const documentId = crypto.randomUUID();
 

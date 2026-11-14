@@ -1,0 +1,11 @@
+SETZE DEIN PASSWORT ZURÜCK
+
+Wir haben eine Anfrage erhalten, das Passwort deines nullish-Kontos zurückzusetzen. Mit dem Button unten wählst du ein neues.
+
+Passwort zurücksetzen [[ nullish.passwordReset.url ]]
+
+----------------------------------------
+
+Falls du das nicht angefordert hast, kannst du diese E-Mail einfach ignorieren. Dein Passwort bleibt unverändert.
+
+nullish https://nullish.ch · Schweizer Buchhaltung, fast ohne Aufwand

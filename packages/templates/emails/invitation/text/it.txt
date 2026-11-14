@@ -1,0 +1,13 @@
+HAI RICEVUTO UN INVITO
+
+[[ nullish.invitation.invitedBy.name ]] ([[ nullish.invitation.invitedBy.email ]]) ti invita a unirti a [[ nullish.organization.name ]] su nullish.
+
+Per accettarlo, accedi o crea il tuo account con questo indirizzo e-mail.
+
+Vedi l'invito [[ nullish.invitation.url ]]
+
+----------------------------------------
+
+Questo invito scade il [[ nullish.invitation.expiresOn ]]. Se non te lo aspettavi, puoi semplicemente ignorare questa e-mail.
+
+nullish https://nullish.ch · Contabilità svizzera, quasi senza fatica

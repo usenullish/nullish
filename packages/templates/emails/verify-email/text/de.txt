@@ -1,0 +1,11 @@
+BESTÄTIGE DEINE E-MAIL-ADRESSE
+
+Bestätige, dass diese E-Mail-Adresse dir gehört, um mit nullish loszulegen.
+
+E-Mail-Adresse bestätigen [[ nullish.emailVerification.url ]]
+
+----------------------------------------
+
+Falls du kein Konto bei nullish erstellt hast, kannst du diese E-Mail einfach ignorieren.
+
+nullish https://nullish.ch · Schweizer Buchhaltung, fast ohne Aufwand

@@ -1,0 +1,13 @@
+YOU'VE BEEN INVITED
+
+[[ nullish.invitation.invitedBy.name ]] ([[ nullish.invitation.invitedBy.email ]]) invited you to join [[ nullish.organization.name ]] on nullish.
+
+To accept, sign in or create your account with this email address.
+
+View invitation [[ nullish.invitation.url ]]
+
+----------------------------------------
+
+This invitation expires on [[ nullish.invitation.expiresOn ]]. If you did not expect it, you can safely ignore this email.
+
+nullish https://nullish.ch · Swiss accounting, almost effortless

@@ -1,0 +1,11 @@
+REIMPOSTA LA TUA PASSWORD
+
+Abbiamo ricevuto una richiesta di reimpostare la password del tuo account nullish. Usa il pulsante qui sotto per sceglierne una nuova.
+
+Reimposta la password [[ nullish.passwordReset.url ]]
+
+----------------------------------------
+
+Se non hai fatto questa richiesta, puoi semplicemente ignorare questa e-mail. La tua password resta invariata.
+
+nullish https://nullish.ch · Contabilità svizzera, quasi senza fatica
