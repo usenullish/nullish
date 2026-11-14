@@ -1,5 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { DefaultTemplateLanguage, InvoiceLineType, InvoiceStatus } from "@usenullish/nullish-schema/db";
+import {
+  DefaultTemplateLanguage,
+  InvoiceLineType,
+  InvoiceStatus,
+} from "@usenullish/nullish-schema/db";
 import { InvoiceTemplateDataSchema } from "../../src/documents/schemas";
 import { PDF_INVOICES_TEMPLATES } from "../../src/documents/templates";
 import { renderTemplate } from "../../src/render";
