@@ -18,6 +18,7 @@ Dependencies flow top to bottom. A package never imports from a package below it
 | `common`          | `Result`/`Option` types, `tryCatch`, asserts (`nonNullish`, `notEmptyString`, …), shared codecs (`DateCodec`, `DateStringCodec`, `BigIntCodec`, `TimestampCodec`) |
 | `env`             | Environment helpers (DB url, data dir, migrations folder)                                                                                                         |
 | `schema`          | Drizzle tables, Zod record schemas, composites, API schemas and codecs, views, reports                                                                            |
+| `templates`       | Default templates rendered by the app: the invoice PDFs (`documents/`), later the emails                                                                          |
 | `db`              | DB instance, migrations, user/admin contexts (row-level security), statement helpers                                                                              |
 | `migration`       | Parsers of other accounting software's exports (Bexio) into `Foreign*` entities, and the steps importing them as the user                                         |
 | `engine`          | Stores, services (invoice lifecycle, jobs, storage), reports, `EngineError`                                                                                       |

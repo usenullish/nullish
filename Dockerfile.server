@@ -14,6 +14,7 @@ COPY package.json bun.lock /temp/dev/
 COPY packages/common/package.json /temp/dev/packages/common/
 COPY packages/schema/package.json /temp/dev/packages/schema/
 COPY packages/env/package.json /temp/dev/packages/env/
+COPY packages/templates/package.json /temp/dev/packages/templates/
 COPY packages/db/package.json /temp/dev/packages/db/
 COPY packages/engine/package.json /temp/dev/packages/engine/
 COPY packages/jobs/package.json /temp/dev/packages/jobs/
@@ -36,6 +37,7 @@ COPY package.json bun.lock /temp/prod/
 COPY packages/common/package.json /temp/prod/packages/common/
 COPY packages/schema/package.json /temp/prod/packages/schema/
 COPY packages/env/package.json /temp/prod/packages/env/
+COPY packages/templates/package.json /temp/prod/packages/templates/
 COPY packages/db/package.json /temp/prod/packages/db/
 COPY packages/engine/package.json /temp/prod/packages/engine/
 COPY packages/jobs/package.json /temp/prod/packages/jobs/
@@ -57,6 +59,7 @@ COPY --from=install /temp/dev/node_modules node_modules
 COPY --from=install /temp/dev/packages/common/node_modules ./packages/common/node_modules
 COPY --from=install /temp/dev/packages/schema/node_modules ./packages/schema/node_modules
 COPY --from=install /temp/dev/packages/env/node_modules ./packages/env/node_modules
+COPY --from=install /temp/dev/packages/templates/node_modules ./packages/templates/node_modules
 COPY --from=install /temp/dev/packages/db/node_modules ./packages/db/node_modules
 COPY --from=install /temp/dev/packages/engine/node_modules ./packages/engine/node_modules
 COPY --from=install /temp/dev/packages/jobs/node_modules ./packages/jobs/node_modules
@@ -76,6 +79,7 @@ COPY bunfig.toml bunfig.toml
 COPY packages/common ./packages/common
 COPY packages/schema ./packages/schema
 COPY packages/env ./packages/env
+COPY packages/templates ./packages/templates
 COPY packages/db ./packages/db
 COPY packages/engine ./packages/engine
 COPY packages/jobs ./packages/jobs
