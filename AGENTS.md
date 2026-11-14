@@ -75,7 +75,7 @@ Filters are per resource, typed end to end and combined with AND. They are the o
 
 ## Testing
 
-- Tests use `bun:test` and a dedicated test database: `bun run env:run:test`, then `bun test` **from the repository root** (the root `bunfig.toml` preloads the migrations).
+- Tests use `bun:test` and a dedicated test database: `bun run env:test`, then `bun test` **from the repository root** (the root `bunfig.toml` preloads the migrations).
 - Test files contain no comments. The intent lives in the `describe`/`test` names.
 - Test output must stay clean. Error-path tests mock `console.error` (`spyOn(console, "error").mockImplementation(() => {})`, restored in `afterEach`) and assert it was called.
 - Prefer fresh fixtures (e.g. a new organization) per block over depending on the rows other tests create or mutate.

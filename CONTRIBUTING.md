@@ -52,7 +52,7 @@ You'll find how to run the database, the API and the client in the [README](READ
 The tests run against a dedicated database. Start it with:
 
 ```bash
-bun run env:run:test
+bun run env:test
 ```
 
 Then run the tests from the root of the repository:
