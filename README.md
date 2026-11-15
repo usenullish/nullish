@@ -32,6 +32,12 @@ It is open source and self-hostable.
 - 🤖 MCP [[Docs](https://nullish.ch/en/developers/mcp/)]
 - 🏠 Self-hosting [[Docs](https://nullish.ch/en/developers/self-hosting/)]
 
+<br />
+
+![A screenshot of nullish](.github/assets/assistant-screenshot.png)
+
+<br />
+
 ## 🧪 Local Development
 
 > [!NOTE]
