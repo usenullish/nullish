@@ -20,6 +20,8 @@ import * as AccountingSchema from "./schemas/core/accounting";
 import * as BankSchema from "./schemas/core/bank";
 import * as BillingSchema from "./schemas/core/billing";
 import * as DocumentsSchema from "./schemas/core/documents";
+import * as SubscriptionsSchema from "./schemas/core/subscriptions";
+import * as OrganizationRulesSchema from "./schemas/instance/organization-rules";
 import * as UsersSchema from "./schemas/auth/users";
 import * as LlmUsagesSchema from "./schemas/metering/llm-usages";
 import * as LlmReservationsSchema from "./schemas/metering/llm-reservations";
@@ -44,6 +46,7 @@ const DbSchema = {
     Bank: BankSchema,
     Billing: BillingSchema,
     Documents: DocumentsSchema,
+    Subscriptions: SubscriptionsSchema,
   },
   Ledger: {
     Periods: PeriodsSchema,
@@ -77,6 +80,9 @@ const DbSchema = {
   Migration: {
     Migrations: MigrationsSchema,
     Datasets: MigrationDatasetsSchema,
+  },
+  Instance: {
+    OrganizationRules: OrganizationRulesSchema,
   },
 };
 

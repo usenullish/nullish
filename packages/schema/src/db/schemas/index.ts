@@ -10,6 +10,7 @@ export * from "./core/vat";
 export * from "./core/accounting";
 export * from "./core/bank";
 export * from "./core/billing";
+export * from "./core/subscriptions";
 export * from "./core/documents";
 
 export * from "./ledger/_schema";
@@ -50,5 +51,8 @@ export * from "./migration/datasets";
 
 export * from "./audit/_schema";
 export * from "./audit/logs";
+
+export * from "./instance/_schema";
+export * from "./instance/organization-rules";
 
 export { currencyValue } from "./_currency";
