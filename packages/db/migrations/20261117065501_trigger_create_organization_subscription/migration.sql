@@ -5,10 +5,14 @@
 -- ⚠️ SECURITY DEFINER: this function runs with full database rights, not the
 -- user's, because users can neither write the subscriptions nor read the
 -- organization rules.
+--
+-- The initial status is its own enum, with values that also exist in the
+-- subscription status. Postgres has no cast between two enums, so it goes
+-- through text, which fails if a value is missing in the subscription status.
 CREATE OR REPLACE FUNCTION core.seed_subscription_for_organization () RETURNS TRIGGER AS $$
 BEGIN
 INSERT INTO core.subscriptions (organization_id, status)
-SELECT NEW.id, r.initial_subscription_status
+SELECT NEW.id, r.initial_subscription_status::text::core.subscription_status
 FROM instance.organization_rules r;
 
 RETURN NEW;

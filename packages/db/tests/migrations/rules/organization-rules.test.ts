@@ -3,7 +3,11 @@ import { SQL as BunSQL } from "bun";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  InitialSubscriptionStatus,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 import { causeMessage, resetDb, seedUsers, TEST_USER_ID } from "../_test-utils";
 
 const client = new BunSQL(envDbUrl());
@@ -20,7 +24,7 @@ describe("instance.organization_rules", () => {
   afterEach(async () => {
     await db
       .update(organizationRules)
-      .set({ initialSubscriptionStatus: SubscriptionStatus.ACTIVE });
+      .set({ initialSubscriptionStatus: InitialSubscriptionStatus.ACTIVE });
   });
 
   afterAll(async () => {
@@ -32,7 +36,7 @@ describe("instance.organization_rules", () => {
 
     expect(rows).toHaveLength(1);
     expect(rows[0]?.id).toBe(1);
-    expect(rows[0]?.initialSubscriptionStatus).toBe(SubscriptionStatus.ACTIVE);
+    expect(rows[0]?.initialSubscriptionStatus).toBe(InitialSubscriptionStatus.ACTIVE);
   });
 
   test("rejects a second row", async () => {
@@ -70,21 +74,22 @@ describe("instance.organization_rules", () => {
   test("allows starting subscriptions as pending", async () => {
     const [updated] = await db
       .update(organizationRules)
-      .set({ initialSubscriptionStatus: SubscriptionStatus.PENDING })
+      .set({ initialSubscriptionStatus: InitialSubscriptionStatus.PENDING })
       .returning();
 
-    expect(updated?.initialSubscriptionStatus).toBe(SubscriptionStatus.PENDING);
+    expect(updated?.initialSubscriptionStatus).toBe(InitialSubscriptionStatus.PENDING);
   });
 
   test.each([SubscriptionStatus.PAST_DUE, SubscriptionStatus.CANCELED])(
     "rejects starting subscriptions as %s",
     async (status) => {
       const error = await db
-        .update(organizationRules)
-        .set({ initialSubscriptionStatus: status })
+        .execute(
+          sql`UPDATE instance.organization_rules SET initial_subscription_status = ${status}`,
+        )
         .catch((e: unknown) => e);
 
-      expect(causeMessage(error)).toContain("organization_rules_initial_subscription_status");
+      expect(causeMessage(error)).toContain("invalid input value for enum");
     },
   );
 

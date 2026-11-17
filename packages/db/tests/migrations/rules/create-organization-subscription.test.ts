@@ -3,7 +3,11 @@ import { SQL as BunSQL } from "bun";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  InitialSubscriptionStatus,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -44,7 +48,7 @@ describe("seed_subscription_for_organization", () => {
   afterEach(async () => {
     await db
       .update(organizationRules)
-      .set({ initialSubscriptionStatus: SubscriptionStatus.ACTIVE });
+      .set({ initialSubscriptionStatus: InitialSubscriptionStatus.ACTIVE });
   });
 
   afterAll(async () => {
@@ -65,7 +69,7 @@ describe("seed_subscription_for_organization", () => {
   test("creates a pending subscription when the organization rules start it as pending", async () => {
     await db
       .update(organizationRules)
-      .set({ initialSubscriptionStatus: SubscriptionStatus.PENDING });
+      .set({ initialSubscriptionStatus: InitialSubscriptionStatus.PENDING });
 
     const organizationId = await createOrganization(db);
 
