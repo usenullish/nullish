@@ -8,7 +8,8 @@
     "./users": "./src/users/index.ts",
     "./auth": "./src/auth/index.ts",
     "./organizations": "./src/organizations/index.ts",
-    "./metering": "./src/metering/index.ts"
+    "./metering": "./src/metering/index.ts",
+    "./subscription": "./src/subscription/index.ts"
   },
   "scripts": {
     "test": "bun test",
