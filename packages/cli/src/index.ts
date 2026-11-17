@@ -5,6 +5,8 @@ import { help } from "./help/help";
 import { logVersion } from "./commands/version";
 import { helpUser, user } from "./commands/user";
 import { helpOrganization, organization } from "./commands/organization";
+import { claim, helpClaim } from "./commands/claim";
+import { helpSubscription, subscription } from "./commands/subscription";
 
 // https://zod.dev/blog/zod-4-5#zcompile
 import "zod/compile";
@@ -36,6 +38,12 @@ export const run = async () => {
       case "user":
         helpUser(args);
         break;
+      case "claim":
+        helpClaim(args);
+        break;
+      case "subscription":
+        helpSubscription(args);
+        break;
       default:
         error("Unknown command.");
         log(help);
@@ -49,6 +57,12 @@ export const run = async () => {
       break;
     case "user":
       await user(args);
+      break;
+    case "claim":
+      await claim(args);
+      break;
+    case "subscription":
+      await subscription(args);
       break;
     case "help":
       log(help);
