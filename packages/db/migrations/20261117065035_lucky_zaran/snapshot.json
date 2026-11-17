@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "2ce7998f-f53d-4603-bc5c-2772da05f391",
+  "id": "7f03070a-156d-420b-81b0-4a7d5ed7544b",
   "prevIds": ["c5745cd1-a64e-495e-9dc2-96491bb56379"],
   "ddl": [
     {
@@ -224,6 +224,12 @@
       "name": "log_operation_type",
       "entityType": "enums",
       "schema": "audit"
+    },
+    {
+      "values": ["active", "pending"],
+      "name": "initial_subscription_status",
+      "entityType": "enums",
+      "schema": "instance"
     },
     {
       "isRlsEnabled": false,
@@ -5943,8 +5949,8 @@
       "table": "organization_rules"
     },
     {
-      "type": "subscription_status",
-      "typeSchema": "core",
+      "type": "initial_subscription_status",
+      "typeSchema": "instance",
       "notNull": true,
       "dimensions": 0,
       "default": "'active'",
@@ -8815,13 +8821,6 @@
     {
       "value": "\"id\" = 1",
       "name": "organization_rules_single_row",
-      "entityType": "checks",
-      "schema": "instance",
-      "table": "organization_rules"
-    },
-    {
-      "value": "\"initial_subscription_status\" IN ('active', 'pending')",
-      "name": "organization_rules_initial_subscription_status",
       "entityType": "checks",
       "schema": "instance",
       "table": "organization_rules"
