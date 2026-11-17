@@ -1,6 +1,6 @@
 {
-  "id": "acbe065b-e005-4224-a509-45b6da2ccc5f",
-  "prevIds": ["1499dcdd-959a-4c1f-8ed9-68ffc3afac10"],
+  "id": "f6cc5e12-638f-4c9a-b7e3-7de957f9526a",
+  "prevIds": ["a41c5436-79cb-4e0f-a44b-eabf8dbefc54"],
   "version": "8",
   "dialect": "postgres",
   "ddl": [
@@ -486,6 +486,12 @@
     {
       "isRlsEnabled": true,
       "name": "claims",
+      "entityType": "tables",
+      "schema": "subscription"
+    },
+    {
+      "isRlsEnabled": true,
+      "name": "subscription_settings",
       "entityType": "tables",
       "schema": "subscription"
     },
@@ -5852,19 +5858,6 @@
       "table": "claims"
     },
     {
-      "type": "boolean",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "false",
-      "generated": null,
-      "identity": null,
-      "name": "onboarding",
-      "entityType": "columns",
-      "schema": "subscription",
-      "table": "claims"
-    },
-    {
       "type": "integer",
       "typeSchema": null,
       "notNull": false,
@@ -5876,6 +5869,32 @@
       "entityType": "columns",
       "schema": "subscription",
       "table": "claims"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "1",
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "initial_claim_id",
+      "entityType": "columns",
+      "schema": "subscription",
+      "table": "subscription_settings"
     },
     {
       "type": "uuid",
@@ -7287,27 +7306,6 @@
       "nameExplicit": true,
       "columns": [
         {
-          "value": "onboarding",
-          "isExpression": false,
-          "asc": true,
-          "nullsFirst": false,
-          "opclass": null
-        }
-      ],
-      "isUnique": true,
-      "where": "\"onboarding\"",
-      "with": "",
-      "method": "btree",
-      "concurrently": false,
-      "name": "claims_onboarding_uidx",
-      "entityType": "indexes",
-      "schema": "subscription",
-      "table": "claims"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        {
           "value": "organization_id",
           "isExpression": false,
           "asc": true,
@@ -8302,6 +8300,19 @@
     },
     {
       "nameExplicit": false,
+      "columns": ["initial_claim_id"],
+      "schemaTo": "subscription",
+      "tableTo": "claims",
+      "columnsTo": ["id"],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "name": "subscription_settings_initial_claim_id_claims_id_fkey",
+      "entityType": "fks",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "nameExplicit": false,
       "columns": ["organization_id"],
       "schemaTo": "core",
       "tableTo": "organizations",
@@ -8681,6 +8692,14 @@
     {
       "columns": ["id"],
       "nameExplicit": false,
+      "name": "subscription_settings_pkey",
+      "schema": "subscription",
+      "table": "subscription_settings",
+      "entityType": "pks"
+    },
+    {
+      "columns": ["id"],
+      "nameExplicit": false,
       "name": "subscriptions_pkey",
       "schema": "subscription",
       "table": "subscriptions",
@@ -8878,6 +8897,13 @@
       "entityType": "checks",
       "schema": "subscription",
       "table": "claims"
+    },
+    {
+      "value": "\"id\" = 1",
+      "name": "subscription_settings_single_row",
+      "entityType": "checks",
+      "schema": "subscription",
+      "table": "subscription_settings"
     },
     {
       "superuser": false,
@@ -10377,6 +10403,50 @@
       "entityType": "policies",
       "schema": "subscription",
       "table": "claims"
+    },
+    {
+      "as": "PERMISSIVE",
+      "for": "SELECT",
+      "roles": ["authenticated_user"],
+      "using": "true",
+      "withCheck": null,
+      "name": "subscription_settings_select_policy",
+      "entityType": "policies",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "as": "PERMISSIVE",
+      "for": "INSERT",
+      "roles": ["authenticated_user"],
+      "using": null,
+      "withCheck": "false",
+      "name": "subscription_settings_insert_policy",
+      "entityType": "policies",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "as": "PERMISSIVE",
+      "for": "UPDATE",
+      "roles": ["authenticated_user"],
+      "using": "false",
+      "withCheck": null,
+      "name": "subscription_settings_update_policy",
+      "entityType": "policies",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "as": "PERMISSIVE",
+      "for": "DELETE",
+      "roles": ["authenticated_user"],
+      "using": "false",
+      "withCheck": null,
+      "name": "subscription_settings_delete_policy",
+      "entityType": "policies",
+      "schema": "subscription",
+      "table": "subscription_settings"
     },
     {
       "as": "PERMISSIVE",

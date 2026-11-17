@@ -29,6 +29,7 @@ import * as LogsSchema from "./schemas/audit/logs";
 import * as MigrationsSchema from "./schemas/migration/migrations";
 import * as MigrationDatasetsSchema from "./schemas/migration/datasets";
 import * as ClaimsSchema from "./schemas/subscription/claims";
+import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 
 const DbSchema = {
@@ -82,6 +83,7 @@ const DbSchema = {
   },
   Subscription: {
     Claims: ClaimsSchema,
+    SubscriptionSettings: SubscriptionSettingsSchema,
     Subscriptions: SubscriptionsSchema,
   },
 };
