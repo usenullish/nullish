@@ -5,6 +5,7 @@ import { SQL as BunSQL } from "bun";
 import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { CheckSubscriptionService } from "../../../src/subscription/services/subscription.check";
+import { EngineError } from "../../../src/errors";
 import {
   createOrganization,
   resetDb,
@@ -37,56 +38,65 @@ describe("CheckSubscriptionService", () => {
     await client.close();
   });
 
-  describe("isValid", () => {
-    test("is true for an organization with a valid subscription", async () => {
+  describe("assertValid of an organization", () => {
+    test("succeeds for an organization with a valid subscription", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
 
-      expect(await service.isValid({ organizationId })).toEqual({
+      expect(await service.assertValid({ organizationId })).toEqual({
         status: "success",
-        result: true,
+        result: undefined,
       });
     });
 
-    test("is false for a locked organization", async () => {
+    test("rejects a locked organization", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
       await lock(organizationId);
 
-      expect(await service.isValid({ organizationId })).toEqual({
-        status: "success",
-        result: false,
-      });
+      const result = await service.assertValid({ organizationId });
+
+      expect(result.status === "error" ? result.err : undefined).toEqual(
+        new EngineError("The subscription of this organization is not valid."),
+      );
     });
 
-    test("is false for an organization the user is not a member of", async () => {
+    test("rejects an organization the user is not a member of", async () => {
       const organizationId = await createOrganization(db, TEST_OTHER_USER_ID);
 
-      expect(await service.isValid({ organizationId })).toEqual({
-        status: "success",
-        result: false,
-      });
+      const result = await service.assertValid({ organizationId });
+
+      expect(result.status === "error" ? result.err : undefined).toBeInstanceOf(EngineError);
     });
   });
 
-  describe("hasAnyValidSubscription", () => {
-    test("is true when one organization of the user is valid", async () => {
+  describe("assertValid without organization", () => {
+    test("succeeds when one organization of the user is valid", async () => {
       const lockedId = await createOrganization(db, TEST_USER_ID);
       await createOrganization(db, TEST_USER_ID);
       await lock(lockedId);
 
-      expect(await service.hasAnyValidSubscription()).toEqual({ status: "success", result: true });
+      expect(await service.assertValid({ organizationId: null })).toEqual({
+        status: "success",
+        result: undefined,
+      });
     });
 
-    test("is false when every organization of the user is locked", async () => {
+    test("rejects when every organization of the user is locked", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
       await lock(organizationId);
 
-      expect(await service.hasAnyValidSubscription()).toEqual({ status: "success", result: false });
+      const result = await service.assertValid({ organizationId: null });
+
+      expect(result.status === "error" ? result.err : undefined).toEqual(
+        new EngineError("None of the organizations has a valid subscription."),
+      );
     });
 
-    test("is false for a user without organization", async () => {
+    test("rejects a user without organization", async () => {
       await createOrganization(db, TEST_OTHER_USER_ID);
 
-      expect(await service.hasAnyValidSubscription()).toEqual({ status: "success", result: false });
+      const result = await service.assertValid({ organizationId: null });
+
+      expect(result.status === "error" ? result.err : undefined).toBeInstanceOf(EngineError);
     });
   });
 });

@@ -108,7 +108,7 @@ describe("llm subscription", () => {
 
     const response = await request({ body: organizationChat(organizationId) });
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(422);
     expect(await response.json()).toEqual({
       error: "The subscription of this organization is not valid.",
       code: ErrorCode.REJECTED,
@@ -131,7 +131,7 @@ describe("llm subscription", () => {
 
     const response = await request({ body: unscopedChat });
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(422);
     expect(await response.json()).toEqual({
       error: "None of the organizations has a valid subscription.",
       code: ErrorCode.REJECTED,
@@ -141,7 +141,7 @@ describe("llm subscription", () => {
   test("rejects an unscoped chat for a user without organization", async () => {
     const response = await request({ body: unscopedChat });
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(422);
   });
 
   test("leaves an invalid request to the route", async () => {
