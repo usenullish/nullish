@@ -11,7 +11,8 @@
     "./metering": "./src/metering/index.ts",
     "./chat": "./src/chat/index.ts",
     "./banking": "./src/banking/index.ts",
-    "./migration": "./src/migration/index.ts"
+    "./migration": "./src/migration/index.ts",
+    "./subscription": "./src/subscription/index.ts"
   },
   "scripts": {
     "check": "tsc"
