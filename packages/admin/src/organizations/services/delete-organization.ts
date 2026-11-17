@@ -9,12 +9,6 @@ import { deleteAuditLogs } from "../_helpers/audit-logs";
 import { deleteOrganization } from "../_helpers/organizations";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
 
-// TODO: extract constants to make it more visible
-// Similarly we can group the invitation 7 days constant
-// and have the default expiration of the api-keys (?)
-// Maybe a new pkg settings or config or in env
-export const ORGANIZATION_DELETION_DELAY_DAYS = 30;
-
 const organizations = DbSchema.Core.Organizations.OrganizationsSchema;
 
 type Organization = Records["Core"]["Organizations"]["Select"];
