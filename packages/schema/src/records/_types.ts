@@ -238,9 +238,6 @@ interface Records {
       Select: z.infer<
         typeof RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema
       >;
-      Update: z.infer<
-        typeof RecordsSchema.Subscription.SubscriptionsSchema.UpdateSubscriptionsSchema
-      >;
     };
   };
 }
