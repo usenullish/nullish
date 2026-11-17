@@ -15,6 +15,7 @@ import { loadWorkersMiddleware } from "./middlewares/workers";
 import { defineMcp } from "./resources/_mcp";
 import { llmUsageLimitMiddleware } from "./middlewares/llm-usage";
 import { assertLlmEnabledMiddleware } from "./middlewares/llm-enabled";
+import { llmSubscriptionMiddleware } from "./middlewares/llm-subscription";
 import { RATE_LIMITS, userRateLimitMiddleware } from "./middlewares/rate-limit";
 
 export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
@@ -32,7 +33,13 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
   resources.forEach((resource) => resource.useAssertAuthSessionMiddleware());
   resources.forEach((resource) => resource.useCustomMiddleware());
 
-  app.on("POST", "/chat", assertLlmEnabledMiddleware, llmUsageLimitMiddleware);
+  app.on(
+    "POST",
+    "/chat",
+    assertLlmEnabledMiddleware,
+    llmSubscriptionMiddleware,
+    llmUsageLimitMiddleware,
+  );
 
   app.on(["POST", "GET"], "/auth/*", defineAuth);
 
