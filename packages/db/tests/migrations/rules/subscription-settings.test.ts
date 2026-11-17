@@ -49,6 +49,21 @@ describe("subscription.subscription_settings", () => {
     expect(rows[0]?.trialDays).toBeNull();
   });
 
+  test("grants a grace period of 7 days by default", async () => {
+    const [settings] = await db.select().from(subscriptionSettings);
+
+    expect(settings?.graceDays).toBe(7);
+  });
+
+  test("rejects a negative grace period", async () => {
+    const error = await db
+      .update(subscriptionSettings)
+      .set({ graceDays: -1 })
+      .catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("subscription_settings_grace_days_non_negative");
+  });
+
   test("rejects a second row", async () => {
     const error = await db
       .insert(subscriptionSettings)

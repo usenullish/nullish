@@ -17,7 +17,9 @@ ALTER TABLE "subscription"."claims" ENABLE ROW LEVEL SECURITY;
 CREATE TABLE "subscription"."subscription_settings" (
   "id" integer PRIMARY KEY DEFAULT 1,
   "initial_claim_id" uuid NOT NULL,
-  CONSTRAINT "subscription_settings_single_row" CHECK ("id" = 1)
+  "grace_days" integer DEFAULT 7 NOT NULL,
+  CONSTRAINT "subscription_settings_single_row" CHECK ("id" = 1),
+  CONSTRAINT "subscription_settings_grace_days_non_negative" CHECK ("grace_days" >= 0)
 );
 
 --> statement-breakpoint
