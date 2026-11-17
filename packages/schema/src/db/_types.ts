@@ -54,6 +54,11 @@ interface Db {
     Migrations: typeof DbSchema.Migration.Migrations.MigrationsSchema;
     Datasets: typeof DbSchema.Migration.Datasets.DatasetsSchema;
   };
+  Subscription: {
+    Claims: typeof DbSchema.Subscription.Claims.ClaimsSchema;
+    SubscriptionSettings: typeof DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
+    Subscriptions: typeof DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
+  };
 }
 
 export type { Db };
