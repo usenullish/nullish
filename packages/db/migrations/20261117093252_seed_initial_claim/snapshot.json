@@ -1,6 +1,6 @@
 {
-  "id": "3a8ef06d-6ef1-4b92-aac9-b040286b8c71",
-  "prevIds": ["f6cc5e12-638f-4c9a-b7e3-7de957f9526a"],
+  "id": "a78c6bb0-3983-4704-9707-45d05326e36f",
+  "prevIds": ["6ef201f1-7680-44da-8d8b-da3b1dba684e"],
   "version": "8",
   "dialect": "postgres",
   "ddl": [
@@ -5897,6 +5897,19 @@
       "table": "subscription_settings"
     },
     {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "7",
+      "generated": null,
+      "identity": null,
+      "name": "grace_days",
+      "entityType": "columns",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
       "type": "uuid",
       "typeSchema": null,
       "notNull": true,
@@ -8901,6 +8914,13 @@
     {
       "value": "\"id\" = 1",
       "name": "subscription_settings_single_row",
+      "entityType": "checks",
+      "schema": "subscription",
+      "table": "subscription_settings"
+    },
+    {
+      "value": "\"grace_days\" >= 0",
+      "name": "subscription_settings_grace_days_non_negative",
       "entityType": "checks",
       "schema": "subscription",
       "table": "subscription_settings"
