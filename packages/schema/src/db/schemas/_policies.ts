@@ -83,6 +83,13 @@ export const organizationPolicies = ({
     to: [authenticatedUser],
     withCheck: userIsOrgEditor({ organizationId }),
   }),
+  pg.pgPolicy(`${tableName}_subscription_policy`, {
+    as: "restrictive",
+    for: "all",
+    to: [authenticatedUser],
+    using: orgSubscriptionIsValid({ organizationId }),
+    withCheck: orgSubscriptionIsValid({ organizationId }),
+  }),
 ];
 
 export const subscriptionPolicies = ({
@@ -249,6 +256,21 @@ export const readonlyPolicies = ({ tableName }: { tableName: string }) => [
     using: sql`false`,
   }),
 ];
+
+const orgSubscriptionIsValid = ({
+  organizationId,
+}: {
+  organizationId: AnyPgColumn;
+}) => sql`${organizationId} IN (
+  SELECT s.organization_id FROM subscription.subscriptions s
+  CROSS JOIN subscription.subscription_settings st
+  WHERE s.status IN ('active', 'past_due')
+    AND (
+      s.period_end IS NULL
+      OR s.period_end > now()
+      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())
+    )
+)`;
 
 export const userBelongsToOrg = ({
   organizationId,
