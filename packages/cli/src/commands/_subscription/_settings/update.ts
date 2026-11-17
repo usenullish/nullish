@@ -17,7 +17,7 @@ export const subscriptionSettingsUpdate = async (_args?: string[]) => {
     const claims = await listClaims({ dbContext });
 
     const newInitialClaimId = await select({
-      message: "Which claim do new organizations get?",
+      message: "Which claim should newly created organizations be subscribed to?",
       options: claims.map((claim) => ({ label: claimLabel(claim), value: claim.id })),
       initialValue: initialClaimId,
     });
@@ -27,7 +27,7 @@ export const subscriptionSettingsUpdate = async (_args?: string[]) => {
     }
 
     const newGraceDays = await text({
-      message: "How many days does a past due subscription stay usable after its end?",
+      message: "How many days can a subscription remain active if no payment arrives?",
       defaultValue: String(graceDays),
       placeholder: String(graceDays),
       validate: (input) =>
