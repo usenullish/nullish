@@ -1,8 +1,8 @@
 {
+  "id": "ae2fc67f-d85f-4f70-8c18-d521b4f1dacf",
+  "prevIds": ["2267dfc4-9247-4c96-a7ba-52648e7025d3", "71819aa3-de5a-4231-a306-e83ddf514027"],
   "version": "8",
   "dialect": "postgres",
-  "id": "8dfa8fd0-2155-4bf3-858a-c54b23c48217",
-  "prevIds": ["2d3fa36d-341e-438b-bfa5-af4f92b15ee3"],
   "ddl": [
     {
       "name": "core",
@@ -9094,17 +9094,6 @@
       "table": "vat_methods"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "vat_methods_subscription_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "vat_methods"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9144,17 +9133,6 @@
       "using": null,
       "withCheck": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_periods_insert_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "vat_periods"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "vat_periods_subscription_policy",
       "entityType": "policies",
       "schema": "core",
       "table": "vat_periods"
@@ -9204,17 +9182,6 @@
       "table": "vat_rates"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "vat_rates_subscription_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "vat_rates"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9254,17 +9221,6 @@
       "using": null,
       "withCheck": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_settings_insert_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "vat_settings"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "vat_settings_subscription_policy",
       "entityType": "policies",
       "schema": "core",
       "table": "vat_settings"
@@ -9314,17 +9270,6 @@
       "table": "accounting_settings"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "accounting_settings_subscription_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "accounting_settings"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9364,17 +9309,6 @@
       "using": null,
       "withCheck": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "bank_relations_insert_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "bank_relations"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "bank_relations_subscription_policy",
       "entityType": "policies",
       "schema": "core",
       "table": "bank_relations"
@@ -9424,17 +9358,6 @@
       "table": "billing_settings"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "billing_settings_subscription_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "billing_settings"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9474,17 +9397,6 @@
       "using": null,
       "withCheck": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "document_templates_insert_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "document_templates"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "document_templates_subscription_policy",
       "entityType": "policies",
       "schema": "core",
       "table": "document_templates"
@@ -9534,17 +9446,6 @@
       "table": "template_contents"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "template_contents_subscription_policy",
-      "entityType": "policies",
-      "schema": "core",
-      "table": "template_contents"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9584,17 +9485,6 @@
       "using": null,
       "withCheck": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "accounts_insert_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "accounts"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "accounts_subscription_policy",
       "entityType": "policies",
       "schema": "ledger",
       "table": "accounts"
@@ -9644,17 +9534,6 @@
       "table": "system_accounts"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "system_accounts_subscription_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "system_accounts"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9694,17 +9573,6 @@
       "using": null,
       "withCheck": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "journal_entries_insert_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "journal_entries"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "journal_entries_subscription_policy",
       "entityType": "policies",
       "schema": "ledger",
       "table": "journal_entries"
@@ -9754,17 +9622,6 @@
       "table": "postings"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "postings_subscription_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "postings"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9804,17 +9661,6 @@
       "using": null,
       "withCheck": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "periods_insert_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "periods"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "periods_subscription_policy",
       "entityType": "policies",
       "schema": "ledger",
       "table": "periods"
@@ -9864,17 +9710,6 @@
       "table": "period_journal_entries"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "period_journal_entries_subscription_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "period_journal_entries"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -9914,17 +9749,6 @@
       "using": null,
       "withCheck": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "posting_manual_vat_postings_insert_policy",
-      "entityType": "policies",
-      "schema": "ledger",
-      "table": "posting_manual_vat_postings"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "posting_manual_vat_postings_subscription_policy",
       "entityType": "policies",
       "schema": "ledger",
       "table": "posting_manual_vat_postings"
@@ -9974,17 +9798,6 @@
       "table": "clients"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "clients_subscription_policy",
-      "entityType": "policies",
-      "schema": "billing",
-      "table": "clients"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -10024,17 +9837,6 @@
       "using": null,
       "withCheck": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "contacts_insert_policy",
-      "entityType": "policies",
-      "schema": "billing",
-      "table": "contacts"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "contacts_subscription_policy",
       "entityType": "policies",
       "schema": "billing",
       "table": "contacts"
@@ -10084,17 +9886,6 @@
       "table": "invoices"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "invoices_subscription_policy",
-      "entityType": "policies",
-      "schema": "billing",
-      "table": "invoices"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -10134,17 +9925,6 @@
       "using": null,
       "withCheck": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "lines_insert_policy",
-      "entityType": "policies",
-      "schema": "billing",
-      "table": "lines"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "lines_subscription_policy",
       "entityType": "policies",
       "schema": "billing",
       "table": "lines"
@@ -10194,17 +9974,6 @@
       "table": "invoice_journal_entries"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "invoice_journal_entries_subscription_policy",
-      "entityType": "policies",
-      "schema": "billing",
-      "table": "invoice_journal_entries"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -10244,17 +10013,6 @@
       "using": null,
       "withCheck": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "statements_insert_policy",
-      "entityType": "policies",
-      "schema": "banking",
-      "table": "statements"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "statements_subscription_policy",
       "entityType": "policies",
       "schema": "banking",
       "table": "statements"
@@ -10304,17 +10062,6 @@
       "table": "movements"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "movements_subscription_policy",
-      "entityType": "policies",
-      "schema": "banking",
-      "table": "movements"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -10354,17 +10101,6 @@
       "using": null,
       "withCheck": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "movement_journal_entries_insert_policy",
-      "entityType": "policies",
-      "schema": "banking",
-      "table": "movement_journal_entries"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "movement_journal_entries_subscription_policy",
       "entityType": "policies",
       "schema": "banking",
       "table": "movement_journal_entries"
@@ -10601,17 +10337,6 @@
       "table": "migrations"
     },
     {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "migrations_subscription_policy",
-      "entityType": "policies",
-      "schema": "migration",
-      "table": "migrations"
-    },
-    {
       "as": "PERMISSIVE",
       "for": "SELECT",
       "roles": ["authenticated_user"],
@@ -10651,17 +10376,6 @@
       "using": null,
       "withCheck": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "datasets_insert_policy",
-      "entityType": "policies",
-      "schema": "migration",
-      "table": "datasets"
-    },
-    {
-      "as": "RESTRICTIVE",
-      "for": "ALL",
-      "roles": ["authenticated_user"],
-      "using": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "withCheck": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT s.organization_id FROM subscription.subscriptions s\n  CROSS JOIN subscription.subscription_settings st\n  WHERE s.status IN ('active', 'past_due')\n    AND (\n      s.period_end IS NULL\n      OR s.period_end > now()\n      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())\n    )\n)",
-      "name": "datasets_subscription_policy",
       "entityType": "policies",
       "schema": "migration",
       "table": "datasets"

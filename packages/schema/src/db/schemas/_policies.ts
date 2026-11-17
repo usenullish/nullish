@@ -131,6 +131,25 @@ export const membershipPolicies = ({
     to: [authenticatedUser],
     using: userIsOrgAdmin({ organizationId }),
   }),
+  pg.pgPolicy(`memberships_subscription_insert_policy`, {
+    as: "restrictive",
+    for: "insert",
+    to: [authenticatedUser],
+    withCheck: orgSubscriptionIsValid({ organizationId }),
+  }),
+  pg.pgPolicy(`memberships_subscription_update_policy`, {
+    as: "restrictive",
+    for: "update",
+    to: [authenticatedUser],
+    using: orgSubscriptionIsValid({ organizationId }),
+    withCheck: orgSubscriptionIsValid({ organizationId }),
+  }),
+  pg.pgPolicy(`memberships_subscription_delete_policy`, {
+    as: "restrictive",
+    for: "delete",
+    to: [authenticatedUser],
+    using: orgSubscriptionIsValid({ organizationId }),
+  }),
 ];
 
 export const invitationPolicies = ({
@@ -152,6 +171,13 @@ export const invitationPolicies = ({
     for: "delete",
     to: [authenticatedUser],
     using: userIsOrgAdmin({ organizationId }),
+  }),
+  pg.pgPolicy(`invitations_subscription_policy`, {
+    as: "restrictive",
+    for: "all",
+    to: [authenticatedUser],
+    using: orgSubscriptionIsValid({ organizationId }),
+    withCheck: orgSubscriptionIsValid({ organizationId }),
   }),
 ];
 
@@ -257,20 +283,10 @@ export const readonlyPolicies = ({ tableName }: { tableName: string }) => [
   }),
 ];
 
-const orgSubscriptionIsValid = ({
-  organizationId,
-}: {
-  organizationId: AnyPgColumn;
-}) => sql`${organizationId} IN (
-  SELECT s.organization_id FROM subscription.subscriptions s
-  CROSS JOIN subscription.subscription_settings st
-  WHERE s.status IN ('active', 'past_due')
-    AND (
-      s.period_end IS NULL
-      OR s.period_end > now()
-      OR (s.status = 'past_due' AND s.period_end + make_interval(days => st.grace_days) > now())
-    )
-)`;
+// subscription.organization_subscription_is_valid is declared in the custom migration
+// 20261117111529_function_subscription_is_valid, not by Drizzle.
+export const orgSubscriptionIsValid = ({ organizationId }: { organizationId: AnyPgColumn }) =>
+  sql`subscription.organization_subscription_is_valid(${organizationId})`;
 
 export const userBelongsToOrg = ({
   organizationId,
