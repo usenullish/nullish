@@ -10,7 +10,6 @@ import { createOrganization, resetDb, seedUsers } from "../_test-utils";
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 const logsOf = (recordId: string) =>
@@ -25,7 +24,6 @@ const logsOf = (recordId: string) =>
 
 describe("audit.logs of subscription.subscriptions", () => {
   let organizationId: string;
-  let claimId: string;
   let subscriptionId: string;
 
   beforeAll(async () => {
@@ -34,25 +32,20 @@ describe("audit.logs of subscription.subscriptions", () => {
 
     organizationId = await createOrganization(db);
 
-    const [claim] = await db.insert(claims).values({}).returning();
-    assertNonNullish(claim);
-    claimId = claim.id;
-
     const [subscription] = await db
-      .insert(subscriptions)
-      .values({ organizationId, claimId, status: SubscriptionStatus.ACTIVE })
-      .returning();
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.organizationId, organizationId));
     assertNonNullish(subscription);
     subscriptionId = subscription.id;
   });
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, claimId));
     await client.close();
   });
 
-  test("records the creation of a subscription", async () => {
+  test("records the subscription created with the organization", async () => {
     const [log] = await logsOf(subscriptionId);
 
     expect(log?.table_schema).toBe("subscription");

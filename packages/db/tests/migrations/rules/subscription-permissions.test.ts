@@ -44,21 +44,17 @@ describe("subscription schema permissions", () => {
 
     organizationId = await createOrganization(db);
 
-    const [claim] = await db.insert(claims).values({}).returning();
-    assertNonNullish(claim);
-    claimId = claim.id;
-
     const [subscription] = await db
-      .insert(subscriptions)
-      .values({ organizationId, claimId, status: SubscriptionStatus.ACTIVE })
-      .returning();
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.organizationId, organizationId));
     assertNonNullish(subscription);
     subscriptionId = subscription.id;
+    claimId = subscription.claimId;
   });
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, claimId));
     await client.close();
   });
 
