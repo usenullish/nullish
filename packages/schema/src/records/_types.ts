@@ -220,6 +220,29 @@ interface Records {
       >;
     };
   };
+  Subscription: {
+    Claims: {
+      Select: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.SelectClaimsSchema>;
+      Insert: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.InsertClaimsSchema>;
+      Update: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.UpdateClaimsSchema>;
+    };
+    SubscriptionSettings: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionSettingsSchema.SelectSubscriptionSettingsSchema
+      >;
+      Update: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionSettingsSchema.UpdateSubscriptionSettingsSchema
+      >;
+    };
+    Subscriptions: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema
+      >;
+      Update: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionsSchema.UpdateSubscriptionsSchema
+      >;
+    };
+  };
 }
 
 export type { Records };
