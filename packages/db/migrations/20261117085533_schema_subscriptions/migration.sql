@@ -7,6 +7,7 @@ CREATE TYPE "subscription"."subscription_status" AS ENUM('active', 'past_due', '
 CREATE TABLE "subscription"."claims" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "trial_days" integer,
+  "expires_at" timestamp with time zone,
   CONSTRAINT "claims_trial_days_positive" CHECK ("trial_days" >= 1)
 );
 
