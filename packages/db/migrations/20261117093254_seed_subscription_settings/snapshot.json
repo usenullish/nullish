@@ -1,6 +1,6 @@
 {
-  "id": "a76869f2-8f60-4ccb-a9c2-e6246427a66e",
-  "prevIds": ["a78c6bb0-3983-4704-9707-45d05326e36f"],
+  "id": "d8467a66-6aec-468e-aa12-370c71c9754f",
+  "prevIds": ["47cb735e-f846-4620-a288-674850f715ba"],
   "version": "8",
   "dialect": "postgres",
   "ddl": [
@@ -5866,6 +5866,19 @@
       "generated": null,
       "identity": null,
       "name": "trial_days",
+      "entityType": "columns",
+      "schema": "subscription",
+      "table": "claims"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "expires_at",
       "entityType": "columns",
       "schema": "subscription",
       "table": "claims"
