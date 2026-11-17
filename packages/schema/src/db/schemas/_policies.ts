@@ -85,6 +85,18 @@ export const organizationPolicies = ({
   }),
 ];
 
+export const subscriptionPolicies = ({
+  organizationId,
+}: {
+  organizationId: ExtraConfigColumn<PgColumnBaseConfig<ColumnType>>;
+}) => [
+  pg.pgPolicy(`subscriptions_select_policy`, {
+    for: "select",
+    to: [authenticatedUser],
+    using: userBelongsToOrg({ organizationId }),
+  }),
+];
+
 export const membershipPolicies = ({
   userId,
   organizationId,
