@@ -4,7 +4,7 @@ import { isEmptyString } from "@usenullish/nullish-common";
 import { withDbContext } from "../../db";
 import { lime } from "../../utils/colors";
 import { cancel, exit } from "../../utils/exit";
-import { claimLabel, promptDate } from "./_claims";
+import { claimLabel, promptClaimExpiresAt } from "./_claims";
 
 export const claimCreate = async (_args?: string[]) => {
   console.log();
@@ -23,7 +23,7 @@ export const claimCreate = async (_args?: string[]) => {
     cancel();
   }
 
-  const expiresAt = await promptDate({ message: "Until when can the claim be given?" });
+  const expiresAt = await promptClaimExpiresAt({ message: "Until when can the claim be given?" });
 
   await withDbContext(async (dbContext) => {
     const result = await ClaimsService.create({ db: dbContext.connection }).insert({

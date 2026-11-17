@@ -27,7 +27,11 @@ export const listClaims = async ({
 export const claimLabel = ({ id, trialDays, expiresAt }: Claim): string =>
   `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"})`;
 
-export const promptDate = async ({ message }: { message: string }): Promise<Option<Date>> => {
+export const promptClaimExpiresAt = async ({
+  message,
+}: {
+  message: string;
+}): Promise<Option<Date>> => {
   const value = await text({
     message,
     placeholder: "YYYY-MM-DD, empty for no end",
