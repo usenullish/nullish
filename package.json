@@ -36,7 +36,7 @@
     "env:test": "./env.run.sh test",
     "db:generate": "drizzle-kit generate",
     "db:view": "drizzle-kit studio --port=3100",
-    "llm:run:dev": "./llm.run.sh dev",
+    "llm:dev": "./llm.run.sh dev",
     "server:run:dev": "./server.run.sh prod",
     "knip": "knip",
     "e2e": "NODE_ENV=development playwright test",

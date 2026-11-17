@@ -68,7 +68,7 @@ cd packages/client && bun run dev
 Optionally, run an LLM for the AI chat with [Ollama](https://ollama.com).
 
 ```bash
-bun run llm:run:dev
+bun run llm:dev
 ```
 
 Then open [http://localhost:5173](http://localhost:5173) in your browser and have fun!
