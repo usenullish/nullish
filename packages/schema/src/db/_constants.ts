@@ -12,4 +12,3 @@ export * from "./constants/bank-movements";
 export * from "./constants/chat";
 export * from "./constants/migrations";
 export * from "./constants/organizations";
-export * from "./constants/subscriptions";
