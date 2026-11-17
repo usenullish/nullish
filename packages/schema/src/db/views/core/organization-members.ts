@@ -1,7 +1,7 @@
-import { eq, getColumns } from "drizzle-orm";
+import { and, eq, getColumns } from "drizzle-orm";
 import { CoreSchema, MembershipsSchema } from "../../schemas";
 import { UsersSchema } from "../../schemas/auth/users";
-import { userIsOrgAdmin } from "../../schemas/_policies";
+import { orgSubscriptionIsValid, userIsOrgAdmin } from "../../schemas/_policies";
 
 export const OrganizationMembersView = CoreSchema.view("organization_members")
   .with({ securityBarrier: true })
@@ -15,5 +15,10 @@ export const OrganizationMembersView = CoreSchema.view("organization_members")
       })
       .from(MembershipsSchema)
       .innerJoin(UsersSchema, eq(UsersSchema.id, MembershipsSchema.userId))
-      .where(userIsOrgAdmin({ organizationId: MembershipsSchema.organizationId })),
+      .where(
+        and(
+          userIsOrgAdmin({ organizationId: MembershipsSchema.organizationId }),
+          orgSubscriptionIsValid({ organizationId: MembershipsSchema.organizationId }),
+        ),
+      ),
   );
