@@ -1,9 +1,16 @@
 import { sql } from "drizzle-orm";
 import * as z from "zod";
-import { assertArrayExactlyOne, type Result, tryCatch } from "@usenullish/nullish-common";
-import type { DbUserContextArgs } from "@usenullish/nullish-db";
+import {
+  assertArrayExactlyOne,
+  isNullish,
+  type Nullable,
+  type Result,
+  tryCatch,
+} from "@usenullish/nullish-common";
+import type { DbUserContextArgs, Tx } from "@usenullish/nullish-db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { ServiceContext } from "../../_service/service";
+import { EngineError } from "../../errors";
 
 type OrganizationId = Records["Core"]["Organizations"]["Select"]["id"];
 
@@ -18,39 +25,62 @@ export class CheckSubscriptionService extends ServiceContext {
     return new this(args);
   }
 
-  isValid({ organizationId }: { organizationId: OrganizationId }): Promise<Result<boolean>> {
+  assertValid({
+    organizationId,
+  }: {
+    organizationId: Nullable<OrganizationId>;
+  }): Promise<Result<void>> {
     return tryCatch(async () => {
-      return await this._withAuth(async (tx) => {
-        const rows = await tx.execute(
-          sql`SELECT subscription.organization_subscription_is_valid(${organizationId}) AS valid`,
-        );
+      await this._withAuth(async (tx) => {
+        if (isNullish(organizationId)) {
+          await this.#assertAnyValid({ tx });
+          return;
+        }
 
-        assertArrayExactlyOne(rows);
-
-        const [row] = rows;
-
-        return ValidSchema.parse(row).valid;
+        await this.#assertOrganizationValid({ tx, organizationId });
       });
     });
   }
 
-  hasAnyValidSubscription(): Promise<Result<boolean>> {
-    return tryCatch(async () => {
-      return await this._withAuth(async (tx) => {
-        const rows = await tx.execute(
-          sql`SELECT EXISTS (
-            SELECT 1 FROM core.memberships m
-            WHERE m.user_id = auth.current_user_id()
-              AND subscription.organization_subscription_is_valid(m.organization_id)
-          ) AS valid`,
-        );
-
-        assertArrayExactlyOne(rows);
-
-        const [row] = rows;
-
-        return ValidSchema.parse(row).valid;
-      });
+  async #assertOrganizationValid({
+    tx,
+    organizationId,
+  }: {
+    tx: Tx;
+    organizationId: OrganizationId;
+  }): Promise<void> {
+    const valid = await this.#queryValid({
+      tx,
+      query: sql`SELECT subscription.organization_subscription_is_valid(${organizationId}) AS valid`,
     });
+
+    if (!valid) {
+      throw new EngineError("The subscription of this organization is not valid.");
+    }
+  }
+
+  async #assertAnyValid({ tx }: { tx: Tx }): Promise<void> {
+    const valid = await this.#queryValid({
+      tx,
+      query: sql`SELECT EXISTS (
+        SELECT 1 FROM core.memberships m
+        WHERE m.user_id = auth.current_user_id()
+          AND subscription.organization_subscription_is_valid(m.organization_id)
+      ) AS valid`,
+    });
+
+    if (!valid) {
+      throw new EngineError("None of the organizations has a valid subscription.");
+    }
+  }
+
+  async #queryValid({ tx, query }: { tx: Tx; query: ReturnType<typeof sql> }): Promise<boolean> {
+    const rows = await tx.execute(query);
+
+    assertArrayExactlyOne(rows);
+
+    const [row] = rows;
+
+    return ValidSchema.parse(row).valid;
   }
 }
