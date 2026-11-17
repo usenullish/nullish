@@ -4,6 +4,9 @@ CREATE SCHEMA "instance";
 CREATE TYPE "core"."subscription_status" AS ENUM('pending', 'active', 'past_due', 'canceled');
 
 --> statement-breakpoint
+CREATE TYPE "instance"."initial_subscription_status" AS ENUM('active', 'pending');
+
+--> statement-breakpoint
 CREATE TABLE "core"."subscriptions" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "organization_id" uuid NOT NULL,
@@ -20,11 +23,8 @@ ALTER TABLE "core"."subscriptions" ENABLE ROW LEVEL SECURITY;
 --> statement-breakpoint
 CREATE TABLE "instance"."organization_rules" (
   "id" integer PRIMARY KEY DEFAULT 1,
-  "initial_subscription_status" "core"."subscription_status" DEFAULT 'active'::"core"."subscription_status" NOT NULL,
-  CONSTRAINT "organization_rules_single_row" CHECK ("id" = 1),
-  CONSTRAINT "organization_rules_initial_subscription_status" CHECK (
-    "initial_subscription_status" IN ('active', 'pending')
-  )
+  "initial_subscription_status" "instance"."initial_subscription_status" DEFAULT 'active'::"instance"."initial_subscription_status" NOT NULL,
+  CONSTRAINT "organization_rules_single_row" CHECK ("id" = 1)
 );
 
 --> statement-breakpoint

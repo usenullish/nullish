@@ -4,3 +4,8 @@ export enum SubscriptionStatus {
   PAST_DUE = "past_due",
   CANCELED = "canceled",
 }
+
+export enum InitialSubscriptionStatus {
+  ACTIVE = "active",
+  PENDING = "pending",
+}
