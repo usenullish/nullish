@@ -28,6 +28,8 @@ import * as MessagesSchema from "./schemas/chat/messages";
 import * as LogsSchema from "./schemas/audit/logs";
 import * as MigrationsSchema from "./schemas/migration/migrations";
 import * as MigrationDatasetsSchema from "./schemas/migration/datasets";
+import * as ClaimsSchema from "./schemas/subscription/claims";
+import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 
 const DbSchema = {
   Auth: {
@@ -77,6 +79,10 @@ const DbSchema = {
   Migration: {
     Migrations: MigrationsSchema,
     Datasets: MigrationDatasetsSchema,
+  },
+  Subscription: {
+    Claims: ClaimsSchema,
+    Subscriptions: SubscriptionsSchema,
   },
 };
 

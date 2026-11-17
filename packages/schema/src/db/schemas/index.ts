@@ -51,4 +51,8 @@ export * from "./migration/datasets";
 export * from "./audit/_schema";
 export * from "./audit/logs";
 
+export * from "./subscription/_schema";
+export * from "./subscription/claims";
+export * from "./subscription/subscriptions";
+
 export { currencyValue } from "./_currency";
