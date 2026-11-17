@@ -2,7 +2,7 @@
 --
 -- Gives a subscription, active and without end, to every organization that
 -- already exists. New organizations get theirs from
--- 20261117093257_trigger_create_organization_subscription.
+-- 20261117102252_trigger_create_organization_subscription.
 INSERT INTO
   subscription.subscriptions (organization_id, claim_id, status)
 SELECT

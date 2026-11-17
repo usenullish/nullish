@@ -16,7 +16,7 @@ const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const runSeed = async (): Promise<void> => {
   const seed = await Bun.file(
     new URL(
-      "../../../migrations/20261117093259_seed_organization_subscriptions/migration.sql",
+      "../../../migrations/20261117102252_seed_organization_subscriptions/migration.sql",
       import.meta.url,
     ),
   ).text();
