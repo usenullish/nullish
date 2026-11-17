@@ -13,11 +13,19 @@ export const subscriptionStatus = SubscriptionSchema.enum(
   SubscriptionStatus,
 );
 
+// The subscription of a new organization is inserted before the organization row, so that it exists
+// when the other organization creation triggers run. Otherwise, every trigger that generates data
+// (e.g. the default accounts) would be rejected by the policies.
+//
+// Drizzle cannot generate DEFERRABLE INITIALLY DEFERRED, so it is done in
+// 20261117102251_rule_subscriptions_organization_deferred.
+const deferredOrganizationIdReference = () => organizationIdReference();
+
 export const SubscriptionsSchema = SubscriptionSchema.table(
   "subscriptions",
   {
     id: primaryKey(),
-    organizationId: organizationIdReference(),
+    organizationId: deferredOrganizationIdReference(),
     claimId: claimIdReference(),
     status: subscriptionStatus().notNull(),
     periodEnd: timestamp(),

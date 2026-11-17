@@ -1,6 +1,8 @@
 {
-  "id": "99a71011-eb14-43f0-b0a9-469db1477690",
-  "prevIds": ["bc6f2a43-5e62-4e28-9bb0-91813e430530"],
+  "id": "30cf3e9b-ad2a-4016-94cd-a807ecbc83e8",
+  "prevIds": [
+    "bc6f2a43-5e62-4e28-9bb0-91813e430530"
+  ],
   "version": "8",
   "dialect": "postgres",
   "ddl": [
@@ -45,37 +47,57 @@
       "entityType": "schemas"
     },
     {
-      "values": ["fiat", "crypto"],
+      "values": [
+        "fiat",
+        "crypto"
+      ],
       "name": "currency_type",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["llc", "corporation", "sole_proprietorship"],
+      "values": [
+        "llc",
+        "corporation",
+        "sole_proprietorship"
+      ],
       "name": "legal_form",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["admin", "accountant", "reviewer"],
+      "values": [
+        "admin",
+        "accountant",
+        "reviewer"
+      ],
       "name": "membership_role",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["net_rate", "effective"],
+      "values": [
+        "net_rate",
+        "effective"
+      ],
       "name": "vat_payment_method",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["open", "closed"],
+      "values": [
+        "open",
+        "closed"
+      ],
       "name": "vat_period_status",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["agreed", "received"],
+      "values": [
+        "agreed",
+        "received"
+      ],
       "name": "vat_remuneration_method",
       "entityType": "enums",
       "schema": "core"
@@ -98,13 +120,22 @@
       "schema": "core"
     },
     {
-      "values": ["invoice"],
+      "values": [
+        "invoice"
+      ],
       "name": "document_type",
       "entityType": "enums",
       "schema": "core"
     },
     {
-      "values": ["asset", "liability", "equity", "income", "expense", "closing"],
+      "values": [
+        "asset",
+        "liability",
+        "equity",
+        "income",
+        "expense",
+        "closing"
+      ],
       "name": "account_type",
       "entityType": "enums",
       "schema": "ledger"
@@ -148,79 +179,130 @@
       "schema": "ledger"
     },
     {
-      "values": ["open", "closed"],
+      "values": [
+        "open",
+        "closed"
+      ],
       "name": "period_status",
       "entityType": "enums",
       "schema": "ledger"
     },
     {
-      "values": ["opening", "result"],
+      "values": [
+        "opening",
+        "result"
+      ],
       "name": "period_journal_entry_type",
       "entityType": "enums",
       "schema": "ledger"
     },
     {
-      "values": ["company", "individual"],
+      "values": [
+        "company",
+        "individual"
+      ],
       "name": "client_type",
       "entityType": "enums",
       "schema": "billing"
     },
     {
-      "values": ["draft", "open", "paid", "uncollectible", "void"],
+      "values": [
+        "draft",
+        "open",
+        "paid",
+        "uncollectible",
+        "void"
+      ],
       "name": "invoice_status",
       "entityType": "enums",
       "schema": "billing"
     },
     {
-      "values": ["item", "discount"],
+      "values": [
+        "item",
+        "discount"
+      ],
       "name": "line_type",
       "entityType": "enums",
       "schema": "billing"
     },
     {
-      "values": ["open", "payment", "void", "uncollectible"],
+      "values": [
+        "open",
+        "payment",
+        "void",
+        "uncollectible"
+      ],
       "name": "invoice_journal_entry_type",
       "entityType": "enums",
       "schema": "billing"
     },
     {
-      "values": ["unreconciled", "reconciled", "ignored"],
+      "values": [
+        "unreconciled",
+        "reconciled",
+        "ignored"
+      ],
       "name": "movement_status",
       "entityType": "enums",
       "schema": "banking"
     },
     {
-      "values": ["user", "assistant", "tool"],
+      "values": [
+        "user",
+        "assistant",
+        "tool"
+      ],
       "name": "message_role",
       "entityType": "enums",
       "schema": "chat"
     },
     {
-      "values": ["bexio"],
+      "values": [
+        "bexio"
+      ],
       "name": "migration_provider",
       "entityType": "enums",
       "schema": "migration"
     },
     {
-      "values": ["draft", "succeeded", "failed"],
+      "values": [
+        "draft",
+        "succeeded",
+        "failed"
+      ],
       "name": "migration_status",
       "entityType": "enums",
       "schema": "migration"
     },
     {
-      "values": ["accounts", "clients", "balances", "journal", "invoices"],
+      "values": [
+        "accounts",
+        "clients",
+        "balances",
+        "journal",
+        "invoices"
+      ],
       "name": "migration_dataset_type",
       "entityType": "enums",
       "schema": "migration"
     },
     {
-      "values": ["insert", "update", "delete"],
+      "values": [
+        "insert",
+        "update",
+        "delete"
+      ],
       "name": "log_operation_type",
       "entityType": "enums",
       "schema": "audit"
     },
     {
-      "values": ["active", "past_due", "inactive"],
+      "values": [
+        "active",
+        "past_due",
+        "inactive"
+      ],
       "name": "subscription_status",
       "entityType": "enums",
       "schema": "subscription"
@@ -7325,10 +7407,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "memberships_user_id_users_id_fkey",
@@ -7338,10 +7424,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "memberships_organization_id_organizations_id_fkey",
@@ -7351,10 +7441,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "invitations_organization_id_organizations_id_fkey",
@@ -7364,10 +7458,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "vat_methods_organization_id_organizations_id_fkey",
@@ -7377,10 +7475,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["period_id"],
+      "columns": [
+        "period_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "periods",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "vat_methods_period_id_periods_id_fkey",
@@ -7390,10 +7492,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "vat_periods_organization_id_organizations_id_fkey",
@@ -7403,10 +7509,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "vat_rates_organization_id_organizations_id_fkey",
@@ -7416,10 +7526,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "vat_settings_organization_id_organizations_id_fkey",
@@ -7429,10 +7543,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "accounting_settings_organization_id_organizations_id_fkey",
@@ -7442,10 +7560,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["base_currency"],
+      "columns": [
+        "base_currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "accounting_settings_base_currency_currencies_code_fkey",
@@ -7455,10 +7577,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "bank_relations_organization_id_organizations_id_fkey",
@@ -7468,10 +7594,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["currency"],
+      "columns": [
+        "currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "bank_relations_currency_currencies_code_fkey",
@@ -7481,10 +7611,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["account_id"],
+      "columns": [
+        "account_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "accounts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "bank_relations_account_id_accounts_id_fkey",
@@ -7494,10 +7628,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "billing_settings_organization_id_organizations_id_fkey",
@@ -7507,10 +7645,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["vat_rate_id"],
+      "columns": [
+        "vat_rate_id"
+      ],
       "schemaTo": "core",
       "tableTo": "vat_rates",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "billing_settings_vat_rate_id_vat_rates_id_fkey",
@@ -7520,10 +7662,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["bank_relation_id"],
+      "columns": [
+        "bank_relation_id"
+      ],
       "schemaTo": "core",
       "tableTo": "bank_relations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "billing_settings_bank_relation_id_bank_relations_id_fkey",
@@ -7533,10 +7679,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "document_templates_organization_id_organizations_id_fkey",
@@ -7546,10 +7696,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "template_contents_organization_id_organizations_id_fkey",
@@ -7559,10 +7713,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["template_id"],
+      "columns": [
+        "template_id"
+      ],
       "schemaTo": "core",
       "tableTo": "document_templates",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "template_contents_template_id_document_templates_id_fkey",
@@ -7572,10 +7730,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["parent_id"],
+      "columns": [
+        "parent_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "accounts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "accounts_parent_id_accounts_id_fkey",
@@ -7585,10 +7747,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "accounts_organization_id_organizations_id_fkey",
@@ -7598,10 +7764,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "system_accounts_organization_id_organizations_id_fkey",
@@ -7611,10 +7781,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["account_id"],
+      "columns": [
+        "account_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "accounts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "system_accounts_account_id_accounts_id_fkey",
@@ -7624,10 +7798,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "journal_entries_organization_id_organizations_id_fkey",
@@ -7637,10 +7815,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "postings_organization_id_organizations_id_fkey",
@@ -7650,10 +7832,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["journal_entry_id"],
+      "columns": [
+        "journal_entry_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "journal_entries",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "postings_journal_entry_id_journal_entries_id_fkey",
@@ -7663,10 +7849,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["account_id"],
+      "columns": [
+        "account_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "accounts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "postings_account_id_accounts_id_fkey",
@@ -7676,10 +7866,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["vat_rate_id"],
+      "columns": [
+        "vat_rate_id"
+      ],
       "schemaTo": "core",
       "tableTo": "vat_rates",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "postings_vat_rate_id_vat_rates_id_fkey",
@@ -7689,10 +7883,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["currency"],
+      "columns": [
+        "currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "postings_currency_currencies_code_fkey",
@@ -7702,10 +7900,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "periods_organization_id_organizations_id_fkey",
@@ -7715,10 +7917,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "period_journal_entries_organization_id_organizations_id_fkey",
@@ -7728,10 +7934,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["period_id"],
+      "columns": [
+        "period_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "periods",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "period_journal_entries_period_id_periods_id_fkey",
@@ -7741,10 +7951,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["journal_entry_id"],
+      "columns": [
+        "journal_entry_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "journal_entries",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "period_journal_entries_journal_entry_id_journal_entries_id_fkey",
@@ -7754,10 +7968,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "posting_manual_vat_postings_0mQABIJSoc4y_fkey",
@@ -7767,10 +7985,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["posting_id"],
+      "columns": [
+        "posting_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "postings",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "posting_manual_vat_postings_posting_id_postings_id_fkey",
@@ -7780,10 +8002,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["vat_posting_id"],
+      "columns": [
+        "vat_posting_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "postings",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "posting_manual_vat_postings_vat_posting_id_postings_id_fkey",
@@ -7793,10 +8019,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "clients_organization_id_organizations_id_fkey",
@@ -7806,10 +8036,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "contacts_organization_id_organizations_id_fkey",
@@ -7819,10 +8053,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["client_id"],
+      "columns": [
+        "client_id"
+      ],
       "schemaTo": "billing",
       "tableTo": "clients",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "contacts_client_id_clients_id_fkey",
@@ -7832,10 +8070,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "invoices_organization_id_organizations_id_fkey",
@@ -7845,10 +8087,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["client_id"],
+      "columns": [
+        "client_id"
+      ],
       "schemaTo": "billing",
       "tableTo": "clients",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "invoices_client_id_clients_id_fkey",
@@ -7858,10 +8104,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["vat_rate_id"],
+      "columns": [
+        "vat_rate_id"
+      ],
       "schemaTo": "core",
       "tableTo": "vat_rates",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "invoices_vat_rate_id_vat_rates_id_fkey",
@@ -7871,10 +8121,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["currency"],
+      "columns": [
+        "currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "invoices_currency_currencies_code_fkey",
@@ -7884,10 +8138,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "lines_organization_id_organizations_id_fkey",
@@ -7897,10 +8155,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["invoice_id"],
+      "columns": [
+        "invoice_id"
+      ],
       "schemaTo": "billing",
       "tableTo": "invoices",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "lines_invoice_id_invoices_id_fkey",
@@ -7910,10 +8172,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "invoice_journal_entries_organization_id_organizations_id_fkey",
@@ -7923,10 +8189,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["invoice_id"],
+      "columns": [
+        "invoice_id"
+      ],
       "schemaTo": "billing",
       "tableTo": "invoices",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "invoice_journal_entries_invoice_id_invoices_id_fkey",
@@ -7936,10 +8206,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["journal_entry_id"],
+      "columns": [
+        "journal_entry_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "journal_entries",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "invoice_journal_entries_2noWbSmzk3Rq_fkey",
@@ -7949,10 +8223,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "statements_organization_id_organizations_id_fkey",
@@ -7962,10 +8240,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["bank_relation_id"],
+      "columns": [
+        "bank_relation_id"
+      ],
       "schemaTo": "core",
       "tableTo": "bank_relations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "statements_bank_relation_id_bank_relations_id_fkey",
@@ -7975,10 +8257,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["currency"],
+      "columns": [
+        "currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "statements_currency_currencies_code_fkey",
@@ -7988,10 +8274,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "movements_organization_id_organizations_id_fkey",
@@ -8001,10 +8291,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["bank_relation_id"],
+      "columns": [
+        "bank_relation_id"
+      ],
       "schemaTo": "core",
       "tableTo": "bank_relations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movements_bank_relation_id_bank_relations_id_fkey",
@@ -8014,10 +8308,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["statement_id"],
+      "columns": [
+        "statement_id"
+      ],
       "schemaTo": "banking",
       "tableTo": "statements",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movements_statement_id_statements_id_fkey",
@@ -8027,10 +8325,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["currency"],
+      "columns": [
+        "currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movements_currency_currencies_code_fkey",
@@ -8040,10 +8342,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["foreign_currency"],
+      "columns": [
+        "foreign_currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movements_foreign_currency_currencies_code_fkey",
@@ -8053,10 +8359,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["bank_fees_currency"],
+      "columns": [
+        "bank_fees_currency"
+      ],
       "schemaTo": "core",
       "tableTo": "currencies",
-      "columnsTo": ["code"],
+      "columnsTo": [
+        "code"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movements_bank_fees_currency_currencies_code_fkey",
@@ -8066,10 +8376,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "movement_journal_entries_organization_id_organizations_id_fkey",
@@ -8079,10 +8393,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["movement_id"],
+      "columns": [
+        "movement_id"
+      ],
       "schemaTo": "banking",
       "tableTo": "movements",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movement_journal_entries_movement_id_movements_id_fkey",
@@ -8092,10 +8410,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["journal_entry_id"],
+      "columns": [
+        "journal_entry_id"
+      ],
       "schemaTo": "ledger",
       "tableTo": "journal_entries",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "movement_journal_entries_20jKexMdUz2q_fkey",
@@ -8105,10 +8427,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["parent_id"],
+      "columns": [
+        "parent_id"
+      ],
       "schemaTo": "templates",
       "tableTo": "ledger_accounts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "ledger_accounts_parent_id_ledger_accounts_id_fkey",
@@ -8118,10 +8444,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "accounts_user_id_users_id_fkey",
@@ -8131,10 +8461,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "sessions_user_id_users_id_fkey",
@@ -8144,10 +8478,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "two_factors_user_id_users_id_fkey",
@@ -8157,10 +8495,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "conversations_user_id_users_id_fkey",
@@ -8170,10 +8512,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "conversations_organization_id_organizations_id_fkey",
@@ -8183,10 +8529,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["conversation_id"],
+      "columns": [
+        "conversation_id"
+      ],
       "schemaTo": "chat",
       "tableTo": "conversations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "messages_conversation_id_conversations_id_fkey",
@@ -8196,10 +8546,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
       "name": "llm_usages_user_id_users_id_fkey",
@@ -8209,10 +8563,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
       "name": "llm_usages_organization_id_organizations_id_fkey",
@@ -8222,10 +8580,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["conversation_id"],
+      "columns": [
+        "conversation_id"
+      ],
       "schemaTo": "chat",
       "tableTo": "conversations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
       "name": "llm_usages_conversation_id_conversations_id_fkey",
@@ -8235,10 +8597,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "llm_reservations_user_id_users_id_fkey",
@@ -8248,10 +8614,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "migrations_organization_id_organizations_id_fkey",
@@ -8261,10 +8631,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "auth",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
       "name": "migrations_user_id_users_id_fkey",
@@ -8274,10 +8648,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "datasets_organization_id_organizations_id_fkey",
@@ -8287,10 +8665,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["migration_id"],
+      "columns": [
+        "migration_id"
+      ],
       "schemaTo": "migration",
       "tableTo": "migrations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "datasets_migration_id_migrations_id_fkey",
@@ -8300,10 +8682,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["initial_claim_id"],
+      "columns": [
+        "initial_claim_id"
+      ],
       "schemaTo": "subscription",
       "tableTo": "claims",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "subscription_settings_initial_claim_id_claims_id_fkey",
@@ -8313,10 +8699,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["organization_id"],
+      "columns": [
+        "organization_id"
+      ],
       "schemaTo": "core",
       "tableTo": "organizations",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "subscriptions_organization_id_organizations_id_fkey",
@@ -8326,10 +8716,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["claim_id"],
+      "columns": [
+        "claim_id"
+      ],
       "schemaTo": "subscription",
       "tableTo": "claims",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "subscriptions_claim_id_claims_id_fkey",
@@ -8338,7 +8732,9 @@
       "table": "subscriptions"
     },
     {
-      "columns": ["code"],
+      "columns": [
+        "code"
+      ],
       "nameExplicit": false,
       "name": "currencies_pkey",
       "schema": "core",
@@ -8346,7 +8742,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "organizations_pkey",
       "schema": "core",
@@ -8354,7 +8752,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "memberships_pkey",
       "schema": "core",
@@ -8362,7 +8762,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "invitations_pkey",
       "schema": "core",
@@ -8370,7 +8772,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "vat_methods_pkey",
       "schema": "core",
@@ -8378,7 +8782,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "vat_periods_pkey",
       "schema": "core",
@@ -8386,7 +8792,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "vat_rates_pkey",
       "schema": "core",
@@ -8394,7 +8802,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "vat_settings_pkey",
       "schema": "core",
@@ -8402,7 +8812,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "accounting_settings_pkey",
       "schema": "core",
@@ -8410,7 +8822,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "bank_relations_pkey",
       "schema": "core",
@@ -8418,7 +8832,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "billing_settings_pkey",
       "schema": "core",
@@ -8426,7 +8842,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "document_templates_pkey",
       "schema": "core",
@@ -8434,7 +8852,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "template_contents_pkey",
       "schema": "core",
@@ -8442,7 +8862,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "accounts_pkey",
       "schema": "ledger",
@@ -8450,7 +8872,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "system_accounts_pkey",
       "schema": "ledger",
@@ -8458,7 +8882,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "journal_entries_pkey",
       "schema": "ledger",
@@ -8466,7 +8892,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "postings_pkey",
       "schema": "ledger",
@@ -8474,7 +8902,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "periods_pkey",
       "schema": "ledger",
@@ -8482,7 +8912,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "period_journal_entries_pkey",
       "schema": "ledger",
@@ -8490,7 +8922,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "posting_manual_vat_postings_pkey",
       "schema": "ledger",
@@ -8498,7 +8932,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "clients_pkey",
       "schema": "billing",
@@ -8506,7 +8942,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "contacts_pkey",
       "schema": "billing",
@@ -8514,7 +8952,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "invoices_pkey",
       "schema": "billing",
@@ -8522,7 +8962,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "lines_pkey",
       "schema": "billing",
@@ -8530,7 +8972,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "invoice_journal_entries_pkey",
       "schema": "billing",
@@ -8538,7 +8982,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "statements_pkey",
       "schema": "banking",
@@ -8546,7 +8992,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "movements_pkey",
       "schema": "banking",
@@ -8554,7 +9002,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "movement_journal_entries_pkey",
       "schema": "banking",
@@ -8562,7 +9012,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "ledger_accounts_pkey",
       "schema": "templates",
@@ -8570,7 +9022,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "vat_rates_pkey",
       "schema": "templates",
@@ -8578,7 +9032,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "accounts_pkey",
       "schema": "auth",
@@ -8586,7 +9042,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "apikeys_pkey",
       "schema": "auth",
@@ -8594,7 +9052,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "sessions_pkey",
       "schema": "auth",
@@ -8602,7 +9062,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "two_factors_pkey",
       "schema": "auth",
@@ -8610,7 +9072,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "users_pkey",
       "schema": "auth",
@@ -8618,7 +9082,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "verifications_pkey",
       "schema": "auth",
@@ -8626,7 +9092,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "conversations_pkey",
       "schema": "chat",
@@ -8634,7 +9102,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "messages_pkey",
       "schema": "chat",
@@ -8642,7 +9112,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "llm_usages_pkey",
       "schema": "metering",
@@ -8650,7 +9122,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "llm_reservations_pkey",
       "schema": "metering",
@@ -8658,7 +9132,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "migrations_pkey",
       "schema": "migration",
@@ -8666,7 +9142,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "datasets_pkey",
       "schema": "migration",
@@ -8674,7 +9152,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "logs_pkey",
       "schema": "audit",
@@ -8682,7 +9162,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "claims_pkey",
       "schema": "subscription",
@@ -8690,7 +9172,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "subscription_settings_pkey",
       "schema": "subscription",
@@ -8698,7 +9182,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "subscriptions_pkey",
       "schema": "subscription",
@@ -8707,7 +9193,9 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["token"],
+      "columns": [
+        "token"
+      ],
       "nullsNotDistinct": false,
       "name": "sessions_token_key",
       "schema": "auth",
@@ -8716,7 +9204,9 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["email"],
+      "columns": [
+        "email"
+      ],
       "nullsNotDistinct": false,
       "name": "users_email_key",
       "schema": "auth",
@@ -8922,7 +9412,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"organizations\".\"id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "organizations_select_policy",
@@ -8933,7 +9425,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"organizations\".\"deleted_at\" IS NULL AND \"core\".\"organizations\".\"id\" IN (\n    SELECT organization_id FROM core.memberships\n    WHERE user_id = auth.current_user_id() AND role = 'admin'\n  )",
       "withCheck": "\"core\".\"organizations\".\"id\" IN (\n    SELECT organization_id FROM core.memberships\n    WHERE user_id = auth.current_user_id() AND role = 'admin'\n  )",
       "name": "organizations_update_policy",
@@ -8944,7 +9438,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "auth.current_user_id() IS NOT NULL",
       "name": "organizations_insert_policy",
@@ -8955,7 +9451,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"memberships\".\"user_id\" = auth.current_user_id()",
       "withCheck": null,
       "name": "memberships_select_policy",
@@ -8966,7 +9464,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"memberships\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "name": "memberships_insert_policy",
@@ -8977,7 +9477,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"memberships\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "memberships_update_policy",
@@ -8988,7 +9490,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"memberships\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "memberships_delete_policy",
@@ -8999,7 +9503,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"invitations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invitations_select_policy",
@@ -9010,7 +9516,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"invitations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "name": "invitations_insert_policy",
@@ -9021,7 +9529,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"invitations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invitations_delete_policy",
@@ -9032,7 +9542,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "vat_methods_select_policy",
@@ -9043,7 +9555,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_methods_update_policy",
@@ -9054,7 +9568,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_methods_delete_policy",
@@ -9065,7 +9581,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"vat_methods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_methods_insert_policy",
@@ -9076,7 +9594,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "vat_periods_select_policy",
@@ -9087,7 +9607,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_periods_update_policy",
@@ -9098,7 +9620,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_periods_delete_policy",
@@ -9109,7 +9633,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"vat_periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_periods_insert_policy",
@@ -9120,7 +9646,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "vat_rates_select_policy",
@@ -9131,7 +9659,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_rates_update_policy",
@@ -9142,7 +9672,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_rates_delete_policy",
@@ -9153,7 +9685,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"vat_rates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_rates_insert_policy",
@@ -9164,7 +9698,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "vat_settings_select_policy",
@@ -9175,7 +9711,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_settings_update_policy",
@@ -9186,7 +9724,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "vat_settings_delete_policy",
@@ -9197,7 +9737,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"vat_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "vat_settings_insert_policy",
@@ -9208,7 +9750,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "accounting_settings_select_policy",
@@ -9219,7 +9763,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "accounting_settings_update_policy",
@@ -9230,7 +9776,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "accounting_settings_delete_policy",
@@ -9241,7 +9789,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"accounting_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "accounting_settings_insert_policy",
@@ -9252,7 +9802,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "bank_relations_select_policy",
@@ -9263,7 +9815,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "bank_relations_update_policy",
@@ -9274,7 +9828,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "bank_relations_delete_policy",
@@ -9285,7 +9841,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"bank_relations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "bank_relations_insert_policy",
@@ -9296,7 +9854,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "billing_settings_select_policy",
@@ -9307,7 +9867,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "billing_settings_update_policy",
@@ -9318,7 +9880,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "billing_settings_delete_policy",
@@ -9329,7 +9893,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"billing_settings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "billing_settings_insert_policy",
@@ -9340,7 +9906,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "document_templates_select_policy",
@@ -9351,7 +9919,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "document_templates_update_policy",
@@ -9362,7 +9932,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "document_templates_delete_policy",
@@ -9373,7 +9945,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"document_templates\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "document_templates_insert_policy",
@@ -9384,7 +9958,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "template_contents_select_policy",
@@ -9395,7 +9971,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "template_contents_update_policy",
@@ -9406,7 +9984,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "template_contents_delete_policy",
@@ -9417,7 +9997,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"core\".\"template_contents\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "template_contents_insert_policy",
@@ -9428,7 +10010,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "accounts_select_policy",
@@ -9439,7 +10023,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "accounts_update_policy",
@@ -9450,7 +10036,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "accounts_delete_policy",
@@ -9461,7 +10049,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "accounts_insert_policy",
@@ -9472,7 +10062,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "system_accounts_select_policy",
@@ -9483,7 +10075,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "system_accounts_update_policy",
@@ -9494,7 +10088,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "system_accounts_delete_policy",
@@ -9505,7 +10101,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"system_accounts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "system_accounts_insert_policy",
@@ -9516,7 +10114,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "journal_entries_select_policy",
@@ -9527,7 +10127,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "journal_entries_update_policy",
@@ -9538,7 +10140,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "journal_entries_delete_policy",
@@ -9549,7 +10153,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "journal_entries_insert_policy",
@@ -9560,7 +10166,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "postings_select_policy",
@@ -9571,7 +10179,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "postings_update_policy",
@@ -9582,7 +10192,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "postings_delete_policy",
@@ -9593,7 +10205,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "postings_insert_policy",
@@ -9604,7 +10218,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "periods_select_policy",
@@ -9615,7 +10231,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "periods_update_policy",
@@ -9626,7 +10244,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "periods_delete_policy",
@@ -9637,7 +10257,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"periods\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "periods_insert_policy",
@@ -9648,7 +10270,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "period_journal_entries_select_policy",
@@ -9659,7 +10283,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "period_journal_entries_update_policy",
@@ -9670,7 +10296,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "period_journal_entries_delete_policy",
@@ -9681,7 +10309,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"period_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "period_journal_entries_insert_policy",
@@ -9692,7 +10322,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "posting_manual_vat_postings_select_policy",
@@ -9703,7 +10335,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "posting_manual_vat_postings_update_policy",
@@ -9714,7 +10348,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "posting_manual_vat_postings_delete_policy",
@@ -9725,7 +10361,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"ledger\".\"posting_manual_vat_postings\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "posting_manual_vat_postings_insert_policy",
@@ -9736,7 +10374,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "clients_select_policy",
@@ -9747,7 +10387,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "clients_update_policy",
@@ -9758,7 +10400,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "clients_delete_policy",
@@ -9769,7 +10413,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"billing\".\"clients\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "clients_insert_policy",
@@ -9780,7 +10426,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "contacts_select_policy",
@@ -9791,7 +10439,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "contacts_update_policy",
@@ -9802,7 +10452,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "contacts_delete_policy",
@@ -9813,7 +10465,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"billing\".\"contacts\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "contacts_insert_policy",
@@ -9824,7 +10478,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "invoices_select_policy",
@@ -9835,7 +10491,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invoices_update_policy",
@@ -9846,7 +10504,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invoices_delete_policy",
@@ -9857,7 +10517,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"billing\".\"invoices\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "invoices_insert_policy",
@@ -9868,7 +10530,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "lines_select_policy",
@@ -9879,7 +10543,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "lines_update_policy",
@@ -9890,7 +10556,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "lines_delete_policy",
@@ -9901,7 +10569,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"billing\".\"lines\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "lines_insert_policy",
@@ -9912,7 +10582,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "invoice_journal_entries_select_policy",
@@ -9923,7 +10595,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invoice_journal_entries_update_policy",
@@ -9934,7 +10608,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "invoice_journal_entries_delete_policy",
@@ -9945,7 +10621,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"billing\".\"invoice_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "invoice_journal_entries_insert_policy",
@@ -9956,7 +10634,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "statements_select_policy",
@@ -9967,7 +10647,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "statements_update_policy",
@@ -9978,7 +10660,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "statements_delete_policy",
@@ -9989,7 +10673,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"banking\".\"statements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "statements_insert_policy",
@@ -10000,7 +10686,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "movements_select_policy",
@@ -10011,7 +10699,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "movements_update_policy",
@@ -10022,7 +10712,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "movements_delete_policy",
@@ -10033,7 +10725,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"banking\".\"movements\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "movements_insert_policy",
@@ -10044,7 +10738,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "movement_journal_entries_select_policy",
@@ -10055,7 +10751,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "movement_journal_entries_update_policy",
@@ -10066,7 +10764,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "movement_journal_entries_delete_policy",
@@ -10077,7 +10777,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"banking\".\"movement_journal_entries\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "movement_journal_entries_insert_policy",
@@ -10088,7 +10790,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "true",
       "withCheck": null,
       "name": "ledger_accounts_select_policy",
@@ -10099,7 +10803,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "false",
       "name": "ledger_accounts_insert_policy",
@@ -10110,7 +10816,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "ledger_accounts_update_policy",
@@ -10121,7 +10829,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "ledger_accounts_delete_policy",
@@ -10132,7 +10842,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "true",
       "withCheck": null,
       "name": "vat_rates_templates_select_policy",
@@ -10143,7 +10855,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "false",
       "name": "vat_rates_templates_insert_policy",
@@ -10154,7 +10868,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "vat_rates_templates_update_policy",
@@ -10165,7 +10881,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "vat_rates_templates_delete_policy",
@@ -10176,7 +10894,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"chat\".\"conversations\".\"user_id\" = auth.current_user_id() AND (\"chat\".\"conversations\".\"organization_id\" IS NULL OR \"chat\".\"conversations\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n))",
       "withCheck": null,
       "name": "conversations_select_policy",
@@ -10187,7 +10907,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"chat\".\"conversations\".\"user_id\" = auth.current_user_id() AND (\"chat\".\"conversations\".\"organization_id\" IS NULL OR \"chat\".\"conversations\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n))",
       "name": "conversations_insert_policy",
@@ -10198,7 +10920,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"chat\".\"conversations\".\"user_id\" = auth.current_user_id()",
       "withCheck": "\"chat\".\"conversations\".\"user_id\" = auth.current_user_id() AND (\"chat\".\"conversations\".\"organization_id\" IS NULL OR \"chat\".\"conversations\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n))",
       "name": "conversations_update_policy",
@@ -10209,7 +10933,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"chat\".\"conversations\".\"user_id\" = auth.current_user_id()",
       "withCheck": null,
       "name": "conversations_delete_policy",
@@ -10220,7 +10946,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"chat\".\"messages\".\"conversation_id\" IN (\n    SELECT id FROM \"chat\".\"conversations\"\n  WHERE user_id = auth.current_user_id()\n  )",
       "withCheck": null,
       "name": "messages_select_policy",
@@ -10231,7 +10959,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"chat\".\"messages\".\"conversation_id\" IN (\n    SELECT id FROM \"chat\".\"conversations\"\n  WHERE user_id = auth.current_user_id()\n  )",
       "name": "messages_insert_policy",
@@ -10242,7 +10972,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"chat\".\"messages\".\"conversation_id\" IN (\n    SELECT id FROM \"chat\".\"conversations\"\n  WHERE user_id = auth.current_user_id()\n  )",
       "withCheck": null,
       "name": "messages_delete_policy",
@@ -10253,7 +10985,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"metering\".\"llm_usages\".\"user_id\" = auth.current_user_id()",
       "withCheck": null,
       "name": "llm_usages_select_policy",
@@ -10264,7 +10998,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"metering\".\"llm_reservations\".\"user_id\" = auth.current_user_id()",
       "withCheck": null,
       "name": "llm_reservations_select_policy",
@@ -10275,7 +11011,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "migrations_select_policy",
@@ -10286,7 +11024,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "migrations_update_policy",
@@ -10297,7 +11037,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "migrations_delete_policy",
@@ -10308,7 +11050,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"migration\".\"migrations\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "migrations_insert_policy",
@@ -10319,7 +11063,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "datasets_select_policy",
@@ -10330,7 +11076,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "datasets_update_policy",
@@ -10341,7 +11089,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "withCheck": null,
       "name": "datasets_delete_policy",
@@ -10352,7 +11102,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "\"migration\".\"datasets\".\"organization_id\" IN (\n  SELECT m.organization_id FROM core.memberships m\n  JOIN core.organizations o ON o.id = m.organization_id\n  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND o.deleted_at IS NULL\n)",
       "name": "datasets_insert_policy",
@@ -10363,7 +11115,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "true",
       "withCheck": null,
       "name": "claims_select_policy",
@@ -10374,7 +11128,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "false",
       "name": "claims_insert_policy",
@@ -10385,7 +11141,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "claims_update_policy",
@@ -10396,7 +11154,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "claims_delete_policy",
@@ -10407,7 +11167,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "true",
       "withCheck": null,
       "name": "subscription_settings_select_policy",
@@ -10418,7 +11180,9 @@
     {
       "as": "PERMISSIVE",
       "for": "INSERT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": null,
       "withCheck": "false",
       "name": "subscription_settings_insert_policy",
@@ -10429,7 +11193,9 @@
     {
       "as": "PERMISSIVE",
       "for": "UPDATE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "subscription_settings_update_policy",
@@ -10440,7 +11206,9 @@
     {
       "as": "PERMISSIVE",
       "for": "DELETE",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "false",
       "withCheck": null,
       "name": "subscription_settings_delete_policy",
@@ -10451,7 +11219,9 @@
     {
       "as": "PERMISSIVE",
       "for": "SELECT",
-      "roles": ["authenticated_user"],
+      "roles": [
+        "authenticated_user"
+      ],
       "using": "\"subscription\".\"subscriptions\".\"organization_id\" IN (\n  SELECT organization_id FROM core.memberships\n  WHERE user_id = auth.current_user_id()\n)",
       "withCheck": null,
       "name": "subscriptions_select_policy",

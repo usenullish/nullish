@@ -2,6 +2,11 @@
 -- the initial claim of the subscription settings, ending after the trial of
 -- that claim, or without end when the claim has no trial.
 --
+-- It runs before the organization is inserted, so that the subscription
+-- already exists when the other organization creation triggers run. The
+-- foreign key to the organization is deferred for that reason
+-- (20261117102251_rule_subscriptions_organization_deferred).
+--
 -- ⚠️ SECURITY DEFINER: this function runs with full database rights, not the
 -- user's, because users can only read the subscriptions, never write them.
 CREATE OR REPLACE FUNCTION subscription.seed_subscription_for_organization () RETURNS TRIGGER AS $$
@@ -19,5 +24,5 @@ SET
   search_path = '';
 
 CREATE TRIGGER seed_subscription_on_organization_created
-AFTER INSERT ON core.organizations FOR EACH ROW
+BEFORE INSERT ON core.organizations FOR EACH ROW
 EXECUTE FUNCTION subscription.seed_subscription_for_organization ();
