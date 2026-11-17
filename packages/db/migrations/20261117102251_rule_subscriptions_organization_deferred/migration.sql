@@ -4,4 +4,5 @@
 --
 -- Drizzle cannot declare a deferrable foreign key, hence the ALTER.
 ALTER TABLE subscription.subscriptions
-ALTER CONSTRAINT subscriptions_organization_id_organizations_id_fkey DEFERRABLE INITIALLY DEFERRED;
+ALTER CONSTRAINT subscriptions_organization_id_organizations_id_fkey
+DEFERRABLE INITIALLY DEFERRED;
