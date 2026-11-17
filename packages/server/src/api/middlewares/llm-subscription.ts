@@ -4,7 +4,7 @@ import { ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import type { ApiEnv } from "../types/api";
 import { errorResponse, toApiError } from "../_errors";
 
-export const llmSubscriptionMiddleware = createMiddleware<ApiEnv>(async (context, next) => {
+export const assertLlmSubscriptionMiddleware =createMiddleware<ApiEnv>(async (context, next) => {
   const {
     var: {
       db: { connection },

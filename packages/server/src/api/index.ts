@@ -15,7 +15,7 @@ import { loadWorkersMiddleware } from "./middlewares/workers";
 import { defineMcp } from "./resources/_mcp";
 import { llmUsageLimitMiddleware } from "./middlewares/llm-usage";
 import { assertLlmEnabledMiddleware } from "./middlewares/llm-enabled";
-import { llmSubscriptionMiddleware } from "./middlewares/llm-subscription";
+import { assertLlmSubscriptionMiddleware } from "./middlewares/llm-subscription";
 import { RATE_LIMITS, userRateLimitMiddleware } from "./middlewares/rate-limit";
 
 export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
@@ -37,7 +37,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
     "POST",
     "/chat",
     assertLlmEnabledMiddleware,
-    llmSubscriptionMiddleware,
+    assertLlmSubscriptionMiddleware,
     llmUsageLimitMiddleware,
   );
 

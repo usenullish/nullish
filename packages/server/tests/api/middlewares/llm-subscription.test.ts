@@ -10,7 +10,7 @@ import {
 } from "@usenullish/nullish-schema/db";
 import { ErrorCode } from "@usenullish/nullish-schema/server";
 import type { ApiEnv } from "../../../src/api/types/api";
-import { llmSubscriptionMiddleware } from "../../../src/api/middlewares/llm-subscription";
+import { assertLlmSubscriptionMiddleware } from "../../../src/api/middlewares/llm-subscription";
 import {
   createOrganization,
   resetDb,
@@ -44,7 +44,7 @@ describe("llm subscription", () => {
       await next();
     });
 
-    app.post("/chat", llmSubscriptionMiddleware, (context) => context.text("passed"));
+    app.post("/chat", assertLlmSubscriptionMiddleware, (context) => context.text("passed"));
 
     return await app.request("/chat", {
       method: "POST",
