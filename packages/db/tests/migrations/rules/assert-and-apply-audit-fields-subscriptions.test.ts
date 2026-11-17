@@ -10,25 +10,18 @@ import { causeMessage, createOrganization, resetDb, seedUsers } from "../_test-u
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 describe("core.assert_and_apply_audit_fields on subscription.subscriptions", () => {
-  let claimId: string;
   let subscriptionId: string;
 
   beforeAll(async () => {
     await resetDb(db);
     await seedUsers(db);
-
-    const [claim] = await db.insert(claims).values({}).returning();
-    assertNonNullish(claim);
-    claimId = claim.id;
   });
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, claimId));
     await client.close();
   });
 
@@ -36,9 +29,9 @@ describe("core.assert_and_apply_audit_fields on subscription.subscriptions", () 
     const organizationId = await createOrganization(db);
 
     const [subscription] = await db
-      .insert(subscriptions)
-      .values({ organizationId, claimId, status: SubscriptionStatus.ACTIVE })
-      .returning();
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.organizationId, organizationId));
     assertNonNullish(subscription);
     subscriptionId = subscription.id;
   });
