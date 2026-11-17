@@ -53,6 +53,7 @@ export * from "./audit/logs";
 
 export * from "./subscription/_schema";
 export * from "./subscription/claims";
+export * from "./subscription/subscription-settings";
 export * from "./subscription/subscriptions";
 
 export { currencyValue } from "./_currency";

@@ -6,13 +6,22 @@ CREATE TYPE "subscription"."subscription_status" AS ENUM('active', 'past_due', '
 --> statement-breakpoint
 CREATE TABLE "subscription"."claims" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  "onboarding" boolean DEFAULT false NOT NULL,
   "trial_days" integer,
   CONSTRAINT "claims_trial_days_positive" CHECK ("trial_days" >= 1)
 );
 
 --> statement-breakpoint
 ALTER TABLE "subscription"."claims" ENABLE ROW LEVEL SECURITY;
+
+--> statement-breakpoint
+CREATE TABLE "subscription"."subscription_settings" (
+  "id" integer PRIMARY KEY DEFAULT 1,
+  "initial_claim_id" uuid NOT NULL,
+  CONSTRAINT "subscription_settings_single_row" CHECK ("id" = 1)
+);
+
+--> statement-breakpoint
+ALTER TABLE "subscription"."subscription_settings" ENABLE ROW LEVEL SECURITY;
 
 --> statement-breakpoint
 CREATE TABLE "subscription"."subscriptions" (
@@ -30,12 +39,11 @@ CREATE TABLE "subscription"."subscriptions" (
 ALTER TABLE "subscription"."subscriptions" ENABLE ROW LEVEL SECURITY;
 
 --> statement-breakpoint
-CREATE UNIQUE INDEX "claims_onboarding_uidx" ON "subscription"."claims" ("onboarding")
-WHERE
-  "onboarding";
+CREATE UNIQUE INDEX "subscriptions_org_uidx" ON "subscription"."subscriptions" ("organization_id");
 
 --> statement-breakpoint
-CREATE UNIQUE INDEX "subscriptions_org_uidx" ON "subscription"."subscriptions" ("organization_id");
+ALTER TABLE "subscription"."subscription_settings"
+ADD CONSTRAINT "subscription_settings_initial_claim_id_claims_id_fkey" FOREIGN KEY ("initial_claim_id") REFERENCES "subscription"."claims" ("id");
 
 --> statement-breakpoint
 ALTER TABLE "subscription"."subscriptions"
@@ -62,6 +70,24 @@ FOR UPDATE
 
 --> statement-breakpoint
 CREATE POLICY "claims_delete_policy" ON "subscription"."claims" AS PERMISSIVE FOR DELETE TO "authenticated_user" USING (false);
+
+--> statement-breakpoint
+CREATE POLICY "subscription_settings_select_policy" ON "subscription"."subscription_settings" AS PERMISSIVE FOR
+SELECT
+  TO "authenticated_user" USING (true);
+
+--> statement-breakpoint
+CREATE POLICY "subscription_settings_insert_policy" ON "subscription"."subscription_settings" AS PERMISSIVE FOR INSERT TO "authenticated_user"
+WITH
+  CHECK (false);
+
+--> statement-breakpoint
+CREATE POLICY "subscription_settings_update_policy" ON "subscription"."subscription_settings" AS PERMISSIVE
+FOR UPDATE
+  TO "authenticated_user" USING (false);
+
+--> statement-breakpoint
+CREATE POLICY "subscription_settings_delete_policy" ON "subscription"."subscription_settings" AS PERMISSIVE FOR DELETE TO "authenticated_user" USING (false);
 
 --> statement-breakpoint
 CREATE POLICY "subscriptions_select_policy" ON "subscription"."subscriptions" AS PERMISSIVE FOR
