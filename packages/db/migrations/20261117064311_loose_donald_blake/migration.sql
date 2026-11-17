@@ -21,9 +21,6 @@ ALTER TABLE "core"."subscriptions" ENABLE ROW LEVEL SECURITY;
 CREATE TABLE "instance"."organization_rules" (
   "id" integer PRIMARY KEY DEFAULT 1,
   "initial_subscription_status" "core"."subscription_status" DEFAULT 'active'::"core"."subscription_status" NOT NULL,
-  "created_at" timestamp with time zone DEFAULT now() NOT NULL,
-  "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-  "version" integer DEFAULT 1 NOT NULL,
   CONSTRAINT "organization_rules_single_row" CHECK ("id" = 1),
   CONSTRAINT "organization_rules_initial_subscription_status" CHECK (
     "initial_subscription_status" IN ('active', 'pending')
