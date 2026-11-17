@@ -61,6 +61,7 @@ import * as SettingsSchema from "./api/settings";
 import * as MigrationsSchema from "./api/migrations";
 import * as MigrationsDatasetsSchema from "./api/migrations+datasets";
 import * as MigrationsRunSchema from "./api/migrations+run";
+import * as SubscriptionsSchema from "./api/subscriptions";
 
 const ApiSchema = {
   Periods: PeriodsSchema,
@@ -123,6 +124,7 @@ const ApiSchema = {
   Migrations: MigrationsSchema,
   MigrationsDatasets: MigrationsDatasetsSchema,
   MigrationsRun: MigrationsRunSchema,
+  Subscriptions: SubscriptionsSchema,
 };
 
 const CommonSchema = {

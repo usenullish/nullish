@@ -26,6 +26,15 @@ export const encodeInvitationResponse = <
   expiresAt: encodeWithCodecs({ schema: TimestampCodec, value: invitation.expiresAt }),
 });
 
+export const encodeSubscriptionResponse = (
+  subscription: Records["Subscription"]["Subscriptions"]["Select"],
+) => ({
+  ...encodeAuditFieldsResponse(subscription),
+  periodEnd: nonNullish(subscription.periodEnd)
+    ? encodeWithCodecs({ schema: TimestampCodec, value: subscription.periodEnd })
+    : null,
+});
+
 export const encodeOrganizationResponse = (
   organization: Records["Core"]["Organizations"]["Select"],
 ) => ({

@@ -954,6 +954,18 @@ interface Api {
       >;
     };
   };
+  Subscriptions: {
+    Server: {
+      GetSubscriptionsResponse: z.input<
+        typeof ApiSchema.Subscriptions.GetSubscriptionsResponseSchema
+      >;
+    };
+    Client: {
+      GetSubscriptionsResponse: z.infer<
+        typeof ApiSchema.Subscriptions.GetSubscriptionsResponseSchema
+      >;
+    };
+  };
 }
 
 interface Common {
