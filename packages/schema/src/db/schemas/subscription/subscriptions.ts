@@ -35,6 +35,10 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
   (table) => [
     pg.uniqueIndex("subscriptions_org_uidx").on(table.organizationId),
     pg.check(
+      "subscriptions_trialing_period_end",
+      sql`${table.status} <> 'trialing' OR ${table.periodEnd} IS NOT NULL`,
+    ),
+    pg.check(
       "subscriptions_past_due_period_end",
       sql`${table.status} <> 'past_due' OR ${table.periodEnd} IS NOT NULL`,
     ),

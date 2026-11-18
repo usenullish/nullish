@@ -75,6 +75,23 @@ describe("subscription/_helpers/subscription-summaries", () => {
     });
   });
 
+  test("returns an open organization until the end of its trial", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+    const periodEnd = new Date(Date.now() + DAY_MS);
+
+    await updateSubscription({
+      organizationId,
+      values: { status: SubscriptionStatus.TRIALING, periodEnd },
+    });
+
+    const [summary] = await list(organizationId);
+
+    expect(summary?.organization).toEqual({
+      status: OrganizationSubscriptionStatus.OPEN,
+      expiresAt: periodEnd,
+    });
+  });
+
   test("adds the grace days of the settings to the end in grace", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
     const periodEnd = new Date(Date.now() - DAY_MS);

@@ -14,7 +14,7 @@ BEGIN
     FROM subscription.subscriptions s
     CROSS JOIN subscription.subscription_settings st
     WHERE s.organization_id = p_organization_id
-      AND s.status IN ('active', 'past_due')
+      AND s.status IN ('trialing', 'active', 'past_due')
       AND (
         s.period_end IS NULL
         OR s.period_end > now()

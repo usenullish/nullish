@@ -95,6 +95,28 @@ describe("DbCollectionSubscriptionSummaries", () => {
     expect(await organizationStatusOf(organizationId)).toBe(OrganizationSubscriptionStatus.LOCKED);
   });
 
+  test("is open with a trialing subscription before its end", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    await updateSubscription({
+      organizationId,
+      values: { status: SubscriptionStatus.TRIALING, periodEnd: new Date(Date.now() + DAY_MS) },
+    });
+
+    expect(await organizationStatusOf(organizationId)).toBe(OrganizationSubscriptionStatus.OPEN);
+  });
+
+  test("is locked with a trialing subscription after its end", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    await updateSubscription({
+      organizationId,
+      values: { status: SubscriptionStatus.TRIALING, periodEnd: new Date(Date.now() - DAY_MS) },
+    });
+
+    expect(await organizationStatusOf(organizationId)).toBe(OrganizationSubscriptionStatus.LOCKED);
+  });
+
   test("is in grace with a past due subscription within the grace days", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
 
