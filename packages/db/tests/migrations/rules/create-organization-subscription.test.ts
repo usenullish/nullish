@@ -51,7 +51,7 @@ describe("seed_subscription_for_organization", () => {
     expect(rows[0]?.periodEnd).toBeNull();
   });
 
-  test("ends the subscription after the trial of the initial claim", async () => {
+  test("creates a trialing subscription ending after the trial of the initial claim", async () => {
     await db.update(claims).set({ trialDays: 14 }).where(eq(claims.id, initialClaimId));
 
     const before = Date.now();
@@ -61,7 +61,7 @@ describe("seed_subscription_for_organization", () => {
     const [subscription] = await subscriptionsOf(organizationId);
     const periodEnd = subscription?.periodEnd?.getTime() ?? 0;
 
-    expect(subscription?.status).toBe(SubscriptionStatus.ACTIVE);
+    expect(subscription?.status).toBe(SubscriptionStatus.TRIALING);
     expect(periodEnd).toBeGreaterThanOrEqual(before + 14 * DAY_MS - 1000);
     expect(periodEnd).toBeLessThanOrEqual(after + 14 * DAY_MS + 1000);
   });

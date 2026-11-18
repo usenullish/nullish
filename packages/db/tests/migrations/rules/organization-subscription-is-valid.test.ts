@@ -59,6 +59,8 @@ describe("subscription.organization_subscription_is_valid", () => {
   });
 
   test.each([
+    ["trialing before its end", SubscriptionStatus.TRIALING, 1, true],
+    ["trialing after its end", SubscriptionStatus.TRIALING, -1, false],
     ["active without end", SubscriptionStatus.ACTIVE, null, true],
     ["active before its end", SubscriptionStatus.ACTIVE, 1, true],
     ["active after its end", SubscriptionStatus.ACTIVE, -1, false],
