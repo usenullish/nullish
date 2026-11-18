@@ -14,12 +14,15 @@ const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.Subscrip
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 const runSeed = async (): Promise<void> => {
-  const seed = await Bun.file(
-    new URL(
-      "../../../migrations/20261117102252_seed_organization_subscriptions/migration.sql",
-      import.meta.url,
-    ),
-  ).text();
+  const [seedPath] = await Array.fromAsync(
+    new Bun.Glob("*_seed_organization_subscriptions/migration.sql").scan({
+      cwd: new URL("../../../migrations/", import.meta.url).pathname,
+      absolute: true,
+    }),
+  );
+  assertNonNullish(seedPath);
+
+  const seed = await Bun.file(seedPath).text();
 
   await db.execute(sql.raw(seed));
 };

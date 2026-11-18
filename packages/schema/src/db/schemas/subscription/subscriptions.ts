@@ -19,7 +19,7 @@ export const subscriptionStatus = SubscriptionSchema.enum(
 // (e.g. the default accounts) would be rejected by the policies.
 //
 // Drizzle cannot generate DEFERRABLE INITIALLY DEFERRED, so it is done in
-// 20261117102251_rule_subscriptions_organization_deferred.
+// rule_subscriptions_organization_deferred.
 const deferredOrganizationIdReference = () => organizationIdReference();
 
 export const SubscriptionsSchema = SubscriptionSchema.table(
