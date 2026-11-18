@@ -5,6 +5,10 @@ export enum SubscriptionStatus {
   INACTIVE = "inactive",
 }
 
+export enum SubscriptionProvider {
+  STRIPE = "stripe",
+}
+
 export enum OrganizationSubscriptionStatus {
   OPEN = "open",
   GRACE = "grace",

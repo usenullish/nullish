@@ -4,6 +4,7 @@ import { timestamp } from "../_temporal";
 import * as pg from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { readonlyPolicies } from "../_policies";
+import { subscriptionProvider } from "./provider";
 
 export const ClaimsSchema = SubscriptionSchema.table(
   "claims",
@@ -11,9 +12,18 @@ export const ClaimsSchema = SubscriptionSchema.table(
     id: primaryKey(),
     trialDays: pg.integer(),
     expiresAt: timestamp(),
+    provider: subscriptionProvider(),
+    externalProductId: pg.text(),
   },
   (table) => [
     pg.check("claims_trial_days_positive", sql`${table.trialDays} >= 1`),
+    pg.check(
+      "claims_provider_external_product",
+      sql`(${table.provider} IS NULL) = (${table.externalProductId} IS NULL)`,
+    ),
+    pg
+      .uniqueIndex("claims_provider_external_product_uidx")
+      .on(table.provider, table.externalProductId),
     ...readonlyPolicies({ tableName: "claims" }),
   ],
 );
