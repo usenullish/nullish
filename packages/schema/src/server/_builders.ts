@@ -35,6 +35,14 @@ export const encodeSubscriptionResponse = (
     : null,
 });
 
+export const encodeSubscriptionSummaryResponse = ({
+  subscription,
+  organization,
+}: Composites["SubscriptionSummaries"]["Select"]) => ({
+  subscription: encodeSubscriptionResponse(subscription),
+  organization,
+});
+
 export const encodeOrganizationResponse = (
   organization: Records["Core"]["Organizations"]["Select"],
 ) => ({
