@@ -31,6 +31,7 @@ import * as MigrationDatasetsSchema from "./schemas/migration/datasets";
 import * as ClaimsSchema from "./schemas/subscription/claims";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
+import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
 
 const DbSchema = {
   Auth: {
@@ -85,6 +86,7 @@ const DbSchema = {
     Claims: ClaimsSchema,
     SubscriptionSettings: SubscriptionSettingsSchema,
     Subscriptions: SubscriptionsSchema,
+    SubscriptionReferences: SubscriptionReferencesSchema,
   },
 };
 

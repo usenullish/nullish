@@ -11,9 +11,11 @@ export const ClaimsSchema = SubscriptionSchema.table(
     id: primaryKey(),
     trialDays: pg.integer(),
     expiresAt: timestamp(),
+    externalProductId: pg.text(),
   },
   (table) => [
     pg.check("claims_trial_days_positive", sql`${table.trialDays} >= 1`),
+    pg.uniqueIndex("claims_external_product_uidx").on(table.externalProductId),
     ...readonlyPolicies({ tableName: "claims" }),
   ],
 );

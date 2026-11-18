@@ -58,6 +58,7 @@ interface Db {
     Claims: typeof DbSchema.Subscription.Claims.ClaimsSchema;
     SubscriptionSettings: typeof DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
     Subscriptions: typeof DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
+    SubscriptionReferences: typeof DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
   };
 }
 

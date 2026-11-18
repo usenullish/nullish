@@ -58,5 +58,6 @@ export * from "./audit/logs";
 export * from "./subscription/claims";
 export * from "./subscription/subscription-settings";
 export * from "./subscription/subscriptions";
+export * from "./subscription/subscription-references";
 
 export { currencyValue } from "./_currency";
