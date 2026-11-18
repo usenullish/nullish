@@ -200,6 +200,14 @@
         "@types/papaparse": "^5.5.2",
       },
     },
+    "packages/payments": {
+      "name": "@usenullish/nullish-payments",
+      "dependencies": {
+        "@usenullish/nullish-common": "workspace:*",
+        "@usenullish/nullish-env": "workspace:*",
+        "@usenullish/nullish-schema": "workspace:*",
+      },
+    },
     "packages/schema": {
       "name": "@usenullish/nullish-schema",
       "dependencies": {
@@ -870,6 +878,8 @@
     "@usenullish/nullish-metering": ["@usenullish/nullish-metering@workspace:packages/metering"],
 
     "@usenullish/nullish-migration": ["@usenullish/nullish-migration@workspace:packages/migration"],
+
+    "@usenullish/nullish-payments": ["@usenullish/nullish-payments@workspace:packages/payments"],
 
     "@usenullish/nullish-schema": ["@usenullish/nullish-schema@workspace:packages/schema"],
 
