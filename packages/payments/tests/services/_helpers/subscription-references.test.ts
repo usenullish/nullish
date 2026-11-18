@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import {
-  getReferencedOrganizationId,
   getSubscriptionReference,
   insertSubscriptionReference,
 } from "../../../src/services/_helpers/subscription-references";
@@ -83,38 +82,6 @@ describe("subscription references helpers", () => {
       );
 
       expect(reference).toBeUndefined();
-    });
-  });
-
-  describe("getReferencedOrganizationId", () => {
-    test("returns the organization of the external subscription", async () => {
-      const externalIds = externalIdsOf();
-
-      await insertReference(externalIds);
-
-      const result = await db.transaction((tx) =>
-        getReferencedOrganizationId({
-          tx,
-          provider,
-          externalSubscriptionId: externalIds.subscriptionId,
-        }),
-      );
-
-      expect(result).toBe(organizationId);
-    });
-
-    test("returns nothing for an unknown external subscription", async () => {
-      await insertReference();
-
-      const result = await db.transaction((tx) =>
-        getReferencedOrganizationId({
-          tx,
-          provider,
-          externalSubscriptionId: `sub_${crypto.randomUUID()}`,
-        }),
-      );
-
-      expect(result).toBeUndefined();
     });
   });
 
