@@ -284,7 +284,7 @@ export const readonlyPolicies = ({ tableName }: { tableName: string }) => [
 ];
 
 // subscription.organization_subscription_is_valid is declared in the custom migration
-// 20261117111529_function_subscription_is_valid, not by Drizzle.
+// function_subscription_is_valid, not by Drizzle.
 export const orgSubscriptionIsValid = ({ organizationId }: { organizationId: AnyPgColumn }) =>
   sql`subscription.organization_subscription_is_valid(${organizationId})`;
 

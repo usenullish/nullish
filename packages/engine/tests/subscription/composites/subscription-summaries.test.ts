@@ -117,17 +117,6 @@ describe("DbCollectionSubscriptionSummaries", () => {
     expect(await organizationStatusOf(organizationId)).toBe(OrganizationSubscriptionStatus.GRACE);
   });
 
-  test("is in grace with a past due subscription without end", async () => {
-    const organizationId = await createOrganization(db, TEST_USER_ID);
-
-    await updateSubscription({
-      organizationId,
-      values: { status: SubscriptionStatus.PAST_DUE },
-    });
-
-    expect(await organizationStatusOf(organizationId)).toBe(OrganizationSubscriptionStatus.GRACE);
-  });
-
   test("is locked with a past due subscription after the grace days", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
 
@@ -203,23 +192,7 @@ describe("DbCollectionSubscriptionSummaries", () => {
 
       const expected = periodEnd.getTime() + 7 * DAY_MS;
 
-      expect(Math.abs((organization.expiresAt?.getTime() ?? 0) - expected)).toBeLessThanOrEqual(
-        HOUR_MS,
-      );
-    });
-
-    test("is empty in grace without end", async () => {
-      const organizationId = await createOrganization(db, TEST_USER_ID);
-
-      await updateSubscription({
-        organizationId,
-        values: { status: SubscriptionStatus.PAST_DUE },
-      });
-
-      expect(await organizationOf(organizationId)).toEqual({
-        status: OrganizationSubscriptionStatus.GRACE,
-        expiresAt: null,
-      });
+      expect(Math.abs(organization.expiresAt.getTime() - expected)).toBeLessThanOrEqual(HOUR_MS);
     });
 
     test("is absent for a locked organization", async () => {

@@ -9,7 +9,7 @@ export const SubscriptionOrganizationSchema = z.discriminatedUnion("status", [
   }),
   z.strictObject({
     status: z.literal(OrganizationSubscriptionStatus.GRACE),
-    expiresAt: z.date().nullable(),
+    expiresAt: z.date(),
   }),
   z.strictObject({
     status: z.literal(OrganizationSubscriptionStatus.LOCKED),

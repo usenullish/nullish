@@ -62,7 +62,6 @@ describe("subscription.organization_subscription_is_valid", () => {
     ["active without end", SubscriptionStatus.ACTIVE, null, true],
     ["active before its end", SubscriptionStatus.ACTIVE, 1, true],
     ["active after its end", SubscriptionStatus.ACTIVE, -1, false],
-    ["past due without end", SubscriptionStatus.PAST_DUE, null, true],
     ["past due before its end", SubscriptionStatus.PAST_DUE, 1, true],
     ["past due within the grace days", SubscriptionStatus.PAST_DUE, -6, true],
     ["past due after the grace days", SubscriptionStatus.PAST_DUE, -8, false],
