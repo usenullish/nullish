@@ -1,13 +1,8 @@
 import { SubscriptionSchema } from "./_schema";
 import { primaryKey } from "../_common";
 import * as pg from "drizzle-orm/pg-core";
-import { SubscriptionProvider } from "../../constants/subscriptions";
+import { subscriptionProvider } from "./provider";
 import { SubscriptionsSchema } from "./subscriptions";
-
-export const subscriptionProvider = SubscriptionSchema.enum(
-  "subscription_provider",
-  SubscriptionProvider,
-);
 
 export const SubscriptionReferencesSchema = SubscriptionSchema.table(
   "subscription_references",
