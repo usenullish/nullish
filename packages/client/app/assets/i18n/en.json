@@ -263,7 +263,8 @@
     "action": {
       "create": "Create organization",
       "lets_go": "Let's go!",
-      "delete": "Delete organization"
+      "delete": "Delete organization",
+      "back_to_organizations": "Back to my organizations"
     },
     "state": {
       "creating": "Creating…"
@@ -294,7 +295,9 @@
       "danger_zone": "Deleting the organization makes it read-only. It is deleted for good, with all its data, after 30 days.",
       "delete_title": "Delete {name}?",
       "delete_description": "The organization becomes read-only right away and is deleted for good, with all its data, after 30 days. This action is irreversible.",
-      "deleted": "This organization was marked as deleted on {date}."
+      "deleted": "This organization was marked as deleted on {date}.",
+      "locked_title": "{name} is locked",
+      "locked_description": "Its subscription is no longer active, so its data can't be accessed for now. Nothing is lost."
     },
     "toast": {
       "create_error": "The organization could not be created.",

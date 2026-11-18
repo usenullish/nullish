@@ -263,7 +263,8 @@
     "action": {
       "create": "Créer une organisation",
       "lets_go": "C'est parti !",
-      "delete": "Supprimer l'organisation"
+      "delete": "Supprimer l'organisation",
+      "back_to_organizations": "Retour à mes organisations"
     },
     "state": {
       "creating": "Création…"
@@ -294,7 +295,9 @@
       "danger_zone": "La suppression rend l'organisation accessible en lecture seule. Elle est supprimée définitivement, avec toutes ses données, après 30 jours.",
       "delete_title": "Supprimer {name} ?",
       "delete_description": "L'organisation passe immédiatement en lecture seule et est supprimée définitivement, avec toutes ses données, après 30 jours. Cette action est irréversible.",
-      "deleted": "Cette organisation a été marquée comme supprimée le {date}."
+      "deleted": "Cette organisation a été marquée comme supprimée le {date}.",
+      "locked_title": "{name} est verrouillée",
+      "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment. Rien n'est perdu."
     },
     "toast": {
       "create_error": "L'organisation n'a pas pu être créée.",

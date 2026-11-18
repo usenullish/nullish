@@ -263,7 +263,8 @@
     "action": {
       "create": "Crea l'organizzazione",
       "lets_go": "Andiamo!",
-      "delete": "Elimina organizzazione"
+      "delete": "Elimina organizzazione",
+      "back_to_organizations": "Torna alle mie organizzazioni"
     },
     "state": {
       "creating": "Creazione…"
@@ -294,7 +295,9 @@
       "danger_zone": "L'eliminazione rende l'organizzazione di sola lettura. Viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni.",
       "delete_title": "Eliminare {name}?",
       "delete_description": "L'organizzazione passa subito in sola lettura e viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni. Questa azione è irreversibile.",
-      "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}."
+      "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}.",
+      "locked_title": "{name} è bloccata",
+      "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora. Non si perde nulla."
     },
     "toast": {
       "create_error": "Non è stato possibile creare l'organizzazione.",

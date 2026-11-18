@@ -4,6 +4,7 @@ import { isNullish } from "@usenullish/nullish-common";
 import { Navigate, Outlet, type ShouldRevalidateFunction } from "react-router";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { OrganizationLayout } from "~/components/layout/organization-layout";
+import { SubscriptionGuard } from "~/components/auth/guards/subscription-guard";
 import { WriteRouteGuard } from "~/components/auth/guards/write-route-guard";
 import { AccountsContext } from "~/context/contexts/accounts.context";
 import { AccountingSettingsContext } from "~/context/contexts/accounting-settings.context";
@@ -32,19 +33,21 @@ const Layout = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <NonNullishOrganizationContext.Provider value={organization}>
-      <AccountsContext.Provider value={loaderData.accounts}>
-        <AccountingSettingsContext.Provider value={loaderData.accountingSettings}>
-          <BillingSettingsContext.Provider value={loaderData.billingSettings}>
-            <ClientsContext.Provider value={loaderData.clients}>
-              <OrganizationLayout>
-                <WriteRouteGuard>
-                  <Outlet />
-                </WriteRouteGuard>
-              </OrganizationLayout>
-            </ClientsContext.Provider>
-          </BillingSettingsContext.Provider>
-        </AccountingSettingsContext.Provider>
-      </AccountsContext.Provider>
+      <SubscriptionGuard subscriptionSummary={loaderData.subscriptionSummary}>
+        <AccountsContext.Provider value={loaderData.accounts}>
+          <AccountingSettingsContext.Provider value={loaderData.accountingSettings}>
+            <BillingSettingsContext.Provider value={loaderData.billingSettings}>
+              <ClientsContext.Provider value={loaderData.clients}>
+                <OrganizationLayout>
+                  <WriteRouteGuard>
+                    <Outlet />
+                  </WriteRouteGuard>
+                </OrganizationLayout>
+              </ClientsContext.Provider>
+            </BillingSettingsContext.Provider>
+          </AccountingSettingsContext.Provider>
+        </AccountsContext.Provider>
+      </SubscriptionGuard>
     </NonNullishOrganizationContext.Provider>
   );
 };
