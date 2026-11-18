@@ -4,6 +4,7 @@ import { organizationIdReference } from "../core/organizations";
 import { auditFields } from "../_audit";
 import { timestamp } from "../_temporal";
 import * as pg from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { SubscriptionStatus } from "../../constants/subscriptions";
 import { subscriptionPolicies } from "../_policies";
 import { claimIdReference } from "./claims";
@@ -33,6 +34,10 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
   },
   (table) => [
     pg.uniqueIndex("subscriptions_org_uidx").on(table.organizationId),
+    pg.check(
+      "subscriptions_past_due_period_end",
+      sql`${table.status} <> 'past_due' OR ${table.periodEnd} IS NOT NULL`,
+    ),
     ...subscriptionPolicies({ organizationId: table.organizationId }),
   ],
 );

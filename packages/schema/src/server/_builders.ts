@@ -36,20 +36,34 @@ export const encodeSubscriptionResponse = (
     : null,
 });
 
+const encodeSubscriptionOrganizationResponse = (
+  organization: Composites["SubscriptionSummaries"]["Select"]["organization"],
+) => {
+  if (organization.status === OrganizationSubscriptionStatus.LOCKED) {
+    return organization;
+  }
+
+  if (organization.status === OrganizationSubscriptionStatus.GRACE) {
+    return {
+      ...organization,
+      expiresAt: encodeWithCodecs({ schema: TimestampCodec, value: organization.expiresAt }),
+    };
+  }
+
+  return {
+    ...organization,
+    expiresAt: nonNullish(organization.expiresAt)
+      ? encodeWithCodecs({ schema: TimestampCodec, value: organization.expiresAt })
+      : null,
+  };
+};
+
 export const encodeSubscriptionSummaryResponse = ({
   subscription,
   organization,
 }: Composites["SubscriptionSummaries"]["Select"]) => ({
   subscription: encodeSubscriptionResponse(subscription),
-  organization:
-    organization.status === OrganizationSubscriptionStatus.LOCKED
-      ? organization
-      : {
-          ...organization,
-          expiresAt: nonNullish(organization.expiresAt)
-            ? encodeWithCodecs({ schema: TimestampCodec, value: organization.expiresAt })
-            : null,
-        },
+  organization: encodeSubscriptionOrganizationResponse(organization),
 });
 
 export const encodeOrganizationResponse = (

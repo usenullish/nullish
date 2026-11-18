@@ -57,7 +57,7 @@ describe("audit.logs of subscription.subscriptions", () => {
   test("records a change of status", async () => {
     await db
       .update(subscriptions)
-      .set({ status: SubscriptionStatus.PAST_DUE })
+      .set({ status: SubscriptionStatus.PAST_DUE, periodEnd: new Date() })
       .where(eq(subscriptions.id, subscriptionId));
 
     const logs = await logsOf(subscriptionId);
