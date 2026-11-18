@@ -1,14 +1,12 @@
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { assertArrayAtMostOne, type Option } from "@usenullish/nullish-common";
 import { selectMany, type Tx } from "@usenullish/nullish-db";
 import { DbSchema } from "@usenullish/nullish-schema/db";
 import type { Payments } from "@usenullish/nullish-schema/payments";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
 
-const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
 
-type Subscription = Records["Subscription"]["Subscriptions"]["Select"];
 type SubscriptionReference = Records["Subscription"]["SubscriptionReferences"]["Select"];
 
 export const getSubscriptionReference = async ({
@@ -30,32 +28,6 @@ export const getSubscriptionReference = async ({
 
   const [reference] = rows;
   return reference;
-};
-
-export const getReferencedOrganizationId = async ({
-  tx,
-  provider,
-  externalSubscriptionId,
-}: {
-  tx: Tx;
-} & Pick<SubscriptionReference, "provider" | "externalSubscriptionId">): Promise<
-  Option<Subscription["organizationId"]>
-> => {
-  const rows = await tx
-    .select({ organizationId: subscriptions.organizationId })
-    .from(references)
-    .innerJoin(subscriptions, eq(subscriptions.id, references.subscriptionId))
-    .where(
-      and(
-        eq(references.provider, provider),
-        eq(references.externalSubscriptionId, externalSubscriptionId),
-      ),
-    );
-
-  assertArrayAtMostOne(rows);
-
-  const [row] = rows;
-  return row?.organizationId;
 };
 
 export const insertSubscriptionReference = async ({

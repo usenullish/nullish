@@ -15,7 +15,7 @@ export const PaymentExternalIdsSchema = z.strictObject({
 });
 
 export const PaymentSchema = z.strictObject({
-  organizationId: SelectSubscriptionsSchema.shape.organizationId.optional(),
+  organizationId: SelectSubscriptionsSchema.shape.organizationId,
   provider: SelectSubscriptionReferencesSchema.shape.provider,
   externalIds: PaymentExternalIdsSchema,
   status: SelectSubscriptionsSchema.shape.status,
