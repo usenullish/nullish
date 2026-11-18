@@ -13,15 +13,17 @@ import { version } from "../../../../package.json";
 import { swaggerUI } from "@hono/swagger-ui";
 import { loadWorkersMiddleware } from "./middlewares/workers";
 import { defineMcp } from "./resources/_mcp";
+import { initWebhooks } from "./webhooks";
 import { llmUsageLimitMiddleware } from "./middlewares/llm-usage";
 import { assertLlmEnabledMiddleware } from "./middlewares/llm-enabled";
 import { assertLlmSubscriptionMiddleware } from "./middlewares/llm-subscription";
 import { RATE_LIMITS, userRateLimitMiddleware } from "./middlewares/rate-limit";
 
-export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
+export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   const app = new OpenAPIHono<ApiEnv>();
 
   const resources = initResources({ app });
+  const webhooks = initWebhooks({ app, payments });
 
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", loadDbMiddleware({ db }));
@@ -46,6 +48,8 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail }) => {
   app.all("/mcp", defineMcp);
 
   resources.forEach((resource) => resource.register());
+
+  webhooks.forEach((webhook) => webhook.register());
 
   app.openapi(settingsRoute, defineSettings({ mail }));
   app.openapi(healthRoute, defineHealth);
