@@ -19,6 +19,7 @@ export abstract class PaymentProvider implements HandlePaymentEvent {
       return undefined;
     }
 
+
     const payment = PaymentsSchema.PaymentSchema.parse(resolved);
 
     const result = await withDbContext(async (dbContext) => {
