@@ -973,7 +973,9 @@ interface Api {
       >;
     };
     Client: {
-      SubscriptionSummary: z.infer<typeof ApiSchema.SubscriptionSummaries.SubscriptionSummarySchema>;
+      SubscriptionSummary: z.infer<
+        typeof ApiSchema.SubscriptionSummaries.SubscriptionSummarySchema
+      >;
       GetSubscriptionSummariesResponse: z.infer<
         typeof ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema
       >;
