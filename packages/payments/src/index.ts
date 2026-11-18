@@ -1,1 +1,1 @@
-export { createPaymentProvider } from "./provider";
+export default {};

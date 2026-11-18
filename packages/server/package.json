@@ -24,7 +24,6 @@
     "@usenullish/nullish-jobs": "workspace:*",
     "@usenullish/nullish-mail": "workspace:*",
     "@usenullish/nullish-metering": "workspace:*",
-    "@usenullish/nullish-payments": "workspace:*",
     "@usenullish/nullish-schema": "workspace:*",
     "@usenullish/nullish-storage": "workspace:*",
     "hono": "^4.13.16",
