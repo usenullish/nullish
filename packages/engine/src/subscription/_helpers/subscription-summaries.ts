@@ -21,9 +21,9 @@ export const listSubscriptionSummaries = async ({
     .select({
       subscription: subscriptions,
       status: sql<OrganizationSubscriptionStatus>`CASE
-          WHEN NOT subscription.organization_subscription_is_valid(${subscriptions.organizationId}) THEN 'locked'
-          WHEN ${subscriptions.status} = 'past_due' THEN 'grace'
-          ELSE 'open'
+          WHEN NOT subscription.organization_subscription_is_valid(${subscriptions.organizationId}) THEN ${OrganizationSubscriptionStatus.LOCKED}::text
+          WHEN ${subscriptions.status} = 'past_due' THEN ${OrganizationSubscriptionStatus.GRACE}::text
+          ELSE ${OrganizationSubscriptionStatus.OPEN}::text
         END`,
       expiresAt: sql`CASE
           WHEN ${subscriptions.status} = 'past_due' THEN ${subscriptions.periodEnd} + make_interval(days => (SELECT st.grace_days FROM subscription.subscription_settings st))
