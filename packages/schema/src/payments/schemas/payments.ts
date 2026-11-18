@@ -3,7 +3,7 @@ import { SelectClaimsSchema } from "../../records/schemas/subscription/claims";
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 
-export const HandlePaymentEventArgsSchema = z.strictObject({
+export const HandlePaymentsArgsSchema = z.strictObject({
   payload: z.string(),
   signature: z.string(),
 });

@@ -1,17 +1,17 @@
 import { isNullish, type Option } from "@usenullish/nullish-common";
 import {
-  type HandlePaymentEvent,
+  type HandlePayments,
   type Payments,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
 import { withDbContext } from "./_db";
 import { PaymentSubscriptionService } from "./services/payment-subscription";
 
-export abstract class PaymentProvider implements HandlePaymentEvent {
+export abstract class PaymentProvider implements HandlePayments {
   protected constructor() {}
 
   async handle(args: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
-    const parsedArgs = PaymentsSchema.HandlePaymentEventArgsSchema.parse(args);
+    const parsedArgs = PaymentsSchema.HandlePaymentsArgsSchema.parse(args);
 
     const resolved = await this.resolve(parsedArgs);
 
