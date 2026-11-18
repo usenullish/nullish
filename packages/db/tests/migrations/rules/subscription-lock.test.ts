@@ -3,6 +3,7 @@ import { SQL as BunSQL, CryptoHasher } from "bun";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
+import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
@@ -125,41 +126,66 @@ describe("subscription lock", () => {
     expect(causeMessage(error)).toContain("row-level security");
   });
 
-  test("rejects updating a locked organization", async () => {
+  test("ignores changing the role of a member of a locked organization", async () => {
+    const [member] = await db
+      .insert(memberships)
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" })
+      .returning();
+    assertNonNullish(member);
+
     await setSubscription({ status: SubscriptionStatus.INACTIVE, periodEnd: null });
 
-    const error = await asUser((tx) =>
-      tx.update(organizations).set({ name: "Renamed" }).where(eq(organizations.id, organizationId)),
-    ).catch((e: unknown) => e);
-
-    expect(causeMessage(error)).toContain("can only be deleted");
-  });
-
-  test("rejects renaming a locked organization while deleting it", async () => {
-    await setSubscription({ status: SubscriptionStatus.INACTIVE, periodEnd: null });
-
-    const error = await asUser((tx) =>
+    const updated = await asUser((tx) =>
       tx
-        .update(organizations)
-        .set({ name: "Renamed", deletedAt: new Date() })
-        .where(eq(organizations.id, organizationId)),
-    ).catch((e: unknown) => e);
-
-    expect(causeMessage(error)).toContain("can only be deleted");
-  });
-
-  test("allows deleting a locked organization", async () => {
-    await setSubscription({ status: SubscriptionStatus.INACTIVE, periodEnd: null });
-
-    const [deleted] = await asUser((tx) =>
-      tx
-        .update(organizations)
-        .set({ deletedAt: new Date() })
-        .where(eq(organizations.id, organizationId))
+        .update(memberships)
+        .set({ role: "accountant" })
+        .where(eq(memberships.id, member.id))
         .returning(),
     );
 
-    expect(deleted?.deletedAt).not.toBeNull();
+    const [row] = await db.select().from(memberships).where(eq(memberships.id, member.id));
+
+    expect(updated).toHaveLength(0);
+    expect(row?.role).toBe("reviewer");
+  });
+
+  test("ignores removing a member of a locked organization", async () => {
+    const [member] = await db
+      .insert(memberships)
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" })
+      .returning();
+    assertNonNullish(member);
+
+    await setSubscription({ status: SubscriptionStatus.INACTIVE, periodEnd: null });
+
+    const deleted = await asUser((tx) =>
+      tx.delete(memberships).where(eq(memberships.id, member.id)).returning(),
+    );
+
+    const rows = await db.select().from(memberships).where(eq(memberships.id, member.id));
+
+    expect(deleted).toHaveLength(0);
+    expect(rows).toHaveLength(1);
+  });
+
+  test("hides the invitations of a locked organization", async () => {
+    await db.insert(invitations).values({
+      organizationId,
+      email: "invited@test.dev",
+      role: "reviewer",
+      tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
+    });
+
+    const visibleInvitations = () =>
+      asUser((tx) =>
+        tx.select().from(invitations).where(eq(invitations.organizationId, organizationId)),
+      );
+
+    expect(await visibleInvitations()).toHaveLength(1);
+
+    await setSubscription({ status: SubscriptionStatus.INACTIVE, periodEnd: null });
+
+    expect(await visibleInvitations()).toHaveLength(0);
   });
 
   test("rejects adding a member to a locked organization", async () => {
