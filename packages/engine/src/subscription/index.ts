@@ -1,2 +1,2 @@
-export * from "./records/subscriptions";
+export * from "./composites/subscription-summaries";
 export * from "./services/subscription.check";

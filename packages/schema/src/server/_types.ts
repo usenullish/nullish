@@ -954,15 +954,18 @@ interface Api {
       >;
     };
   };
-  Subscriptions: {
+  SubscriptionSummaries: {
     Server: {
-      GetSubscriptionsResponse: z.input<
-        typeof ApiSchema.Subscriptions.GetSubscriptionsResponseSchema
+      GetSubscriptionSummariesResponse: z.input<
+        typeof ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema
       >;
     };
     Client: {
-      GetSubscriptionsResponse: z.infer<
-        typeof ApiSchema.Subscriptions.GetSubscriptionsResponseSchema
+      SubscriptionSummary: z.infer<
+        typeof ApiSchema.SubscriptionSummaries.SubscriptionSummarySchema
+      >;
+      GetSubscriptionSummariesResponse: z.infer<
+        typeof ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema
       >;
     };
   };

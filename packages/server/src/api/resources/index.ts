@@ -20,7 +20,7 @@ import { JournalUpdateHandlers } from "./_journal+update";
 import { CurrenciesHandlers } from "./_currencies";
 import { AccountingSettingsHandlers } from "./_organizations+accouting+settings";
 import { BillingSettingsHandlers } from "./_organizations+billing+settings";
-import { SubscriptionsHandlers } from "./_organizations+subscriptions";
+import { SubscriptionSummariesHandlers } from "./_organizations+subscription-summaries";
 import { DocumentTemplatesHandlers } from "./_organizations+document-templates";
 import { TemplateContentsHandlers } from "./_document-templates+contents";
 import { BankRelationsHandlers } from "./_organizations+bank-relations";
@@ -89,7 +89,7 @@ const RESOURCES = [
   VatMethodSummariesHandlers,
   AccountingSettingsHandlers,
   BillingSettingsHandlers,
-  SubscriptionsHandlers,
+  SubscriptionSummariesHandlers,
   DocumentTemplatesHandlers,
   TemplateContentsHandlers,
   BankRelationsHandlers,

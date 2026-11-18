@@ -31,6 +31,11 @@ interface Composites {
       typeof CompositesSchema.VatMethodSummariesSchema.SelectVatMethodSummariesSchema
     >;
   };
+  SubscriptionSummaries: {
+    Select: z.infer<
+      typeof CompositesSchema.SubscriptionSummariesSchema.SelectSubscriptionSummariesSchema
+    >;
+  };
   DatasetSummaries: {
     Select: z.infer<typeof CompositesSchema.DatasetSummariesSchema.SelectDatasetSummariesSchema>;
     Filter: z.infer<typeof CompositesSchema.DatasetSummariesSchema.FilterDatasetSummariesSchema>;
