@@ -22,13 +22,9 @@ export const SubscriptionReferencesSchema = SubscriptionSchema.table(
     externalSubscriptionId: pg.text().notNull(),
   },
   (table) => [
+    pg.uniqueIndex("subscription_references_subscription_uidx").on(table.subscriptionId),
     pg
-      .uniqueIndex("subscription_references_subscription_uidx")
-      .on(table.subscriptionId),
-    pg
-      .uniqueIndex(
-        "subscription_references_provider_external_subscription_uidx",
-      )
+      .uniqueIndex("subscription_references_provider_external_subscription_uidx")
       .on(table.provider, table.externalSubscriptionId),
     // No explicit policies on purpose: like the auth tables, users never access this table. Their permissions
     // are revoked in the custom migration permission_subscription_references.sql
