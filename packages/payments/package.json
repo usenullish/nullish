@@ -13,6 +13,7 @@
   "dependencies": {
     "@usenullish/nullish-common": "workspace:*",
     "@usenullish/nullish-env": "workspace:*",
-    "@usenullish/nullish-schema": "workspace:*"
+    "@usenullish/nullish-schema": "workspace:*",
+    "stripe": "^23.1.0"
   }
 }
