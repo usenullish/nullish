@@ -10,7 +10,7 @@ const SubscriptionOrganizationResponseSchema = z.discriminatedUnion("status", [
   }),
   z.strictObject({
     status: z.literal(OrganizationSubscriptionStatus.GRACE),
-    expiresAt: TimestampCodec.nullable(),
+    expiresAt: TimestampCodec,
   }),
   z.strictObject({
     status: z.literal(OrganizationSubscriptionStatus.LOCKED),

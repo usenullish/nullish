@@ -94,9 +94,9 @@ describe("subscription/_helpers/subscription-summaries", () => {
 
     const expected = periodEnd.getTime() + 10 * DAY_MS;
 
-    expect(
-      Math.abs((summary.organization.expiresAt?.getTime() ?? 0) - expected),
-    ).toBeLessThanOrEqual(HOUR_MS);
+    expect(Math.abs(summary.organization.expiresAt.getTime() - expected)).toBeLessThanOrEqual(
+      HOUR_MS,
+    );
   });
 
   test("returns a locked organization without date", async () => {

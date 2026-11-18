@@ -55,7 +55,7 @@ describe("core.assert_and_apply_audit_fields on subscription.subscriptions", () 
   test("rejects an update that sends back a stale version", async () => {
     await db
       .update(subscriptions)
-      .set({ status: SubscriptionStatus.PAST_DUE })
+      .set({ status: SubscriptionStatus.PAST_DUE, periodEnd: new Date() })
       .where(eq(subscriptions.id, subscriptionId));
 
     const error = await db
