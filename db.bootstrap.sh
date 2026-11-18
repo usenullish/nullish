@@ -5,6 +5,8 @@ PRE_DIR="./packages/db/bootstrap/pre"
 POST_DIR="./packages/db/bootstrap/post"
 OUT_DIR="./packages/db/migrations"
 
+LAST_KEPT_MIGRATION="20261105163418_trigger_assert_and_apply_audit_fields"
+
 function generate_custom_sql() {
     local dir="$1"
 
@@ -33,6 +35,13 @@ function generate_custom_sql() {
 
     done
 }
+
+# Remove the migrations generated after the last one to keep
+for migration_dir in "$OUT_DIR"/*/; do
+  if [[ "$(basename "$migration_dir")" > "$LAST_KEPT_MIGRATION" ]]; then
+    rm -rf "$migration_dir"
+  fi
+done
 
 # Custom policies, functions etc. that need to exist
 # before the schema migrations with Drizzle finds place.
