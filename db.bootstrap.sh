@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BOOTSTRAP_DIR="./packages/db/bootstrap"
+PRE_DIR="./packages/db/bootstrap/pre"
+POST_DIR="./packages/db/bootstrap/post"
 OUT_DIR="./packages/db/migrations"
 
 function generate_custom_sql() {
@@ -33,12 +34,21 @@ function generate_custom_sql() {
     done
 }
 
+# rm existing migrations script
+rm -rf "$OUT_DIR"
+
+# Custom policies, functions etc. that need to exist
+# before the schema migrations with Drizzle finds place.
+generate_custom_sql "$PRE_DIR"
+
+sleep 1
+
 # Generate SQL from code
-bun --bun drizzle-kit generate
+bun --bun drizzle-kit generate --name schema_init
 
 sleep 1
 
 # Additional custom SQL scripts (triggers, seed data, etc.)
-generate_custom_sql "$BOOTSTRAP_DIR"
+generate_custom_sql "$POST_DIR"
 
 bun fmt
