@@ -966,6 +966,21 @@ interface Api {
       >;
     };
   };
+  SubscriptionSummaries: {
+    Server: {
+      GetSubscriptionSummariesResponse: z.input<
+        typeof ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema
+      >;
+    };
+    Client: {
+      SubscriptionSummary: z.infer<
+        typeof ApiSchema.SubscriptionSummaries.SubscriptionSummarySchema
+      >;
+      GetSubscriptionSummariesResponse: z.infer<
+        typeof ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema
+      >;
+    };
+  };
 }
 
 interface Common {

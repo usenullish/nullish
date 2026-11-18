@@ -6,6 +6,7 @@ import * as MovementSummariesSchema from "./schemas/movement-summaries";
 import * as VatMethodSummariesSchema from "./schemas/vat-method-summaries";
 import * as DatasetSummariesSchema from "./schemas/dataset-summaries";
 import * as ChatSchema from "./schemas/chat";
+import * as SubscriptionSummariesSchema from "./schemas/subscription-summaries";
 
 const CompositesSchema = {
   JournalSchema,
@@ -16,6 +17,7 @@ const CompositesSchema = {
   VatMethodSummariesSchema,
   DatasetSummariesSchema,
   ChatSchema,
+  SubscriptionSummariesSchema,
 };
 
 export { CompositesSchema };

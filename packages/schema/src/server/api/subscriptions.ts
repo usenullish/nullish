@@ -3,7 +3,7 @@ import * as z from "zod";
 import { RecordsSchema } from "../../records";
 import { withAuditFieldsCodecs } from "./_audit";
 
-const SubscriptionResponseSchema = withAuditFieldsCodecs(
+export const SubscriptionResponseSchema = withAuditFieldsCodecs(
   RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
 ).extend({
   periodEnd: TimestampCodec.nullable(),

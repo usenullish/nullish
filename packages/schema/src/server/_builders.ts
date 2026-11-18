@@ -5,6 +5,7 @@ import {
   TimestampCodec,
   encodeWithCodecs,
 } from "@usenullish/nullish-common";
+import { OrganizationSubscriptionStatus } from "../db/constants/subscriptions";
 import type { Records } from "../records";
 import type { Composites } from "../composites";
 import type { Reports } from "../reports";
@@ -33,6 +34,22 @@ export const encodeSubscriptionResponse = (
   periodEnd: nonNullish(subscription.periodEnd)
     ? encodeWithCodecs({ schema: TimestampCodec, value: subscription.periodEnd })
     : null,
+});
+
+export const encodeSubscriptionSummaryResponse = ({
+  subscription,
+  organization,
+}: Composites["SubscriptionSummaries"]["Select"]) => ({
+  subscription: encodeSubscriptionResponse(subscription),
+  organization:
+    organization.status === OrganizationSubscriptionStatus.LOCKED
+      ? organization
+      : {
+          ...organization,
+          expiresAt: nonNullish(organization.expiresAt)
+            ? encodeWithCodecs({ schema: TimestampCodec, value: organization.expiresAt })
+            : null,
+        },
 });
 
 export const encodeOrganizationResponse = (
