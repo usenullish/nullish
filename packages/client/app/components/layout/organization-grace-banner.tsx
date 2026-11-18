@@ -1,5 +1,4 @@
 import { TriangleAlert } from "lucide-react";
-import { nonNullish } from "@usenullish/nullish-common";
 import { OrganizationSubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
@@ -15,8 +14,6 @@ export const OrganizationGraceBanner = () => {
     return null;
   }
 
-  const { expiresAt } = subscriptionSummary.organization;
-
   return (
     <div
       role="status"
@@ -24,11 +21,9 @@ export const OrganizationGraceBanner = () => {
     >
       <TriangleAlert className="size-4 shrink-0" />
       <p>
-        {nonNullish(expiresAt)
-          ? replacePlaceholders(i18n.organizations.text.grace, {
-              "{date}": formatDate(expiresAt),
-            })
-          : i18n.organizations.text.grace_no_date}
+        {replacePlaceholders(i18n.organizations.text.grace, {
+          "{date}": formatDate(subscriptionSummary.organization.expiresAt),
+        })}
       </p>
     </div>
   );

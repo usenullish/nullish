@@ -298,8 +298,7 @@
       "deleted": "Diese Organisation wurde am {date} als gelöscht markiert.",
       "locked_title": "{name} ist gesperrt",
       "locked_description": "Ihr Abo ist nicht mehr aktiv, deshalb sind ihre Daten im Moment nicht zugänglich. Es geht nichts verloren.",
-      "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt.",
-      "grace_no_date": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird bald gesperrt."
+      "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt."
     },
     "toast": {
       "create_error": "Die Organisation konnte nicht erstellt werden.",
