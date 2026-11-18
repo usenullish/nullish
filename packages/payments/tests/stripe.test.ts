@@ -13,11 +13,18 @@ const ORGANIZATION_ID = "018f4a2e-7c1b-4d3a-9e5f-2b6c8d0e1f3a";
 const PERIOD_START = 1_796_083_200;
 const PERIOD_END = 1_798_761_600;
 
-const subscriptionOf = ({ status }: { status: Stripe.Subscription.Status }) => ({
+const subscriptionOf = ({
+  status,
+  metadata = { organizationId: ORGANIZATION_ID },
+}: {
+  status: Stripe.Subscription.Status;
+  metadata?: Record<string, string>;
+}) => ({
   id: "sub_123",
   object: "subscription",
   customer: "cus_456",
   status,
+  metadata,
   items: {
     object: "list",
     data: [
@@ -69,6 +76,8 @@ describe("StripePaymentProvider", () => {
     process.env.NULLISH_STRIPE_SECRET_KEY = "sk_test_123";
     process.env.NULLISH_STRIPE_WEBHOOK_SECRET = WEBHOOK_SECRET;
 
+    withDbContext.mockClear();
+
     fetchSpy = spyOn(globalThis, "fetch");
     mockSubscription(subscriptionOf({ status: "active" }));
   });
@@ -106,7 +115,7 @@ describe("StripePaymentProvider", () => {
     const result = await handle(
       payloadOf({
         type: "checkout.session.completed",
-        object: { id: "cs_1", subscription: null, client_reference_id: ORGANIZATION_ID },
+        object: { id: "cs_1", subscription: null },
       }),
     );
 
@@ -114,11 +123,11 @@ describe("StripePaymentProvider", () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  test("returns the organization of a completed checkout", async () => {
+  test("returns the organization of the subscription", async () => {
     const result = await handle(
       payloadOf({
         type: "checkout.session.completed",
-        object: { id: "cs_1", subscription: "sub_123", client_reference_id: ORGANIZATION_ID },
+        object: { id: "cs_1", subscription: "sub_123" },
       }),
     );
 
@@ -135,20 +144,42 @@ describe("StripePaymentProvider", () => {
     });
   });
 
-  test("rejects a checkout with an invalid organization", async () => {
-    const payload = payloadOf({
-      type: "checkout.session.completed",
-      object: { id: "cs_1", subscription: "sub_123", client_reference_id: "not-an-organization" },
-    });
+  test("ignores the client reference of a checkout", async () => {
+    const result = await handle(
+      payloadOf({
+        type: "checkout.session.completed",
+        object: {
+          id: "cs_1",
+          subscription: "sub_123",
+          client_reference_id: "11111111-1111-4111-8111-111111111111",
+        },
+      }),
+    );
 
-    expect(handle(payload)).rejects.toThrow();
+    expect(result?.organizationId).toBe(ORGANIZATION_ID);
   });
 
-  test("returns no organization for a subscription event", async () => {
+  test("returns the organization for every subscription event", async () => {
     const result = await handle(subscriptionUpdated);
 
-    expect(result?.organizationId).toBeUndefined();
+    expect(result?.organizationId).toBe(ORGANIZATION_ID);
     expect(result?.externalIds.subscriptionId).toBe("sub_123");
+  });
+
+  test("ignores a subscription without organization", async () => {
+    mockSubscription(subscriptionOf({ status: "active", metadata: {} }));
+
+    expect(await handle(subscriptionUpdated)).toBeUndefined();
+    expect(withDbContext).not.toHaveBeenCalled();
+  });
+
+  test("rejects a subscription with an invalid organization", async () => {
+    mockSubscription(
+      subscriptionOf({ status: "active", metadata: { organizationId: "not-an-organization" } }),
+    );
+
+    await expect(handle(subscriptionUpdated)).rejects.toThrow();
+    expect(withDbContext).not.toHaveBeenCalled();
   });
 
   test("reads the subscription of a failed invoice", async () => {
