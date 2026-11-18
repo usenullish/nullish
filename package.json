@@ -17,6 +17,7 @@
     "packages/jobs",
     "packages/chat",
     "packages/metering",
+    "packages/payments",
     "packages/server",
     "packages/client",
     "packages/admin",
