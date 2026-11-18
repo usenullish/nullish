@@ -296,8 +296,8 @@
       "delete_title": "Delete {name}?",
       "delete_description": "The organization becomes read-only right away and is deleted for good, with all its data, after 30 days. This action is irreversible.",
       "deleted": "This organization was marked as deleted on {date}.",
-      "locked_title": "This organization is taking a nap",
-      "locked_description": "Its subscription has ended, so its data is out of reach for now. Nothing is lost."
+      "locked_title": "{name} is locked",
+      "locked_description": "Its subscription is no longer active, so its data can't be accessed for now. Nothing is lost."
     },
     "toast": {
       "create_error": "The organization could not be created.",

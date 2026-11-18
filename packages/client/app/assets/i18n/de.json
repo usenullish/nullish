@@ -296,8 +296,8 @@
       "delete_title": "{name} löschen?",
       "delete_description": "Die Organisation ist ab sofort nur noch lesbar und wird nach 30 Tagen mit allen Daten endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleted": "Diese Organisation wurde am {date} als gelöscht markiert.",
-      "locked_title": "Diese Organisation macht gerade ein Nickerchen",
-      "locked_description": "Ihr Abo ist abgelaufen, deshalb sind ihre Daten im Moment nicht erreichbar. Es geht nichts verloren."
+      "locked_title": "{name} ist gesperrt",
+      "locked_description": "Ihr Abo ist nicht mehr aktiv, deshalb sind ihre Daten im Moment nicht zugänglich. Es geht nichts verloren."
     },
     "toast": {
       "create_error": "Die Organisation konnte nicht erstellt werden.",

@@ -296,8 +296,8 @@
       "delete_title": "Eliminare {name}?",
       "delete_description": "L'organizzazione passa subito in sola lettura e viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni. Questa azione è irreversibile.",
       "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}.",
-      "locked_title": "Questa organizzazione sta facendo un pisolino",
-      "locked_description": "Il suo abbonamento è terminato, quindi i suoi dati sono fuori portata per ora. Non si perde nulla."
+      "locked_title": "{name} è bloccata",
+      "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora. Non si perde nulla."
     },
     "toast": {
       "create_error": "Non è stato possibile creare l'organizzazione.",
