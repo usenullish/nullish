@@ -297,7 +297,8 @@
       "delete_description": "L'organizzazione passa subito in sola lettura e viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni. Questa azione è irreversibile.",
       "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}.",
       "locked_title": "{name} è bloccata",
-      "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora. Non si perde nulla."
+      "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora. Non si perde nulla.",
+      "grace": "L'ultimo pagamento non è andato a buon fine. Questa organizzazione sarà bloccata il {date}."
     },
     "toast": {
       "create_error": "Non è stato possibile creare l'organizzazione.",

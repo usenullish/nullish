@@ -17,6 +17,7 @@ import { isBreadcrumbHandle } from "~/kit/router/route-handle";
 import { useActiveConversation } from "~/kit/chat/active-conversation.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { OrganizationDeletedBanner } from "~/components/layout/organization-deleted-banner";
+import { OrganizationGraceBanner } from "~/components/layout/organization-grace-banner";
 
 export const OrganizationLayout = ({ children }: { children: React.ReactNode }) => {
   const { i18n } = useI18n();
@@ -45,6 +46,7 @@ export const OrganizationLayout = ({ children }: { children: React.ReactNode }) 
 
       <SidebarInset className="min-w-0">
         <OrganizationDeletedBanner />
+        <OrganizationGraceBanner />
 
         <header className="flex h-12 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />

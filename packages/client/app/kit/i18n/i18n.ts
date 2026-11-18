@@ -276,6 +276,7 @@ const I18nOrganizationsSchema = z.strictObject({
     deleted: z.string(),
     locked_title: z.string(),
     locked_description: z.string(),
+    grace: z.string(),
   }),
   toast: z.strictObject({
     create_error: z.string(),

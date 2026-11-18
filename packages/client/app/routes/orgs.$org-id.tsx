@@ -10,6 +10,7 @@ import { AccountsContext } from "~/context/contexts/accounts.context";
 import { AccountingSettingsContext } from "~/context/contexts/accounting-settings.context";
 import { BillingSettingsContext } from "~/context/contexts/billing-settings.context";
 import { ClientsContext } from "~/context/contexts/clients.context";
+import { SubscriptionSummaryContext } from "~/context/contexts/subscription-summary.context";
 import { loadOrganizationData } from "~/context/loaders/organization.loader.server";
 
 export const loader = async (args: Route.LoaderArgs) => {
@@ -33,21 +34,23 @@ const Layout = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <NonNullishOrganizationContext.Provider value={organization}>
-      <SubscriptionGuard subscriptionSummary={loaderData.subscriptionSummary}>
-        <AccountsContext.Provider value={loaderData.accounts}>
-          <AccountingSettingsContext.Provider value={loaderData.accountingSettings}>
-            <BillingSettingsContext.Provider value={loaderData.billingSettings}>
-              <ClientsContext.Provider value={loaderData.clients}>
-                <OrganizationLayout>
-                  <WriteRouteGuard>
-                    <Outlet />
-                  </WriteRouteGuard>
-                </OrganizationLayout>
-              </ClientsContext.Provider>
-            </BillingSettingsContext.Provider>
-          </AccountingSettingsContext.Provider>
-        </AccountsContext.Provider>
-      </SubscriptionGuard>
+      <SubscriptionSummaryContext.Provider value={loaderData.subscriptionSummary}>
+        <SubscriptionGuard>
+          <AccountsContext.Provider value={loaderData.accounts}>
+            <AccountingSettingsContext.Provider value={loaderData.accountingSettings}>
+              <BillingSettingsContext.Provider value={loaderData.billingSettings}>
+                <ClientsContext.Provider value={loaderData.clients}>
+                  <OrganizationLayout>
+                    <WriteRouteGuard>
+                      <Outlet />
+                    </WriteRouteGuard>
+                  </OrganizationLayout>
+                </ClientsContext.Provider>
+              </BillingSettingsContext.Provider>
+            </AccountingSettingsContext.Provider>
+          </AccountsContext.Provider>
+        </SubscriptionGuard>
+      </SubscriptionSummaryContext.Provider>
     </NonNullishOrganizationContext.Provider>
   );
 };
