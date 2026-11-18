@@ -3,9 +3,11 @@ import { defineApi } from "./api";
 import { startJobs } from "@usenullish/nullish-jobs";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { createMailProvider } from "@usenullish/nullish-mail";
-import { envMailEnabled } from "@usenullish/nullish-env";
+import { createPaymentProvider } from "@usenullish/nullish-payments";
+import { envMailEnabled, envPaymentsEnabled } from "@usenullish/nullish-env";
 import type { Nullable, Result } from "@usenullish/nullish-common";
 import type { SendMail } from "@usenullish/nullish-schema/mail";
+import type { HandlePaymentEvent } from "@usenullish/nullish-schema/payments";
 
 // https://zod.dev/blog/zod-4-5#zcompile
 import "zod/compile";
@@ -33,17 +35,28 @@ if (mailResult.status === "error") {
   process.exit(1);
 }
 
+const paymentsResult: Result<Nullable<HandlePaymentEvent>> = envPaymentsEnabled()
+  ? createPaymentProvider()
+  : { status: "success", result: null };
+
+if (paymentsResult.status === "error") {
+  console.error("Cannot create the payment provider:", paymentsResult.err);
+  process.exit(1);
+}
+
 const { result: db } = dbResult;
 const {
   result: { triggered: triggeredJobs, close: closeJobs },
 } = jobsResult;
 const { result: mail } = mailResult;
+const { result: payments } = paymentsResult;
 
 const { fetch: apiFetch } = defineApi({
   db,
   jobs: triggeredJobs,
   storage: FsStorageProvider.create(),
   mail,
+  payments,
 });
 
 const apiServer = Bun.serve({
