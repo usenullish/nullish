@@ -6,8 +6,8 @@ import { API_URL } from "~/env";
 import { assertNotEmptyString } from "@usenullish/nullish-common";
 import type { ApiOrganizationsGetByIdArgs } from "~/lib/api/_organizations";
 
-export class ApiSubscriptionsSsr extends ApiSsr {
-  static create(args: { cookie: Cookie }): ApiSubscriptionsSsr {
+export class ApiSubscriptionSummariesSsr extends ApiSsr {
+  static create(args: { cookie: Cookie }): ApiSubscriptionSummariesSsr {
     const apiUrl = API_URL;
 
     assertNotEmptyString(apiUrl, "API_URL");
@@ -19,10 +19,10 @@ export class ApiSubscriptionsSsr extends ApiSsr {
     orgId,
     query,
   }: ApiOrganizationsGetByIdArgs & ApiListArgs): Promise<
-    Api["Subscriptions"]["Client"]["GetSubscriptionsResponse"]
+    Api["SubscriptionSummaries"]["Client"]["GetSubscriptionSummariesResponse"]
   > => {
     const response = await fetch(
-      `${this.apiUrl}/organizations/${orgId}/subscriptions?${this.listSearchParams({ query })}`,
+      `${this.apiUrl}/organizations/${orgId}/subscription-summaries?${this.listSearchParams({ query })}`,
       {
         headers: {
           ...this.cookieHeader(),
@@ -33,10 +33,12 @@ export class ApiSubscriptionsSsr extends ApiSsr {
     if (!response.ok) {
       return await this.throwError({
         response,
-        message: `Cannot get /organizations/${orgId}/subscriptions`,
+        message: `Cannot get /organizations/${orgId}/subscription-summaries`,
       });
     }
 
-    return ApiSchema.Subscriptions.GetSubscriptionsResponseSchema.parse(await response.json());
+    return ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema.parse(
+      await response.json(),
+    );
   };
 }

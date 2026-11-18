@@ -263,7 +263,8 @@
     "action": {
       "create": "Organisation erstellen",
       "lets_go": "Los geht's!",
-      "delete": "Organisation löschen"
+      "delete": "Organisation löschen",
+      "back_to_organizations": "Zurück zu meinen Organisationen"
     },
     "state": {
       "creating": "Wird erstellt…"
@@ -294,7 +295,9 @@
       "danger_zone": "Durch das Löschen ist die Organisation nur noch lesbar. Nach 30 Tagen wird sie mit allen Daten endgültig gelöscht.",
       "delete_title": "{name} löschen?",
       "delete_description": "Die Organisation ist ab sofort nur noch lesbar und wird nach 30 Tagen mit allen Daten endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "deleted": "Diese Organisation wurde am {date} als gelöscht markiert."
+      "deleted": "Diese Organisation wurde am {date} als gelöscht markiert.",
+      "locked_title": "Diese Organisation macht gerade ein Nickerchen",
+      "locked_description": "Ihr Abo ist abgelaufen, deshalb sind ihre Daten im Moment nicht erreichbar. Es geht nichts verloren."
     },
     "toast": {
       "create_error": "Die Organisation konnte nicht erstellt werden.",

@@ -240,7 +240,12 @@ const I18nOrganizationsSchema = z.strictObject({
   setup: z.strictObject({ organization: z.string(), vat: z.string() }),
   setup_done: z.strictObject({ organization: z.string(), vat: z.string() }),
   setup_next: z.strictObject({ vat: z.string() }),
-  action: z.strictObject({ create: z.string(), lets_go: z.string(), delete: z.string() }),
+  action: z.strictObject({
+    create: z.string(),
+    lets_go: z.string(),
+    delete: z.string(),
+    back_to_organizations: z.string(),
+  }),
   state: z.strictObject({ creating: z.string() }),
   label: z.strictObject({
     legal_form: z.string(),
@@ -269,6 +274,8 @@ const I18nOrganizationsSchema = z.strictObject({
     delete_title: z.string(),
     delete_description: z.string(),
     deleted: z.string(),
+    locked_title: z.string(),
+    locked_description: z.string(),
   }),
   toast: z.strictObject({
     create_error: z.string(),

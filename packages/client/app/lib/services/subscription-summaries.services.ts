@@ -1,16 +1,16 @@
 import type { Cookie } from "~/lib/schemas/cookie";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
-import { ApiSubscriptionsSsr } from "~/lib/api/subscriptions.ssr.api";
+import { ApiSubscriptionSummariesSsr } from "~/lib/api/subscription-summaries.ssr.api";
 import type { Api } from "@usenullish/nullish-schema/server";
 import type { ApiOrganizationsGetByIdArgs } from "~/lib/api/_organizations";
 import { Service } from "./_services";
 
-export class SubscriptionsService extends Service {
+export class SubscriptionSummariesService extends Service {
   private constructor() {
     super();
   }
 
-  static create(): SubscriptionsService {
+  static create(): SubscriptionSummariesService {
     return new this();
   }
 
@@ -20,19 +20,19 @@ export class SubscriptionsService extends Service {
   }: {
     cookie: Cookie;
   } & ApiOrganizationsGetByIdArgs): Promise<
-    Result<Api["Subscriptions"]["Client"]["GetSubscriptionsResponse"]>
+    Result<Api["SubscriptionSummaries"]["Client"]["GetSubscriptionSummariesResponse"]>
   > => {
     return await tryCatch(async () => {
-      const api = ApiSubscriptionsSsr.create({ cookie });
+      const api = ApiSubscriptionSummariesSsr.create({ cookie });
 
-      const subscriptions = await this._listAll({
+      const subscriptionSummaries = await this._listAll({
         listFn: async (query) => {
-          const { subscriptions } = await api.list({ orgId, query });
-          return subscriptions;
+          const { subscriptionSummaries } = await api.list({ orgId, query });
+          return subscriptionSummaries;
         },
       });
 
-      return { subscriptions };
+      return { subscriptionSummaries };
     });
   };
 }
