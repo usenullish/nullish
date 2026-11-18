@@ -297,7 +297,9 @@
       "delete_description": "L'organisation passe immédiatement en lecture seule et est supprimée définitivement, avec toutes ses données, après 30 jours. Cette action est irréversible.",
       "deleted": "Cette organisation a été marquée comme supprimée le {date}.",
       "locked_title": "{name} est verrouillée",
-      "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment. Rien n'est perdu."
+      "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment. Rien n'est perdu.",
+      "grace": "Le dernier paiement a échoué. Cette organisation sera verrouillée le {date}.",
+      "grace_no_date": "Le dernier paiement a échoué. Cette organisation sera bientôt verrouillée."
     },
     "toast": {
       "create_error": "L'organisation n'a pas pu être créée.",
