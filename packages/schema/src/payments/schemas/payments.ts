@@ -9,8 +9,7 @@ export const HandlePaymentEventArgsSchema = z.strictObject({
 });
 
 export const PaymentExternalIdsSchema = z.strictObject({
-  subscriptionId:
-    SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
+  subscriptionId: SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
   customerId: SelectSubscriptionReferencesSchema.shape.externalCustomerId,
   productId: SelectClaimsSchema.shape.externalProductId.unwrap(),
 });

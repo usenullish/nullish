@@ -87,7 +87,7 @@ export class StripePaymentProvider extends PaymentProvider {
     }
   }
 
-  #organizationId({type, data}: Stripe.Event): Payments["Payment"]["organizationId"] {
+  #organizationId({ type, data }: Stripe.Event): Payments["Payment"]["organizationId"] {
     return type === "checkout.session.completed"
       ? (data.object.client_reference_id ?? undefined)
       : undefined;
@@ -158,8 +158,7 @@ export class StripePaymentProvider extends PaymentProvider {
     subscription: Stripe.Subscription;
     item: Stripe.SubscriptionItem;
   }> {
-    const subscription =
-      await this.#stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await this.#stripe.subscriptions.retrieve(subscriptionId);
 
     const [item] = subscription.items.data;
     assertNonNullish(item);
