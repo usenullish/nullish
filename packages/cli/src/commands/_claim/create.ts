@@ -25,11 +25,21 @@ export const claimCreate = async (_args?: string[]) => {
 
   const expiresAt = await promptClaimExpiresAt({ message: "Until when can the claim be given?" });
 
+  const externalProductId = await text({
+    message: "Which product of the payment provider does the claim belong to?",
+    placeholder: "e.g. prod_123, empty for none",
+  });
+
+  if (isCancel(externalProductId)) {
+    cancel();
+  }
+
   await withDbContext(async (dbContext) => {
     const result = await ClaimsService.create({ db: dbContext.connection }).insert({
       claim: {
         trialDays: isEmptyString(trialDays) ? null : Number(trialDays),
         expiresAt: expiresAt ?? null,
+        externalProductId: isEmptyString(externalProductId) ? null : externalProductId,
       },
     });
 

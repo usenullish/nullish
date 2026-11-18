@@ -24,8 +24,8 @@ export const listClaims = async ({
   return result.result;
 };
 
-export const claimLabel = ({ id, trialDays, expiresAt }: Claim): string =>
-  `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"})`;
+export const claimLabel = ({ id, trialDays, expiresAt, externalProductId }: Claim): string =>
+  `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"}, product: ${externalProductId ?? "none"})`;
 
 export const promptClaimExpiresAt = async ({
   message,
