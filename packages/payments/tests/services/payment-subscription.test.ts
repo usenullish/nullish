@@ -163,32 +163,19 @@ describe("PaymentSubscriptionService", () => {
     });
   });
 
-  describe("without an organization", () => {
-    test("finds the subscription through its reference", async () => {
+  describe("update of the subscription", () => {
+    test("applies the status of a later event", async () => {
       const payment = paymentOf();
 
       await sync({ payment });
 
-      const result = await sync({
-        payment: { ...payment, organizationId: undefined, status: SubscriptionStatus.PAST_DUE },
-      });
+      const result = await sync({ payment: { ...payment, status: SubscriptionStatus.PAST_DUE } });
 
       expect(result.status).toBe("success");
       expect((await subscriptionOf()).status).toBe(SubscriptionStatus.PAST_DUE);
+      expect(await referencesOf()).toHaveLength(1);
     });
 
-    test("skips an event that cannot be linked yet", async () => {
-      const result = await sync({
-        payment: paymentOf({ organizationId: undefined, status: SubscriptionStatus.INACTIVE }),
-      });
-
-      expect(result).toEqual({ status: "success", result: undefined });
-      expect((await subscriptionOf()).status).toBe(SubscriptionStatus.ACTIVE);
-      expect(await referencesOf()).toHaveLength(0);
-    });
-  });
-
-  describe("update of the subscription", () => {
     test("keeps the end of the subscription when the payment has none", async () => {
       const payment = paymentOf();
 

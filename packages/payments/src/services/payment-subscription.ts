@@ -1,16 +1,9 @@
-import {
-  isNullish,
-  nonNullish,
-  type Option,
-  type Result,
-  tryCatch,
-} from "@usenullish/nullish-common";
+import { isNullish, nonNullish, type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbAdminContext, type Tx } from "@usenullish/nullish-db";
 import type { Payments } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { getClaimByExternalProduct } from "./_helpers/claims";
 import {
-  getReferencedOrganizationId,
   getSubscriptionReference,
   insertSubscriptionReference,
 } from "./_helpers/subscription-references";
@@ -31,33 +24,22 @@ export class PaymentSubscriptionService {
     return new this(args);
   }
 
-  sync({ payment }: { payment: Payment }): Promise<Result<Option<Subscription>>> {
+  sync({ payment }: { payment: Payment }): Promise<Result<Subscription>> {
     return tryCatch(async () => {
       return await this.#db.exec(async (tx) => {
-        const { organizationId } = payment;
-
-        return nonNullish(organizationId)
-          ? await this.#link({ tx, organizationId, payment })
-          : await this.#update({ tx, payment });
+        return await this.#link({ tx, payment });
       });
     });
   }
 
-  async #link({
-    tx,
-    organizationId,
-    payment,
-  }: {
-    tx: Tx;
-    organizationId: Subscription["organizationId"];
-    payment: Payment;
-  }): Promise<Subscription> {
-    const { provider, externalIds } = payment;
+  async #link({ tx, payment }: { tx: Tx; payment: Payment }): Promise<Subscription> {
+    const { organizationId, provider, externalIds } = payment;
 
     const subscription = await getAndLockExistingSubscription({
       tx,
       organizationId,
     });
+
     const reference = await getSubscriptionReference({
       tx,
       subscriptionId: subscription.id,
@@ -94,27 +76,6 @@ export class PaymentSubscriptionService {
         `Subscription ${reference.subscriptionId} is linked to another external subscription.`,
       );
     }
-  }
-
-  async #update({ tx, payment }: { tx: Tx; payment: Payment }): Promise<Option<Subscription>> {
-    const { provider, externalIds } = payment;
-
-    const organizationId = await getReferencedOrganizationId({
-      tx,
-      provider,
-      externalSubscriptionId: externalIds.subscriptionId,
-    });
-
-    if (isNullish(organizationId)) {
-      return undefined;
-    }
-
-    const subscription = await getAndLockExistingSubscription({
-      tx,
-      organizationId,
-    });
-
-    return await this.#apply({ tx, subscription, payment });
   }
 
   async #apply({
