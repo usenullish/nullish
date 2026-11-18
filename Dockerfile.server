@@ -24,6 +24,7 @@ COPY packages/storage/package.json /temp/dev/packages/storage/
 COPY packages/auth/package.json /temp/dev/packages/auth/
 COPY packages/chat/package.json /temp/dev/packages/chat/
 COPY packages/metering/package.json /temp/dev/packages/metering/
+COPY packages/payments/package.json /temp/dev/packages/payments/
 COPY packages/server/package.json /temp/dev/packages/server/
 COPY packages/admin/package.json /temp/dev/packages/admin/
 COPY packages/cli/package.json /temp/dev/packages/cli/
@@ -48,6 +49,7 @@ COPY packages/storage/package.json /temp/prod/packages/storage/
 COPY packages/auth/package.json /temp/prod/packages/auth/
 COPY packages/chat/package.json /temp/prod/packages/chat/
 COPY packages/metering/package.json /temp/prod/packages/metering/
+COPY packages/payments/package.json /temp/prod/packages/payments/
 COPY packages/server/package.json /temp/prod/packages/server/
 COPY packages/admin/package.json /temp/prod/packages/admin/
 COPY packages/cli/package.json /temp/prod/packages/cli/
@@ -72,6 +74,7 @@ COPY --from=install /temp/dev/packages/admin/node_modules ./packages/admin/node_
 COPY --from=install /temp/dev/packages/auth/node_modules ./packages/auth/node_modules
 COPY --from=install /temp/dev/packages/chat/node_modules ./packages/chat/node_modules
 COPY --from=install /temp/dev/packages/metering/node_modules ./packages/metering/node_modules
+COPY --from=install /temp/dev/packages/payments/node_modules ./packages/payments/node_modules
 COPY --from=install /temp/dev/packages/server/node_modules ./packages/server/node_modules
 COPY --from=install /temp/dev/packages/cli/node_modules ./packages/cli/node_modules
 
@@ -93,6 +96,7 @@ COPY packages/admin ./packages/admin
 COPY packages/auth ./packages/auth
 COPY packages/chat ./packages/chat
 COPY packages/metering ./packages/metering
+COPY packages/payments ./packages/payments
 COPY packages/server ./packages/server
 COPY packages/cli ./packages/cli
 
