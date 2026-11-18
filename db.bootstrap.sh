@@ -34,9 +34,6 @@ function generate_custom_sql() {
     done
 }
 
-# rm existing migrations script
-rm -rf "$OUT_DIR"
-
 # Custom policies, functions etc. that need to exist
 # before the schema migrations with Drizzle finds place.
 generate_custom_sql "$PRE_DIR"
