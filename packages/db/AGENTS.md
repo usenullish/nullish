@@ -19,6 +19,19 @@ Database connection, migrations, user contexts and statement helpers.
 - **VAT methods** (`core.vat_methods`) hold the payment and remuneration methods of a fiscal year (ledger period), one row per period. Creating them runs triggers that generate the VAT periods of the year (only the calendar year of the start of the period: when a period spans two calendar years, e.g. a long first fiscal year, the VAT periods of the second year are created manually) and seed rates from `templates.vat_rates`: the common rates when the organization has no rate yet, and the rates of a payment method the first time a year uses it (also when switching method). The net rate tax is not seeded. Opening a new ledger period copies the VAT methods of the previous year. They require the VAT settings of the organization, changing the payment method or the dates of the period regenerates the VAT periods of the year, and the methods are locked once an invoice or a journal entry of the year uses VAT. A posting with a VAT rate requires the VAT methods of its year, and the type of the rate must be allowed with their payment method (net rate tax with the net rate method; sales, input and import tax with the effective method; the others with both), checked again when the date of its entry changes.
 - Every insert, update and delete on the business tables is recorded in `audit.logs` with the old and new rows.
 
+## Bootstrapping a large feature
+
+While a feature is unreleased, its migrations keep changing. Stacking fixes on top of them or editing them by hand leaves the SQL and the Drizzle snapshots out of sync, so they are regenerated from a single source instead.
+
+Only for a large feature that is certain not to ship before it is complete. Anything else follows the README, one migration at a time.
+
+- The custom SQL of the feature lives in `bootstrap/`, numbered in execution order: `pre/` runs before the Drizzle migration, `post/` after it. `pre/` only holds what the generated migration depends on, everything else goes in `post/`.
+- `bun run db:bootstrap` deletes the migrations after `LAST_KEPT_MIGRATION` in `db.bootstrap.sh` and regenerates them. Set it to the last released migration when the feature starts.
+- Change the code or the files in `bootstrap/`, never the generated migrations: the next run overwrites them.
+- Every run changes the timestamps, so reset the local and test databases and update the rows of the README.
+- A schema created in `pre/` is not exported from `schemas/index.ts`, otherwise Drizzle creates it a second time.
+- Once the feature is released, its migrations are final: empty `bootstrap/` and never run the script on them again.
+
 ## Tests
 
 Trigger and constraint tests live in `tests/migrations/rules`, one file per rule.
