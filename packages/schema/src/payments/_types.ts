@@ -7,9 +7,7 @@ interface Payments {
     Args: z.infer<typeof PaymentsSchema.HandlePaymentEventArgsSchema>;
   };
   Payment: z.infer<typeof PaymentsSchema.PaymentSchema>;
-  PaymentExternalIds: z.infer<
-    typeof PaymentsSchema.PaymentExternalIdsSchema
-  >;
+  PaymentExternalIds: z.infer<typeof PaymentsSchema.PaymentExternalIdsSchema>;
 }
 
 export type { HandlePaymentEvent, Payments };

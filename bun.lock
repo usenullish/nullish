@@ -204,6 +204,7 @@
       "name": "@usenullish/nullish-payments",
       "dependencies": {
         "@usenullish/nullish-common": "workspace:*",
+        "@usenullish/nullish-db": "workspace:*",
         "@usenullish/nullish-env": "workspace:*",
         "@usenullish/nullish-schema": "workspace:*",
         "stripe": "^23.1.0",

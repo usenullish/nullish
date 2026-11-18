@@ -1,7 +1,12 @@
-import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import Stripe from "stripe";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
-import { StripePaymentProvider } from "../src/_stripe";
+
+const withDbContext = mock(async () => ({ status: "success", result: undefined }));
+
+mock.module("../src/_db", () => ({ withDbContext }));
+
+const { StripePaymentProvider } = await import("../src/_stripe");
 
 const WEBHOOK_SECRET = "whsec_test";
 const ORGANIZATION_ID = "018f4a2e-7c1b-4d3a-9e5f-2b6c8d0e1f3a";
@@ -120,9 +125,11 @@ describe("StripePaymentProvider", () => {
     expect(result).toEqual({
       organizationId: ORGANIZATION_ID,
       provider: SubscriptionProvider.STRIPE,
-      externalCustomerId: "cus_456",
-      externalSubscriptionId: "sub_123",
-      externalProductId: "prod_10users",
+      externalIds: {
+        subscriptionId: "sub_123",
+        customerId: "cus_456",
+        productId: "prod_10users",
+      },
       status: SubscriptionStatus.ACTIVE,
       periodEnd: new Date(PERIOD_END * 1000),
     });
@@ -141,7 +148,7 @@ describe("StripePaymentProvider", () => {
     const result = await handle(subscriptionUpdated);
 
     expect(result?.organizationId).toBeUndefined();
-    expect(result?.externalSubscriptionId).toBe("sub_123");
+    expect(result?.externalIds.subscriptionId).toBe("sub_123");
   });
 
   test("reads the subscription of a failed invoice", async () => {
@@ -184,6 +191,17 @@ describe("StripePaymentProvider", () => {
 
     expect(result?.status).toBe(expected);
     expect(result?.periodEnd).toEqual(periodEnd);
+  });
+
+  test("throws when the subscription cannot be synced", async () => {
+    const err = new Error("Cannot sync");
+
+    withDbContext.mockImplementationOnce(
+      async () =>
+        ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+    );
+
+    await expect(handle(subscriptionUpdated)).rejects.toThrow(err);
   });
 
   test("ignores an incomplete subscription", async () => {

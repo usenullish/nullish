@@ -4,20 +4,34 @@ import {
   type Payments,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
+import { withDbContext } from "./_db";
+import { PaymentSubscriptionService } from "./services/payment-subscription";
 
 export abstract class PaymentProvider implements HandlePaymentEvent {
   protected constructor() {}
 
-  async handle(
-    args: Payments["Handle"]["Args"],
-  ): Promise<Option<Payments["Payment"]>> {
+  async handle(args: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
     const parsedArgs = PaymentsSchema.HandlePaymentEventArgsSchema.parse(args);
 
-    const subscription = await this.resolve(parsedArgs);
+    const resolved = await this.resolve(parsedArgs);
 
-    return isNullish(subscription)
-      ? undefined
-      : PaymentsSchema.PaymentSchema.parse(subscription);
+    if (isNullish(resolved)) {
+      return undefined;
+    }
+
+    const payment = PaymentsSchema.PaymentSchema.parse(resolved);
+
+    const result = await withDbContext(async (dbContext) => {
+      return await PaymentSubscriptionService.create({
+        db: dbContext,
+      }).sync({ payment });
+    });
+
+    if (result.status === "error") {
+      throw result.err;
+    }
+
+    return payment;
   }
 
   protected abstract resolve(
