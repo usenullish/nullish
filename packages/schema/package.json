@@ -15,6 +15,7 @@
     "./jobs": "./src/jobs/index.ts",
     "./storage": "./src/storage/index.ts",
     "./mail": "./src/mail/index.ts",
+    "./payments": "./src/payments/index.ts",
     "./migration": "./src/migration/index.ts",
     "./auth": "./src/auth/index.ts",
     "./reports": "./src/reports/index.ts"
