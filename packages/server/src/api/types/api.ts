@@ -5,7 +5,7 @@ import type { Auth as AuthSession } from "@usenullish/nullish-auth/server";
 import type { Auth as AuthTypes } from "@usenullish/nullish-schema/auth";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
 import type { SendMail } from "@usenullish/nullish-schema/mail";
-import type { HandlePaymentEvent } from "@usenullish/nullish-schema/payments";
+import type { HandlePayments } from "@usenullish/nullish-schema/payments";
 import { Storage } from "@usenullish/nullish-storage";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { LlmMeter } from "@usenullish/nullish-metering";
@@ -15,7 +15,7 @@ export type DefineApi = (args: {
   jobs: TriggerJobs;
   storage: Storage;
   mail: Nullable<SendMail>;
-  payments?: Nullable<HandlePaymentEvent>;
+  payments?: Nullable<HandlePayments>;
 }) => {
   fetch: Hono["fetch"];
 };

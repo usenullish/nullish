@@ -12,7 +12,7 @@ import {
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { Nullable } from "@usenullish/nullish-common";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
-import type { HandlePaymentEvent } from "@usenullish/nullish-schema/payments";
+import type { HandlePayments } from "@usenullish/nullish-schema/payments";
 import { ErrorCode, PAYMENT_EVENT_MAX_SIZE } from "@usenullish/nullish-schema/server";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { defineApi } from "../../../src/api";
@@ -21,7 +21,7 @@ describe("POST /payments/stripe/webhook", () => {
   const PAYLOAD = JSON.stringify({ id: "evt_1" });
   const SIGNATURE = "t=1,v1=signature";
 
-  const handle = mock<HandlePaymentEvent["handle"]>(async () => undefined);
+  const handle = mock<HandlePayments["handle"]>(async () => undefined);
 
   let instance: DbInstance;
 
@@ -30,7 +30,7 @@ describe("POST /payments/stripe/webhook", () => {
     body = PAYLOAD,
     headers = { "stripe-signature": SIGNATURE },
   }: {
-    payments?: Nullable<HandlePaymentEvent>;
+    payments?: Nullable<HandlePayments>;
     body?: string;
     headers?: Record<string, string>;
   } = {}) => {

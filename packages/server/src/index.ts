@@ -7,7 +7,7 @@ import { createPaymentProvider } from "@usenullish/nullish-payments";
 import { envMailEnabled, envPaymentsEnabled } from "@usenullish/nullish-env";
 import type { Nullable, Result } from "@usenullish/nullish-common";
 import type { SendMail } from "@usenullish/nullish-schema/mail";
-import type { HandlePaymentEvent } from "@usenullish/nullish-schema/payments";
+import type { HandlePayments } from "@usenullish/nullish-schema/payments";
 
 // https://zod.dev/blog/zod-4-5#zcompile
 import "zod/compile";
@@ -35,7 +35,7 @@ if (mailResult.status === "error") {
   process.exit(1);
 }
 
-const paymentsResult: Result<Nullable<HandlePaymentEvent>> = envPaymentsEnabled()
+const paymentsResult: Result<Nullable<HandlePayments>> = envPaymentsEnabled()
   ? createPaymentProvider()
   : { status: "success", result: null };
 
