@@ -36,8 +36,7 @@ const updateSubscription = ({
 }: {
   organizationId: string;
   values: Partial<typeof subscriptions.$inferInsert>;
-}) =>
-  db.update(subscriptions).set(values).where(eq(subscriptions.organizationId, organizationId));
+}) => db.update(subscriptions).set(values).where(eq(subscriptions.organizationId, organizationId));
 
 describe("subscription/_helpers/subscription-summaries", () => {
   beforeEach(async () => {
