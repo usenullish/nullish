@@ -6,7 +6,6 @@ import {
   tryCatch,
 } from "@usenullish/nullish-common";
 import { DbAdminContext, type Tx } from "@usenullish/nullish-db";
-import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { Payments } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { getClaimByExternalProduct } from "./_helpers/claims";
@@ -16,7 +15,6 @@ import {
   insertSubscriptionReference,
 } from "./_helpers/subscription-references";
 import { getAndLockExistingSubscription, updateSubscription } from "./_helpers/subscriptions";
-import { withDbContext } from "../_db";
 
 type Subscription = Records["Subscription"]["Subscriptions"]["Select"];
 type SubscriptionReference = Records["Subscription"]["SubscriptionReferences"]["Select"];
