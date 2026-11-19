@@ -984,6 +984,16 @@ interface Api {
       >;
     };
   };
+  PaymentsPlans: {
+    Server: {
+      GetPlansResponse: z.input<typeof ApiSchema.PaymentsPlans.GetPlansResponseSchema>;
+    };
+    Client: {
+      Plan: z.infer<typeof ApiSchema.PaymentsPlans.PlanSchema>;
+      PlanPrice: z.infer<typeof ApiSchema.PaymentsPlans.PlanPriceSchema>;
+      GetPlansResponse: z.infer<typeof ApiSchema.PaymentsPlans.GetPlansResponseSchema>;
+    };
+  };
 }
 
 interface Common {
