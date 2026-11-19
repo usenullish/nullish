@@ -59,6 +59,7 @@ interface Db {
     SubscriptionSettings: typeof DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
     Subscriptions: typeof DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
     SubscriptionReferences: typeof DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
+    SubscriptionTaxRates: typeof DbSchema.Subscription.SubscriptionTaxRates.SubscriptionTaxRatesSchema;
   };
 }
 

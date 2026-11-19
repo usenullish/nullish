@@ -60,5 +60,6 @@ export * from "./subscription/claims";
 export * from "./subscription/subscription-settings";
 export * from "./subscription/subscriptions";
 export * from "./subscription/subscription-references";
+export * from "./subscription/subscription-tax-rates";
 
 export { currencyValue } from "./_currency";

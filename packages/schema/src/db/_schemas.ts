@@ -32,6 +32,7 @@ import * as ClaimsSchema from "./schemas/subscription/claims";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
+import * as SubscriptionTaxRatesSchema from "./schemas/subscription/subscription-tax-rates";
 
 const DbSchema = {
   Auth: {
@@ -87,6 +88,7 @@ const DbSchema = {
     SubscriptionSettings: SubscriptionSettingsSchema,
     Subscriptions: SubscriptionsSchema,
     SubscriptionReferences: SubscriptionReferencesSchema,
+    SubscriptionTaxRates: SubscriptionTaxRatesSchema,
   },
 };
 
