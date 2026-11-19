@@ -3,7 +3,10 @@ import Stripe from "stripe";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { PaymentInterval } from "@usenullish/nullish-schema/payments";
 
-const withDbContext = mock(async () => ({ status: "success", result: undefined }));
+const withDbContext = mock(async () => ({
+  status: "success",
+  result: { externalTaxRateId: undefined },
+}));
 
 mock.module("../src/_db", () => ({ withDbContext }));
 
@@ -314,6 +317,30 @@ describe("StripePaymentProvider", () => {
       expect(params.get("line_items[0][quantity]")).toBe("1");
       expect(params.get("success_url")).toBe(args.successUrl);
       expect(params.get("cancel_url")).toBe(args.cancelUrl);
+    });
+
+    test("applies the tax rate valid today to the subscription", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({
+            status: "success",
+            result: { externalTaxRateId: "txr_1" },
+          }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().get("subscription_data[default_tax_rates][0]")).toBe("txr_1");
+    });
+
+    test("applies no tax rate when none is valid today", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().has("subscription_data[default_tax_rates][0]")).toBe(false);
     });
 
     test("does not set a client reference", async () => {

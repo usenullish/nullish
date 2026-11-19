@@ -17,6 +17,7 @@ const claims = DbSchema.Subscription.Claims.ClaimsSchema;
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
+const taxRates = DbSchema.Subscription.SubscriptionTaxRates.SubscriptionTaxRatesSchema;
 
 const instance = await openTestDb();
 const db = instance.connection;
@@ -32,16 +33,19 @@ describe("CheckoutService", () => {
     userId = TEST_USER_ID,
     organizationId: checkoutOrganizationId = organizationId,
     externalProductId: checkoutProductId = externalProductId,
+    validOn = new Date("2026-06-15"),
   }: {
     userId?: string;
     organizationId?: string;
     externalProductId?: string;
+    validOn?: Date;
   } = {}) =>
-    CheckoutService.create({ db }).assert({
+    CheckoutService.create({ db }).prepare({
       userId,
       organizationId: checkoutOrganizationId,
       provider,
       externalProductId: checkoutProductId,
+      validOn,
     });
 
   beforeAll(async () => {
@@ -62,6 +66,7 @@ describe("CheckoutService", () => {
   afterAll(async () => {
     await resetDb(db);
     await db.delete(claims).where(eq(claims.id, claimId));
+    await db.delete(taxRates);
     await instance.close();
   });
 
@@ -69,6 +74,36 @@ describe("CheckoutService", () => {
     const result = await checkout();
 
     expect(result.status).toBe("success");
+  });
+
+  test("returns the tax rate valid on the date", async () => {
+    await db.delete(taxRates);
+    await db.insert(taxRates).values([
+      {
+        provider,
+        externalTaxRateId: "txr_2025",
+        startOn: new Date("2025-01-01"),
+        endOn: new Date("2025-12-31"),
+      },
+      {
+        provider,
+        externalTaxRateId: "txr_2026",
+        startOn: new Date("2026-01-01"),
+        endOn: null,
+      },
+    ]);
+
+    const result = await checkout({ validOn: new Date("2026-06-15") });
+
+    expect(result).toEqual({ status: "success", result: { externalTaxRateId: "txr_2026" } });
+  });
+
+  test("returns no tax rate when none is valid on the date", async () => {
+    await db.delete(taxRates);
+
+    const result = await checkout();
+
+    expect(result).toEqual({ status: "success", result: { externalTaxRateId: undefined } });
   });
 
   test("refuses a member who is not an admin", async () => {

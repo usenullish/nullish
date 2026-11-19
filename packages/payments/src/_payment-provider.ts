@@ -11,6 +11,8 @@ import { PaymentSubscriptionService } from "./services/payment-subscription";
 import { PlansService } from "./services/plans";
 
 type Claim = Records["Subscription"]["Claims"]["Select"];
+type ExternalTaxRateId =
+  Records["Subscription"]["SubscriptionTaxRates"]["Select"]["externalTaxRateId"];
 
 type CheckoutProduct = Pick<Payments["Payment"], "provider"> & {
   externalProductId: Payments["PaymentExternalIds"]["productId"];
@@ -46,18 +48,23 @@ export abstract class PaymentProvider implements ProcessPayments {
     const product = await this.loadProduct({ priceId });
 
     // 2. Assert user own the org, claim is related to this product and has never been used (referenced)
+    // and load the tax rate valid today
     const result = await withDbContext(async (dbContext) => {
       return await CheckoutService.create({
         db: dbContext,
-      }).assert({ userId, organizationId, ...product });
+      }).prepare({ userId, organizationId, ...product, validOn: new Date() });
     });
 
     if (result.status === "error") {
       throw result.err;
     }
 
+    const {
+      result: { externalTaxRateId },
+    } = result;
+
     // 3. Create the checkout with the provider ("in Stripe")
-    const checkout = await this.createCheckoutSession(parsedArgs);
+    const checkout = await this.createCheckoutSession({ ...parsedArgs, externalTaxRateId });
 
     return PaymentsSchema.PaymentCheckoutSchema.parse(checkout);
   }
@@ -95,7 +102,7 @@ export abstract class PaymentProvider implements ProcessPayments {
   protected abstract loadPlans(args: { claims: Claim[] }): Promise<Payments["Plan"][]>;
 
   protected abstract createCheckoutSession(
-    args: Payments["Checkout"]["Args"],
+    args: Payments["Checkout"]["Args"] & { externalTaxRateId: Option<ExternalTaxRateId> },
   ): Promise<Payments["Checkout"]["Result"]>;
 
   protected abstract resolve(
