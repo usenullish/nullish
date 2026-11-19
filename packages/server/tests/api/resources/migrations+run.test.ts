@@ -62,7 +62,15 @@ describe("migrations run", () => {
     app.use("*", loadDbMiddleware({ db: instance }));
     app.use("*", loadAuthMiddleware({ db: instance, mail: null }));
     app.use("*", loadCallerMiddleware());
-    app.use("*", loadWorkersMiddleware({ jobs, storage: FsStorageProvider.create(), mail: null }));
+    app.use(
+      "*",
+      loadWorkersMiddleware({
+        jobs,
+        storage: FsStorageProvider.create(),
+        mail: null,
+        payments: null,
+      }),
+    );
 
     MigrationsRunHandlers.create({ app }).register();
     MigrationsRunJobsHandlers.create({ app }).register();
