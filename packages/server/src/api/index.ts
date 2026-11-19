@@ -18,6 +18,7 @@ import { llmUsageLimitMiddleware } from "./middlewares/llm-usage";
 import { assertLlmEnabledMiddleware } from "./middlewares/llm-enabled";
 import { assertLlmSubscriptionMiddleware } from "./middlewares/llm-subscription";
 import { RATE_LIMITS, userRateLimitMiddleware } from "./middlewares/rate-limit";
+import { noRobotsMiddleware } from "./middlewares/robots";
 
 export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   const app = new OpenAPIHono<ApiEnv>();
@@ -26,6 +27,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   const webhooks = initWebhooks({ app });
 
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
+  app.use("*", noRobotsMiddleware);
   app.use("*", loadDbMiddleware({ db }));
   app.use("*", loadAuthMiddleware({ db, mail }));
   app.use("*", loadWorkersMiddleware({ jobs, storage, mail, payments: payments ?? null }));
