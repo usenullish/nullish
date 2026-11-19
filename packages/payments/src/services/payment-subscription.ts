@@ -34,21 +34,25 @@ export class PaymentSubscriptionService extends AdminServiceContext {
   async #link({ tx, payment }: { tx: Tx; payment: Payment }): Promise<Subscription> {
     const { organizationId, provider, externalIds } = payment;
 
+    // 1. Get and lock the existing subscription
     const subscription = await getExistingSubscription({
       tx,
       organizationId,
       lock: "update",
     });
 
+    // 2. Find the related subscription reference
     const reference = await getSubscriptionReference({
       tx,
       subscriptionId: subscription.id,
     });
 
+    // 3. If the reference exists ensure it is related to the received payment
     if (nonNullish(reference)) {
       this.#assertSameExternalSubscription({ reference, payment });
     }
 
+    // 4. If the reference does not exist yes - first time user is paying - create it
     if (isNullish(reference)) {
       await insertSubscriptionReference({
         tx,
@@ -58,7 +62,23 @@ export class PaymentSubscriptionService extends AdminServiceContext {
       });
     }
 
-    return await this.#apply({ tx, subscription, payment });
+    // 5. Get the claim configured for the product
+    const { id: claimId } = await getClaimByExternalProduct({
+      tx,
+      provider,
+      externalProductId: externalIds.productId,
+    });
+
+    const { status, periodEnd } = payment;
+
+    // 6. Update the subscription with the claim (new or same), period end and status
+    return await updateSubscription({
+      tx,
+      subscription,
+      claimId,
+      status,
+      periodEnd,
+    });
   }
 
   #assertSameExternalSubscription({
@@ -76,29 +96,5 @@ export class PaymentSubscriptionService extends AdminServiceContext {
         `Subscription ${reference.subscriptionId} is linked to another external subscription.`,
       );
     }
-  }
-
-  async #apply({
-    tx,
-    subscription,
-    payment: { provider, externalIds, status, periodEnd },
-  }: {
-    tx: Tx;
-    subscription: Subscription;
-    payment: Payment;
-  }): Promise<Subscription> {
-    const { id: claimId } = await getClaimByExternalProduct({
-      tx,
-      provider,
-      externalProductId: externalIds.productId,
-    });
-
-    return await updateSubscription({
-      tx,
-      subscription,
-      claimId,
-      status,
-      periodEnd,
-    });
   }
 }
