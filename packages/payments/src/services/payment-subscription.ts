@@ -7,7 +7,7 @@ import {
   getSubscriptionReference,
   insertSubscriptionReference,
 } from "./_helpers/subscription-references";
-import { getAndLockExistingSubscription, updateSubscription } from "./_helpers/subscriptions";
+import { getExistingSubscription, updateSubscription } from "./_helpers/subscriptions";
 import { AdminServiceContext } from "./_admin-service";
 import type { AdminServiceContextArgs } from "../../../admin/src/_service";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
@@ -34,9 +34,10 @@ export class PaymentSubscriptionService extends AdminServiceContext {
   async #link({ tx, payment }: { tx: Tx; payment: Payment }): Promise<Subscription> {
     const { organizationId, provider, externalIds } = payment;
 
-    const subscription = await getAndLockExistingSubscription({
+    const subscription = await getExistingSubscription({
       tx,
       organizationId,
+      lock: "update",
     });
 
     const reference = await getSubscriptionReference({

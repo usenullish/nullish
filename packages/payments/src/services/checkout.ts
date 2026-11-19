@@ -6,7 +6,7 @@ import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-serv
 import { getClaimByExternalProduct } from "./_helpers/claims";
 import { getMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
-import { getAndLockExistingSubscription } from "./_helpers/subscriptions";
+import { getExistingSubscription } from "./_helpers/subscriptions";
 
 type Membership = Records["Core"]["Memberships"]["Select"];
 type ExternalProductId = NonNullable<
@@ -22,7 +22,7 @@ export class CheckoutService extends AdminServiceContext {
     return new this(args);
   }
 
-  checkout({
+  assert({
     userId,
     organizationId,
     provider,
@@ -78,7 +78,7 @@ export class CheckoutService extends AdminServiceContext {
     tx: Tx;
     organizationId: Membership["organizationId"];
   }): Promise<void> {
-    const subscription = await getAndLockExistingSubscription({ tx, organizationId });
+    const subscription = await getExistingSubscription({ tx, organizationId });
 
     const reference = await getSubscriptionReference({ tx, subscriptionId: subscription.id });
 

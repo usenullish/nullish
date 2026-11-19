@@ -37,7 +37,7 @@ describe("CheckoutService", () => {
     organizationId?: string;
     externalProductId?: string;
   } = {}) =>
-    CheckoutService.create({ db }).checkout({
+    CheckoutService.create({ db }).assert({
       userId,
       organizationId: checkoutOrganizationId,
       provider,

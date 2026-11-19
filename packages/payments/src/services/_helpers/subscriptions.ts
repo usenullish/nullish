@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import type { LockStrength } from "drizzle-orm/pg-core";
 import { assertArrayExactlyOne } from "@usenullish/nullish-common";
 import { selectMany, type Tx, updateMany } from "@usenullish/nullish-db";
 import { DbSchema } from "@usenullish/nullish-schema/db";
@@ -9,19 +10,21 @@ const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 type Subscription = Records["Subscription"]["Subscriptions"]["Select"];
 
-export const getAndLockExistingSubscription = async ({
+export const getExistingSubscription = async ({
   tx,
   organizationId,
+  lock,
 }: {
   tx: Tx;
   organizationId: Subscription["organizationId"];
+  lock?: LockStrength;
 }): Promise<Subscription> => {
   const rows = await selectMany({
     tx,
     table: subscriptions,
     schema: RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
     where: eq(subscriptions.organizationId, organizationId),
-    lock: "update",
+    lock,
   });
 
   assertArrayExactlyOne(rows);
