@@ -1,7 +1,7 @@
 import { SubscriptionSchema } from "./_schema";
 import { primaryKey } from "../_common";
 import * as pg from "drizzle-orm/pg-core";
-import { subscriptionProvider } from "./provider";
+import { subscriptionProviderReference } from "./subscription-providers";
 import { SubscriptionsSchema } from "./subscriptions";
 
 export const SubscriptionReferencesSchema = SubscriptionSchema.table(
@@ -12,7 +12,7 @@ export const SubscriptionReferencesSchema = SubscriptionSchema.table(
       .uuid()
       .references(() => SubscriptionsSchema.id, { onDelete: "cascade" })
       .notNull(),
-    provider: subscriptionProvider().notNull(),
+    provider: subscriptionProviderReference(),
     externalCustomerId: pg.text().notNull(),
     externalSubscriptionId: pg.text().notNull(),
   },

@@ -4,7 +4,7 @@ import { timestamp } from "../_temporal";
 import * as pg from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { readonlyPolicies } from "../_policies";
-import { subscriptionProvider } from "./provider";
+import { subscriptionProviderReferenceOptional } from "./subscription-providers";
 
 export const ClaimsSchema = SubscriptionSchema.table(
   "claims",
@@ -12,7 +12,7 @@ export const ClaimsSchema = SubscriptionSchema.table(
     id: primaryKey(),
     trialDays: pg.integer(),
     expiresAt: timestamp(),
-    provider: subscriptionProvider(),
+    provider: subscriptionProviderReferenceOptional(),
     externalProductId: pg.text(),
   },
   (table) => [
