@@ -3,6 +3,7 @@ import { SelectMembershipsSchema } from "../../records/schemas/core/memberships"
 import { SelectClaimsSchema } from "../../records/schemas/subscription/claims";
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
+import { SelectSubscriptionTaxRatesSchema } from "../../records/schemas/subscription/subscription-tax-rates";
 import { PaymentInterval } from "../constants";
 
 export const HandlePaymentsArgsSchema = z.strictObject({
@@ -52,4 +53,14 @@ export const PaymentSchema = z.strictObject({
   externalIds: PaymentExternalIdsSchema,
   status: SelectSubscriptionsSchema.shape.status,
   periodEnd: SelectSubscriptionsSchema.shape.periodEnd.unwrap().optional(),
+});
+
+export const PaymentInvoiceSchema = z.strictObject({
+  provider: SelectSubscriptionReferencesSchema.shape.provider,
+  externalIds: z.strictObject({
+    invoiceId: z.string().min(1),
+    subscriptionId: SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
+    taxRateIds: z.array(SelectSubscriptionTaxRatesSchema.shape.externalTaxRateId),
+  }),
+  validOn: z.date(),
 });
