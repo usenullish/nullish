@@ -21,7 +21,7 @@ const dbContext = await DbAdminContext.open();
 const db = dbContext.connection;
 
 const sync = ({ payment }: { payment: Payments["Payment"] }) =>
-  PaymentSubscriptionService.create({ db: dbContext }).sync({ payment });
+  PaymentSubscriptionService.create({ db: dbContext.connection }).sync({ payment });
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
