@@ -1,16 +1,16 @@
 import { isEmptyString, tryCatch } from "@usenullish/nullish-common";
-import type { HandlePayments } from "@usenullish/nullish-schema/payments";
+import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { ErrorCode, PAYMENT_EVENT_MAX_SIZE } from "@usenullish/nullish-schema/server";
 import { bodyLimit } from "hono/body-limit";
 import { errorResponse } from "../_errors";
 import type { DefineRawHandler } from "../types/raw-api";
 import { Webhook, type WebhookArgs, WebhookProvider } from "./_factories/webhook";
 
-type PaymentsWebhookArgs = Omit<WebhookArgs, "path"> & { payments: HandlePayments };
+type PaymentsWebhookArgs = Omit<WebhookArgs, "path"> & { payments: ProcessPayments };
 
 @WebhookProvider
 export class PaymentsWebhook extends Webhook {
-  readonly #payments: HandlePayments;
+  readonly #payments: ProcessPayments;
 
   private constructor({ app, payments }: PaymentsWebhookArgs) {
     super({ path: "/payments/stripe/webhook", app });

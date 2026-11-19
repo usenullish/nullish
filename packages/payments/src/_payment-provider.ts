@@ -1,7 +1,6 @@
 import { isNullish, type Option } from "@usenullish/nullish-common";
 import {
-  type CheckoutPayments,
-  type HandlePayments,
+  type ProcessPayments,
   type Payments,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
@@ -13,7 +12,7 @@ type CheckoutProduct = Pick<Payments["Payment"], "provider"> & {
   externalProductId: Payments["PaymentExternalIds"]["productId"];
 };
 
-export abstract class PaymentProvider implements HandlePayments, CheckoutPayments {
+export abstract class PaymentProvider implements ProcessPayments {
   protected constructor() {}
 
   async checkout(args: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {

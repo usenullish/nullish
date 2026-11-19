@@ -12,7 +12,7 @@ import {
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { Nullable } from "@usenullish/nullish-common";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
-import type { HandlePayments } from "@usenullish/nullish-schema/payments";
+import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { ErrorCode, PAYMENT_EVENT_MAX_SIZE } from "@usenullish/nullish-schema/server";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { defineApi } from "../../../src/api";
@@ -21,16 +21,19 @@ describe("POST /payments/stripe/webhook", () => {
   const PAYLOAD = JSON.stringify({ id: "evt_1" });
   const SIGNATURE = "t=1,v1=signature";
 
-  const handle = mock<HandlePayments["handle"]>(async () => undefined);
+  const handle = mock<ProcessPayments["handle"]>(async () => undefined);
+  const checkout = mock<ProcessPayments["checkout"]>(async () => ({
+    url: "https://checkout.stripe.com/c/pay/cs_1",
+  }));
 
   let instance: DbInstance;
 
   const post = async ({
-    payments = { handle },
+    payments = { handle, checkout },
     body = PAYLOAD,
     headers = { "stripe-signature": SIGNATURE },
   }: {
-    payments?: Nullable<HandlePayments>;
+    payments?: Nullable<ProcessPayments>;
     body?: string;
     headers?: Record<string, string>;
   } = {}) => {

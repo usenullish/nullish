@@ -4,7 +4,10 @@ import type { PaymentsSchema } from "./_schemas";
 
 type HandlePaymentsArgs = z.infer<typeof PaymentsSchema.HandlePaymentsArgsSchema>;
 type PaymentSubscription = z.infer<typeof PaymentsSchema.PaymentSchema>;
+type CheckoutPaymentsArgs = z.infer<typeof PaymentsSchema.CheckoutPaymentsArgsSchema>;
+type PaymentCheckout = z.infer<typeof PaymentsSchema.PaymentCheckoutSchema>;
 
-export interface HandlePayments {
+export interface ProcessPayments {
   handle(args: HandlePaymentsArgs): Promise<Option<PaymentSubscription>>;
+  checkout(args: CheckoutPaymentsArgs): Promise<PaymentCheckout>;
 }
