@@ -10,6 +10,8 @@ interface Payments {
     Args: z.infer<typeof PaymentsSchema.CheckoutPaymentsArgsSchema>;
     Result: z.infer<typeof PaymentsSchema.PaymentCheckoutSchema>;
   };
+  Plan: z.infer<typeof PaymentsSchema.PaymentPlanSchema>;
+  PlanPrice: z.infer<typeof PaymentsSchema.PaymentPlanPriceSchema>;
   Payment: z.infer<typeof PaymentsSchema.PaymentSchema>;
   PaymentExternalIds: z.infer<typeof PaymentsSchema.PaymentExternalIdsSchema>;
 }

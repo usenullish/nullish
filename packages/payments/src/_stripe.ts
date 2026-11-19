@@ -1,10 +1,28 @@
 import Stripe from "stripe";
-import { assertNonNullish, isNullish, type Option } from "@usenullish/nullish-common";
+import {
+  assertNonNullish,
+  isNullish,
+  nonNullish,
+  notEmptyString,
+  type Option,
+} from "@usenullish/nullish-common";
 import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-env";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
-import { type Payments, PaymentsSchema } from "@usenullish/nullish-schema/payments";
+import {
+  type Payments,
+  PaymentInterval,
+  PaymentsSchema,
+} from "@usenullish/nullish-schema/payments";
+import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
 import { PaymentProvider } from "./_payment-provider";
+
+type Claim = Records["Subscription"]["Claims"]["Select"];
+
+type StripePlanPrice = Stripe.Price & {
+  unit_amount: number;
+  recurring: Stripe.Price.Recurring & { interval: PaymentInterval };
+};
 
 @PaymentFactory
 export class StripePaymentProvider extends PaymentProvider {
@@ -31,6 +49,64 @@ export class StripePaymentProvider extends PaymentProvider {
     return {
       provider: SubscriptionProvider.STRIPE,
       externalProductId: this.#id(product),
+    };
+  }
+
+  protected override async loadPlans({ claims }: { claims: Claim[] }): Promise<Payments["Plan"][]> {
+    const productIds = claims
+      .filter(({ provider }) => provider === SubscriptionProvider.STRIPE)
+      .map(({ externalProductId }) => externalProductId)
+      .filter(notEmptyString);
+
+    const plans = await Promise.all(productIds.map((productId) => this.#loadPlan({ productId })));
+
+    return plans.filter(nonNullish);
+  }
+
+  async #loadPlan({
+    productId,
+  }: {
+    productId: Stripe.Product["id"];
+  }): Promise<Option<Payments["Plan"]>> {
+    const [{ name: productName }, { data: prices }] = await Promise.all([
+      this.#stripe.products.retrieve(productId),
+      this.#stripe.prices.list({ product: productId, active: true, type: "recurring", limit: 100 }),
+    ]);
+
+    const isValidPlanPrice = (price: Stripe.Price): price is StripePlanPrice => {
+      const { unit_amount: amount, recurring } = price;
+
+      // Does the interval (week, month etc.) matches with our enums
+      const isPaymentInterval = (
+        interval: Stripe.Price.Recurring.Interval,
+      ): interval is PaymentInterval => {
+        return Object.values<string>(PaymentInterval).includes(interval);
+      };
+
+      return nonNullish(amount) && nonNullish(recurring) && isPaymentInterval(recurring.interval);
+    };
+
+    const mapPlanPrice = ({
+      id: priceId,
+      unit_amount: amount,
+      currency,
+      recurring: { interval },
+    }: StripePlanPrice): Payments["PlanPrice"] => ({
+      priceId,
+      amount: BigInt(amount),
+      currency: currency.toUpperCase(),
+      interval,
+    });
+
+    const planPrices = prices.filter(isValidPlanPrice).map(mapPlanPrice);
+
+    if (planPrices.length === 0) {
+      return undefined;
+    }
+
+    return {
+      productName,
+      prices: planPrices,
     };
   }
 
