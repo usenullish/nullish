@@ -969,6 +969,21 @@ interface Api {
       >;
     };
   };
+  PaymentsCheckout: {
+    Server: {
+      CheckoutPaymentsResponse: z.input<
+        typeof ApiSchema.PaymentsCheckout.CheckoutPaymentsResponseSchema
+      >;
+    };
+    Client: {
+      CheckoutPaymentsBody: z.infer<
+        typeof ApiSchema.PaymentsCheckout.CheckoutPaymentsRequestSchema
+      >;
+      CheckoutPaymentsResponse: z.infer<
+        typeof ApiSchema.PaymentsCheckout.CheckoutPaymentsResponseSchema
+      >;
+    };
+  };
 }
 
 interface Common {
