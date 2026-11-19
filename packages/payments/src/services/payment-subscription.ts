@@ -8,27 +8,26 @@ import {
   insertSubscriptionReference,
 } from "./_helpers/subscription-references";
 import { getAndLockExistingSubscription, updateSubscription } from "./_helpers/subscriptions";
+import { AdminServiceContext } from "./_admin-service";
+import type { AdminServiceContextArgs } from "../../../admin/src/_service";
+import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 
 type Subscription = Records["Subscription"]["Subscriptions"]["Select"];
 type SubscriptionReference = Records["Subscription"]["SubscriptionReferences"]["Select"];
 type Payment = Payments["Payment"];
 
-export class PaymentSubscriptionService {
-  readonly #db: DbAdminContext;
-
-  private constructor({ db }: { db: DbAdminContext }) {
-    this.#db = db;
+export class PaymentSubscriptionService extends AdminServiceContext {
+  private constructor(args: AdminServiceContextArgs) {
+    super(args);
   }
 
-  static create(args: { db: DbAdminContext }): PaymentSubscriptionService {
+  static create(args: { db: PostgresDbInstance }): PaymentSubscriptionService {
     return new this(args);
   }
 
   sync({ payment }: { payment: Payment }): Promise<Result<Subscription>> {
-    return tryCatch(async () => {
-      return await this.#db.exec(async (tx) => {
-        return await this.#link({ tx, payment });
-      });
+    return this._withDbContext(async (tx) => {
+      return await this.#link({ tx, payment });
     });
   }
 
