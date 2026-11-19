@@ -1,6 +1,10 @@
 import { nonNullish, type Result } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
-import type { PostgresDbInstance, SubscriptionProvider } from "@usenullish/nullish-schema/db";
+import {
+  MembershipRole,
+  type PostgresDbInstance,
+  type SubscriptionProvider,
+} from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
 import { getClaimByExternalProduct } from "./_helpers/claims";
@@ -53,7 +57,7 @@ export class CheckoutService extends AdminServiceContext {
   }): Promise<void> {
     const membership = await getMembership({ tx, organizationId, userId });
 
-    if (membership.role !== "admin") {
+    if (membership.role !== MembershipRole.ADMIN) {
       throw new Error(`User ${userId} is not an admin of organization ${organizationId}.`);
     }
   }

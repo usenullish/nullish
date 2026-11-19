@@ -5,12 +5,9 @@ import { auditFields } from "../_audit";
 import * as pg from "drizzle-orm/pg-core";
 import { authUserIdReference } from "../auth/users";
 import { membershipPolicies } from "../_policies";
+import { MembershipRole } from "../../constants/memberships";
 
-export const membershipRole = CoreSchema.enum("membership_role", [
-  "admin", // full access: bookkeeping + organization/user administration
-  "accountant", // full bookkeeping access (accounts, journal, periods, VAT), no org/user administration
-  "reviewer", // read-only access
-]);
+export const membershipRole = CoreSchema.enum("membership_role", MembershipRole);
 
 export const MembershipsSchema = CoreSchema.table(
   "memberships",

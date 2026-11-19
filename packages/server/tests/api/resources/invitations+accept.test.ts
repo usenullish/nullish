@@ -6,6 +6,7 @@ import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/s
 import {
   DbSchema,
   DefaultTemplateLanguage,
+  MembershipRole,
   type PostgresDbInstance,
 } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
@@ -74,7 +75,10 @@ describe("accept invitation", () => {
       userId: admin.id,
       organizationId,
       mail: null,
-    }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
+    }).create({
+      invitation: { email, role: MembershipRole.REVIEWER },
+      language: DefaultTemplateLanguage.EN,
+    });
 
     if (result.status === "error") {
       throw result.err;
@@ -145,7 +149,7 @@ describe("accept invitation", () => {
     );
 
     expect(membership.organizationId).toBe(organizationId);
-    expect(membership.role).toBe("reviewer");
+    expect(membership.role).toBe(MembershipRole.REVIEWER);
 
     const [row] = await db
       .select()

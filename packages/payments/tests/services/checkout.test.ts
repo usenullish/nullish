@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { CheckoutService } from "../../src/services/checkout";
 import {
   createOrganization,
@@ -52,7 +52,7 @@ describe("CheckoutService", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
 
     const [claim] = await db.insert(claims).values({ provider, externalProductId }).returning();
     assertNonNullish(claim);

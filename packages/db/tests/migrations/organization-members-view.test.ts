@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, DbView, LegalForm } from "@usenullish/nullish-schema/db";
+import { DbSchema, DbView, LegalForm, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   memberships,
@@ -72,7 +72,7 @@ describe("core.organization_members", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER });
   });
 
   afterAll(async () => {
@@ -84,8 +84,8 @@ describe("core.organization_members", () => {
     const rows = await listAs({ userId: TEST_USER_ID, organizationId });
 
     expect(rows.map(({ userId, role }) => ({ userId, role }))).toEqual([
-      { userId: TEST_USER_ID, role: "admin" },
-      { userId: TEST_OTHER_USER_ID, role: "reviewer" },
+      { userId: TEST_USER_ID, role: MembershipRole.ADMIN },
+      { userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER },
     ]);
   });
 

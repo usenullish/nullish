@@ -5,6 +5,7 @@ import { Chat, type ChatStreamEvent, MAX_CHAT_DURATION_SECONDS } from "@usenulli
 import { ChatService, MessageService } from "@usenullish/nullish-engine/chat";
 import { type Api, ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import type { Records } from "@usenullish/nullish-schema/records";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import { Resource, type ResourceArgs, ResourceProvider } from "./_factories/resource";
 import { defineStreamRoute } from "./_factories/stream-route-config";
 import type { OpenAPIHandlerContext } from "../types/openapi";
@@ -98,7 +99,7 @@ export class ChatHandlers extends Resource {
       domain.type === "unscoped" ||
       domain.readOnly ||
       caller.user.roles?.find(({ organizationId }) => organizationId === domain.organizationId)
-        ?.role === "reviewer";
+        ?.role === MembershipRole.REVIEWER;
 
     const mcp = await McpHandler.create({
       db: connection,

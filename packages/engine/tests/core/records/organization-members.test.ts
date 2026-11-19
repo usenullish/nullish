@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { DbCollectionOrganizationMembers } from "../../../src/core/records/organization-members";
 import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
@@ -68,7 +68,7 @@ describe("organization-members", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {
@@ -86,8 +86,8 @@ describe("organization-members", () => {
       }
 
       expect(result.result.map(({ userId, role }) => ({ userId, role }))).toEqual([
-        { userId: TEST_USER_ID, role: "admin" },
-        { userId: TEST_OTHER_USER_ID, role: "accountant" },
+        { userId: TEST_USER_ID, role: MembershipRole.ADMIN },
+        { userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT },
       ]);
     });
 

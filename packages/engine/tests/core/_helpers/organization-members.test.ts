@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import type { Tx } from "@usenullish/nullish-db";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { getOrganizationMember } from "../../../src/core/_helpers/organization-members";
 import {
@@ -63,7 +63,7 @@ describe("core/_helpers/organization-members", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {
@@ -80,7 +80,7 @@ describe("core/_helpers/organization-members", () => {
       });
 
       expect(member?.userId).toBe(TEST_OTHER_USER_ID);
-      expect(member?.role).toBe("accountant");
+      expect(member?.role).toBe(MembershipRole.ACCOUNTANT);
       expect(member?.name).toBe(TEST_OTHER_USER_ID);
       expect(member?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
     });
@@ -88,7 +88,7 @@ describe("core/_helpers/organization-members", () => {
     test("returns the admin to themselves", async () => {
       const member = await get({ userId: TEST_USER_ID, organizationId, memberId: TEST_USER_ID });
 
-      expect(member?.role).toBe("admin");
+      expect(member?.role).toBe(MembershipRole.ADMIN);
     });
 
     test("returns no member for a user who is not a member", async () => {

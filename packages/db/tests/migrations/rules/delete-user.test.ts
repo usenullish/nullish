@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, MessageRole } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, MessageRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -49,7 +49,7 @@ describe("deleting a user", () => {
     organizationId = await createOrganization(db);
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
   });
 
   test("deletes the memberships of the user", async () => {

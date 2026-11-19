@@ -10,6 +10,7 @@ import {
   DbSchema,
   InvoiceJournalEntryType,
   InvoiceStatus,
+  MembershipRole,
   MigrationStatus,
   PeriodJournalEntryType,
   PeriodStatus,
@@ -102,7 +103,7 @@ const createBookkeptOrganization = async (): Promise<{
 
   await db
     .insert(memberships)
-    .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+    .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
 
   const periodId = await createPeriod(db, organizationId, {
     startOn: new Date("2026-01-01"),

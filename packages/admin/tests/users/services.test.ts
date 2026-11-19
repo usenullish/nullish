@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { assertNonNullish } from "@usenullish/nullish-common";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import { listUsersWithOrgs } from "../../src/users/helpers";
 import {
   createOrganization,
@@ -53,7 +54,7 @@ describe("listUsersWithOrgs", () => {
 
     expect(row.email).toBe(`${TEST_USER_ID}@test.dev`);
     expect(row.organizationName).toBe(`Org ${TEST_USER_ID}`);
-    expect(row.role).toBe("admin");
+    expect(row.role).toBe(MembershipRole.ADMIN);
     expect(row.organizationId).not.toBeNull();
   });
 

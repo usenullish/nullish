@@ -3,7 +3,7 @@ import { SQL as BunSQL, CryptoHasher } from "bun";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   clients,
@@ -64,7 +64,7 @@ describe("core.organizations", () => {
     organizationId = await createOrganization(db);
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
   });
 
   test("lets an admin update the organization", async () => {
@@ -227,7 +227,7 @@ describe("core.organizations", () => {
           tx.insert(memberships).values({
             organizationId,
             userId: "user-22222222-2222-4222-8222-222222222222",
-            role: "reviewer",
+            role: MembershipRole.REVIEWER,
           }),
       }).catch((e: unknown) => e);
 
@@ -241,7 +241,7 @@ describe("core.organizations", () => {
           tx.insert(invitations).values({
             organizationId,
             email: "invited@test.dev",
-            role: "reviewer",
+            role: MembershipRole.REVIEWER,
             tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
           }),
       }).catch((e: unknown) => e);

@@ -12,7 +12,7 @@ import type { Mock } from "bun:test";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
 import { eq } from "drizzle-orm";
@@ -180,7 +180,7 @@ describe("delete organization", () => {
     const organizationId = await createOrganization(db, admin.id);
     await db
       .insert(memberships)
-      .values({ organizationId, userId: accountant.id, role: "accountant" });
+      .values({ organizationId, userId: accountant.id, role: MembershipRole.ACCOUNTANT });
 
     const response = await deleteOrganization({ organizationId, cookie: accountant.cookie });
 

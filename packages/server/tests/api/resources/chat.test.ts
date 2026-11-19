@@ -35,7 +35,12 @@ import {
 } from "../../../../chat/tests/_test-utils";
 import type { Api } from "@usenullish/nullish-schema/server";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { DbSchema, MessageRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  MembershipRole,
+  MessageRole,
+  type PostgresDbInstance,
+} from "@usenullish/nullish-schema/db";
 import { DbCollectionMessages } from "@usenullish/nullish-engine/chat";
 import { DbLlmUsages } from "@usenullish/nullish-engine/metering";
 import { LlmMeter } from "@usenullish/nullish-metering";
@@ -344,7 +349,7 @@ describe("chat", () => {
       expect(tools.map(({ function: { name } }) => name)).toContain("list_clients");
     });
 
-    test.each(["admin", "accountant"] as const)(
+    test.each([MembershipRole.ADMIN, MembershipRole.ACCOUNTANT] as const)(
       "exposes the write tools to an %s of the organization who asks to write",
       async (role) => {
         fetchSpy = mockLlm([textAnswer("Hello.")]);
@@ -369,7 +374,7 @@ describe("chat", () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 
       const response = await request({
-        role: "admin",
+        role: MembershipRole.ADMIN,
         body: JSON.stringify({
           domain: { type: "organization", organizationId: orgId },
           message: MESSAGE,
@@ -390,7 +395,7 @@ describe("chat", () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 
       const response = await request({
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
         body: JSON.stringify({
           domain: { type: "organization", organizationId: orgId, readOnly: false },
           message: MESSAGE,
@@ -410,7 +415,7 @@ describe("chat", () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 
       const response = await request({
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
         body: JSON.stringify({
           domain: { type: "organization", organizationId: orgId, readOnly: false },
           message: MESSAGE,
@@ -428,7 +433,7 @@ describe("chat", () => {
       fetchSpy = mockLlm([textAnswer("Hello.")]);
 
       const response = await request({
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
         body: JSON.stringify({
           domain: { type: "organization", organizationId: orgId },
           message: MESSAGE,

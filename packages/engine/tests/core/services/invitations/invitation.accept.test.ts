@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { DbSchema, DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
+import { DbSchema, DefaultTemplateLanguage, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { AcceptInvitationService } from "../../../../src/core/services/invitations/invitation.accept";
 import { CreateInvitationService } from "../../../../src/core/services/invitations/invitation.create";
@@ -33,7 +33,10 @@ const invite = async ({
     userId: TEST_USER_ID,
     organizationId,
     mail: null,
-  }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
+  }).create({
+    invitation: { email, role: MembershipRole.REVIEWER },
+    language: DefaultTemplateLanguage.EN,
+  });
 
   if (result.status === "error") {
     throw result.err;
@@ -73,7 +76,7 @@ describe("AcceptInvitationService", () => {
     }
 
     expect(result.result.organizationId).toBe(organizationId);
-    expect(result.result.role).toBe("reviewer");
+    expect(result.result.role).toBe(MembershipRole.REVIEWER);
 
     const [row] = await db
       .select()

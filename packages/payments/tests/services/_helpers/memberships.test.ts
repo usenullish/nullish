@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { getMembership } from "../../../src/services/_helpers/memberships";
 import {
   createOrganization,
@@ -27,7 +27,7 @@ describe("getMembership", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {
@@ -42,7 +42,7 @@ describe("getMembership", () => {
 
     expect(membership.organizationId).toBe(organizationId);
     expect(membership.userId).toBe(TEST_OTHER_USER_ID);
-    expect(membership.role).toBe("accountant");
+    expect(membership.role).toBe(MembershipRole.ACCOUNTANT);
   });
 
   test("throws for an organization the user is not a member of", async () => {

@@ -4,7 +4,7 @@ import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -37,7 +37,13 @@ const insertInvitation = async ({
 
   const [row] = await db
     .insert(invitations)
-    .values({ organizationId, email, role: "accountant", tokenHash: hashOf(token), expiresAt })
+    .values({
+      organizationId,
+      email,
+      role: MembershipRole.ACCOUNTANT,
+      tokenHash: hashOf(token),
+      expiresAt,
+    })
     .returning();
   assertNonNullish(row);
 
@@ -146,7 +152,7 @@ describe("decline_invitation", () => {
   test("rejects a person who is already a member and keeps the invitation", async () => {
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER });
     const { id, token } = await insertInvitation({ organizationId });
 
     const error = await declineAs({ userId: TEST_OTHER_USER_ID, token }).catch((e: unknown) => e);

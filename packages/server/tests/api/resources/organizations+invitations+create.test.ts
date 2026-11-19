@@ -15,6 +15,7 @@ import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import {
   DbSchema,
   DefaultTemplateLanguage,
+  MembershipRole,
   type PostgresDbInstance,
 } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish, type Nullable } from "@usenullish/nullish-common";
@@ -54,13 +55,13 @@ describe("create invitation", () => {
   const invite = async ({
     cookie,
     email,
-    role = "accountant",
+    role = MembershipRole.ACCOUNTANT,
     language,
     mail = null,
   }: {
     cookie?: string;
     email: string;
-    role?: "admin" | "accountant" | "reviewer";
+    role?: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
     language?: string;
     mail?: Nullable<SendMail>;
   }): Promise<Response> => {
@@ -123,7 +124,7 @@ describe("create invitation", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: accountant.id, role: "accountant" });
+      .values({ organizationId, userId: accountant.id, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {
@@ -141,7 +142,7 @@ describe("create invitation", () => {
     const response = await invite({
       cookie: admin.cookie,
       email: "created@test.local",
-      role: "admin",
+      role: MembershipRole.ADMIN,
     });
 
     expect(response.status).toBe(201);
@@ -150,7 +151,7 @@ describe("create invitation", () => {
 
     expect(invitation.organizationId).toBe(organizationId);
     expect(invitation.email).toBe("created@test.local");
-    expect(invitation.role).toBe("admin");
+    expect(invitation.role).toBe(MembershipRole.ADMIN);
     expect(invitation.expiresAt).toBeInstanceOf(Date);
     expect(invitation).not.toHaveProperty("tokenHash");
     expect(token.length).toBeGreaterThan(0);

@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createClient,
@@ -63,7 +63,7 @@ describe("audit.logs", () => {
         .values({
           organizationId,
           email: "invited@test.dev",
-          role: "reviewer",
+          role: MembershipRole.REVIEWER,
           tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
         })
         .returning(),
@@ -85,7 +85,7 @@ describe("audit.logs", () => {
         .values({
           organizationId,
           email: "revoked@test.dev",
-          role: "reviewer",
+          role: MembershipRole.REVIEWER,
           tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
         })
         .returning(),

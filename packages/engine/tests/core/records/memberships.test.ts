@@ -3,7 +3,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { assertNonNullish, InvalidArrayLengthError } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { DbMemberships } from "../../../src/core/records/memberships";
 import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
@@ -151,7 +151,7 @@ describe("memberships", () => {
   describe("insert", () => {
     test("returns an error Result for an organization the user does not own", async () => {
       const result = await store.insert({
-        values: { organizationId: otherOrgId, userId: TEST_USER_ID, role: "reviewer" },
+        values: { organizationId: otherOrgId, userId: TEST_USER_ID, role: MembershipRole.REVIEWER },
       });
 
       expect(result.status).toBe("error");
@@ -170,13 +170,15 @@ describe("memberships", () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({ organizationId: sharedOrgId, userId: TEST_OTHER_USER_ID, role: "admin" });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,
-        values: { version: 1, role: "accountant" },
+        values: { version: 1, role: MembershipRole.ACCOUNTANT },
       });
 
       if (result.status === "error") {
@@ -185,20 +187,22 @@ describe("memberships", () => {
       }
 
       expect(result.result.id).toBe(ownMembershipId);
-      expect(result.result.role).toBe("accountant");
+      expect(result.result.role).toBe(MembershipRole.ACCOUNTANT);
     });
 
     test("increments the version on a role change", async () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({ organizationId: sharedOrgId, userId: TEST_OTHER_USER_ID, role: "admin" });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,
-        values: { version: 1, role: "reviewer" },
+        values: { version: 1, role: MembershipRole.REVIEWER },
       });
 
       if (result.status === "error") {
@@ -213,26 +217,28 @@ describe("memberships", () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({ organizationId: sharedOrgId, userId: TEST_OTHER_USER_ID, role: "admin" });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,
-        values: { version: 999, role: "accountant" },
+        values: { version: 999, role: MembershipRole.ACCOUNTANT },
       });
 
       expect(result.status).toBe("error");
 
       const [row] = await db.select().from(memberships).where(eq(memberships.id, ownMembershipId));
 
-      expect(row?.role).toBe("admin");
+      expect(row?.role).toBe(MembershipRole.ADMIN);
     });
 
     test("returns an error Result when the last admin changes their role", async () => {
       const result = await store.update({
         pKey: membershipId,
-        values: { version: 1, role: "accountant" },
+        values: { version: 1, role: MembershipRole.ACCOUNTANT },
       });
 
       if (result.status === "success") {
@@ -251,7 +257,7 @@ describe("memberships", () => {
 
       const result = await store.update({
         pKey: otherMembershipId,
-        values: { version: 1, role: "reviewer" },
+        values: { version: 1, role: MembershipRole.REVIEWER },
       });
 
       if (result.status === "success") {
@@ -265,7 +271,7 @@ describe("memberships", () => {
     test("errors with InvalidArrayLengthError when the id matches nothing", async () => {
       const result = await store.update({
         pKey: TEST_MISSING_ID,
-        values: { version: 1, role: "reviewer" },
+        values: { version: 1, role: MembershipRole.REVIEWER },
       });
 
       if (result.status === "success") {
@@ -277,81 +283,91 @@ describe("memberships", () => {
     });
   });
 
-  describe.each(["accountant", "reviewer"] as const)("as a member with the %s role", (role) => {
-    let memberOrgId: string;
-    let ownMembershipId: string;
+  describe.each([MembershipRole.ACCOUNTANT, MembershipRole.REVIEWER] as const)(
+    "as a member with the %s role",
+    (role) => {
+      let memberOrgId: string;
+      let ownMembershipId: string;
 
-    beforeAll(async () => {
-      await db
-        .insert(users)
-        .values({
-          id: TEST_INVITEE_ID,
-          name: TEST_INVITEE_ID,
-          email: `${TEST_INVITEE_ID}@test.dev`,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-        .onConflictDoNothing();
-    });
-
-    beforeEach(async () => {
-      memberOrgId = await createOrganization(db, TEST_OTHER_USER_ID);
-
-      const [row] = await db
-        .insert(memberships)
-        .values({ organizationId: memberOrgId, userId: TEST_USER_ID, role })
-        .returning();
-      assertNonNullish(row);
-      ownMembershipId = row.id;
-    });
-
-    test("cannot add a membership to the organization", async () => {
-      const result = await store.insert({
-        values: { organizationId: memberOrgId, userId: TEST_INVITEE_ID, role: "reviewer" },
+      beforeAll(async () => {
+        await db
+          .insert(users)
+          .values({
+            id: TEST_INVITEE_ID,
+            name: TEST_INVITEE_ID,
+            email: `${TEST_INVITEE_ID}@test.dev`,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .onConflictDoNothing();
       });
 
-      expect(result.status).toBe("error");
+      beforeEach(async () => {
+        memberOrgId = await createOrganization(db, TEST_OTHER_USER_ID);
 
-      const rows = await db
-        .select()
-        .from(memberships)
-        .where(eq(memberships.organizationId, memberOrgId));
-
-      expect(rows.map(({ userId }) => userId).sort()).toEqual(
-        [TEST_OTHER_USER_ID, TEST_USER_ID].sort(),
-      );
-    });
-
-    test("cannot change its own role", async () => {
-      const result = await store.update({
-        pKey: ownMembershipId,
-        values: { version: 1, role: "admin" },
+        const [row] = await db
+          .insert(memberships)
+          .values({ organizationId: memberOrgId, userId: TEST_USER_ID, role })
+          .returning();
+        assertNonNullish(row);
+        ownMembershipId = row.id;
       });
 
-      if (result.status === "success") {
-        expect(true).toBeFalse();
-        return;
-      }
+      test("cannot add a membership to the organization", async () => {
+        const result = await store.insert({
+          values: {
+            organizationId: memberOrgId,
+            userId: TEST_INVITEE_ID,
+            role: MembershipRole.REVIEWER,
+          },
+        });
 
-      expect(result.err).toBeInstanceOf(InvalidArrayLengthError);
+        expect(result.status).toBe("error");
 
-      const [row] = await db.select().from(memberships).where(eq(memberships.id, ownMembershipId));
+        const rows = await db
+          .select()
+          .from(memberships)
+          .where(eq(memberships.organizationId, memberOrgId));
 
-      expect(row?.role).toBe(role);
-    });
-
-    test("cannot delete its own membership", async () => {
-      const deleted = await db.transaction(async (tx) => {
-        await tx.execute(sql`SET LOCAL ROLE authenticated_user`);
-        await tx.execute(sql`SELECT auth.set_current_user_id(${TEST_USER_ID})`);
-        return tx.delete(memberships).where(eq(memberships.id, ownMembershipId)).returning();
+        expect(rows.map(({ userId }) => userId).sort()).toEqual(
+          [TEST_OTHER_USER_ID, TEST_USER_ID].sort(),
+        );
       });
 
-      expect(deleted).toHaveLength(0);
+      test("cannot change its own role", async () => {
+        const result = await store.update({
+          pKey: ownMembershipId,
+          values: { version: 1, role: MembershipRole.ADMIN },
+        });
 
-      const rows = await db.select().from(memberships).where(eq(memberships.id, ownMembershipId));
+        if (result.status === "success") {
+          expect(true).toBeFalse();
+          return;
+        }
 
-      expect(rows).toHaveLength(1);
-    });
-  });
+        expect(result.err).toBeInstanceOf(InvalidArrayLengthError);
+
+        const [row] = await db
+          .select()
+          .from(memberships)
+          .where(eq(memberships.id, ownMembershipId));
+
+        expect(row?.role).toBe(role);
+      });
+
+      test("cannot delete its own membership", async () => {
+        const deleted = await db.transaction(async (tx) => {
+          await tx.execute(sql`SET LOCAL ROLE authenticated_user`);
+          await tx.execute(sql`SELECT auth.set_current_user_id(${TEST_USER_ID})`);
+          return tx.delete(memberships).where(eq(memberships.id, ownMembershipId)).returning();
+        });
+
+        expect(deleted).toHaveLength(0);
+
+        const rows = await db.select().from(memberships).where(eq(memberships.id, ownMembershipId));
+
+        expect(rows).toHaveLength(1);
+      });
+    },
+  );
 });
