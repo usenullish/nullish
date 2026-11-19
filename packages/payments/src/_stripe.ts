@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { assertNonNullish, isNullish, type Option } from "@usenullish/nullish-common";
 import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-env";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
-import type { Payments } from "@usenullish/nullish-schema/payments";
+import { type Payments, PaymentsSchema } from "@usenullish/nullish-schema/payments";
 import { PaymentFactory } from "./_factory";
 import { PaymentProvider } from "./_payment-provider";
 
@@ -18,6 +18,30 @@ export class StripePaymentProvider extends PaymentProvider {
 
   static create(): StripePaymentProvider {
     return new this();
+  }
+
+  protected override async createCheckout({
+    organizationId,
+    priceId,
+    successUrl,
+    cancelUrl,
+  }: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {
+    // https://docs.stripe.com/payments/accept-a-payment?payment-ui=checkout&ui=stripe-hosted
+    const { url } = await this.#stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
+      subscription_data: {
+        metadata: PaymentsSchema.PaymentMetadataSchema.parse({
+          organizationId,
+        }),
+      },
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+    });
+
+    assertNonNullish(url);
+
+    return { url };
   }
 
   protected override async resolve({
@@ -96,7 +120,9 @@ export class StripePaymentProvider extends PaymentProvider {
   }: {
     subscription: Stripe.Subscription;
   }): Option<Payments["Payment"]["organizationId"]> {
-    return metadata.organizationId;
+    const result = PaymentsSchema.PaymentMetadataSchema.safeParse(metadata);
+
+    return result.success ? result.data.organizationId : undefined;
   }
 
   #mapExternalIds({

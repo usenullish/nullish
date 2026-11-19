@@ -173,13 +173,26 @@ describe("StripePaymentProvider", () => {
     expect(withDbContext).not.toHaveBeenCalled();
   });
 
-  test("rejects a subscription with an invalid organization", async () => {
+  test("ignores a subscription with an invalid organization", async () => {
     mockSubscription(
       subscriptionOf({ status: "active", metadata: { organizationId: "not-an-organization" } }),
     );
 
-    await expect(handle(subscriptionUpdated)).rejects.toThrow();
+    expect(await handle(subscriptionUpdated)).toBeUndefined();
     expect(withDbContext).not.toHaveBeenCalled();
+  });
+
+  test("accepts other metadata next to the organization", async () => {
+    mockSubscription(
+      subscriptionOf({
+        status: "active",
+        metadata: { organizationId: ORGANIZATION_ID, campaign: "launch" },
+      }),
+    );
+
+    const result = await handle(subscriptionUpdated);
+
+    expect(result?.organizationId).toBe(ORGANIZATION_ID);
   });
 
   test("reads the subscription of a failed invoice", async () => {
@@ -239,5 +252,79 @@ describe("StripePaymentProvider", () => {
     mockSubscription(subscriptionOf({ status: "incomplete" }));
 
     expect(await handle(subscriptionUpdated)).toBeUndefined();
+  });
+
+  describe("checkout", () => {
+    const CHECKOUT_URL = "https://checkout.stripe.com/c/pay/cs_1";
+
+    const args = {
+      organizationId: ORGANIZATION_ID,
+      priceId: "price_1",
+      successUrl: "https://app.nullish.test/orgs/success",
+      cancelUrl: "https://app.nullish.test/orgs/cancel",
+    };
+
+    const mockCheckout = ({ url }: { url: string | null }) => {
+      fetchSpy.mockImplementation((async () =>
+        Response.json({ id: "cs_1", object: "checkout.session", url })) as unknown as typeof fetch);
+    };
+
+    const sentParams = (): URLSearchParams => {
+      const [, init] = fetchSpy.mock.calls[0] ?? [];
+
+      return new URLSearchParams(String(init?.body));
+    };
+
+    test("returns the url of the checkout", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      const result = await StripePaymentProvider.create().checkout(args);
+
+      expect(result).toEqual({ url: CHECKOUT_URL });
+    });
+
+    test("stores the organization on the subscription", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().get("subscription_data[metadata][organizationId]")).toBe(ORGANIZATION_ID);
+    });
+
+    test("creates a subscription for the price", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      const params = sentParams();
+
+      expect(params.get("mode")).toBe("subscription");
+      expect(params.get("line_items[0][price]")).toBe("price_1");
+      expect(params.get("line_items[0][quantity]")).toBe("1");
+      expect(params.get("success_url")).toBe(args.successUrl);
+      expect(params.get("cancel_url")).toBe(args.cancelUrl);
+    });
+
+    test("does not set a client reference", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().has("client_reference_id")).toBe(false);
+    });
+
+    test("rejects an invalid organization without calling Stripe", async () => {
+      await expect(
+        StripePaymentProvider.create().checkout({ ...args, organizationId: "not-an-organization" }),
+      ).rejects.toThrow();
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("throws when Stripe returns no url", async () => {
+      mockCheckout({ url: null });
+
+      await expect(StripePaymentProvider.create().checkout(args)).rejects.toThrow();
+    });
   });
 });
