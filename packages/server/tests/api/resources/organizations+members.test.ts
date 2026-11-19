@@ -5,7 +5,7 @@ import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { ApiSchema } from "@usenullish/nullish-schema/server";
 import { ApiKeyAction, ApiKeyResource } from "@usenullish/nullish-schema/auth";
-import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
@@ -97,7 +97,7 @@ describe("organization members", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: accountant.id, role: "accountant" });
+      .values({ organizationId, userId: accountant.id, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {
@@ -120,11 +120,15 @@ describe("organization members", () => {
     const members = await parseMembers(response);
 
     expect(members.map(({ email, name, role }) => ({ email, name, role }))).toEqual([
-      { email: "members-admin@test.local", name: "members-admin@test.local", role: "admin" },
+      {
+        email: "members-admin@test.local",
+        name: "members-admin@test.local",
+        role: MembershipRole.ADMIN,
+      },
       {
         email: "members-accountant@test.local",
         name: "members-accountant@test.local",
-        role: "accountant",
+        role: MembershipRole.ACCOUNTANT,
       },
     ]);
   });

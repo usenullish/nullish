@@ -1,6 +1,6 @@
 import { afterAll, beforeEach, describe, expect, test } from "bun:test";
 import { CryptoHasher } from "bun";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { SignUpService } from "../../src/auth/services/sign-up";
 import { createOrganization, openTestDb, resetDb, seedUsers, TEST_USER_ID } from "../_test-utils";
 
@@ -22,7 +22,7 @@ const invite = async ({
   await db.insert(invitations).values({
     organizationId,
     email,
-    role: "reviewer",
+    role: MembershipRole.REVIEWER,
     tokenHash: new CryptoHasher("sha256").update(token).digest("hex"),
     expiresAt,
   });

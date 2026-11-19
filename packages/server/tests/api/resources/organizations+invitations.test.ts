@@ -7,6 +7,7 @@ import { CreateInvitationService } from "@usenullish/nullish-engine/core";
 import {
   DbSchema,
   DefaultTemplateLanguage,
+  MembershipRole,
   type PostgresDbInstance,
 } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
@@ -84,7 +85,10 @@ describe("organization invitations", () => {
       userId: admin.id,
       organizationId,
       mail: null,
-    }).create({ invitation: { email, role: "accountant" }, language: DefaultTemplateLanguage.EN });
+    }).create({
+      invitation: { email, role: MembershipRole.ACCOUNTANT },
+      language: DefaultTemplateLanguage.EN,
+    });
 
     if (result.status === "error") {
       throw result.err;
@@ -130,7 +134,7 @@ describe("organization invitations", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: accountant.id, role: "accountant" });
+      .values({ organizationId, userId: accountant.id, role: MembershipRole.ACCOUNTANT });
   });
 
   afterAll(async () => {

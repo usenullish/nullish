@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { DeleteOrganizationService } from "../../../../src/core/services/organizations/organization.delete";
 import { EngineError } from "../../../../src/errors";
@@ -88,7 +88,7 @@ describe("DeleteOrganizationService", () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
 
     const result = await deleteOrganization({ organizationId, userId: TEST_OTHER_USER_ID });
 

@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, mock, spyOn, test } from "bun:te
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL, CryptoHasher } from "bun";
-import { DbSchema, DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
+import { DbSchema, DefaultTemplateLanguage, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envAppUrl, envDbUrl } from "@usenullish/nullish-env";
 import type { Nullable, Option } from "@usenullish/nullish-common";
 import { MailType, type SendMail } from "@usenullish/nullish-schema/mail";
@@ -40,7 +40,7 @@ const invite = ({
     userId,
     organizationId,
     mail,
-  }).create({ invitation: { email, role: "accountant" }, language });
+  }).create({ invitation: { email, role: MembershipRole.ACCOUNTANT }, language });
 
 describe("CreateInvitationService", () => {
   let organizationId: string;
@@ -69,7 +69,7 @@ describe("CreateInvitationService", () => {
 
     expect(invitation.organizationId).toBe(organizationId);
     expect(invitation.email).toBe("invited@test.dev");
-    expect(invitation.role).toBe("accountant");
+    expect(invitation.role).toBe(MembershipRole.ACCOUNTANT);
     expect(invitation).not.toHaveProperty("tokenHash");
     expect(token).toMatch(/^[A-Za-z0-9_-]{43}$/);
   });
@@ -116,7 +116,11 @@ describe("CreateInvitationService", () => {
     const memberOrgId = await createOrganization(db, TEST_USER_ID);
     await db
       .insert(memberships)
-      .values({ organizationId: memberOrgId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+      .values({
+        organizationId: memberOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ACCOUNTANT,
+      });
 
     const result = await invite({
       userId: TEST_OTHER_USER_ID,
@@ -193,7 +197,7 @@ describe("CreateInvitationService", () => {
         userId: TEST_USER_ID,
         organizationId,
         mail: { send },
-      }).create({ invitation: { email: "english@test.dev", role: "accountant" } });
+      }).create({ invitation: { email: "english@test.dev", role: MembershipRole.ACCOUNTANT } });
 
       expect(send).toHaveBeenCalledWith(
         expect.objectContaining({ lang: DefaultTemplateLanguage.EN }),

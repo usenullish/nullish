@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL, CryptoHasher } from "bun";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { DbCollectionInvitations, DbInvitations } from "../../../src/core/records/invitations";
 import {
@@ -38,7 +38,7 @@ const insertInvitation = async ({
     .values({
       organizationId,
       email,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
       tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
     })
     .returning();
@@ -106,7 +106,11 @@ describe("invitations", () => {
       await insertInvitation({ organizationId: memberOrgId, email: "invited@test.dev" });
       await db
         .insert(memberships)
-        .values({ organizationId: memberOrgId, userId: TEST_OTHER_USER_ID, role: "accountant" });
+        .values({
+          organizationId: memberOrgId,
+          userId: TEST_OTHER_USER_ID,
+          role: MembershipRole.ACCOUNTANT,
+        });
 
       const result = await DbCollectionInvitations.create({
         db,
@@ -140,7 +144,7 @@ describe("invitations", () => {
       }
 
       expect(result.result?.id).toBe(invitationId);
-      expect(result.result?.role).toBe("accountant");
+      expect(result.result?.role).toBe(MembershipRole.ACCOUNTANT);
     });
 
     test("resolves to undefined for a user outside the organization", async () => {

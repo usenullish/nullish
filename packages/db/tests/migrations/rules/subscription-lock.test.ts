@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   clients,
@@ -129,7 +129,7 @@ describe("subscription lock", () => {
   test("ignores changing the role of a member of a locked organization", async () => {
     const [member] = await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" })
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER })
       .returning();
     assertNonNullish(member);
 
@@ -138,7 +138,7 @@ describe("subscription lock", () => {
     const updated = await asUser((tx) =>
       tx
         .update(memberships)
-        .set({ role: "accountant" })
+        .set({ role: MembershipRole.ACCOUNTANT })
         .where(eq(memberships.id, member.id))
         .returning(),
     );
@@ -146,13 +146,13 @@ describe("subscription lock", () => {
     const [row] = await db.select().from(memberships).where(eq(memberships.id, member.id));
 
     expect(updated).toHaveLength(0);
-    expect(row?.role).toBe("reviewer");
+    expect(row?.role).toBe(MembershipRole.REVIEWER);
   });
 
   test("ignores removing a member of a locked organization", async () => {
     const [member] = await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" })
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER })
       .returning();
     assertNonNullish(member);
 
@@ -172,7 +172,7 @@ describe("subscription lock", () => {
     await db.insert(invitations).values({
       organizationId,
       email: "invited@test.dev",
-      role: "reviewer",
+      role: MembershipRole.REVIEWER,
       tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
     });
 
@@ -194,7 +194,7 @@ describe("subscription lock", () => {
     const error = await asUser((tx) =>
       tx
         .insert(memberships)
-        .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" }),
+        .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER }),
     ).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("row-level security");
@@ -207,7 +207,7 @@ describe("subscription lock", () => {
       tx.insert(invitations).values({
         organizationId,
         email: "invited@test.dev",
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
         tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
       }),
     ).catch((e: unknown) => e);

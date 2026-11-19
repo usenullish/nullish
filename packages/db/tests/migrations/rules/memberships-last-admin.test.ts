@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -22,7 +23,7 @@ const addMembership = async ({
   role,
 }: {
   organizationId: string;
-  role: "admin" | "accountant" | "reviewer";
+  role: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
 }): Promise<string> => {
   const [row] = await db
     .insert(memberships)
@@ -53,7 +54,7 @@ describe("check_memberships_last_admin", () => {
 
     const error = await db
       .update(memberships)
-      .set({ role: "accountant" })
+      .set({ role: MembershipRole.ACCOUNTANT })
       .where(eq(memberships.id, id))
       .catch((e: unknown) => e);
 
@@ -73,7 +74,7 @@ describe("check_memberships_last_admin", () => {
 
   test("rejects deleting the last admin while other members remain", async () => {
     const { id } = await adminMembership(db, organizationId);
-    await addMembership({ organizationId, role: "accountant" });
+    await addMembership({ organizationId, role: MembershipRole.ACCOUNTANT });
 
     const error = await db
       .delete(memberships)
@@ -85,20 +86,20 @@ describe("check_memberships_last_admin", () => {
 
   test("allows changing the role of an admin when another admin remains", async () => {
     const { id } = await adminMembership(db, organizationId);
-    await addMembership({ organizationId, role: "admin" });
+    await addMembership({ organizationId, role: MembershipRole.ADMIN });
 
     const [updated] = await db
       .update(memberships)
-      .set({ role: "reviewer" })
+      .set({ role: MembershipRole.REVIEWER })
       .where(eq(memberships.id, id))
       .returning();
 
-    expect(updated?.role).toBe("reviewer");
+    expect(updated?.role).toBe(MembershipRole.REVIEWER);
   });
 
   test("allows deleting an admin when another admin remains", async () => {
     const { id } = await adminMembership(db, organizationId);
-    await addMembership({ organizationId, role: "admin" });
+    await addMembership({ organizationId, role: MembershipRole.ADMIN });
 
     const deleted = await db.delete(memberships).where(eq(memberships.id, id)).returning();
 
@@ -106,7 +107,7 @@ describe("check_memberships_last_admin", () => {
   });
 
   test("allows deleting a member who is not an admin", async () => {
-    const id = await addMembership({ organizationId, role: "accountant" });
+    const id = await addMembership({ organizationId, role: MembershipRole.ACCOUNTANT });
 
     const deleted = await db.delete(memberships).where(eq(memberships.id, id)).returning();
 
@@ -114,15 +115,15 @@ describe("check_memberships_last_admin", () => {
   });
 
   test("allows changing the role of a member who is not an admin", async () => {
-    const id = await addMembership({ organizationId, role: "reviewer" });
+    const id = await addMembership({ organizationId, role: MembershipRole.REVIEWER });
 
     const [updated] = await db
       .update(memberships)
-      .set({ role: "accountant" })
+      .set({ role: MembershipRole.ACCOUNTANT })
       .where(eq(memberships.id, id))
       .returning();
 
-    expect(updated?.role).toBe("accountant");
+    expect(updated?.role).toBe(MembershipRole.ACCOUNTANT);
   });
 
   test("allows updating the last admin without changing the role", async () => {
@@ -130,10 +131,10 @@ describe("check_memberships_last_admin", () => {
 
     const [updated] = await db
       .update(memberships)
-      .set({ role: "admin" })
+      .set({ role: MembershipRole.ADMIN })
       .where(eq(memberships.id, id))
       .returning();
 
-    expect(updated?.role).toBe("admin");
+    expect(updated?.role).toBe(MembershipRole.ADMIN);
   });
 });

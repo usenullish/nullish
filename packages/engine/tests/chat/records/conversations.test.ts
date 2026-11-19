@@ -9,7 +9,7 @@ import {
 import { DbCollectionMessages } from "../../../src/chat/records/messages";
 import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { DbSchema, MessageRole } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, MessageRole } from "@usenullish/nullish-schema/db";
 import {
   createOrganization,
   resetDb,
@@ -337,7 +337,11 @@ describe("conversations", () => {
 
       await db
         .insert(memberships)
-        .values({ organizationId: leftOrgId, userId: TEST_USER_ID, role: "accountant" });
+        .values({
+          organizationId: leftOrgId,
+          userId: TEST_USER_ID,
+          role: MembershipRole.ACCOUNTANT,
+        });
 
       const conversation = await storeFor(TEST_USER_ID).insert({
         values: { organizationId: leftOrgId, title: "Left" },

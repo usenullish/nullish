@@ -10,6 +10,7 @@ import {
   DbSchema,
   DefaultTemplateLanguage,
   EXCHANGE_RATE_ONE,
+  MembershipRole,
   type PostgresDbInstance,
   SystemAccountPurpose,
   VatPaymentMethod,
@@ -416,7 +417,9 @@ describe("mcp", () => {
           email,
           role,
         })),
-      ).toEqual([{ userId: TEST_USER_ID, email: `${TEST_USER_ID}@test.dev`, role: "admin" }]);
+      ).toEqual([
+        { userId: TEST_USER_ID, email: `${TEST_USER_ID}@test.dev`, role: MembershipRole.ADMIN },
+      ]);
     });
 
     test("lists no member of an organization the user does not own", async () => {
@@ -438,7 +441,7 @@ describe("mcp", () => {
         organizationId: orgId,
         mail: null,
       }).create({
-        invitation: { email: "mcp-invited@test.dev", role: "reviewer" },
+        invitation: { email: "mcp-invited@test.dev", role: MembershipRole.REVIEWER },
         language: DefaultTemplateLanguage.EN,
       });
 
@@ -466,7 +469,7 @@ describe("mcp", () => {
 
       expect(invitation?.id).toBe(created.result.invitation.id);
       expect(invitation?.email).toBe("mcp-invited@test.dev");
-      expect(invitation?.role).toBe("reviewer");
+      expect(invitation?.role).toBe(MembershipRole.REVIEWER);
       expect(typeof invitation?.expiresAt.__timestamp__).toBe("string");
       expect(invitation).not.toHaveProperty("tokenHash");
     });

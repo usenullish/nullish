@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -20,7 +20,7 @@ const db = drizzle({ client });
 
 const invitations = DbSchema.Core.Invitations.InvitationsSchema;
 
-type Role = "admin" | "accountant" | "reviewer";
+type Role = MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
 
 const tokenHash = (): string =>
   new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex");
@@ -47,7 +47,7 @@ const insertInvitation = async ({
 }): Promise<string> => {
   const [row] = await db
     .insert(invitations)
-    .values({ organizationId, email, role: "accountant", tokenHash: tokenHash() })
+    .values({ organizationId, email, role: MembershipRole.ACCOUNTANT, tokenHash: tokenHash() })
     .returning();
   assertNonNullish(row);
   return row.id;
@@ -85,7 +85,7 @@ describe("core.invitations", () => {
             .values({
               organizationId,
               email: "invited@test.dev",
-              role: "admin",
+              role: MembershipRole.ADMIN,
               tokenHash: tokenHash(),
             })
             .returning(),
@@ -130,7 +130,7 @@ describe("core.invitations", () => {
         fn: (tx) =>
           tx
             .update(invitations)
-            .set({ role: "admin" })
+            .set({ role: MembershipRole.ADMIN })
             .where(eq(invitations.id, invitationId))
             .returning(),
       });
@@ -139,11 +139,11 @@ describe("core.invitations", () => {
 
       const [row] = await db.select().from(invitations).where(eq(invitations.id, invitationId));
 
-      expect(row?.role).toBe("accountant");
+      expect(row?.role).toBe(MembershipRole.ACCOUNTANT);
     });
   });
 
-  describe.each(["accountant", "reviewer"] as const)(
+  describe.each([MembershipRole.ACCOUNTANT, MembershipRole.REVIEWER] as const)(
     "as a member with the %s role",
     (role: Role) => {
       beforeEach(async () => {
@@ -157,7 +157,7 @@ describe("core.invitations", () => {
             tx.insert(invitations).values({
               organizationId,
               email: "invited@test.dev",
-              role: "reviewer",
+              role: MembershipRole.REVIEWER,
               tokenHash: tokenHash(),
             }),
         }).catch((e: unknown) => e);
@@ -211,7 +211,7 @@ describe("core.invitations", () => {
           tx.insert(invitations).values({
             organizationId,
             email: "invited@test.dev",
-            role: "admin",
+            role: MembershipRole.ADMIN,
             tokenHash: tokenHash(),
           }),
       }).catch((e: unknown) => e);
@@ -248,7 +248,7 @@ describe("core.invitations", () => {
       .values({
         organizationId,
         email: "invited@test.dev",
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
         tokenHash: "x".repeat(64),
       })
       .catch((e: unknown) => e);

@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   createOrganization,
   memberships,
@@ -57,7 +57,7 @@ describe("delete_organization_member of a locked organization", () => {
 
     const [member] = await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "accountant" })
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT })
       .returning();
     assertNonNullish(member);
     memberMembershipId = member.id;

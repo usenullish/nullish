@@ -4,7 +4,7 @@ import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -28,12 +28,12 @@ const hashOf = (token: string): string => new CryptoHasher("sha256").update(toke
 const insertInvitation = async ({
   organizationId,
   email = INVITEE_EMAIL,
-  role = "accountant",
+  role = MembershipRole.ACCOUNTANT,
   expiresAt,
 }: {
   organizationId: string;
   email?: string;
-  role?: "admin" | "accountant" | "reviewer";
+  role?: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
   expiresAt?: Date;
 }): Promise<{ id: string; token: string }> => {
   const token = crypto.randomUUID();
@@ -97,13 +97,13 @@ describe("accept_invitation", () => {
   });
 
   test("adds the invited person with the role of the invitation and returns the membership", async () => {
-    const { token } = await insertInvitation({ organizationId, role: "reviewer" });
+    const { token } = await insertInvitation({ organizationId, role: MembershipRole.REVIEWER });
 
     const [row] = await acceptAs({ userId: TEST_OTHER_USER_ID, token });
 
     expect(row?.organization_id).toBe(organizationId);
     expect(row?.user_id).toBe(TEST_OTHER_USER_ID);
-    expect(row?.role).toBe("reviewer");
+    expect(row?.role).toBe(MembershipRole.REVIEWER);
 
     const membership = await membershipOf({ organizationId, userId: TEST_OTHER_USER_ID });
 
@@ -111,13 +111,13 @@ describe("accept_invitation", () => {
   });
 
   test("adds the invited person as an admin", async () => {
-    const { token } = await insertInvitation({ organizationId, role: "admin" });
+    const { token } = await insertInvitation({ organizationId, role: MembershipRole.ADMIN });
 
     await acceptAs({ userId: TEST_OTHER_USER_ID, token });
 
     const membership = await membershipOf({ organizationId, userId: TEST_OTHER_USER_ID });
 
-    expect(membership?.role).toBe("admin");
+    expect(membership?.role).toBe(MembershipRole.ADMIN);
   });
 
   test("uses up the invitation", async () => {
@@ -183,14 +183,14 @@ describe("accept_invitation", () => {
   test("rejects a person who is already a member and keeps the invitation", async () => {
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "reviewer" });
-    const { id, token } = await insertInvitation({ organizationId, role: "admin" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.REVIEWER });
+    const { id, token } = await insertInvitation({ organizationId, role: MembershipRole.ADMIN });
 
     const error = await acceptAs({ userId: TEST_OTHER_USER_ID, token }).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("You are already a member of this organization");
     expect((await membershipOf({ organizationId, userId: TEST_OTHER_USER_ID }))?.role).toBe(
-      "reviewer",
+      MembershipRole.REVIEWER,
     );
     expect(await invitationExists(id)).toBeTrue();
   });

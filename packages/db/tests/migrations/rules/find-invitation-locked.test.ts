@@ -3,7 +3,7 @@ import { SQL as BunSQL, CryptoHasher } from "bun";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -36,7 +36,7 @@ describe("find_invitation of a locked organization", () => {
     await db.insert(invitations).values({
       organizationId,
       email: `${TEST_OTHER_USER_ID}@test.dev`,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
       tokenHash: new CryptoHasher("sha256").update(token).digest("hex"),
     });
 

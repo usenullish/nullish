@@ -3,7 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
-import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
 import { and, eq } from "drizzle-orm";
 import type { ApiEnv } from "../../../src/api/types/api";
@@ -67,7 +67,7 @@ describe("delete member", () => {
   }: {
     organizationId: string;
     userId: string;
-    role: "admin" | "accountant" | "reviewer";
+    role: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
   }): Promise<string> => {
     const [row] = await db.insert(memberships).values({ organizationId, userId, role }).returning();
     assertNonNullish(row);
@@ -78,7 +78,12 @@ describe("delete member", () => {
     const [row] = await db
       .select()
       .from(memberships)
-      .where(and(eq(memberships.organizationId, organizationId), eq(memberships.role, "admin")));
+      .where(
+        and(
+          eq(memberships.organizationId, organizationId),
+          eq(memberships.role, MembershipRole.ADMIN),
+        ),
+      );
     assertNonNullish(row);
     return row.id;
   };
@@ -136,7 +141,7 @@ describe("delete member", () => {
     const memberId = await insertMembership({
       organizationId: otherOrganizationId,
       userId: accountant.id,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
 
     const response = await deleteMember({ membershipId: memberId, cookie: admin.cookie });
@@ -150,7 +155,7 @@ describe("delete member", () => {
     const ownId = await insertMembership({
       organizationId: otherOrganizationId,
       userId: accountant.id,
-      role: "reviewer",
+      role: MembershipRole.REVIEWER,
     });
 
     const response = await deleteMember({ membershipId: ownId, cookie: accountant.cookie });
@@ -164,7 +169,7 @@ describe("delete member", () => {
     await insertMembership({
       organizationId: otherOrganizationId,
       userId: accountant.id,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
     const adminId = await adminMembershipId(otherOrganizationId);
 

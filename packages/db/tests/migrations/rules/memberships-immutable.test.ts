@@ -3,6 +3,7 @@ import { SQL as BunSQL } from "bun";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -62,14 +63,14 @@ describe("check_memberships_user_immutable", () => {
 
     await db
       .insert(memberships)
-      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: "admin" });
+      .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ADMIN });
 
     const [updated] = await db
       .update(memberships)
-      .set({ role: "accountant" })
+      .set({ role: MembershipRole.ACCOUNTANT })
       .where(eq(memberships.id, membership.id))
       .returning();
 
-    expect(updated?.role).toBe("accountant");
+    expect(updated?.role).toBe(MembershipRole.ACCOUNTANT);
   });
 });

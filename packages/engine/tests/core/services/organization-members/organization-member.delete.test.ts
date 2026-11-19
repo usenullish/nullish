@@ -3,7 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { DeleteOrganizationMemberService } from "../../../../src/core/services/organization-members/organization-member.delete";
 import {
@@ -31,7 +31,7 @@ const insertMembership = async ({
 }: {
   organizationId: string;
   userId: string;
-  role: "admin" | "accountant" | "reviewer";
+  role: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
 }): Promise<string> => {
   const [row] = await db.insert(memberships).values({ organizationId, userId, role }).returning();
   assertNonNullish(row);
@@ -42,7 +42,12 @@ const adminMembershipId = async (organizationId: string): Promise<string> => {
   const [row] = await db
     .select()
     .from(memberships)
-    .where(and(eq(memberships.organizationId, organizationId), eq(memberships.role, "admin")));
+    .where(
+      and(
+        eq(memberships.organizationId, organizationId),
+        eq(memberships.role, MembershipRole.ADMIN),
+      ),
+    );
   assertNonNullish(row);
   return row.id;
 };
@@ -68,7 +73,7 @@ describe("DeleteOrganizationMemberService", () => {
     const memberId = await insertMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
 
     const result = await deleteMembership(memberId);
@@ -82,7 +87,7 @@ describe("DeleteOrganizationMemberService", () => {
     const otherAdminId = await insertMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "admin",
+      role: MembershipRole.ADMIN,
     });
 
     const result = await deleteMembership(otherAdminId);
@@ -96,7 +101,7 @@ describe("DeleteOrganizationMemberService", () => {
     const ownId = await insertMembership({
       organizationId,
       userId: TEST_USER_ID,
-      role: "reviewer",
+      role: MembershipRole.REVIEWER,
     });
 
     const result = await deleteMembership(ownId);
@@ -108,7 +113,11 @@ describe("DeleteOrganizationMemberService", () => {
   test("lets an admin leave an organization that has another admin", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
     const ownId = await adminMembershipId(organizationId);
-    await insertMembership({ organizationId, userId: TEST_OTHER_USER_ID, role: "admin" });
+    await insertMembership({
+      organizationId,
+      userId: TEST_OTHER_USER_ID,
+      role: MembershipRole.ADMIN,
+    });
 
     const result = await deleteMembership(ownId);
 
@@ -121,7 +130,7 @@ describe("DeleteOrganizationMemberService", () => {
     const memberId = await insertMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
     const [conversation] = await db
       .insert(conversations)
@@ -136,7 +145,7 @@ describe("DeleteOrganizationMemberService", () => {
     expect(rows).toEqual([]);
   });
 
-  test.each(["accountant", "reviewer"] as const)(
+  test.each([MembershipRole.ACCOUNTANT, MembershipRole.REVIEWER] as const)(
     "resolves to undefined when a member with the %s role removes someone else",
     async (role) => {
       const organizationId = await createOrganization(db, TEST_OTHER_USER_ID);

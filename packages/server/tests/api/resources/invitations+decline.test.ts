@@ -6,6 +6,7 @@ import { CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import {
   DbSchema,
   DefaultTemplateLanguage,
+  MembershipRole,
   type PostgresDbInstance,
 } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
@@ -74,7 +75,10 @@ describe("decline invitation", () => {
       userId: admin.id,
       organizationId,
       mail: null,
-    }).create({ invitation: { email, role: "reviewer" }, language: DefaultTemplateLanguage.EN });
+    }).create({
+      invitation: { email, role: MembershipRole.REVIEWER },
+      language: DefaultTemplateLanguage.EN,
+    });
 
     if (result.status === "error") {
       throw result.err;
@@ -197,7 +201,7 @@ describe("decline invitation", () => {
         const organizationId = await createOrganization(db, admin.id);
         await db
           .insert(memberships)
-          .values({ organizationId, userId: invitee.id, role: "reviewer" });
+          .values({ organizationId, userId: invitee.id, role: MembershipRole.REVIEWER });
         const token = await invite({ organizationId });
 
         const response = await decline({ cookie: invitee.cookie, token });

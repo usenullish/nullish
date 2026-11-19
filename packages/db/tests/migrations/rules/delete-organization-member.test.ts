@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, MessageRole } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, MessageRole } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -34,7 +34,7 @@ const addMembership = async ({
 }: {
   organizationId: string;
   userId: string;
-  role: "admin" | "accountant" | "reviewer";
+  role: MembershipRole.ADMIN | MembershipRole.ACCOUNTANT | MembershipRole.REVIEWER;
 }): Promise<string> => {
   const [row] = await db.insert(memberships).values({ organizationId, userId, role }).returning();
   assertNonNullish(row);
@@ -109,7 +109,7 @@ describe("delete_organization_member", () => {
       const memberId = await addMembership({
         organizationId,
         userId: TEST_OTHER_USER_ID,
-        role: "accountant",
+        role: MembershipRole.ACCOUNTANT,
       });
 
       const rows = await deleteOrganizationMemberAs({
@@ -125,7 +125,7 @@ describe("delete_organization_member", () => {
       const otherAdminId = await addMembership({
         organizationId,
         userId: TEST_OTHER_USER_ID,
-        role: "admin",
+        role: MembershipRole.ADMIN,
       });
 
       const rows = await deleteOrganizationMemberAs({
@@ -138,7 +138,11 @@ describe("delete_organization_member", () => {
     });
 
     test("leaves the organization when another admin remains", async () => {
-      await addMembership({ organizationId, userId: TEST_OTHER_USER_ID, role: "admin" });
+      await addMembership({
+        organizationId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const rows = await deleteOrganizationMemberAs({
         userId: TEST_USER_ID,
@@ -169,55 +173,58 @@ describe("delete_organization_member", () => {
     });
   });
 
-  describe.each(["accountant", "reviewer"] as const)("as a %s", (role) => {
-    let ownId: string;
+  describe.each([MembershipRole.ACCOUNTANT, MembershipRole.REVIEWER] as const)(
+    "as a %s",
+    (role) => {
+      let ownId: string;
 
-    beforeEach(async () => {
-      ownId = await addMembership({ organizationId, userId: TEST_OTHER_USER_ID, role });
-    });
-
-    test("leaves the organization", async () => {
-      const rows = await deleteOrganizationMemberAs({
-        userId: TEST_OTHER_USER_ID,
-        membershipId: ownId,
+      beforeEach(async () => {
+        ownId = await addMembership({ organizationId, userId: TEST_OTHER_USER_ID, role });
       });
 
-      expect(rows.map(({ id }) => id)).toEqual([ownId]);
-      expect(await membershipExists(ownId)).toBeFalse();
-    });
+      test("leaves the organization", async () => {
+        const rows = await deleteOrganizationMemberAs({
+          userId: TEST_OTHER_USER_ID,
+          membershipId: ownId,
+        });
 
-    test("deletes nothing of the admin", async () => {
-      const rows = await deleteOrganizationMemberAs({
-        userId: TEST_OTHER_USER_ID,
-        membershipId: adminMembershipId,
+        expect(rows.map(({ id }) => id)).toEqual([ownId]);
+        expect(await membershipExists(ownId)).toBeFalse();
       });
 
-      expect(rows).toEqual([]);
-      expect(await membershipExists(adminMembershipId)).toBeTrue();
-    });
+      test("deletes nothing of the admin", async () => {
+        const rows = await deleteOrganizationMemberAs({
+          userId: TEST_OTHER_USER_ID,
+          membershipId: adminMembershipId,
+        });
 
-    test("deletes nothing of another member", async () => {
-      const otherId = await addMembership({
-        organizationId,
-        userId: TEST_THIRD_USER_ID,
-        role: "reviewer",
+        expect(rows).toEqual([]);
+        expect(await membershipExists(adminMembershipId)).toBeTrue();
       });
 
-      const rows = await deleteOrganizationMemberAs({
-        userId: TEST_OTHER_USER_ID,
-        membershipId: otherId,
-      });
+      test("deletes nothing of another member", async () => {
+        const otherId = await addMembership({
+          organizationId,
+          userId: TEST_THIRD_USER_ID,
+          role: MembershipRole.REVIEWER,
+        });
 
-      expect(rows).toEqual([]);
-      expect(await membershipExists(otherId)).toBeTrue();
-    });
-  });
+        const rows = await deleteOrganizationMemberAs({
+          userId: TEST_OTHER_USER_ID,
+          membershipId: otherId,
+        });
+
+        expect(rows).toEqual([]);
+        expect(await membershipExists(otherId)).toBeTrue();
+      });
+    },
+  );
 
   test("deletes nothing for a user outside the organization", async () => {
     const memberId = await addMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "reviewer",
+      role: MembershipRole.REVIEWER,
     });
 
     const rows = await deleteOrganizationMemberAs({
@@ -245,7 +252,7 @@ describe("delete_organization_member", () => {
     const memberId = await addMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
     await db
       .update(organizations)
@@ -262,7 +269,7 @@ describe("delete_organization_member", () => {
     const memberId = await addMembership({
       organizationId,
       userId: TEST_OTHER_USER_ID,
-      role: "accountant",
+      role: MembershipRole.ACCOUNTANT,
     });
 
     await deleteOrganizationMemberAs({ userId: TEST_USER_ID, membershipId: memberId });
@@ -279,7 +286,7 @@ describe("delete_organization_member", () => {
       memberId = await addMembership({
         organizationId,
         userId: TEST_OTHER_USER_ID,
-        role: "accountant",
+        role: MembershipRole.ACCOUNTANT,
       });
       conversationId = await addConversation({ userId: TEST_OTHER_USER_ID, organizationId });
     });
@@ -337,7 +344,7 @@ describe("delete_organization_member", () => {
       await addMembership({
         organizationId: otherOrganizationId,
         userId: TEST_OTHER_USER_ID,
-        role: "reviewer",
+        role: MembershipRole.REVIEWER,
       });
       const elsewhereId = await addConversation({
         userId: TEST_OTHER_USER_ID,
@@ -363,7 +370,11 @@ describe("delete_organization_member", () => {
     });
 
     test("keeps their conversations when the removal is not allowed", async () => {
-      await addMembership({ organizationId, userId: TEST_THIRD_USER_ID, role: "reviewer" });
+      await addMembership({
+        organizationId,
+        userId: TEST_THIRD_USER_ID,
+        role: MembershipRole.REVIEWER,
+      });
 
       await deleteOrganizationMemberAs({ userId: TEST_THIRD_USER_ID, membershipId: memberId });
 
