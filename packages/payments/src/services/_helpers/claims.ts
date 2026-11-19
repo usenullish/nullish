@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNotNull } from "drizzle-orm";
 import { assertArrayExactlyOne } from "@usenullish/nullish-common";
 import { selectMany, type Tx } from "@usenullish/nullish-db";
 import { DbSchema, type SubscriptionProvider } from "@usenullish/nullish-schema/db";
@@ -28,4 +28,13 @@ export const getClaimByExternalProduct = async ({
 
   const [claim] = rows;
   return claim;
+};
+
+export const listClaimsWithProduct = async ({ tx }: { tx: Tx }): Promise<Claim[]> => {
+  return await selectMany({
+    tx,
+    table: claims,
+    schema: RecordsSchema.Subscription.ClaimsSchema.SelectClaimsSchema,
+    where: and(isNotNull(claims.provider), isNotNull(claims.externalProductId)),
+  });
 };
