@@ -1,21 +1,16 @@
-import { isEmptyString, tryCatch } from "@usenullish/nullish-common";
-import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
+import { isEmptyString, isNullish, tryCatch } from "@usenullish/nullish-common";
 import { ErrorCode, PAYMENT_EVENT_MAX_SIZE } from "@usenullish/nullish-schema/server";
 import { bodyLimit } from "hono/body-limit";
 import { errorResponse } from "../_errors";
 import type { DefineRawHandler } from "../types/raw-api";
 import { Webhook, type WebhookArgs, WebhookProvider } from "./_factories/webhook";
 
-type PaymentsWebhookArgs = Omit<WebhookArgs, "path"> & { payments: ProcessPayments };
+type PaymentsWebhookArgs = Omit<WebhookArgs, "path">;
 
 @WebhookProvider
 export class PaymentsWebhook extends Webhook {
-  readonly #payments: ProcessPayments;
-
-  private constructor({ app, payments }: PaymentsWebhookArgs) {
+  private constructor({ app }: PaymentsWebhookArgs) {
     super({ path: "/payments/stripe/webhook", app });
-
-    this.#payments = payments;
   }
 
   static create(args: PaymentsWebhookArgs): PaymentsWebhook {
@@ -40,6 +35,21 @@ export class PaymentsWebhook extends Webhook {
   }
 
   #handle: DefineRawHandler = async (context) => {
+    const {
+      var: {
+        workers: { payments },
+      },
+    } = context;
+
+    if (isNullish(payments)) {
+      return errorResponse({
+        context,
+        error: "The payments are not enabled on this instance.",
+        code: ErrorCode.REJECTED,
+        status: 503,
+      });
+    }
+
     const signature = context.req.header("stripe-signature");
 
     if (isEmptyString(signature)) {
@@ -54,7 +64,7 @@ export class PaymentsWebhook extends Webhook {
     const payload = await context.req.text();
 
     const result = await tryCatch(async () => {
-      return await this.#payments.handle({ payload, signature });
+      return await payments.handle({ payload, signature });
     });
 
     if (result.status === "error") {

@@ -23,7 +23,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   const app = new OpenAPIHono<ApiEnv>();
 
   const resources = initResources({ app });
-  const webhooks = initWebhooks({ app, payments });
+  const webhooks = initWebhooks({ app });
 
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", loadDbMiddleware({ db }));
