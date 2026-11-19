@@ -1,11 +1,12 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import Stripe from "stripe";
+import type { Nullable } from "@usenullish/nullish-common";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { PaymentInterval } from "@usenullish/nullish-schema/payments";
 
 const withDbContext = mock(async () => ({
   status: "success",
-  result: { externalTaxRateId: undefined },
+  result: { externalTaxRateId: "txr_default" },
 }));
 
 mock.module("../src/_db", () => ({ withDbContext }));
@@ -258,6 +259,131 @@ describe("StripePaymentProvider", () => {
     expect(await handle(subscriptionUpdated)).toBeUndefined();
   });
 
+  describe("invoice.created", () => {
+    const CREATED = 1_798_761_600;
+
+    const invoiceCreated = ({
+      status = "draft",
+      subscription = "sub_123",
+      taxRateIds = ["txr_2026"],
+    }: {
+      status?: string;
+      subscription?: Nullable<string>;
+      taxRateIds?: string[];
+    } = {}) =>
+      payloadOf({
+        type: "invoice.created",
+        object: {
+          id: "in_1",
+          object: "invoice",
+          status,
+          created: CREATED,
+          parent: { subscription_details: { subscription } },
+          default_tax_rates: taxRateIds.map((id) => ({ id, object: "tax_rate" })),
+        },
+      });
+
+    const mockStripeUpdates = () => {
+      fetchSpy.mockImplementation((async () =>
+        Response.json({ id: "in_1", object: "invoice" })) as unknown as typeof fetch);
+    };
+
+    const mockTaxRate = ({ externalTaxRateId }: { externalTaxRateId?: string }) => {
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "success", result: { externalTaxRateId } }) as unknown as Awaited<
+            ReturnType<typeof withDbContext>
+          >,
+      );
+    };
+
+    const updateCalls = () =>
+      fetchSpy.mock.calls.map(([input, init]) => ({
+        url: String(input),
+        params: new URLSearchParams(String(init?.body)),
+      }));
+
+    test("does not update an invoice that already has the tax rate valid on its date", async () => {
+      mockStripeUpdates();
+      mockTaxRate({ externalTaxRateId: "txr_2026" });
+
+      await handle(invoiceCreated({ taxRateIds: ["txr_2026"] }));
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("throws for an invoice without tax rate", async () => {
+      mockStripeUpdates();
+      mockTaxRate({ externalTaxRateId: "txr_2026" });
+
+      await expect(handle(invoiceCreated({ taxRateIds: [] }))).rejects.toThrow();
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("throws for an invoice with several tax rates", async () => {
+      mockStripeUpdates();
+      mockTaxRate({ externalTaxRateId: "txr_2026" });
+
+      await expect(
+        handle(invoiceCreated({ taxRateIds: ["txr_2026", "txr_other"] })),
+      ).rejects.toThrow();
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("updates the draft and the subscription to the tax rate valid on the invoice date", async () => {
+      mockStripeUpdates();
+      mockTaxRate({ externalTaxRateId: "txr_2027" });
+
+      await handle(invoiceCreated());
+
+      const [invoiceUpdate, subscriptionUpdate] = updateCalls();
+
+      expect(invoiceUpdate?.url).toContain("/v1/invoices/in_1");
+      expect(invoiceUpdate?.params.get("default_tax_rates[0]")).toBe("txr_2027");
+      expect(subscriptionUpdate?.url).toContain("/v1/subscriptions/sub_123");
+      expect(subscriptionUpdate?.params.get("default_tax_rates[0]")).toBe("txr_2027");
+    });
+
+    test("ignores an invoice that is no longer a draft", async () => {
+      mockStripeUpdates();
+
+      await handle(invoiceCreated({ status: "open" }));
+
+      expect(withDbContext).not.toHaveBeenCalled();
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("ignores an invoice without subscription", async () => {
+      mockStripeUpdates();
+
+      await handle(invoiceCreated({ subscription: null }));
+
+      expect(withDbContext).not.toHaveBeenCalled();
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("throws when the tax rate cannot be loaded", async () => {
+      mockStripeUpdates();
+
+      const err = new Error("Cannot load the tax rate");
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await expect(handle(invoiceCreated())).rejects.toThrow(err);
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("does not sync a subscription for the invoice", async () => {
+      mockStripeUpdates();
+      mockTaxRate({ externalTaxRateId: "txr_2027" });
+
+      expect(await handle(invoiceCreated())).toBeUndefined();
+    });
+  });
+
   describe("checkout", () => {
     const CHECKOUT_URL = "https://checkout.stripe.com/c/pay/cs_1";
 
@@ -333,14 +459,6 @@ describe("StripePaymentProvider", () => {
       await StripePaymentProvider.create().checkout(args);
 
       expect(sentParams().get("subscription_data[default_tax_rates][0]")).toBe("txr_1");
-    });
-
-    test("applies no tax rate when none is valid today", async () => {
-      mockCheckout({ url: CHECKOUT_URL });
-
-      await StripePaymentProvider.create().checkout(args);
-
-      expect(sentParams().has("subscription_data[default_tax_rates][0]")).toBe(false);
     });
 
     test("does not set a client reference", async () => {

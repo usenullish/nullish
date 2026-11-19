@@ -1,4 +1,4 @@
-import { nonNullish, type Option, type Result } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
 import {
   MembershipRole,
@@ -40,13 +40,19 @@ export class CheckoutService extends AdminServiceContext {
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
     validOn: SubscriptionTaxRate["startOn"];
-  }): Promise<Result<{ externalTaxRateId: Option<SubscriptionTaxRate["externalTaxRateId"]> }>> {
+  }): Promise<Result<{ externalTaxRateId: SubscriptionTaxRate["externalTaxRateId"] }>> {
     return this._withDbContext(async (tx) => {
       await this.#assert({ tx, userId, organizationId, provider, externalProductId });
 
       const taxRate = await getSubscriptionTaxRate({ tx, provider, validOn });
 
-      return { externalTaxRateId: taxRate?.externalTaxRateId };
+      if (isNullish(taxRate)) {
+        throw new Error(
+          `No ${provider} tax rate is valid on ${validOn.toISOString().slice(0, 10)}.`,
+        );
+      }
+
+      return { externalTaxRateId: taxRate.externalTaxRateId };
     });
   }
 
