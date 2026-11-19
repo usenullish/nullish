@@ -1447,6 +1447,7 @@
       "plans_description": "Choisis l'offre pour {name}. Le paiement se fait sur Stripe.",
       "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
       "no_plans": "Aucune offre disponible pour le moment.",
+      "vat_excluded": "Prix hors TVA.",
       "instance_title": "Ta propre instance",
       "instance_description": "Une instance nullish rien que pour toi, facturée à part.",
       "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",

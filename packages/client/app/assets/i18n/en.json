@@ -1447,6 +1447,7 @@
       "plans_description": "Pick the plan for {name}. The payment happens on Stripe.",
       "admins_only": "Only the admins of the organization can pick a plan.",
       "no_plans": "No plan available for now.",
+      "vat_excluded": "All prices excluding VAT.",
       "instance_title": "Your own instance",
       "instance_description": "A nullish instance of your own, billed separately.",
       "checkout_error": "The payment page could not be opened.",

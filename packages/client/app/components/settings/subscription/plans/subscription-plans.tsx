@@ -95,6 +95,10 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
 
         <InstanceCard />
       </div>
+
+      {plans.length > 0 && (
+        <p className="text-xs text-muted-foreground">{i18n.subscription.text.vat_excluded}</p>
+      )}
     </div>
   );
 };

@@ -1447,6 +1447,7 @@
       "plans_description": "Wähle den Plan für {name}. Die Zahlung läuft über Stripe.",
       "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
       "no_plans": "Im Moment ist kein Plan verfügbar.",
+      "vat_excluded": "Alle Preise exkl. MWST.",
       "instance_title": "Deine eigene Instanz",
       "instance_description": "Eine eigene nullish-Instanz, separat verrechnet.",
       "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",

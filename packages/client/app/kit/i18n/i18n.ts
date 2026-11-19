@@ -1300,6 +1300,7 @@ const I18nSubscriptionSchema = z.strictObject({
     plans_description: z.string(),
     admins_only: z.string(),
     no_plans: z.string(),
+    vat_excluded: z.string(),
     instance_title: z.string(),
     instance_description: z.string(),
     checkout_error: z.string(),

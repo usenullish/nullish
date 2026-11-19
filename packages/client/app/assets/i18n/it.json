@@ -1447,6 +1447,7 @@
       "plans_description": "Scegli il piano per {name}. Il pagamento avviene su Stripe.",
       "admins_only": "Solo gli admin dell'organizzazione possono scegliere un piano.",
       "no_plans": "Nessun piano disponibile per ora.",
+      "vat_excluded": "Tutti i prezzi IVA esclusa.",
       "instance_title": "La tua istanza",
       "instance_description": "Un'istanza nullish tutta tua, fatturata a parte.",
       "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
