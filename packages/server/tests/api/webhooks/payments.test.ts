@@ -25,11 +25,12 @@ describe("POST /payments/stripe/webhook", () => {
   const checkout = mock<ProcessPayments["checkout"]>(async () => ({
     url: "https://checkout.stripe.com/c/pay/cs_1",
   }));
+  const listPlans = mock<ProcessPayments["listPlans"]>(async () => []);
 
   let instance: DbInstance;
 
   const post = async ({
-    payments = { handle, checkout },
+    payments = { handle, checkout, listPlans },
     body = PAYLOAD,
     headers = { "stripe-signature": SIGNATURE },
   }: {

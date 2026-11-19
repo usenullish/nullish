@@ -4,9 +4,13 @@ import {
   type Payments,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
+import type { Records } from "@usenullish/nullish-schema/records";
 import { withDbContext } from "./_db";
 import { CheckoutService } from "./services/checkout";
 import { PaymentSubscriptionService } from "./services/payment-subscription";
+import { PlansService } from "./services/plans";
+
+type Claim = Records["Subscription"]["Claims"]["Select"];
 
 type CheckoutProduct = Pick<Payments["Payment"], "provider"> & {
   externalProductId: Payments["PaymentExternalIds"]["productId"];
@@ -14,6 +18,24 @@ type CheckoutProduct = Pick<Payments["Payment"], "provider"> & {
 
 export abstract class PaymentProvider implements ProcessPayments {
   protected constructor() {}
+
+  async listPlans(): Promise<Payments["Plan"][]> {
+    // 1. Load the claims that are linked with a product
+    const result = await withDbContext(async (dbContext) => {
+      return await PlansService.create({
+        db: dbContext,
+      }).listClaims();
+    });
+
+    if (result.status === "error") {
+      throw result.err;
+    }
+
+    // 2. Load the plans of those products with the provider ("from Stripe")
+    const plans = await this.loadPlans({ claims: result.result });
+
+    return PaymentsSchema.PaymentPlansSchema.parse(plans);
+  }
 
   async checkout(args: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {
     const parsedArgs = PaymentsSchema.CheckoutPaymentsArgsSchema.parse(args);
@@ -69,6 +91,8 @@ export abstract class PaymentProvider implements ProcessPayments {
   protected abstract loadProduct(
     args: Pick<Payments["Checkout"]["Args"], "priceId">,
   ): Promise<CheckoutProduct>;
+
+  protected abstract loadPlans(args: { claims: Claim[] }): Promise<Payments["Plan"][]>;
 
   protected abstract createCheckoutSession(
     args: Payments["Checkout"]["Args"],
