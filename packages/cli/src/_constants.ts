@@ -22,3 +22,7 @@ export const SUBSCRIPTION_SETTINGS_DESCRIPTION = "Manage the initial claim and t
 export const SUBSCRIPTION_SETTINGS_SHOW_DESCRIPTION = "Show the initial claim and the grace days";
 export const SUBSCRIPTION_SETTINGS_UPDATE_DESCRIPTION =
   "Change the initial claim and the grace days";
+export const SUBSCRIPTION_TAX_RATE_DESCRIPTION = "Manage the tax rates of the subscriptions";
+export const SUBSCRIPTION_TAX_RATE_LIST_DESCRIPTION = "List the tax rates";
+export const SUBSCRIPTION_TAX_RATE_CREATE_DESCRIPTION = "Create a tax rate";
+export const SUBSCRIPTION_TAX_RATE_END_DESCRIPTION = "End a tax rate";
