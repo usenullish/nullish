@@ -115,12 +115,16 @@ export class StripePaymentProvider extends PaymentProvider {
     priceId,
     successUrl,
     cancelUrl,
-  }: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {
+    externalTaxRateId,
+  }: Payments["Checkout"]["Args"] & {
+    externalTaxRateId: Option<Stripe.TaxRate["id"]>;
+  }): Promise<Payments["Checkout"]["Result"]> {
     // https://docs.stripe.com/payments/accept-a-payment?payment-ui=checkout&ui=stripe-hosted
     const { url } = await this.#stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
+        ...(nonNullish(externalTaxRateId) && { default_tax_rates: [externalTaxRateId] }),
         metadata: PaymentsSchema.PaymentMetadataSchema.parse({
           organizationId,
         }),
