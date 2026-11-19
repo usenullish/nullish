@@ -1,13 +1,5 @@
-import { nonNullish, type Nullish } from "@usenullish/nullish-common";
-import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import type { App } from "../types/app";
 import type { Webhook } from "./_factories/webhook";
 import { PaymentsWebhook } from "./_payments";
 
-export const initWebhooks = ({
-  app,
-  payments,
-}: {
-  app: App;
-  payments: Nullish<ProcessPayments>;
-}): Webhook[] => (nonNullish(payments) ? [PaymentsWebhook.create({ app, payments })] : []);
+export const initWebhooks = ({ app }: { app: App }): Webhook[] => [PaymentsWebhook.create({ app })];
