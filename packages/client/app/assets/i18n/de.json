@@ -189,7 +189,9 @@
     "team": "Team",
     "members": "Mitglieder",
     "invitations": "Einladungen",
-    "migrations": "Migrationen"
+    "migrations": "Migrationen",
+    "subscription": "Abo",
+    "plans": "Pläne"
   },
   "greeting": {
     "morning": "Guten Morgen, {name}",
@@ -264,7 +266,8 @@
       "create": "Organisation erstellen",
       "lets_go": "Los geht's!",
       "delete": "Organisation löschen",
-      "back_to_organizations": "Zurück zu meinen Organisationen"
+      "back_to_organizations": "Zurück zu meinen Organisationen",
+      "see_plans": "Pläne ansehen"
     },
     "state": {
       "creating": "Wird erstellt…"
@@ -1423,5 +1426,33 @@
     "test": "Test",
     "demo": "Demo",
     "staging": "Staging"
+  },
+  "subscription": {
+    "action": {
+      "choose": "Auswählen",
+      "get_in_touch": "Schreib uns",
+      "back_to_organization": "Zurück zur Organisation"
+    },
+    "state": {
+      "activating": "Wird aktiviert…"
+    },
+    "interval": {
+      "day": "pro Tag",
+      "week": "pro Woche",
+      "month": "pro Monat",
+      "year": "pro Jahr"
+    },
+    "text": {
+      "plans_title": "Wähle einen Plan",
+      "plans_description": "Wähle den Plan für {name}. Die Zahlung läuft über Stripe.",
+      "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
+      "no_plans": "Im Moment ist kein Plan verfügbar.",
+      "instance_title": "Deine eigene Instanz",
+      "instance_description": "Eine eigene nullish-Instanz, separat verrechnet.",
+      "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",
+      "success_title": "Danke!",
+      "success_description": "Dein Abo wird aktiviert, das dauert nur ein paar Sekunden.",
+      "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist."
+    }
   }
 }

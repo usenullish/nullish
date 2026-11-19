@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { isNullish } from "@usenullish/nullish-common";
+import { SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
+import { OrganizationPath } from "~/navigation";
 import { CenteredLayout } from "~/components/layout/centered-layout";
 import { OrganizationDeletedBanner } from "~/components/layout/organization-deleted-banner";
 import { DeleteOrganization } from "~/components/settings/organizations/delete/delete-organization";
@@ -35,7 +37,28 @@ export const OrganizationLocked = () => {
           </CardHeader>
 
           <CardContent className="grid gap-2">
-            <Button className="w-full" nativeButton={false} render={<Link to="/orgs" />}>
+            {isAdmin && isNullish(organization.deletedAt) && (
+              <Button
+                className="w-full"
+                nativeButton={false}
+                render={
+                  <Link
+                    to={OrganizationPath.create({ organizationId: organization.id }).to({
+                      path: SUBSCRIPTION_PLANS_PATH,
+                    })}
+                  />
+                }
+              >
+                {i18n.organizations.action.see_plans}
+              </Button>
+            )}
+
+            <Button
+              className="w-full"
+              variant={isAdmin && isNullish(organization.deletedAt) ? "outline" : "default"}
+              nativeButton={false}
+              render={<Link to="/orgs" />}
+            >
               {i18n.organizations.action.back_to_organizations}
             </Button>
 

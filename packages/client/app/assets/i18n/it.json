@@ -189,7 +189,9 @@
     "team": "Team",
     "members": "Membri",
     "invitations": "Inviti",
-    "migrations": "Migrazioni"
+    "migrations": "Migrazioni",
+    "subscription": "Abbonamento",
+    "plans": "Piani"
   },
   "greeting": {
     "morning": "Buongiorno, {name}",
@@ -264,7 +266,8 @@
       "create": "Crea l'organizzazione",
       "lets_go": "Andiamo!",
       "delete": "Elimina organizzazione",
-      "back_to_organizations": "Torna alle mie organizzazioni"
+      "back_to_organizations": "Torna alle mie organizzazioni",
+      "see_plans": "Vedi i piani"
     },
     "state": {
       "creating": "Creazione…"
@@ -1423,5 +1426,33 @@
     "test": "Test",
     "demo": "Demo",
     "staging": "Staging"
+  },
+  "subscription": {
+    "action": {
+      "choose": "Scegli",
+      "get_in_touch": "Scrivici",
+      "back_to_organization": "Torna all'organizzazione"
+    },
+    "state": {
+      "activating": "Attivazione…"
+    },
+    "interval": {
+      "day": "al giorno",
+      "week": "alla settimana",
+      "month": "al mese",
+      "year": "all'anno"
+    },
+    "text": {
+      "plans_title": "Scegli un piano",
+      "plans_description": "Scegli il piano per {name}. Il pagamento avviene su Stripe.",
+      "admins_only": "Solo gli admin dell'organizzazione possono scegliere un piano.",
+      "no_plans": "Nessun piano disponibile per ora.",
+      "instance_title": "La tua istanza",
+      "instance_description": "Un'istanza nullish tutta tua, fatturata a parte.",
+      "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
+      "success_title": "Grazie!",
+      "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
+      "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."
+    }
   }
 }

@@ -159,17 +159,17 @@ describe("organization payments checkout", () => {
     ).toEqual({ url: CHECKOUT_URL });
   });
 
-  test("checks out with the user, the organization, the price and the return url", async () => {
+  test("checks out with the user, the organization, the price and the return urls", async () => {
     await post({ cookie: admin.cookie });
 
-    const returnUrl = `${envAppUrl()}/orgs/${organizationId}`;
+    const organizationUrl = `${envAppUrl()}/orgs/${organizationId}`;
 
     expect(checkout).toHaveBeenCalledWith({
       userId: admin.id,
       organizationId,
       priceId: PRICE_ID,
-      successUrl: returnUrl,
-      cancelUrl: returnUrl,
+      successUrl: `${organizationUrl}/subscription/success`,
+      cancelUrl: `${organizationUrl}/subscription/plans`,
     });
   });
 

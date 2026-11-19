@@ -189,7 +189,9 @@
     "team": "Team",
     "members": "Members",
     "invitations": "Invitations",
-    "migrations": "Migrations"
+    "migrations": "Migrations",
+    "subscription": "Subscription",
+    "plans": "Plans"
   },
   "greeting": {
     "morning": "Good morning, {name}",
@@ -264,7 +266,8 @@
       "create": "Create organization",
       "lets_go": "Let's go!",
       "delete": "Delete organization",
-      "back_to_organizations": "Back to my organizations"
+      "back_to_organizations": "Back to my organizations",
+      "see_plans": "See the plans"
     },
     "state": {
       "creating": "Creating…"
@@ -1423,5 +1426,33 @@
     "test": "Test",
     "demo": "Demo",
     "staging": "Staging"
+  },
+  "subscription": {
+    "action": {
+      "choose": "Choose",
+      "get_in_touch": "Get in touch",
+      "back_to_organization": "Back to the organization"
+    },
+    "state": {
+      "activating": "Activating…"
+    },
+    "interval": {
+      "day": "per day",
+      "week": "per week",
+      "month": "per month",
+      "year": "per year"
+    },
+    "text": {
+      "plans_title": "Pick a plan",
+      "plans_description": "Pick the plan for {name}. The payment happens on Stripe.",
+      "admins_only": "Only the admins of the organization can pick a plan.",
+      "no_plans": "No plan available for now.",
+      "instance_title": "Your own instance",
+      "instance_description": "A nullish instance of your own, billed separately.",
+      "checkout_error": "The payment page could not be opened.",
+      "success_title": "Thank you!",
+      "success_description": "Your subscription is being activated, it only takes a few seconds.",
+      "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed."
+    }
   }
 }

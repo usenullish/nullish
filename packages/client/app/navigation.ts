@@ -1,6 +1,7 @@
-import { INVITATION_ACCEPT_PATH } from "@usenullish/nullish-schema/server";
+import { INVITATION_ACCEPT_PATH, SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
 import {
   BookOpen,
+  CreditCard,
   DatabaseArrowUp,
   FileText,
   Landmark,
@@ -75,6 +76,14 @@ export const TEAM_NAVIGATION_GROUP: NavigationGroup = {
 };
 
 // Only shown to the admins of the organization.
+export const SUBSCRIPTION_NAVIGATION_GROUP: NavigationGroup = {
+  label: "subscription",
+  icon: CreditCard,
+  collapsible: true,
+  items: [{ title: "plans", path: SUBSCRIPTION_PLANS_PATH }],
+};
+
+// Only shown to the admins of the organization.
 export const MIGRATIONS_NAVIGATION_GROUP: NavigationGroup = {
   label: "migrations",
   icon: DatabaseArrowUp,
@@ -122,6 +131,7 @@ export const NAVIGATION: NavigationGroup[] = [
     ],
   },
   TEAM_NAVIGATION_GROUP,
+  SUBSCRIPTION_NAVIGATION_GROUP,
   {
     label: "settings",
     icon: Settings,

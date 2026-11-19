@@ -178,6 +178,8 @@ const I18nNavigationSchema = z.strictObject({
   members: z.string(),
   invitations: z.string(),
   migrations: z.string(),
+  subscription: z.string(),
+  plans: z.string(),
 });
 
 const I18nGreetingSchema = z.strictObject({
@@ -245,6 +247,7 @@ const I18nOrganizationsSchema = z.strictObject({
     lets_go: z.string(),
     delete: z.string(),
     back_to_organizations: z.string(),
+    see_plans: z.string(),
   }),
   state: z.strictObject({ creating: z.string() }),
   label: z.strictObject({
@@ -1279,6 +1282,33 @@ const I18nEnvironmentSchema = z.strictObject({
   staging: z.string(),
 });
 
+const I18nSubscriptionSchema = z.strictObject({
+  action: z.strictObject({
+    choose: z.string(),
+    get_in_touch: z.string(),
+    back_to_organization: z.string(),
+  }),
+  state: z.strictObject({ activating: z.string() }),
+  interval: z.strictObject({
+    day: z.string(),
+    week: z.string(),
+    month: z.string(),
+    year: z.string(),
+  }),
+  text: z.strictObject({
+    plans_title: z.string(),
+    plans_description: z.string(),
+    admins_only: z.string(),
+    no_plans: z.string(),
+    instance_title: z.string(),
+    instance_description: z.string(),
+    checkout_error: z.string(),
+    success_title: z.string(),
+    success_description: z.string(),
+    success_timeout: z.string(),
+  }),
+});
+
 export const I18nSchema = z.strictObject({
   core: I18nCoreSchema,
   auth: I18nAuthSchema,
@@ -1311,6 +1341,7 @@ export const I18nSchema = z.strictObject({
   migrations: I18nMigrationsSchema,
   notifications: I18nNotificationsSchema,
   environment: I18nEnvironmentSchema,
+  subscription: I18nSubscriptionSchema,
 });
 
 export type I18n = z.infer<typeof I18nSchema>;

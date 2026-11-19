@@ -189,7 +189,9 @@
     "team": "Équipe",
     "members": "Membres",
     "invitations": "Invitations",
-    "migrations": "Migrations"
+    "migrations": "Migrations",
+    "subscription": "Abonnement",
+    "plans": "Offres"
   },
   "greeting": {
     "morning": "Bonjour, {name}",
@@ -264,7 +266,8 @@
       "create": "Créer une organisation",
       "lets_go": "C'est parti !",
       "delete": "Supprimer l'organisation",
-      "back_to_organizations": "Retour à mes organisations"
+      "back_to_organizations": "Retour à mes organisations",
+      "see_plans": "Voir les offres"
     },
     "state": {
       "creating": "Création…"
@@ -1423,5 +1426,33 @@
     "test": "Test",
     "demo": "Démo",
     "staging": "Préproduction"
+  },
+  "subscription": {
+    "action": {
+      "choose": "Choisir",
+      "get_in_touch": "Écris-nous",
+      "back_to_organization": "Retour à l'organisation"
+    },
+    "state": {
+      "activating": "Activation…"
+    },
+    "interval": {
+      "day": "par jour",
+      "week": "par semaine",
+      "month": "par mois",
+      "year": "par an"
+    },
+    "text": {
+      "plans_title": "Choisis une offre",
+      "plans_description": "Choisis l'offre pour {name}. Le paiement se fait sur Stripe.",
+      "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
+      "no_plans": "Aucune offre disponible pour le moment.",
+      "instance_title": "Ta propre instance",
+      "instance_description": "Une instance nullish rien que pour toi, facturée à part.",
+      "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
+      "success_title": "Merci !",
+      "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
+      "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
+    }
   }
 }

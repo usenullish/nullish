@@ -35,6 +35,7 @@ import {
   OrganizationPath,
   OrganizationRootPath,
   MIGRATIONS_NAVIGATION_GROUP,
+  SUBSCRIPTION_NAVIGATION_GROUP,
   TEAM_NAVIGATION_GROUP,
 } from "~/navigation";
 import { OrganizationSwitcher } from "./organization-switcher";
@@ -58,7 +59,11 @@ export const AppSidebar = () => {
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
 
   const navigation = NAVIGATION.filter(
-    (group) => admin || (group !== TEAM_NAVIGATION_GROUP && group !== MIGRATIONS_NAVIGATION_GROUP),
+    (group) =>
+      admin ||
+      (group !== TEAM_NAVIGATION_GROUP &&
+        group !== SUBSCRIPTION_NAVIGATION_GROUP &&
+        group !== MIGRATIONS_NAVIGATION_GROUP),
   );
 
   const toPath = (path: NavigationItem["path"]): string => {
