@@ -82,7 +82,12 @@ describe("chat", () => {
 
     app.use("*", async (context, next) => {
       context.set("db", { connection: db });
-      context.set("workers", { jobs: {} as TriggerJobs, storage: {} as Storage, mail: null });
+      context.set("workers", {
+        jobs: {} as TriggerJobs,
+        storage: {} as Storage,
+        mail: null,
+        payments: null,
+      });
       context.set(
         "caller",
         userId === null

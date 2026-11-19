@@ -71,7 +71,12 @@ describe("create invitation", () => {
     app.use("*", loadCallerMiddleware());
     app.use(
       "*",
-      loadWorkersMiddleware({ jobs: {} as TriggerJobs, storage: FsStorageProvider.create(), mail }),
+      loadWorkersMiddleware({
+        jobs: {} as TriggerJobs,
+        storage: FsStorageProvider.create(),
+        mail,
+        payments: null,
+      }),
     );
 
     InvitationsCreateHandlers.create({ app }).register();
