@@ -1,6 +1,5 @@
 import type { z } from "zod";
-import type { CheckoutPayments } from "./_checkout";
-import type { HandlePayments } from "./_handle";
+import type { ProcessPayments } from "./_process";
 import type { PaymentsSchema } from "./_schemas";
 
 interface Payments {
@@ -15,4 +14,4 @@ interface Payments {
   PaymentExternalIds: z.infer<typeof PaymentsSchema.PaymentExternalIdsSchema>;
 }
 
-export type { CheckoutPayments, HandlePayments, Payments };
+export type { Payments, ProcessPayments };
