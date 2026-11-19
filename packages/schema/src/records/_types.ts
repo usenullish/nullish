@@ -248,6 +248,12 @@ interface Records {
       Select: z.infer<
         typeof RecordsSchema.Subscription.SubscriptionTaxRatesSchema.SelectSubscriptionTaxRatesSchema
       >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionTaxRatesSchema.InsertSubscriptionTaxRatesSchema
+      >;
+      Update: z.infer<
+        typeof RecordsSchema.Subscription.SubscriptionTaxRatesSchema.UpdateSubscriptionTaxRatesSchema
+      >;
     };
   };
 }
