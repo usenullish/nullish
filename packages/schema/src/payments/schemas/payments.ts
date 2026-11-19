@@ -8,6 +8,21 @@ export const HandlePaymentsArgsSchema = z.strictObject({
   signature: z.string(),
 });
 
+export const CheckoutPaymentsArgsSchema = z.strictObject({
+  organizationId: SelectSubscriptionsSchema.shape.organizationId,
+  priceId: z.string().min(1),
+  successUrl: z.url(),
+  cancelUrl: z.url(),
+});
+
+export const PaymentCheckoutSchema = z.strictObject({
+  url: z.url(),
+});
+
+export const PaymentMetadataSchema = z.object({
+  organizationId: SelectSubscriptionsSchema.shape.organizationId,
+});
+
 export const PaymentExternalIdsSchema = z.strictObject({
   subscriptionId: SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
   customerId: SelectSubscriptionReferencesSchema.shape.externalCustomerId,

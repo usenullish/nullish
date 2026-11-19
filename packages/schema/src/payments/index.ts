@@ -1,2 +1,2 @@
 export * from "./_schemas";
-export type { HandlePayments, Payments } from "./_types";
+export type { CheckoutPayments, HandlePayments, Payments } from "./_types";
