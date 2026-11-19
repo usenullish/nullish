@@ -1,4 +1,5 @@
 import type { Api } from "@usenullish/nullish-schema/server";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import { useUser } from "~/context/hooks/auth.hooks";
 
 export const useIsOrganizationAdmin = ({
@@ -9,7 +10,8 @@ export const useIsOrganizationAdmin = ({
   const user = useUser();
 
   return (user?.roles ?? []).some(
-    (membership) => membership.organizationId === organizationId && membership.role === "admin",
+    (membership) =>
+      membership.organizationId === organizationId && membership.role === MembershipRole.ADMIN,
   );
 };
 
@@ -23,6 +25,6 @@ export const useCanWrite = ({
   return (user?.roles ?? []).some(
     (membership) =>
       membership.organizationId === organizationId &&
-      (membership.role === "admin" || membership.role === "accountant"),
+      (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.ACCOUNTANT),
   );
 };

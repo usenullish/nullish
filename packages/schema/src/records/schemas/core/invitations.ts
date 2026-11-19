@@ -2,11 +2,18 @@ import { createInsertSchema, createSelectSchema } from "drizzle-orm/zod";
 import * as z from "zod";
 import { InvitationsSchema } from "../../../db/schemas/core/invitations";
 import { INSERT_OMIT_FIELDS, ORGANIZATION_ID_OMIT_FIELD } from "../../../primitives";
+import { refineMembershipRoleEnums } from "./memberships";
 
-export const SelectInvitationsSchema = createSelectSchema(InvitationsSchema).omit({
+export const SelectInvitationsSchema = createSelectSchema(
+  InvitationsSchema,
+  refineMembershipRoleEnums,
+).omit({
   tokenHash: true,
 });
-export const InsertInvitationsSchema = createInsertSchema(InvitationsSchema)
+export const InsertInvitationsSchema = createInsertSchema(
+  InvitationsSchema,
+  refineMembershipRoleEnums,
+)
   .omit({
     ...ORGANIZATION_ID_OMIT_FIELD,
     ...INSERT_OMIT_FIELDS,

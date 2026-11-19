@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { ApiSchema } from "@usenullish/nullish-schema/server";
+import { MembershipRole } from "@usenullish/nullish-schema/db";
 import { Button } from "~/ui/components/button";
 import { Field, FieldGroup, FieldLabel } from "~/ui/components/field";
 import { Input } from "~/ui/components/input";
@@ -56,7 +57,7 @@ export const NewInvitationForm = ({
 
         <Field>
           <FieldLabel htmlFor={roleId}>{i18n.team.label.role}</FieldLabel>
-          <Select items={roles} name="role" defaultValue="accountant" required>
+          <Select items={roles} name="role" defaultValue={MembershipRole.ACCOUNTANT} required>
             <SelectTrigger id={roleId} className="w-full">
               <SelectValue />
             </SelectTrigger>
