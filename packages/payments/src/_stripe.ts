@@ -10,12 +10,13 @@ import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   type Payments,
+  PaymentEventType,
   PaymentInterval,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
-import { PaymentProvider } from "./_payment-provider";
+import { type PaymentEvent, PaymentProvider } from "./_payment-provider";
 
 type Claim = Records["Subscription"]["Claims"]["Select"];
 
@@ -25,7 +26,10 @@ type StripePlanPrice = Stripe.Price & {
 };
 
 @PaymentFactory
-export class StripePaymentProvider extends PaymentProvider {
+export class StripePaymentProvider extends PaymentProvider<
+  Stripe.Event,
+  Stripe.InvoiceCreatedEvent
+> {
   readonly #stripe: Stripe;
 
   protected constructor() {
@@ -42,7 +46,7 @@ export class StripePaymentProvider extends PaymentProvider {
     priceId,
   }: Pick<Payments["Checkout"]["Args"], "priceId">): Promise<{
     provider: SubscriptionProvider;
-    externalProductId: Payments["PaymentExternalIds"]["productId"];
+    externalProductId: Payments["ExternalIds"]["productId"];
   }> {
     const { product } = await this.#stripe.prices.retrieve(priceId);
 
@@ -115,12 +119,16 @@ export class StripePaymentProvider extends PaymentProvider {
     priceId,
     successUrl,
     cancelUrl,
-  }: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {
+    externalTaxRateId,
+  }: Payments["Checkout"]["Args"] & {
+    externalTaxRateId: Stripe.TaxRate["id"];
+  }): Promise<Payments["Checkout"]["Result"]> {
     // https://docs.stripe.com/payments/accept-a-payment?payment-ui=checkout&ui=stripe-hosted
     const { url } = await this.#stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
+        default_tax_rates: [externalTaxRateId],
         metadata: PaymentsSchema.PaymentMetadataSchema.parse({
           organizationId,
         }),
@@ -134,17 +142,76 @@ export class StripePaymentProvider extends PaymentProvider {
     return { url };
   }
 
-  protected override async resolve({
+  protected override async decode({
     payload,
     signature,
-  }: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
-    const $event = await this.#stripe.webhooks.constructEventAsync(
+  }: Payments["Handle"]["Args"]): Promise<
+    Option<PaymentEvent<Stripe.Event, Stripe.InvoiceCreatedEvent>>
+  > {
+    const providerEvent = await this.#stripe.webhooks.constructEventAsync(
       payload,
       signature,
       envStripeWebhookSecret(),
     );
 
-    const subscriptionId = this.#externalSubscriptionId($event);
+    if (providerEvent.type === "invoice.created") {
+      return { type: PaymentEventType.INVOICE, providerEvent };
+    }
+
+    return { type: PaymentEventType.PAYMENT, providerEvent };
+  }
+
+  protected override async extractDraftInvoice({
+    providerEvent,
+  }: {
+    providerEvent: Stripe.InvoiceCreatedEvent;
+  }): Promise<Option<Payments["Invoice"]>> {
+    const {
+      data: {
+        object: { id: invoiceId, status, created, parent, default_tax_rates: taxRates },
+      },
+    } = providerEvent;
+
+    const subscription = parent?.subscription_details?.subscription;
+
+    // Only the drafts of the renewals can still be edited, the first invoice is paid at checkout.
+    if (status !== "draft" || isNullish(invoiceId) || isNullish(subscription)) {
+      return undefined;
+    }
+
+    return {
+      provider: SubscriptionProvider.STRIPE,
+      externalIds: {
+        invoiceId,
+        subscriptionId: this.#id(subscription),
+        taxRateIds: taxRates.map(({ id }) => id),
+      },
+      validOn: new Date(created * 1000),
+    };
+  }
+
+  protected override async updateTaxRate({
+    invoice: {
+      externalIds: { invoiceId, subscriptionId },
+    },
+    externalTaxRateId,
+  }: {
+    invoice: Payments["Invoice"];
+    externalTaxRateId: Stripe.TaxRate["id"];
+  }): Promise<void> {
+    await this.#stripe.invoices.update(invoiceId, { default_tax_rates: [externalTaxRateId] });
+
+    await this.#stripe.subscriptions.update(subscriptionId, {
+      default_tax_rates: [externalTaxRateId],
+    });
+  }
+
+  protected override async loadPayment({
+    providerEvent,
+  }: {
+    providerEvent: Stripe.Event;
+  }): Promise<Option<Payments["Payment"]>> {
+    const subscriptionId = this.#externalSubscriptionId(providerEvent);
 
     if (isNullish(subscriptionId)) {
       return undefined;
@@ -223,7 +290,7 @@ export class StripePaymentProvider extends PaymentProvider {
   }: {
     subscription: Stripe.Subscription;
     item: Stripe.SubscriptionItem;
-  }): Payments["PaymentExternalIds"] {
+  }): Payments["ExternalIds"] {
     return {
       subscriptionId,
       customerId: this.#id(customer),

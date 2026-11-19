@@ -13,7 +13,8 @@ interface Payments {
   Plan: z.infer<typeof PaymentsSchema.PaymentPlanSchema>;
   PlanPrice: z.infer<typeof PaymentsSchema.PaymentPlanPriceSchema>;
   Payment: z.infer<typeof PaymentsSchema.PaymentSchema>;
-  PaymentExternalIds: z.infer<typeof PaymentsSchema.PaymentExternalIdsSchema>;
+  Invoice: z.infer<typeof PaymentsSchema.PaymentInvoiceSchema>;
+  ExternalIds: z.infer<typeof PaymentsSchema.PaymentExternalIdsSchema>;
 }
 
 export type { Payments, ProcessPayments };

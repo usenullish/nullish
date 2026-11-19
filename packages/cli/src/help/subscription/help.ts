@@ -3,6 +3,7 @@ import {
   OPTION_HELP,
   SUBSCRIPTION_DESCRIPTION,
   SUBSCRIPTION_SETTINGS_DESCRIPTION,
+  SUBSCRIPTION_TAX_RATE_DESCRIPTION,
   TITLE_AND_VERSION,
 } from "../../_constants";
 import { log } from "../../utils/log";
@@ -11,6 +12,7 @@ const usage = `Usage: ${lime("nullish")} ${cyan("subscription")} ${magenta("<sub
 
 Commands:
   ${cyan("settings")}            ${SUBSCRIPTION_SETTINGS_DESCRIPTION}
+  ${cyan("tax-rate")}            ${SUBSCRIPTION_TAX_RATE_DESCRIPTION}
 
 Options:
   ${OPTION_HELP}

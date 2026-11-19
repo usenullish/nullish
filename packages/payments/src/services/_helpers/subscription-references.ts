@@ -37,7 +37,7 @@ export const insertSubscriptionReference = async ({
   externalIds: { customerId, subscriptionId: externalSubscriptionId },
 }: {
   tx: Tx;
-  externalIds: Payments["PaymentExternalIds"];
+  externalIds: Payments["ExternalIds"];
 } & Pick<SubscriptionReference, "subscriptionId" | "provider">): Promise<void> => {
   await tx.insert(references).values({
     subscriptionId,

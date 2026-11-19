@@ -1,4 +1,4 @@
-import { nonNullish, type Result } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
 import {
   MembershipRole,
@@ -11,8 +11,10 @@ import { getClaimByExternalProduct } from "./_helpers/claims";
 import { getMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
 import { getExistingSubscription } from "./_helpers/subscriptions";
+import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
 
 type Membership = Records["Core"]["Memberships"]["Select"];
+type SubscriptionTaxRate = Records["Subscription"]["SubscriptionTaxRates"]["Select"];
 type ExternalProductId = NonNullable<
   Records["Subscription"]["Claims"]["Select"]["externalProductId"]
 >;
@@ -26,24 +28,52 @@ export class CheckoutService extends AdminServiceContext {
     return new this(args);
   }
 
-  assert({
+  prepare({
     userId,
     organizationId,
     provider,
     externalProductId,
+    validOn,
   }: {
     userId: Membership["userId"];
     organizationId: Membership["organizationId"];
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
-  }): Promise<Result<void>> {
+    validOn: SubscriptionTaxRate["startOn"];
+  }): Promise<Result<{ externalTaxRateId: SubscriptionTaxRate["externalTaxRateId"] }>> {
     return this._withDbContext(async (tx) => {
-      await this.#assertAdmin({ tx, organizationId, userId });
+      await this.#assert({ tx, userId, organizationId, provider, externalProductId });
 
-      await this.#assertProductHasClaim({ tx, provider, externalProductId });
+      const taxRate = await getSubscriptionTaxRate({ tx, provider, validOn });
 
-      await this.#assertNotLinked({ tx, organizationId });
+      if (isNullish(taxRate)) {
+        throw new Error(
+          `No ${provider} tax rate is valid on ${validOn.toISOString().slice(0, 10)}.`,
+        );
+      }
+
+      return { externalTaxRateId: taxRate.externalTaxRateId };
     });
+  }
+
+  async #assert({
+    tx,
+    userId,
+    organizationId,
+    provider,
+    externalProductId,
+  }: {
+    tx: Tx;
+    userId: Membership["userId"];
+    organizationId: Membership["organizationId"];
+    provider: SubscriptionProvider;
+    externalProductId: ExternalProductId;
+  }): Promise<void> {
+    await this.#assertAdmin({ tx, organizationId, userId });
+
+    await this.#assertProductHasClaim({ tx, provider, externalProductId });
+
+    await this.#assertNotLinked({ tx, organizationId });
   }
 
   async #assertAdmin({
