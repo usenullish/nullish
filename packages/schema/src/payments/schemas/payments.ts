@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { SelectMembershipsSchema } from "../../records/schemas/core/memberships";
 import { SelectClaimsSchema } from "../../records/schemas/subscription/claims";
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
@@ -9,6 +10,7 @@ export const HandlePaymentsArgsSchema = z.strictObject({
 });
 
 export const CheckoutPaymentsArgsSchema = z.strictObject({
+  userId: SelectMembershipsSchema.shape.userId,
   organizationId: SelectSubscriptionsSchema.shape.organizationId,
   priceId: z.string().min(1),
   successUrl: z.url(),

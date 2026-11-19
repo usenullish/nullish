@@ -20,7 +20,21 @@ export class StripePaymentProvider extends PaymentProvider {
     return new this();
   }
 
-  protected override async createCheckout({
+  protected override async loadProduct({
+    priceId,
+  }: Pick<Payments["Checkout"]["Args"], "priceId">): Promise<{
+    provider: SubscriptionProvider;
+    externalProductId: Payments["PaymentExternalIds"]["productId"];
+  }> {
+    const { product } = await this.#stripe.prices.retrieve(priceId);
+
+    return {
+      provider: SubscriptionProvider.STRIPE,
+      externalProductId: this.#id(product),
+    };
+  }
+
+  protected override async createCheckoutSession({
     organizationId,
     priceId,
     successUrl,
@@ -48,13 +62,13 @@ export class StripePaymentProvider extends PaymentProvider {
     payload,
     signature,
   }: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
-    const event = await this.#stripe.webhooks.constructEventAsync(
+    const $event = await this.#stripe.webhooks.constructEventAsync(
       payload,
       signature,
       envStripeWebhookSecret(),
     );
 
-    const subscriptionId = this.#externalSubscriptionId(event);
+    const subscriptionId = this.#externalSubscriptionId($event);
 
     if (isNullish(subscriptionId)) {
       return undefined;

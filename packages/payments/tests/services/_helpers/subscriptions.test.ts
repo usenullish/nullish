@@ -3,7 +3,7 @@ import { eq, inArray, sql } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
-  getAndLockExistingSubscription,
+  getExistingSubscription,
   updateSubscription,
 } from "../../../src/services/_helpers/subscriptions";
 import {
@@ -62,38 +62,51 @@ describe("subscriptions helpers", () => {
     await instance.close();
   });
 
-  describe("getAndLockExistingSubscription", () => {
+  describe("getExistingSubscription", () => {
+    const lockError = ({ id }: { id: string }) =>
+      db
+        .execute(sql`SELECT id FROM subscription.subscriptions WHERE id = ${id} FOR UPDATE NOWAIT`)
+        .catch((e: unknown) => e);
+
     test("returns the subscription of the organization", async () => {
       const { id } = await subscriptionOf();
 
       const subscription = await db.transaction((tx) =>
-        getAndLockExistingSubscription({ tx, organizationId }),
+        getExistingSubscription({ tx, organizationId }),
       );
 
       expect(subscription.id).toBe(id);
       expect(subscription.organizationId).toBe(organizationId);
     });
 
-    test("locks the subscription until the end of the transaction", async () => {
+    test("locks the subscription until the end of the transaction when asked", async () => {
       const { id } = await subscriptionOf();
 
       const error = await db.transaction(async (tx) => {
-        await getAndLockExistingSubscription({ tx, organizationId });
+        await getExistingSubscription({ tx, organizationId, lock: "update" });
 
-        return await db
-          .execute(
-            sql`SELECT id FROM subscription.subscriptions WHERE id = ${id} FOR UPDATE NOWAIT`,
-          )
-          .catch((e: unknown) => e);
+        return await lockError({ id });
       });
 
       expect(error).toBeInstanceOf(Error);
     });
 
+    test("does not lock the subscription without a lock", async () => {
+      const { id } = await subscriptionOf();
+
+      const error = await db.transaction(async (tx) => {
+        await getExistingSubscription({ tx, organizationId });
+
+        return await lockError({ id });
+      });
+
+      expect(error).not.toBeInstanceOf(Error);
+    });
+
     test("throws for an organization without subscription", async () => {
       await expect(
         db.transaction((tx) =>
-          getAndLockExistingSubscription({ tx, organizationId: TEST_MISSING_ORG_ID }),
+          getExistingSubscription({ tx, organizationId: TEST_MISSING_ORG_ID }),
         ),
       ).rejects.toThrow();
     });

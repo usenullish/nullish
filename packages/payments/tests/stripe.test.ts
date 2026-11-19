@@ -258,6 +258,7 @@ describe("StripePaymentProvider", () => {
     const CHECKOUT_URL = "https://checkout.stripe.com/c/pay/cs_1";
 
     const args = {
+      userId: "user-1",
       organizationId: ORGANIZATION_ID,
       priceId: "price_1",
       successUrl: "https://app.nullish.test/orgs/success",
@@ -265,12 +266,21 @@ describe("StripePaymentProvider", () => {
     };
 
     const mockCheckout = ({ url }: { url: string | null }) => {
-      fetchSpy.mockImplementation((async () =>
-        Response.json({ id: "cs_1", object: "checkout.session", url })) as unknown as typeof fetch);
+      fetchSpy.mockImplementation((async (input: Parameters<typeof fetch>[0]) =>
+        String(input).includes("/v1/prices/")
+          ? Response.json({ id: "price_1", object: "price", product: "prod_10users" })
+          : Response.json({
+              id: "cs_1",
+              object: "checkout.session",
+              url,
+            })) as unknown as typeof fetch);
     };
 
+    const sessionCalls = () =>
+      fetchSpy.mock.calls.filter(([input]) => String(input).includes("/v1/checkout/sessions"));
+
     const sentParams = (): URLSearchParams => {
-      const [, init] = fetchSpy.mock.calls[0] ?? [];
+      const [[, init] = []] = sessionCalls();
 
       return new URLSearchParams(String(init?.body));
     };
@@ -325,6 +335,32 @@ describe("StripePaymentProvider", () => {
       mockCheckout({ url: null });
 
       await expect(StripePaymentProvider.create().checkout(args)).rejects.toThrow();
+    });
+
+    test("retrieves the price before asserting the checkout", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      const [[input] = []] = fetchSpy.mock.calls;
+
+      expect(String(input)).toContain("/v1/prices/price_1");
+      expect(withDbContext).toHaveBeenCalledTimes(1);
+    });
+
+    test("does not create the checkout when the assertion fails", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      const err = new Error("Not an admin");
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await expect(StripePaymentProvider.create().checkout(args)).rejects.toThrow(err);
+
+      expect(sessionCalls()).toHaveLength(0);
     });
   });
 });
