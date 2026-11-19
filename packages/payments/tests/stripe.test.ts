@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import Stripe from "stripe";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { PaymentInterval } from "@usenullish/nullish-schema/payments";
 
 const withDbContext = mock(async () => ({ status: "success", result: undefined }));
 
@@ -361,6 +362,162 @@ describe("StripePaymentProvider", () => {
       await expect(StripePaymentProvider.create().checkout(args)).rejects.toThrow(err);
 
       expect(sessionCalls()).toHaveLength(0);
+    });
+  });
+
+  describe("listPlans", () => {
+    const claimOf = ({ externalProductId }: { externalProductId: string }) => ({
+      id: crypto.randomUUID(),
+      trialDays: null,
+      expiresAt: null,
+      provider: SubscriptionProvider.STRIPE,
+      externalProductId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const priceOf = ({
+      id,
+      unitAmount = 2900,
+      interval = "month",
+    }: {
+      id: string;
+      unitAmount?: number | null;
+      interval?: string;
+    }) => ({
+      id,
+      object: "price",
+      unit_amount: unitAmount,
+      currency: "chf",
+      recurring: { interval, interval_count: 1 },
+    });
+
+    const mockClaims = (claims: ReturnType<typeof claimOf>[]) => {
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "success", result: claims }) as unknown as Awaited<
+            ReturnType<typeof withDbContext>
+          >,
+      );
+    };
+
+    const mockStripe = ({ prices }: { prices: Record<string, ReturnType<typeof priceOf>[]> }) => {
+      fetchSpy.mockImplementation((async (input: Parameters<typeof fetch>[0]) => {
+        const url = new URL(String(input));
+
+        if (url.pathname.startsWith("/v1/products/")) {
+          const id = url.pathname.replace("/v1/products/", "");
+          return Response.json({ id, object: "product", name: `Plan ${id}` });
+        }
+
+        const product = url.searchParams.get("product") ?? "";
+
+        return Response.json({
+          object: "list",
+          url: "/v1/prices",
+          has_more: false,
+          data: prices[product] ?? [],
+        });
+      }) as unknown as typeof fetch);
+    };
+
+    test("returns the product of each claim with its prices", async () => {
+      mockClaims([claimOf({ externalProductId: "prod_10users" })]);
+      mockStripe({
+        prices: {
+          prod_10users: [
+            priceOf({ id: "price_monthly", unitAmount: 2900, interval: "month" }),
+            priceOf({ id: "price_yearly", unitAmount: 29000, interval: "year" }),
+          ],
+        },
+      });
+
+      const plans = await StripePaymentProvider.create().listPlans();
+
+      expect(plans).toEqual([
+        {
+          productName: "Plan prod_10users",
+          prices: [
+            {
+              priceId: "price_monthly",
+              amount: 2900n,
+              currency: "CHF",
+              interval: PaymentInterval.MONTH,
+            },
+            {
+              priceId: "price_yearly",
+              amount: 29000n,
+              currency: "CHF",
+              interval: PaymentInterval.YEAR,
+            },
+          ],
+        },
+      ]);
+    });
+
+    test("only asks for the active recurring prices of the product", async () => {
+      mockClaims([claimOf({ externalProductId: "prod_10users" })]);
+      mockStripe({ prices: { prod_10users: [priceOf({ id: "price_monthly" })] } });
+
+      await StripePaymentProvider.create().listPlans();
+
+      const [pricesUrl] = fetchSpy.mock.calls
+        .map(([input]) => new URL(String(input)))
+        .filter(({ pathname }) => pathname === "/v1/prices");
+
+      expect(pricesUrl?.searchParams.get("product")).toBe("prod_10users");
+      expect(pricesUrl?.searchParams.get("active")).toBe("true");
+      expect(pricesUrl?.searchParams.get("type")).toBe("recurring");
+    });
+
+    test("skips the prices without amount or with an unknown interval", async () => {
+      mockClaims([claimOf({ externalProductId: "prod_10users" })]);
+      mockStripe({
+        prices: {
+          prod_10users: [
+            priceOf({ id: "price_monthly" }),
+            priceOf({ id: "price_custom", unitAmount: null }),
+            priceOf({ id: "price_unknown", interval: "fortnight" }),
+          ],
+        },
+      });
+
+      const plans = await StripePaymentProvider.create().listPlans();
+
+      expect(plans.flatMap(({ prices }) => prices.map(({ priceId }) => priceId))).toEqual([
+        "price_monthly",
+      ]);
+    });
+
+    test("leaves out a product without any valid price", async () => {
+      mockClaims([
+        claimOf({ externalProductId: "prod_10users" }),
+        claimOf({ externalProductId: "prod_archived" }),
+      ]);
+      mockStripe({ prices: { prod_10users: [priceOf({ id: "price_monthly" })] } });
+
+      const plans = await StripePaymentProvider.create().listPlans();
+
+      expect(plans.map(({ productName }) => productName)).toEqual(["Plan prod_10users"]);
+    });
+
+    test("returns no plan without claim", async () => {
+      mockClaims([]);
+
+      expect(await StripePaymentProvider.create().listPlans()).toEqual([]);
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("throws when the claims cannot be loaded", async () => {
+      const err = new Error("Cannot list the claims");
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await expect(StripePaymentProvider.create().listPlans()).rejects.toThrow(err);
+      expect(fetchSpy).not.toHaveBeenCalled();
     });
   });
 });
