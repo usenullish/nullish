@@ -335,13 +335,11 @@ describe("conversations", () => {
     beforeAll(async () => {
       leftOrgId = await createOrganization(db, TEST_OTHER_USER_ID);
 
-      await db
-        .insert(memberships)
-        .values({
-          organizationId: leftOrgId,
-          userId: TEST_USER_ID,
-          role: MembershipRole.ACCOUNTANT,
-        });
+      await db.insert(memberships).values({
+        organizationId: leftOrgId,
+        userId: TEST_USER_ID,
+        role: MembershipRole.ACCOUNTANT,
+      });
 
       const conversation = await storeFor(TEST_USER_ID).insert({
         values: { organizationId: leftOrgId, title: "Left" },

@@ -170,13 +170,11 @@ describe("memberships", () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({
-          organizationId: sharedOrgId,
-          userId: TEST_OTHER_USER_ID,
-          role: MembershipRole.ADMIN,
-        });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,
@@ -196,13 +194,11 @@ describe("memberships", () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({
-          organizationId: sharedOrgId,
-          userId: TEST_OTHER_USER_ID,
-          role: MembershipRole.ADMIN,
-        });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,
@@ -221,13 +217,11 @@ describe("memberships", () => {
       const sharedOrgId = await createOrganization(db, TEST_USER_ID);
       const ownMembershipId = await adminMembershipId(sharedOrgId);
 
-      await db
-        .insert(memberships)
-        .values({
-          organizationId: sharedOrgId,
-          userId: TEST_OTHER_USER_ID,
-          role: MembershipRole.ADMIN,
-        });
+      await db.insert(memberships).values({
+        organizationId: sharedOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ADMIN,
+      });
 
       const result = await store.update({
         pKey: ownMembershipId,

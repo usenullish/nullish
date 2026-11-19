@@ -104,13 +104,11 @@ describe("invitations", () => {
     test("returns no invitation to a member who is not an admin", async () => {
       const memberOrgId = await createOrganization(db, TEST_USER_ID);
       await insertInvitation({ organizationId: memberOrgId, email: "invited@test.dev" });
-      await db
-        .insert(memberships)
-        .values({
-          organizationId: memberOrgId,
-          userId: TEST_OTHER_USER_ID,
-          role: MembershipRole.ACCOUNTANT,
-        });
+      await db.insert(memberships).values({
+        organizationId: memberOrgId,
+        userId: TEST_OTHER_USER_ID,
+        role: MembershipRole.ACCOUNTANT,
+      });
 
       const result = await DbCollectionInvitations.create({
         db,
