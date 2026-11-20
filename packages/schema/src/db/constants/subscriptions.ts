@@ -11,6 +11,13 @@ export enum SubscriptionProvider {
   STRIPE = "stripe",
 }
 
+export enum BillingPeriod {
+  DAY = "day",
+  WEEK = "week",
+  MONTH = "month",
+  YEAR = "year",
+}
+
 export enum OrganizationSubscriptionStatus {
   OPEN = "open",
   GRACE = "grace",

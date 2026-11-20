@@ -1,10 +1,13 @@
 import Stripe from "stripe";
 import { assertNonNullish, isNullish, nonNullish, type Option } from "@usenullish/nullish-common";
 import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-env";
-import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import {
+  BillingPeriod,
+  SubscriptionProvider,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 import {
   type Payments,
-  BillingPeriod,
   PaymentEventType,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";

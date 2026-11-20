@@ -6,7 +6,7 @@ import { readonlyPolicies } from "../_policies";
 import { currencyCodeReference } from "../core/currencies";
 import { currencyValue } from "../_currency";
 import { customProductIdReference } from "./custom-products";
-import { BillingPeriod } from "../../../payments/constants";
+import { BillingPeriod } from "../../constants/subscriptions";
 
 const billingPeriod = SubscriptionSchema.enum("billing_period", BillingPeriod);
 

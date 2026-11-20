@@ -4,7 +4,7 @@ import { SelectExternalProductsSchema } from "../../records/schemas/subscription
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 import { SelectSubscriptionTaxRatesSchema } from "../../records/schemas/subscription/subscription-tax-rates";
-import { BillingPeriod } from "../constants";
+import { SelectCustomPricesSchema } from "../../records/schemas/subscription/custom-prices";
 
 export const HandlePaymentsArgsSchema = z.strictObject({
   payload: z.string(),
@@ -27,7 +27,7 @@ export const PaymentPlanPriceSchema = z.strictObject({
   priceId: CheckoutPaymentsArgsSchema.shape.priceId,
   amount: z.bigint(),
   currency: z.currencyCode(),
-  billingPeriod: z.enum(BillingPeriod),
+  billingPeriod: SelectCustomPricesSchema.shape.billingPeriod,
 });
 
 export const PaymentPlanSchema = z.strictObject({
