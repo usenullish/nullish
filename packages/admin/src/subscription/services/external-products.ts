@@ -59,7 +59,11 @@ export class ExternalProductsService extends AdminServiceContext {
     });
   }
 
-  delete({ productId }: { productId: ExternalProduct["id"] }): Promise<Result<Option<ExternalProduct>>> {
+  delete({
+    productId,
+  }: {
+    productId: ExternalProduct["id"];
+  }): Promise<Result<Option<ExternalProduct>>> {
     return this._withDbContext(async (tx) => {
       const rows = await deleteMany({
         tx,
