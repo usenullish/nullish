@@ -4,10 +4,9 @@ import { DateStringCodec, isEmptyString, type Option } from "@usenullish/nullish
 import type { DbAdminContext } from "@usenullish/nullish-db";
 import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { cancel, exit } from "../../utils/exit";
+import { cancel, exit } from "../../../utils/exit";
 
 type Plan = Records["Subscription"]["Plans"]["Select"];
-type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
 export const listPlans = async ({ dbContext }: { dbContext: DbAdminContext }): Promise<Plan[]> => {
   const result = await PlansService.create({ db: dbContext.connection }).list();
@@ -25,10 +24,7 @@ export const listPlans = async ({ dbContext }: { dbContext: DbAdminContext }): P
 export const planLabel = ({ id, trialDays, expiresAt, provider }: Plan): string =>
   `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"}, provider: ${provider})`;
 
-export const promptPlanProduct = async (): Promise<{
-  provider: Plan["provider"];
-  externalProductId: Option<ExternalProduct["externalProductId"]>;
-}> => {
+export const promptPlanProvider = async (): Promise<Plan["provider"]> => {
   const provider = await select<Plan["provider"]>({
     message: "Who provides this plan?",
     options: Object.values(SubscriptionProvider).map((value) => ({ label: value, value })),
@@ -38,21 +34,7 @@ export const promptPlanProduct = async (): Promise<{
     cancel();
   }
 
-  if ([SubscriptionProvider.SELF, SubscriptionProvider.CUSTOM].includes(provider)) {
-    return { provider, externalProductId: undefined };
-  }
-
-  const externalProductId = await text({
-    message: `What is the product ID at ${provider}?`,
-    placeholder: "e.g. prod_123",
-    validate: (input) => (isEmptyString(input) ? "Enter the ID of the product." : undefined),
-  });
-
-  if (isCancel(externalProductId)) {
-    cancel();
-  }
-
-  return { provider, externalProductId };
+  return provider;
 };
 
 export const promptPlanExpiresAt = async ({

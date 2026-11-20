@@ -16,6 +16,7 @@ export const PLAN_DESCRIPTION = "Manage the plans of the subscriptions";
 export const PLAN_LIST_DESCRIPTION = "List the plans";
 export const PLAN_CREATE_DESCRIPTION = "Create a plan";
 export const PLAN_DISABLE_DESCRIPTION = "Disable a plan";
+export const PLAN_LINK_DESCRIPTION = "Link a plan to its product at a provider";
 
 export const SUBSCRIPTION_DESCRIPTION = "Manage the subscriptions";
 export const SUBSCRIPTION_SETTINGS_DESCRIPTION = "Manage the initial plan and the grace days";

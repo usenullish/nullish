@@ -1,7 +1,7 @@
-import { withDbContext } from "../../db";
+import { withDbContext } from "../../../db";
 import { listPlans } from "./_plans";
 
-export const planList = async (_args?: string[]) => {
+export const subscriptionPlanList = async (_args?: string[]) => {
   await withDbContext(async (dbContext) => {
     const plans = await listPlans({ dbContext });
 
