@@ -1,7 +1,7 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-orm/zod";
 import * as z from "zod";
 import { CustomPricesSchema } from "../../../db/schemas/subscription/custom-prices";
-import { BillingPeriod } from "../../../payments/constants";
+import { BillingPeriod } from "../../../db/constants/subscriptions";
 
 const refineCustomPricesEnums = {
   billingPeriod: z.enum(BillingPeriod),

@@ -1,8 +1,11 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import Stripe from "stripe";
 import { isNullish, type Nullable } from "@usenullish/nullish-common";
-import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
-import { BillingPeriod } from "@usenullish/nullish-schema/payments";
+import {
+  BillingPeriod,
+  SubscriptionProvider,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 
 const withDbContext = mock(async () => ({
   status: "success",
