@@ -1,4 +1,5 @@
 import { asc, eq, gt, inArray, isNull, or, sql } from "drizzle-orm";
+import { isArrayEmpty } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
 import { DbSchema } from "@usenullish/nullish-schema/db";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
@@ -16,6 +17,10 @@ export const listCustomPlans = async ({ tx }: { tx: Tx }): Promise<CustomPlan[]>
     .innerJoin(plans, eq(plans.id, customProducts.planId))
     .where(or(isNull(plans.expiresAt), gt(plans.expiresAt, sql`now()`)))
     .orderBy(asc(customProducts.name));
+
+  if (isArrayEmpty(rows)) {
+    return [];
+  }
 
   const prices = await tx
     .select()
