@@ -28,34 +28,30 @@ describe("SubscriptionBootstrapService", () => {
   let defaultPlans: (typeof plans.$inferSelect)[];
 
   const setupOf = ({
-    initialPlan = "cloud",
     externalProductId = `prod_${crypto.randomUUID()}`,
-  }: { initialPlan?: string; externalProductId?: string } = {}): SubscriptionBootstrap => ({
-    providers: [
-      {
-        provider: SubscriptionProvider.STRIPE,
-        plans: [{ key: "cloud", trialDays: 14, externalProductId }],
-        taxRates: [
-          {
-            externalTaxRateId: `txr_${crypto.randomUUID()}`,
-            startOn: { __date__: "2099-01-01" },
-          },
-        ],
-      },
-    ],
-    plans: [
-      {
-        key: "instance",
-        provider: SubscriptionProvider.CUSTOM,
-        product: { name: "Instance", contactUrl: "https://example.com/contact" },
-        prices: [
-          { amount: { __bigint__: "12000" }, currency: "CHF", billingPeriod: BillingPeriod.MONTH },
-          { amount: { __bigint__: "120000" }, currency: "CHF", billingPeriod: BillingPeriod.YEAR },
-        ],
-      },
-    ],
-    settings: { initialPlan, graceDays: 14 },
-  });
+  }: { externalProductId?: string } = {}): SubscriptionBootstrap => [
+    { provider: SubscriptionProvider.SELF, trialDays: 30 },
+    {
+      provider: SubscriptionProvider.CUSTOM,
+      name: "Instance",
+      contactUrl: "https://example.com/contact",
+      prices: [
+        { amount: { __bigint__: "12000" }, currency: "CHF", billingPeriod: BillingPeriod.MONTH },
+        { amount: { __bigint__: "120000" }, currency: "CHF", billingPeriod: BillingPeriod.YEAR },
+      ],
+    },
+    {
+      provider: SubscriptionProvider.STRIPE,
+      trialDays: 14,
+      externalProductId,
+      taxRates: [
+        {
+          externalTaxRateId: `txr_${crypto.randomUUID()}`,
+          startOn: { __date__: "2099-01-01" },
+        },
+      ],
+    },
+  ];
 
   const newPlans = () =>
     db
@@ -80,8 +76,10 @@ describe("SubscriptionBootstrapService", () => {
 
     insertedPlanIds.push(...(await newPlans()).map(({ id }) => id));
 
-    const taxRateIds = (setup.providers ?? []).flatMap(({ taxRates = [] }) =>
-      taxRates.map(({ externalTaxRateId }) => externalTaxRateId),
+    const taxRateIds = setup.flatMap((plan) =>
+      plan.provider === SubscriptionProvider.STRIPE
+        ? (plan.taxRates ?? []).map(({ externalTaxRateId }) => externalTaxRateId)
+        : [],
     );
     const rows = await db.select().from(taxRates);
     insertedTaxRateIds.push(
@@ -164,16 +162,24 @@ describe("SubscriptionBootstrapService", () => {
     expect(insertedTaxRateIds).toHaveLength(1);
   });
 
-  test("makes the initial plan of the file the initial plan", async () => {
+  test("loads the self plan", async () => {
+    await bootstrap(setupOf());
+
+    const self = await newPlanOf(SubscriptionProvider.SELF);
+
+    expect(self.trialDays).toBe(30);
+  });
+
+  test("makes the self plan the initial plan", async () => {
     const result = await bootstrap(setupOf());
 
     expect(result.status).toBe("success");
 
-    const cloud = await newPlanOf(SubscriptionProvider.STRIPE);
+    const self = await newPlanOf(SubscriptionProvider.SELF);
     const [settings] = await db.select().from(subscriptionSettings);
 
-    expect(settings?.initialPlanId).toBe(cloud.id);
-    expect(settings?.graceDays).toBe(14);
+    expect(settings?.initialPlanId).toBe(self.id);
+    expect(settings?.graceDays).toBe(settingsBefore.graceDays);
   });
 
   test("disables the default self plans", async () => {
@@ -225,8 +231,20 @@ describe("SubscriptionBootstrapService", () => {
     expect(insertedTaxRateIds).toHaveLength(0);
   });
 
-  test("rejects an initial plan that is not one of the plans", async () => {
-    const result = await bootstrap(setupOf({ initialPlan: "unknown" }));
+  test("rejects a file without a self plan", async () => {
+    const result = await bootstrap(
+      setupOf().filter(({ provider }) => provider !== SubscriptionProvider.SELF),
+    );
+
+    expect(result.status).toBe("error");
+    expect(insertedTaxRateIds).toHaveLength(0);
+  });
+
+  test("rejects a file with two self plans", async () => {
+    const result = await bootstrap([
+      ...setupOf(),
+      { provider: SubscriptionProvider.SELF, trialDays: 7 },
+    ]);
 
     expect(result.status).toBe("error");
     expect(insertedTaxRateIds).toHaveLength(0);
