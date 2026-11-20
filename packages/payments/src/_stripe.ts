@@ -13,7 +13,7 @@ import {
 } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
-import { type PaymentEvent, PaymentProvider } from "./_payment-provider";
+import { type CheckoutSessionArgs, type PaymentEvent, PaymentProvider } from "./_payment-provider";
 
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
@@ -149,9 +149,7 @@ export class StripePaymentProvider extends PaymentProvider<
     successUrl,
     cancelUrl,
     externalTaxRateId,
-  }: Payments["Checkout"]["Args"] & {
-    externalTaxRateId: Stripe.TaxRate["id"];
-  }): Promise<Payments["Checkout"]["Result"]> {
+  }: CheckoutSessionArgs): Promise<Payments["Checkout"]["Result"]> {
     // https://docs.stripe.com/payments/accept-a-payment?payment-ui=checkout&ui=stripe-hosted
     const { url } = await this.#stripe.checkout.sessions.create({
       mode: "subscription",

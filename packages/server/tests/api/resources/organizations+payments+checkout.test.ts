@@ -13,11 +13,11 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
-import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { BillingPeriod, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
 import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { assertNonNullish, type Nullable, nonNullish } from "@usenullish/nullish-common";
-import { envAppUrl, envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
+import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
@@ -86,7 +86,7 @@ describe("organization payments checkout", () => {
         "Content-Type": "application/json",
         ...(nonNullish(cookie) && { Cookie: cookie }),
       },
-      body: JSON.stringify({ priceId: PRICE_ID }),
+      body: JSON.stringify({ priceId: PRICE_ID, billingPeriod: BillingPeriod.MONTH }),
     });
   };
 
@@ -159,17 +159,14 @@ describe("organization payments checkout", () => {
     ).toEqual({ url: CHECKOUT_URL });
   });
 
-  test("checks out with the user, the organization, the price and the return urls", async () => {
+  test("checks out with the user, the organization, the price and the billing period", async () => {
     await post({ cookie: admin.cookie });
-
-    const organizationUrl = `${envAppUrl()}/orgs/${organizationId}`;
 
     expect(checkout).toHaveBeenCalledWith({
       userId: admin.id,
       organizationId,
       priceId: PRICE_ID,
-      successUrl: `${organizationUrl}/subscription/success`,
-      cancelUrl: `${organizationUrl}/subscription/plans`,
+      billingPeriod: BillingPeriod.MONTH,
     });
   });
 

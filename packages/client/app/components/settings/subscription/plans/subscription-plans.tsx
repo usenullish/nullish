@@ -6,10 +6,11 @@ import {
   useState,
   ViewTransition,
 } from "react";
+import { useSearchParams } from "react-router";
 import { CheckIcon } from "lucide-react";
 import { isEmptyString, nonNullish, type Nullable, type Option } from "@usenullish/nullish-common";
 import { BillingPeriod } from "@usenullish/nullish-schema/db";
-import type { Api } from "@usenullish/nullish-schema/server";
+import { type Api, ApiSchema, SUBSCRIPTION_BILLING_PARAM } from "@usenullish/nullish-schema/server";
 import { PaymentsCheckoutService } from "~/lib/services/payments+checkout.services";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useCurrencies } from "~/context/contexts/currencies.context";
@@ -33,6 +34,9 @@ type PlanPrice = Api["ExternalPlans"]["Client"]["ExternalPlanPrice"];
 type CustomPlan = Api["CustomPlans"]["Client"]["CustomPlan"];
 type CustomPlanPrice = Api["CustomPlans"]["Client"]["CustomPlanPrice"];
 
+const BillingPeriodSchema =
+  ApiSchema.PaymentsCheckout.CheckoutPaymentsRequestSchema.shape.billingPeriod;
+
 export const SubscriptionPlans = ({
   plans,
   customPlans,
@@ -50,9 +54,28 @@ export const SubscriptionPlans = ({
     ),
   );
 
-  const [billing, setBilling] = useState<Option<BillingPeriod>>(
-    billingPeriods.includes(BillingPeriod.YEAR) ? BillingPeriod.YEAR : billingPeriods[0],
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const billingFromUrl = BillingPeriodSchema.safeParse(
+    searchParams.get(SUBSCRIPTION_BILLING_PARAM),
+  ).data;
+
+  const billing: Option<BillingPeriod> =
+    nonNullish(billingFromUrl) && billingPeriods.includes(billingFromUrl)
+      ? billingFromUrl
+      : billingPeriods.includes(BillingPeriod.YEAR)
+        ? BillingPeriod.YEAR
+        : billingPeriods[0];
+
+  const setBilling = (value: BillingPeriod) =>
+    setSearchParams(
+      (previous) => {
+        const params = new URLSearchParams(previous);
+        params.set(SUBSCRIPTION_BILLING_PARAM, value);
+        return params;
+      },
+      { replace: true, preventScrollReset: true },
+    );
 
   const [pendingPriceId, setPendingPriceId] = useState<Option<PlanPrice["priceId"]>>(undefined);
   const [error, setError] = useState<Nullable<string>>(null);
@@ -69,7 +92,10 @@ export const SubscriptionPlans = ({
     return () => window.removeEventListener("pageshow", onPageShow);
   }, []);
 
-  const checkout = async ({ priceId }: Pick<PlanPrice, "priceId">) => {
+  const checkout = async ({
+    priceId,
+    billingPeriod,
+  }: Pick<PlanPrice, "priceId" | "billingPeriod">) => {
     startTransition(() => {
       setError(null);
       setPendingPriceId(priceId);
@@ -77,7 +103,7 @@ export const SubscriptionPlans = ({
 
     const result = await PaymentsCheckoutService.create().submit({
       orgId: organization.id,
-      checkout: { priceId },
+      checkout: { priceId, billingPeriod },
     });
 
     if (result.status === "error") {
@@ -174,7 +200,7 @@ const PlanCard = ({
   price: PlanPrice;
   admin: boolean;
   pendingPriceId: Option<PlanPrice["priceId"]>;
-  onSubscribe: (args: Pick<PlanPrice, "priceId">) => Promise<void>;
+  onSubscribe: (args: Pick<PlanPrice, "priceId" | "billingPeriod">) => Promise<void>;
 }) => {
   const { i18n } = useI18n();
 
@@ -196,7 +222,9 @@ const PlanCard = ({
             type="button"
             className="w-full"
             disabled={nonNullish(pendingPriceId)}
-            onClick={() => void onSubscribe({ priceId: price.priceId })}
+            onClick={() =>
+              void onSubscribe({ priceId: price.priceId, billingPeriod: price.billingPeriod })
+            }
           >
             {i18n.subscription.action.subscribe}
           </Button>
