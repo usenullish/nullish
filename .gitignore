@@ -33,3 +33,6 @@ tmp
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# stripe (dev)
+.env.stripe

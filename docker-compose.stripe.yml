@@ -1,0 +1,11 @@
+services:
+  stripe:
+    image: stripe/stripe-cli:v1.55.13@sha256:92b1493f3dce8cd95db0c7fd572749c5e18aea1cc33a6f73ff870100aa32f0ee
+    restart: unless-stopped
+    command:
+      - listen
+      - --api-key
+      - ${NULLISH_STRIPE_SECRET_KEY:?Set NULLISH_STRIPE_SECRET_KEY in .env.stripe}
+      - --all-snapshot
+      - --forward-to
+      - host.docker.internal:3000/payments/stripe/webhook
