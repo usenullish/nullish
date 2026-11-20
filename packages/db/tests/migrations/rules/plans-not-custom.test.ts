@@ -37,14 +37,8 @@ describe("check_plan_not_custom", () => {
     assertNonNullish(settings);
     initialPlanId = settings.initialPlanId;
 
-    customPlanId = await insertPlan({
-      provider: SubscriptionProvider.CUSTOM,
-      externalProductId: `instance_${crypto.randomUUID()}`,
-    });
-    stripePlanId = await insertPlan({
-      provider: SubscriptionProvider.STRIPE,
-      externalProductId: `prod_${crypto.randomUUID()}`,
-    });
+    customPlanId = await insertPlan({ provider: SubscriptionProvider.CUSTOM });
+    stripePlanId = await insertPlan({ provider: SubscriptionProvider.STRIPE });
     selfPlanId = await insertPlan({ provider: SubscriptionProvider.SELF, trialDays: 30 });
   });
 

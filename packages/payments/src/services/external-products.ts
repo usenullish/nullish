@@ -2,22 +2,22 @@ import type { Result } from "@usenullish/nullish-common";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
-import { listPlansWithProduct } from "./_helpers/plans";
+import { listExternalProducts } from "./_helpers/external-products";
 
-type Plan = Records["Subscription"]["Plans"]["Select"];
+type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
-export class PlansService extends AdminServiceContext {
+export class ExternalProductsService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
     super(args);
   }
 
-  static create(args: { db: PostgresDbInstance }): PlansService {
+  static create(args: { db: PostgresDbInstance }): ExternalProductsService {
     return new this(args);
   }
 
-  listPlans(): Promise<Result<Plan[]>> {
+  list(): Promise<Result<ExternalProduct[]>> {
     return this._withDbContext(async (tx) => {
-      return await listPlansWithProduct({ tx });
+      return await listExternalProducts({ tx });
     });
   }
 }

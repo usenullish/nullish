@@ -10,9 +10,9 @@ import { withDbContext } from "./_db";
 import { CheckoutService } from "./services/checkout";
 import { PaymentInvoiceService } from "./services/payment-invoice";
 import { PaymentSubscriptionService } from "./services/payment-subscription";
-import { PlansService } from "./services/plans";
+import { ExternalProductsService } from "./services/external-products";
 
-type Plan = Records["Subscription"]["Plans"]["Select"];
+type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 type ExternalTaxRateId =
   Records["Subscription"]["SubscriptionTaxRates"]["Select"]["externalTaxRateId"];
 
@@ -31,11 +31,11 @@ export abstract class PaymentProvider<
   protected constructor() {}
 
   async listPlans(): Promise<Payments["Plan"][]> {
-    // 1. Load the plans that are linked with a product
+    // 1. Load the products linked with a plan
     const result = await withDbContext(async (dbContext) => {
-      return await PlansService.create({
+      return await ExternalProductsService.create({
         db: dbContext,
-      }).listPlans();
+      }).list();
     });
 
     if (result.status === "error") {
@@ -43,7 +43,7 @@ export abstract class PaymentProvider<
     }
 
     // 2. Load the plans of those products with the provider ("from Stripe")
-    const plans = await this.loadPlans({ plans: result.result });
+    const plans = await this.loadPlans({ products: result.result });
 
     return PaymentsSchema.PaymentPlansSchema.parse(plans);
   }
@@ -180,7 +180,7 @@ export abstract class PaymentProvider<
     args: Pick<Payments["Checkout"]["Args"], "priceId">,
   ): Promise<CheckoutProduct>;
 
-  protected abstract loadPlans(args: { plans: Plan[] }): Promise<Payments["Plan"][]>;
+  protected abstract loadPlans(args: { products: ExternalProduct[] }): Promise<Payments["Plan"][]>;
 
   protected abstract createCheckoutSession(
     args: Payments["Checkout"]["Args"] & { externalTaxRateId: ExternalTaxRateId },

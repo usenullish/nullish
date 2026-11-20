@@ -513,12 +513,9 @@ describe("StripePaymentProvider", () => {
   describe("listPlans", () => {
     const planOf = ({ externalProductId }: { externalProductId: string }) => ({
       id: crypto.randomUUID(),
-      trialDays: null,
-      expiresAt: null,
+      planId: crypto.randomUUID(),
       provider: SubscriptionProvider.STRIPE,
       externalProductId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     const priceOf = ({

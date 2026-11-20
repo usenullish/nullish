@@ -14,6 +14,7 @@ import {
 } from "../../../admin/tests/_test-utils";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
+const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
@@ -58,9 +59,11 @@ describe("CheckoutService", () => {
       .insert(memberships)
       .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
 
-    const [plan] = await db.insert(plans).values({ provider, externalProductId }).returning();
+    const [plan] = await db.insert(plans).values({ provider }).returning();
     assertNonNullish(plan);
     planId = plan.id;
+
+    await db.insert(externalProducts).values({ planId, provider, externalProductId });
 
     await db.delete(taxRates);
     await db.insert(taxRates).values([
