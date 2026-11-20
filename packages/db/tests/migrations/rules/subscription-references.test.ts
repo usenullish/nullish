@@ -41,13 +41,15 @@ const subscriptionIdOf = async (organizationId: string): Promise<string> => {
 
 const referenceOf = ({
   subscriptionId,
+  provider = SubscriptionProvider.STRIPE,
   externalSubscriptionId = `sub_${crypto.randomUUID()}`,
 }: {
   subscriptionId: string;
+  provider?: SubscriptionProvider;
   externalSubscriptionId?: string;
 }) => ({
   subscriptionId,
-  provider: SubscriptionProvider.STRIPE,
+  provider,
   externalCustomerId: `cus_${crypto.randomUUID()}`,
   externalSubscriptionId,
 });
@@ -85,6 +87,24 @@ describe("subscription references", () => {
     ).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("permission denied");
+  });
+
+  test("rejects a reference of a self provider", async () => {
+    const error = await db
+      .insert(references)
+      .values(referenceOf({ subscriptionId, provider: SubscriptionProvider.SELF }))
+      .catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("subscription_references_provider_third_party");
+  });
+
+  test("rejects a reference of a custom provider", async () => {
+    const error = await db
+      .insert(references)
+      .values(referenceOf({ subscriptionId, provider: SubscriptionProvider.CUSTOM }))
+      .catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("subscription_references_provider_third_party");
   });
 
   test("rejects a second reference for a subscription", async () => {

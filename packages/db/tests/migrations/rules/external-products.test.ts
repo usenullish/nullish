@@ -64,7 +64,7 @@ describe("external products", () => {
       .values(productOf({ planId, provider: SubscriptionProvider.SELF }))
       .catch((e: unknown) => e);
 
-    expect(causeMessage(error)).toContain("external_products_provider_stripe");
+    expect(causeMessage(error)).toContain("external_products_provider_third_party");
   });
 
   test("rejects a product on a custom plan", async () => {
@@ -75,7 +75,7 @@ describe("external products", () => {
       .values(productOf({ planId, provider: SubscriptionProvider.CUSTOM }))
       .catch((e: unknown) => e);
 
-    expect(causeMessage(error)).toContain("external_products_provider_stripe");
+    expect(causeMessage(error)).toContain("external_products_provider_third_party");
   });
 
   test("rejects a stripe product on a plan of another provider", async () => {
