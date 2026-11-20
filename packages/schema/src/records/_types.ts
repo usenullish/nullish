@@ -234,6 +234,22 @@ interface Records {
         typeof RecordsSchema.Subscription.ExternalProductsSchema.InsertExternalProductsSchema
       >;
     };
+    CustomProducts: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.CustomProductsSchema.SelectCustomProductsSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.CustomProductsSchema.InsertCustomProductsSchema
+      >;
+    };
+    CustomPrices: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.CustomPricesSchema.SelectCustomPricesSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.CustomPricesSchema.InsertCustomPricesSchema
+      >;
+    };
     SubscriptionSettings: {
       Select: z.infer<
         typeof RecordsSchema.Subscription.SubscriptionSettingsSchema.SelectSubscriptionSettingsSchema
