@@ -984,14 +984,28 @@ interface Api {
       >;
     };
   };
-  PaymentsPlans: {
+  ExternalPlans: {
     Server: {
-      GetPlansResponse: z.input<typeof ApiSchema.PaymentsPlans.GetPlansResponseSchema>;
+      GetExternalPlansResponse: z.input<
+        typeof ApiSchema.ExternalPlans.GetExternalPlansResponseSchema
+      >;
     };
     Client: {
-      Plan: z.infer<typeof ApiSchema.PaymentsPlans.PlanSchema>;
-      PlanPrice: z.infer<typeof ApiSchema.PaymentsPlans.PlanPriceSchema>;
-      GetPlansResponse: z.infer<typeof ApiSchema.PaymentsPlans.GetPlansResponseSchema>;
+      ExternalPlan: z.infer<typeof ApiSchema.ExternalPlans.ExternalPlanSchema>;
+      ExternalPlanPrice: z.infer<typeof ApiSchema.ExternalPlans.ExternalPlanPriceSchema>;
+      GetExternalPlansResponse: z.infer<
+        typeof ApiSchema.ExternalPlans.GetExternalPlansResponseSchema
+      >;
+    };
+  };
+  CustomPlans: {
+    Server: {
+      GetCustomPlansResponse: z.input<typeof ApiSchema.CustomPlans.GetCustomPlansResponseSchema>;
+    };
+    Client: {
+      CustomPlan: z.infer<typeof ApiSchema.CustomPlans.CustomPlanSchema>;
+      CustomPlanPrice: z.infer<typeof ApiSchema.CustomPlans.CustomPlanPriceSchema>;
+      GetCustomPlansResponse: z.infer<typeof ApiSchema.CustomPlans.GetCustomPlansResponseSchema>;
     };
   };
 }

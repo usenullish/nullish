@@ -24,7 +24,7 @@ import { loadDbMiddleware } from "../../../src/api/middlewares/db";
 import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { loadWorkersMiddleware } from "../../../src/api/middlewares/workers";
-import { PaymentsPlansHandlers } from "../../../src/api/resources/_payments+plans";
+import { ExternalPlansHandlers } from "../../../src/api/resources/_subscription+external-plans";
 import { resetDb } from "../../../../engine/tests/_test-utils";
 
 const PLANS = [
@@ -47,7 +47,7 @@ const PLANS = [
   },
 ];
 
-describe("payments plans", () => {
+describe("subscription external plans", () => {
   let instance: DbInstance;
   let db: PostgresDbInstance;
   let auth: ReturnType<typeof createAuth>;
@@ -94,9 +94,9 @@ describe("payments plans", () => {
     );
     app.use("*", loadCallerMiddleware());
 
-    PaymentsPlansHandlers.create({ app }).register();
+    ExternalPlansHandlers.create({ app }).register();
 
-    return await app.request("/payments/plans", {
+    return await app.request("/subscription/external-plans", {
       headers: {
         ...(nonNullish(cookie) && { Cookie: cookie }),
       },
@@ -159,7 +159,8 @@ describe("payments plans", () => {
 
     expect(response.status).toBe(200);
     expect(
-      ApiSchema.PaymentsPlans.GetPlansResponseSchema.parse(await response.json()).plans,
+      ApiSchema.ExternalPlans.GetExternalPlansResponseSchema.parse(await response.json())
+        .externalPlans,
     ).toEqual(PLANS);
   });
 
