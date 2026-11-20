@@ -189,7 +189,9 @@
     "team": "Team",
     "members": "Membri",
     "invitations": "Inviti",
-    "migrations": "Migrazioni"
+    "migrations": "Migrazioni",
+    "subscription": "Abbonamento",
+    "plans": "Piani"
   },
   "greeting": {
     "morning": "Buongiorno, {name}",
@@ -264,7 +266,9 @@
       "create": "Crea l'organizzazione",
       "lets_go": "Andiamo!",
       "delete": "Elimina organizzazione",
-      "back_to_organizations": "Torna alle mie organizzazioni"
+      "back_to_organizations": "Torna alle mie organizzazioni",
+      "see_plans": "Vedi i piani",
+      "choose_plan": "Scegli un piano"
     },
     "state": {
       "creating": "Creazione…"
@@ -298,7 +302,9 @@
       "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}.",
       "locked_title": "{name} è bloccata",
       "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora. Non si perde nulla.",
-      "grace": "L'ultimo pagamento non è andato a buon fine. Questa organizzazione sarà bloccata il {date}."
+      "grace": "L'ultimo pagamento non è andato a buon fine. Questa organizzazione sarà bloccata il {date}.",
+      "trial": "Il periodo di prova termina il {date}.",
+      "trial_keep_going": " per continuare."
     },
     "toast": {
       "create_error": "Non è stato possibile creare l'organizzazione.",
@@ -1423,5 +1429,77 @@
     "test": "Test",
     "demo": "Demo",
     "staging": "Staging"
+  },
+  "subscription": {
+    "action": {
+      "subscribe": "Abbonati",
+      "get_in_touch": "Scrivici",
+      "request_instance": "Richiedi la mia istanza",
+      "continue": "Continua",
+      "back_to_organization": "Torna all'organizzazione"
+    },
+    "step": {
+      "plan": "Piano",
+      "payment": "Pagamento",
+      "done": "Fatto"
+    },
+    "state": {
+      "activating": "Attivazione…"
+    },
+    "label": {
+      "billing": "Fatturazione"
+    },
+    "billing": {
+      "day": "Giornaliero",
+      "week": "Settimanale",
+      "month": "Mensile",
+      "year": "Annuale"
+    },
+    "billing_period": {
+      "day": "/ giorno",
+      "week": "/ settimana",
+      "month": "/ mese",
+      "year": "/ anno"
+    },
+    "cloud_features": {
+      "accounting": "Contabilità",
+      "invoices": "Fatture",
+      "banking": "Banca",
+      "vat": "IVA",
+      "ai_assistant": "Assistente IA",
+      "mcp_api": "MCP + API",
+      "organizations": "1 organizzazione",
+      "users": "3 utenti"
+    },
+    "instance_features": {
+      "cloud": "Tutto di Cloud",
+      "server": "Il tuo server in Svizzera",
+      "domain": "Dominio personalizzato",
+      "support": "Supporto prioritario",
+      "organizations": "Fino a 10 organizzazioni",
+      "users": "Fino a 100 utenti"
+    },
+    "on_prem_features": {
+      "cloud": "Tutto di Cloud",
+      "infrastructure": "L’infrastruttura della tua azienda",
+      "setup": "Installazione e configurazione",
+      "maintenance": "Aggiornamenti e manutenzione",
+      "development": "Sviluppi su misura"
+    },
+    "text": {
+      "plans_description": "Perché {name} vada avanti, scegli il piano che fa per te.",
+      "admins_only": "Solo gli admin dell'organizzazione possono scegliere un piano.",
+      "no_plans": "Nessun piano disponibile per ora.",
+      "vat_excluded": "Tutti i prezzi IVA esclusa.",
+      "per_month_billed_yearly": "/ mese, fatturato annualmente",
+      "cloud_description": "Per freelance e piccole imprese",
+      "instance_description": "Per più sovranità e prestazioni",
+      "on_prem_description": "Per gestire la tua contabilità in casa",
+      "custom_pricing": "Prezzo su misura",
+      "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
+      "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
+      "success_ready": "Tutto pronto, grazie!",
+      "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."
+    }
   }
 }

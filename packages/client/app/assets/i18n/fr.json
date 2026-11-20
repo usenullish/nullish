@@ -189,7 +189,9 @@
     "team": "Équipe",
     "members": "Membres",
     "invitations": "Invitations",
-    "migrations": "Migrations"
+    "migrations": "Migrations",
+    "subscription": "Abonnement",
+    "plans": "Offres"
   },
   "greeting": {
     "morning": "Bonjour, {name}",
@@ -264,7 +266,9 @@
       "create": "Créer une organisation",
       "lets_go": "C'est parti !",
       "delete": "Supprimer l'organisation",
-      "back_to_organizations": "Retour à mes organisations"
+      "back_to_organizations": "Retour à mes organisations",
+      "see_plans": "Voir les offres",
+      "choose_plan": "Choisis une offre"
     },
     "state": {
       "creating": "Création…"
@@ -298,7 +302,9 @@
       "deleted": "Cette organisation a été marquée comme supprimée le {date}.",
       "locked_title": "{name} est verrouillée",
       "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment. Rien n'est perdu.",
-      "grace": "Le dernier paiement a échoué. Cette organisation sera verrouillée le {date}."
+      "grace": "Le dernier paiement a échoué. Cette organisation sera verrouillée le {date}.",
+      "trial": "La période d'essai se termine le {date}.",
+      "trial_keep_going": " pour continuer."
     },
     "toast": {
       "create_error": "L'organisation n'a pas pu être créée.",
@@ -1423,5 +1429,77 @@
     "test": "Test",
     "demo": "Démo",
     "staging": "Préproduction"
+  },
+  "subscription": {
+    "action": {
+      "subscribe": "S'abonner",
+      "get_in_touch": "Écris-nous",
+      "request_instance": "Demander mon instance",
+      "continue": "Continuer",
+      "back_to_organization": "Retour à l'organisation"
+    },
+    "step": {
+      "plan": "Offre",
+      "payment": "Paiement",
+      "done": "Terminé"
+    },
+    "state": {
+      "activating": "Activation…"
+    },
+    "label": {
+      "billing": "Facturation"
+    },
+    "billing": {
+      "day": "Quotidien",
+      "week": "Hebdomadaire",
+      "month": "Mensuel",
+      "year": "Annuel"
+    },
+    "billing_period": {
+      "day": "/ jour",
+      "week": "/ semaine",
+      "month": "/ mois",
+      "year": "/ an"
+    },
+    "cloud_features": {
+      "accounting": "Comptabilité",
+      "invoices": "Factures",
+      "banking": "Banque",
+      "vat": "TVA",
+      "ai_assistant": "Assistant IA",
+      "mcp_api": "MCP + API",
+      "organizations": "1 organisation",
+      "users": "3 utilisateurs"
+    },
+    "instance_features": {
+      "cloud": "Tout ce qu’offre Cloud",
+      "server": "Ton propre serveur en Suisse",
+      "domain": "Domaine personnalisé",
+      "support": "Support prioritaire",
+      "organizations": "Jusqu’à 10 organisations",
+      "users": "Jusqu’à 100 utilisateurs"
+    },
+    "on_prem_features": {
+      "cloud": "Tout ce qu’offre Cloud",
+      "infrastructure": "L’infrastructure de ton entreprise",
+      "setup": "Installation et configuration",
+      "maintenance": "Mises à jour et maintenance",
+      "development": "Développements sur mesure"
+    },
+    "text": {
+      "plans_description": "Pour que {name} continue sur sa lancée, choisis le plan qui te convient.",
+      "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
+      "no_plans": "Aucune offre disponible pour le moment.",
+      "vat_excluded": "Prix hors TVA.",
+      "per_month_billed_yearly": "/ mois, facturé annuellement",
+      "cloud_description": "Pour les indépendants et les petites entreprises",
+      "instance_description": "Pour plus de souveraineté et de performance",
+      "on_prem_description": "Pour tenir ta compta en interne",
+      "custom_pricing": "Tarif sur mesure",
+      "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
+      "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
+      "success_ready": "Tout est prêt, merci !",
+      "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
+    }
   }
 }
