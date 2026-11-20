@@ -1,9 +1,9 @@
 import { assertArrayAtMostOne, type Option, type Result } from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import { selectMany, updateMany } from "@usenullish/nullish-db";
-import { eq } from "drizzle-orm";
+import { selectMany } from "@usenullish/nullish-db";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
+import { updateSubscriptionSettings } from "../_helpers/subscription-settings";
 
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 
@@ -45,19 +45,7 @@ export class SubscriptionSettingsService extends AdminServiceContext {
           settings,
         );
 
-      const rows = await updateMany({
-        tx,
-        table: subscriptionSettings,
-        values,
-        returningSchema:
-          RecordsSchema.Subscription.SubscriptionSettingsSchema.SelectSubscriptionSettingsSchema,
-        where: eq(subscriptionSettings.id, 1),
-      });
-
-      assertArrayAtMostOne(rows);
-
-      const [row] = rows;
-      return row;
+      return await updateSubscriptionSettings({ tx, settings: values });
     });
   }
 }
