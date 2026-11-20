@@ -1486,7 +1486,7 @@
       "development": "Individuelle Entwicklung"
     },
     "text": {
-      "plans_description": "Wähle einen Plan für {name}.",
+      "plans_description": "Damit es mit {name} weitergeht: Wähl den Plan, der zu dir passt.",
       "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
       "no_plans": "Im Moment ist kein Plan verfügbar.",
       "vat_excluded": "Alle Preise exkl. MWST.",

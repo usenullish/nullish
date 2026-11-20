@@ -1480,13 +1480,13 @@
     },
     "on_prem_features": {
       "cloud": "Everything in Cloud",
-      "infrastructure": "Your own company infrastructure",
+      "infrastructure": "Your company infrastructure",
       "setup": "Installation and setup",
       "maintenance": "Updates and maintenance",
       "development": "Custom development"
     },
     "text": {
-      "plans_description": "Pick a plan for {name}.",
+      "plans_description": "Keep {name} going: pick the plan that suits you.",
       "admins_only": "Only the admins of the organization can pick a plan.",
       "no_plans": "No plan available for now.",
       "vat_excluded": "All prices excluding VAT.",

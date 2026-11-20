@@ -1486,7 +1486,7 @@
       "development": "Développements sur mesure"
     },
     "text": {
-      "plans_description": "Choisis une offre pour {name}.",
+      "plans_description": "Pour que {name} continue sur sa lancée, choisis le plan qui te convient.",
       "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
       "no_plans": "Aucune offre disponible pour le moment.",
       "vat_excluded": "Prix hors TVA.",
