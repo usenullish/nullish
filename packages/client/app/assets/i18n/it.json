@@ -1435,6 +1435,7 @@
       "subscribe": "Abbonati",
       "get_in_touch": "Scrivici",
       "request_instance": "Richiedi la mia istanza",
+      "continue": "Continua",
       "back_to_organization": "Torna all'organizzazione"
     },
     "step": {
@@ -1497,6 +1498,7 @@
       "custom_pricing": "Prezzo su misura",
       "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
       "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
+      "success_ready": "Tutto pronto, grazie!",
       "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."
     }
   }

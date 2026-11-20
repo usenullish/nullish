@@ -1,5 +1,6 @@
 import { startTransition, useEffect, useRef, useState, ViewTransition } from "react";
-import { Link, Navigate, useRevalidator } from "react-router";
+import { Link, useRevalidator } from "react-router";
+import { Check } from "lucide-react";
 import type { Option } from "@usenullish/nullish-common";
 import { SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import type { Api } from "@usenullish/nullish-schema/server";
@@ -15,11 +16,6 @@ type SubscriptionSummary = Api["SubscriptionSummaries"]["Client"]["SubscriptionS
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 30;
 
-const ACTIVATED_STATUSES: SubscriptionStatus[] = [
-  SubscriptionStatus.ACTIVE,
-  SubscriptionStatus.TRIALING,
-];
-
 export const SubscriptionSuccess = ({
   subscriptionSummary,
 }: {
@@ -33,9 +29,7 @@ export const SubscriptionSuccess = ({
   const timeout = useRef<Option<ReturnType<typeof setTimeout>>>(undefined);
   const attempts = useRef(0);
 
-  const activated =
-    subscriptionSummary !== undefined &&
-    ACTIVATED_STATUSES.includes(subscriptionSummary.subscription.status);
+  const activated = subscriptionSummary?.subscription.status === SubscriptionStatus.ACTIVE;
 
   useEffect(() => {
     if (activated) {
@@ -58,7 +52,20 @@ export const SubscriptionSuccess = ({
   const organizationPath = OrganizationPath.create({ organizationId: organization.id }).to();
 
   if (activated) {
-    return <Navigate to={organizationPath} replace />;
+    return (
+      <SubscriptionStep closeTo={organizationPath} current="done">
+        <div className="flex flex-1 flex-col items-center justify-center gap-6 pb-24 text-center">
+          <h2 className="flex items-center gap-2 text-sm font-semibold">
+            {i18n.subscription.text.success_ready}
+            <Check className="size-4" />
+          </h2>
+
+          <Button nativeButton={false} render={<Link to={organizationPath} />}>
+            {i18n.subscription.action.continue}
+          </Button>
+        </div>
+      </SubscriptionStep>
+    );
   }
 
   return (

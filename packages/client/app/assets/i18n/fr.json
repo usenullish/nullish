@@ -1435,6 +1435,7 @@
       "subscribe": "S'abonner",
       "get_in_touch": "Écris-nous",
       "request_instance": "Demander mon instance",
+      "continue": "Continuer",
       "back_to_organization": "Retour à l'organisation"
     },
     "step": {
@@ -1497,6 +1498,7 @@
       "custom_pricing": "Tarif sur mesure",
       "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
       "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
+      "success_ready": "Tout est prêt, merci !",
       "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
     }
   }

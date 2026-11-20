@@ -1435,6 +1435,7 @@
       "subscribe": "Subscribe",
       "get_in_touch": "Get in touch",
       "request_instance": "Request my instance",
+      "continue": "Continue",
       "back_to_organization": "Back to the organization"
     },
     "step": {
@@ -1497,6 +1498,7 @@
       "custom_pricing": "Custom pricing",
       "checkout_error": "The payment page could not be opened.",
       "success_description": "Your subscription is being activated, it only takes a few seconds.",
+      "success_ready": "All set, thanks!",
       "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed."
     }
   }

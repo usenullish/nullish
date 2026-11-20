@@ -131,7 +131,6 @@ export const NAVIGATION: NavigationGroup[] = [
     ],
   },
   TEAM_NAVIGATION_GROUP,
-  SUBSCRIPTION_NAVIGATION_GROUP,
   {
     label: "settings",
     icon: Settings,
@@ -151,6 +150,7 @@ export const NAVIGATION: NavigationGroup[] = [
       { title: "vat", path: "/accounting/vat/settings", match: "/accounting/vat" },
     ],
   },
+  SUBSCRIPTION_NAVIGATION_GROUP,
   MIGRATIONS_NAVIGATION_GROUP,
 ];
 

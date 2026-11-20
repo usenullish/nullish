@@ -1290,6 +1290,7 @@ const I18nSubscriptionSchema = z.strictObject({
     subscribe: z.string(),
     get_in_touch: z.string(),
     request_instance: z.string(),
+    continue: z.string(),
     back_to_organization: z.string(),
   }),
   step: z.strictObject({ plan: z.string(), payment: z.string(), done: z.string() }),
@@ -1344,6 +1345,7 @@ const I18nSubscriptionSchema = z.strictObject({
     custom_pricing: z.string(),
     checkout_error: z.string(),
     success_description: z.string(),
+    success_ready: z.string(),
     success_timeout: z.string(),
   }),
 });
