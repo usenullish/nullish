@@ -34,7 +34,12 @@ describe("ExternalProductsService", () => {
     const externalProductId = `prod_${crypto.randomUUID()}`;
 
     const result = await service.insert({
-      externalProduct: { planId, provider: SubscriptionProvider.STRIPE, externalProductId },
+      externalProduct: {
+        planId,
+        provider: SubscriptionProvider.STRIPE,
+        externalProductId,
+        name: "Cloud",
+      },
     });
 
     if (result.status === "error") {
@@ -44,6 +49,7 @@ describe("ExternalProductsService", () => {
 
     expect(result.result.planId).toBe(planId);
     expect(result.result.externalProductId).toBe(externalProductId);
+    expect(result.result.name).toBe("Cloud");
   });
 
   test("rejects a product on a self plan", async () => {
@@ -54,6 +60,7 @@ describe("ExternalProductsService", () => {
         planId,
         provider: SubscriptionProvider.STRIPE,
         externalProductId: `prod_${crypto.randomUUID()}`,
+        name: "Cloud",
       },
     });
 
@@ -65,7 +72,12 @@ describe("ExternalProductsService", () => {
     const externalProductId = `prod_${crypto.randomUUID()}`;
 
     await service.insert({
-      externalProduct: { planId, provider: SubscriptionProvider.STRIPE, externalProductId },
+      externalProduct: {
+        planId,
+        provider: SubscriptionProvider.STRIPE,
+        externalProductId,
+        name: "Cloud",
+      },
     });
 
     const result = await service.list();
@@ -86,6 +98,7 @@ describe("ExternalProductsService", () => {
         planId,
         provider: SubscriptionProvider.STRIPE,
         externalProductId: `prod_${crypto.randomUUID()}`,
+        name: "Cloud",
       },
     });
 

@@ -17,6 +17,7 @@
   {
     "provider": "stripe",
     "externalProductId": "prod_VfEEsXNtixb0JX",
+    "name": "Cloud",
     "taxRates": [
       {
         "externalTaxRateId": "txr_1UdTNc2dZiHhTnyYJPdhsYgK",

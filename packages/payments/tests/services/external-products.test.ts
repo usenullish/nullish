@@ -29,6 +29,7 @@ describe("ExternalProductsService", () => {
       planId: withProductId,
       provider: SubscriptionProvider.STRIPE,
       externalProductId,
+      name: "Cloud",
     });
 
     const [withoutProduct] = await db

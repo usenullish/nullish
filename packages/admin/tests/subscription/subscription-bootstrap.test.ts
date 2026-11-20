@@ -44,6 +44,7 @@ describe("SubscriptionBootstrapService", () => {
       provider: SubscriptionProvider.STRIPE,
       trialDays: 14,
       externalProductId,
+      name: "Cloud",
       taxRates: [
         {
           externalTaxRateId: `txr_${crypto.randomUUID()}`,
@@ -134,7 +135,9 @@ describe("SubscriptionBootstrapService", () => {
       .from(externalProducts)
       .where(eq(externalProducts.planId, cloud.id));
 
-    expect(external.map((product) => product.externalProductId)).toEqual([externalProductId]);
+    expect(external.map(({ externalProductId, name }) => [externalProductId, name])).toEqual([
+      [externalProductId, "Cloud"],
+    ]);
 
     const [product] = await db
       .select()

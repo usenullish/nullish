@@ -32,7 +32,7 @@ describe("external products", () => {
     planId: string;
     provider?: SubscriptionProvider;
     externalProductId?: string;
-  }) => ({ planId, provider, externalProductId });
+  }) => ({ planId, provider, externalProductId, name: "Cloud" });
 
   beforeAll(async () => {
     await resetDb(db);

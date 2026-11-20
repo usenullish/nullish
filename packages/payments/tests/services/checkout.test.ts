@@ -63,7 +63,9 @@ describe("CheckoutService", () => {
     assertNonNullish(plan);
     planId = plan.id;
 
-    await db.insert(externalProducts).values({ planId, provider, externalProductId });
+    await db
+      .insert(externalProducts)
+      .values({ planId, provider, externalProductId, name: "Cloud" });
 
     await db.delete(taxRates);
     await db.insert(taxRates).values([
