@@ -8,7 +8,7 @@ import { NonNullishOrganizationContext } from "~/context/contexts/organization.c
 import { ExternalPlansServer } from "~/context/server/subscription+external-plans.server";
 import { CustomPlansServer } from "~/context/server/subscription+custom-plans.server";
 import { SettingsCache } from "~/context/caches/settings.cache";
-import { OrganizationPath } from "~/navigation";
+import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
@@ -19,7 +19,9 @@ export const loader = async (args: Route.LoaderArgs) => {
     const organizationId = args.params["org-id"];
 
     throw redirect(
-      isNullish(organizationId) ? "/orgs" : OrganizationPath.create({ organizationId }).to(),
+      isNullish(organizationId)
+        ? UnscopedPath.create().toOrganizations()
+        : OrganizationPath.create({ organizationId }).to(),
     );
   }
 
@@ -39,7 +41,7 @@ const SubscriptionPlansPage = ({ params, loaderData }: Route.ComponentProps) => 
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   return (

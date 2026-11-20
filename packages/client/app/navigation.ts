@@ -266,6 +266,10 @@ export class UnscopedPath {
   toConversation({ conversationId }: { conversationId: ConversationId }): string {
     return this.to({ path: `/conversations/${conversationId}` });
   }
+
+  toOrganizations(): string {
+    return this.to({ path: "/orgs" });
+  }
 }
 
 export class InvitationPath {

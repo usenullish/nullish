@@ -3,12 +3,16 @@ import { WizardLayout } from "~/components/layout/wizard-layout";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { SetupProgress } from "~/components/settings/organizations/setup/setup-progress";
 import { SETUP_STEPS } from "~/components/settings/organizations/setup/setup.hooks";
+import { UnscopedPath } from "~/navigation";
 
 export const OrgsNewPage = () => {
   const { i18n } = useI18n();
 
   return (
-    <WizardLayout title={i18n.organizations.text.new} closeTo="/orgs">
+    <WizardLayout
+      title={i18n.organizations.text.new}
+      closeTo={UnscopedPath.create().toOrganizations()}
+    >
       <SetupProgress current="organization" steps={SETUP_STEPS} />
 
       <p className="text-xs text-foreground">{i18n.organizations.text.intro}</p>

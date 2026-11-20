@@ -7,7 +7,7 @@ import { MigrationSource } from "~/components/settings/migrations/wizard/migrati
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { useCanWrite } from "~/context/hooks/memberships.hooks";
-import { OrganizationPath } from "~/navigation";
+import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
 // /orgs/:orgId/migrations/new
@@ -16,7 +16,7 @@ const NewMigrationPage = ({ params }: Route.ComponentProps) => {
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   return (

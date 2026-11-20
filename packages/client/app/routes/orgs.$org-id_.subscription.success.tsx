@@ -5,6 +5,7 @@ import { SubscriptionSuccess } from "~/components/settings/subscription/success/
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { SubscriptionSummariesServer } from "~/context/server/subscription-summaries.server";
+import { UnscopedPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
   return await SubscriptionSummariesServer.create().listAll(args);
@@ -17,7 +18,7 @@ const SubscriptionSuccessPage = ({ params, loaderData }: Route.ComponentProps) =
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   const [subscriptionSummary] = loaderData?.subscriptionSummaries ?? [];

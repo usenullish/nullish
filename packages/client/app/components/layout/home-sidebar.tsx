@@ -13,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "~/ui/components/sidebar";
-import { OrganizationPath } from "~/navigation";
+import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { Logo, LogoText } from "~/components/core/logo";
 import { UserMenu } from "./user-menu";
 import { useI18n } from "~/kit/i18n/i18n.context";
@@ -27,7 +27,10 @@ export const HomeSidebar = () => {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<Link to="/orgs" />}>
+            <SidebarMenuButton
+              size="lg"
+              render={<Link to={UnscopedPath.create().toOrganizations()} />}
+            >
               <span className="relative flex h-8 w-full items-center">
                 <LogoText className="h-4! w-auto! transition-opacity duration-200 ease-linear group-data-[collapsible=icon]:opacity-0" />
                 <Logo
