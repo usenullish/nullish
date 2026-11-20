@@ -1,7 +1,13 @@
-import { assertNonNullish, type Result } from "@usenullish/nullish-common";
+import { asc, eq } from "drizzle-orm";
+import {
+  assertArrayAtMostOne,
+  assertNonNullish,
+  type Option,
+  type Result,
+} from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import { insertMany } from "@usenullish/nullish-db";
+import { deleteMany, insertMany, selectMany } from "@usenullish/nullish-db";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
 
 const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
@@ -15,6 +21,17 @@ export class ExternalProductsService extends AdminServiceContext {
 
   static create(args: { db: PostgresDbInstance }): ExternalProductsService {
     return new this(args);
+  }
+
+  list(): Promise<Result<ExternalProduct[]>> {
+    return this._withDbContext((tx) =>
+      selectMany({
+        tx,
+        table: externalProducts,
+        schema: RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema,
+        orderBy: [asc(externalProducts.provider), asc(externalProducts.externalProductId)],
+      }),
+    );
   }
 
   insert({
@@ -38,6 +55,27 @@ export class ExternalProductsService extends AdminServiceContext {
 
       assertNonNullish(row);
 
+      return row;
+    });
+  }
+
+  delete({
+    productId,
+  }: {
+    productId: ExternalProduct["id"];
+  }): Promise<Result<Option<ExternalProduct>>> {
+    return this._withDbContext(async (tx) => {
+      const rows = await deleteMany({
+        tx,
+        table: externalProducts,
+        returningSchema:
+          RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema,
+        where: eq(externalProducts.id, productId),
+      });
+
+      assertArrayAtMostOne(rows);
+
+      const [row] = rows;
       return row;
     });
   }

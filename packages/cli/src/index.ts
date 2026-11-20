@@ -5,7 +5,6 @@ import { help } from "./help/help";
 import { logVersion } from "./commands/version";
 import { helpUser, user } from "./commands/user";
 import { helpOrganization, organization } from "./commands/organization";
-import { plan, helpPlan } from "./commands/plan";
 import { helpSubscription, subscription } from "./commands/subscription";
 
 // https://zod.dev/blog/zod-4-5#zcompile
@@ -38,9 +37,6 @@ export const run = async () => {
       case "user":
         helpUser(args);
         break;
-      case "plan":
-        helpPlan(args);
-        break;
       case "subscription":
         helpSubscription(args);
         break;
@@ -57,9 +53,6 @@ export const run = async () => {
       break;
     case "user":
       await user(args);
-      break;
-    case "plan":
-      await plan(args);
       break;
     case "subscription":
       await subscription(args);

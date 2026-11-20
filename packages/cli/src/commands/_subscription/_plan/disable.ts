@@ -1,12 +1,12 @@
 import { intro, isCancel, log, note, select } from "@clack/prompts";
 import { PlansService } from "@usenullish/nullish-admin/subscription";
 import { isArrayAtLeastOne, isNullish } from "@usenullish/nullish-common";
-import { withDbContext } from "../../db";
-import { lime } from "../../utils/colors";
-import { cancel, exit } from "../../utils/exit";
+import { withDbContext } from "../../../db";
+import { lime } from "../../../utils/colors";
+import { cancel, exit } from "../../../utils/exit";
 import { planLabel, listPlans } from "./_plans";
 
-export const planDisable = async (_args?: string[]) => {
+export const subscriptionPlanDisable = async (_args?: string[]) => {
   console.log();
   intro(lime("nullish"));
 

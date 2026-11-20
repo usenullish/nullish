@@ -4,7 +4,7 @@ import { isNullish } from "@usenullish/nullish-common";
 import { withDbContext } from "../../../db";
 import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
-import { planLabel, listPlans } from "../../_plan/_plans";
+import { planLabel, listPlans } from "../_plan/_plans";
 import { getSubscriptionSettings, settingsLabel } from "./_settings";
 
 export const subscriptionSettingsUpdate = async (_args?: string[]) => {

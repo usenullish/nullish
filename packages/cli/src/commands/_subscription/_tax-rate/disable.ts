@@ -6,7 +6,7 @@ import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
 import { listTaxRates, promptTaxRateDate, taxRateLabel } from "./_tax-rates";
 
-export const subscriptionTaxRateEnd = async (_args?: string[]) => {
+export const subscriptionTaxRateDisable = async (_args?: string[]) => {
   console.log();
   intro(lime("nullish"));
 
@@ -19,7 +19,7 @@ export const subscriptionTaxRateEnd = async (_args?: string[]) => {
     }
 
     const taxRateId = await select({
-      message: "Which tax rate should end?",
+      message: "Which tax rate should be disabled?",
       options: taxRates.map((taxRate) => ({ label: taxRateLabel(taxRate), value: taxRate.id })),
     });
 
@@ -36,7 +36,7 @@ export const subscriptionTaxRateEnd = async (_args?: string[]) => {
 
     if (result.status === "error") {
       exit({
-        msg: `Cannot end the tax rate ${taxRateId}.`,
+        msg: `Cannot disable the tax rate ${taxRateId}.`,
         err: result.err,
       });
     }
@@ -45,6 +45,6 @@ export const subscriptionTaxRateEnd = async (_args?: string[]) => {
       exit({ msg: `The tax rate ${taxRateId} was not found.` });
     }
 
-    note(taxRateLabel(result.result), "Tax rate ended.");
+    note(taxRateLabel(result.result), "Tax rate disabled.");
   });
 };
