@@ -3,23 +3,34 @@ import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { Nullable } from "@usenullish/nullish-common";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
 import type { SendMail } from "@usenullish/nullish-schema/mail";
+import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
+import { ApiSchema } from "@usenullish/nullish-schema/server";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { defineApi } from "../../../src/api";
 
 describe("settings", () => {
   let instance: DbInstance;
 
-  const getSettings = async ({ mail }: { mail: Nullable<SendMail> }) => {
+  const getSettings = async ({
+    mail,
+    payments,
+  }: {
+    mail: Nullable<SendMail>;
+    payments: Nullable<ProcessPayments>;
+  }) => {
     const { fetch } = defineApi({
       db: instance,
       jobs: {} as TriggerJobs,
       storage: FsStorageProvider.create(),
       mail,
-      payments: null,
+      payments,
     });
 
     return await fetch(new Request("http://localhost/settings"));
   };
+
+  const settingsOf = async (response: Response) =>
+    ApiSchema.Settings.GetSettingsResponseSchema.parse(await response.json()).settings;
 
   beforeAll(async () => {
     const opened = await openDb();
@@ -36,20 +47,32 @@ describe("settings", () => {
   });
 
   test("is public", async () => {
-    const response = await getSettings({ mail: null });
+    const response = await getSettings({ mail: null, payments: null });
 
     expect(response.status).toBe(200);
   });
 
   test("enables the mail with a mail provider", async () => {
-    const response = await getSettings({ mail: { send: async () => {} } });
+    const response = await getSettings({ mail: { send: async () => {} }, payments: null });
 
-    expect(await response.json()).toEqual({ settings: { mail: { enabled: true } } });
+    expect((await settingsOf(response)).mail).toEqual({ enabled: true });
   });
 
   test("disables the mail without a mail provider", async () => {
-    const response = await getSettings({ mail: null });
+    const response = await getSettings({ mail: null, payments: null });
 
-    expect(await response.json()).toEqual({ settings: { mail: { enabled: false } } });
+    expect((await settingsOf(response)).mail).toEqual({ enabled: false });
+  });
+
+  test("enables the payments with a payment provider", async () => {
+    const response = await getSettings({ mail: null, payments: {} as ProcessPayments });
+
+    expect((await settingsOf(response)).payments).toEqual({ enabled: true });
+  });
+
+  test("disables the payments without a payment provider", async () => {
+    const response = await getSettings({ mail: null, payments: null });
+
+    expect((await settingsOf(response)).payments).toEqual({ enabled: false });
   });
 });

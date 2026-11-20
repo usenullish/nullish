@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import { isEmptyString, type Option } from "@usenullish/nullish-common";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
+import { useSettings } from "~/context/contexts/settings.context";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/ui/components/collapsible";
 import {
   DropdownMenu,
@@ -57,13 +58,15 @@ export const AppSidebar = () => {
   const { activeConversation } = useActiveConversation();
 
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
+  const settings = useSettings();
 
   const navigation = NAVIGATION.filter(
     (group) =>
-      admin ||
-      (group !== TEAM_NAVIGATION_GROUP &&
-        group !== SUBSCRIPTION_NAVIGATION_GROUP &&
-        group !== MIGRATIONS_NAVIGATION_GROUP),
+      (group !== SUBSCRIPTION_NAVIGATION_GROUP || settings?.payments.enabled === true) &&
+      (admin ||
+        (group !== TEAM_NAVIGATION_GROUP &&
+          group !== SUBSCRIPTION_NAVIGATION_GROUP &&
+          group !== MIGRATIONS_NAVIGATION_GROUP)),
   );
 
   const toPath = (path: NavigationItem["path"]): string => {
