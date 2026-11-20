@@ -1,4 +1,4 @@
-import { intro, note } from "@clack/prompts";
+import { intro, spinner } from "@clack/prompts";
 import { SubscriptionBootstrapService } from "@usenullish/nullish-admin/subscription";
 import { isEmptyString, tryCatch } from "@usenullish/nullish-common";
 import { withDbContext } from "../../db";
@@ -21,15 +21,20 @@ export const subscriptionBootstrap = async (args?: string[]) => {
     exit({ msg: `Cannot read ${file}.`, err: setup.err });
   }
 
+  const s = spinner();
+  s.start("Bootstrapping the subscription");
+
   await withDbContext(async (dbContext) => {
     const result = await SubscriptionBootstrapService.create({
       db: dbContext.connection,
     }).bootstrap({ setup: setup.result });
 
     if (result.status === "error") {
+      s.stop();
+
       exit({ msg: "Cannot bootstrap the subscription.", err: result.err });
     }
 
-    note(file, "Subscription bootstrapped.");
+    s.stop(`Subscription bootstrapped from ${file}`);
   });
 };
