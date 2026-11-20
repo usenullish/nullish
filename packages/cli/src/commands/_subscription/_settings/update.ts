@@ -1,6 +1,7 @@
 import { intro, isCancel, note, select, text } from "@clack/prompts";
 import { SubscriptionSettingsService } from "@usenullish/nullish-admin/subscription";
 import { isNullish } from "@usenullish/nullish-common";
+import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { withDbContext } from "../../../db";
 import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
@@ -18,7 +19,9 @@ export const subscriptionSettingsUpdate = async (_args?: string[]) => {
 
     const newInitialPlanId = await select({
       message: "Which plan should newly created organizations be subscribed to?",
-      options: plans.map((plan) => ({ label: planLabel(plan), value: plan.id })),
+      options: plans
+        .filter(({ provider }) => provider === SubscriptionProvider.SELF)
+        .map((plan) => ({ label: planLabel(plan), value: plan.id })),
       initialValue: initialPlanId,
     });
 
