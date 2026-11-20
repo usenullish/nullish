@@ -58,26 +58,23 @@ export class StripePaymentProvider extends PaymentProvider<
   }: {
     products: ExternalProduct[];
   }): Promise<Payments["Plan"][]> {
-    const productIds = products
-      .filter(({ provider }) => provider === SubscriptionProvider.STRIPE)
-      .map(({ externalProductId }) => externalProductId);
+    const stripeProducts = products.filter(
+      ({ provider }) => provider === SubscriptionProvider.STRIPE,
+    );
 
     const loadedPlans = await Promise.all(
-      productIds.map((productId) => this.#loadPlan({ productId })),
+      stripeProducts.map((product) => this.#loadPlan({ product })),
     );
 
     return loadedPlans.filter(nonNullish);
   }
 
   async #loadPlan({
-    productId,
+    product: { externalProductId: productId, name: productName },
   }: {
-    productId: Stripe.Product["id"];
+    product: ExternalProduct;
   }): Promise<Option<Payments["Plan"]>> {
-    const [{ name: productName }, prices] = await Promise.all([
-      this.#stripe.products.retrieve(productId),
-      this.#listPrices({ productId }),
-    ]);
+    const prices = await this.#listPrices({ productId });
 
     const isRecurringPrice = (price: Stripe.Price): price is StripePlanPrice => {
       const { unit_amount: amount, recurring } = price;

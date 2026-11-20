@@ -6,6 +6,7 @@ import { SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
+import { useSettings } from "~/context/contexts/settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useFormatDate } from "~/kit/format/date.hooks";
@@ -17,6 +18,9 @@ export const OrganizationTrialBanner = () => {
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
   const subscriptionSummary = useSubscriptionSummary();
+  const settings = useSettings();
+
+  const choosePlan = admin && settings?.payments.enabled === true;
 
   const periodEnd = subscriptionSummary?.subscription.periodEnd;
 
@@ -37,7 +41,7 @@ export const OrganizationTrialBanner = () => {
         {replacePlaceholders(i18n.organizations.text.trial, {
           "{date}": formatDate(periodEnd),
         })}{" "}
-        {admin && (
+        {choosePlan && (
           <Link
             to={OrganizationPath.create({ organizationId: organization.id }).to({
               path: SUBSCRIPTION_PLANS_PATH,
@@ -47,7 +51,7 @@ export const OrganizationTrialBanner = () => {
             {i18n.organizations.action.choose_plan}
           </Link>
         )}
-        {admin && i18n.organizations.text.trial_keep_going}
+        {choosePlan && i18n.organizations.text.trial_keep_going}
       </p>
     </div>
   );
