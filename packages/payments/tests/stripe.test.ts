@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import Stripe from "stripe";
-import type { Nullable } from "@usenullish/nullish-common";
+import { isNullish, type Nullable } from "@usenullish/nullish-common";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { PaymentInterval } from "@usenullish/nullish-schema/payments";
 
@@ -613,6 +613,51 @@ describe("StripePaymentProvider", () => {
       expect(pricesUrl?.searchParams.get("product")).toBe("prod_10users");
       expect(pricesUrl?.searchParams.get("active")).toBe("true");
       expect(pricesUrl?.searchParams.get("type")).toBe("recurring");
+    });
+
+    test("loads every page of the prices of the product", async () => {
+      mockClaims([claimOf({ externalProductId: "prod_10users" })]);
+
+      fetchSpy.mockImplementation((async (input: Parameters<typeof fetch>[0]) => {
+        const url = new URL(String(input));
+
+        if (url.pathname.startsWith("/v1/products/")) {
+          return Response.json({
+            id: "prod_10users",
+            object: "product",
+            name: "Plan prod_10users",
+          });
+        }
+
+        const firstPage = isNullish(url.searchParams.get("starting_after"));
+
+        return Response.json({
+          object: "list",
+          url: "/v1/prices",
+          has_more: firstPage,
+          data: [
+            firstPage
+              ? priceOf({ id: "price_monthly", interval: "month" })
+              : priceOf({ id: "price_yearly", interval: "year" }),
+          ],
+        });
+      }) as unknown as typeof fetch);
+
+      const plans = await StripePaymentProvider.create().listPlans();
+
+      expect(plans.flatMap(({ prices }) => prices.map(({ priceId }) => priceId))).toEqual([
+        "price_monthly",
+        "price_yearly",
+      ]);
+
+      const pricesUrls = fetchSpy.mock.calls
+        .map(([input]) => new URL(String(input)))
+        .filter(({ pathname }) => pathname === "/v1/prices");
+
+      expect(pricesUrls.map(({ searchParams }) => searchParams.get("starting_after"))).toEqual([
+        null,
+        "price_monthly",
+      ]);
     });
 
     test("skips the prices without amount or with an unknown interval", async () => {
