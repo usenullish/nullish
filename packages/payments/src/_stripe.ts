@@ -72,9 +72,9 @@ export class StripePaymentProvider extends PaymentProvider<
   }: {
     productId: Stripe.Product["id"];
   }): Promise<Option<Payments["Plan"]>> {
-    const [{ name: productName }, { data: prices }] = await Promise.all([
+    const [{ name: productName }, prices] = await Promise.all([
       this.#stripe.products.retrieve(productId),
-      this.#stripe.prices.list({ product: productId, active: true, type: "recurring", limit: 100 }),
+      this.#listPrices({ productId }),
     ]);
 
     const isValidPlanPrice = (price: Stripe.Price): price is StripePlanPrice => {
@@ -112,6 +112,29 @@ export class StripePaymentProvider extends PaymentProvider<
       productName,
       prices: planPrices,
     };
+  }
+
+  async #listPrices({
+    productId,
+    startingAfter,
+  }: {
+    productId: Stripe.Product["id"];
+    startingAfter?: Stripe.Price["id"];
+  }): Promise<Stripe.Price[]> {
+    const { data: prices, has_more: hasMore } = await this.#stripe.prices.list({
+      product: productId,
+      active: true,
+      type: "recurring",
+      starting_after: startingAfter,
+    });
+
+    const last = prices.at(-1);
+
+    if (!hasMore || isNullish(last)) {
+      return prices;
+    }
+
+    return [...prices, ...(await this.#listPrices({ productId, startingAfter: last.id }))];
   }
 
   protected override async createCheckoutSession({
