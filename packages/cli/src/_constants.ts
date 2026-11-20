@@ -13,6 +13,8 @@ export const ORGANIZATION_DELETE_DESCRIPTION =
   "Delete an organization, their records and audit logs";
 
 export const SUBSCRIPTION_DESCRIPTION = "Manage the subscriptions";
+export const SUBSCRIPTION_BOOTSTRAP_DESCRIPTION =
+  "Set up the plans, products, tax rates and settings of a fresh install from a file";
 export const SUBSCRIPTION_PLAN_DESCRIPTION = "Manage the plans of the subscriptions";
 export const SUBSCRIPTION_PLAN_LIST_DESCRIPTION = "List the plans";
 export const SUBSCRIPTION_PLAN_CREATE_DESCRIPTION = "Create a plan";
