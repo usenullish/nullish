@@ -1,11 +1,5 @@
 import Stripe from "stripe";
-import {
-  assertNonNullish,
-  isNullish,
-  nonNullish,
-  notEmptyString,
-  type Option,
-} from "@usenullish/nullish-common";
+import { assertNonNullish, isNullish, nonNullish, type Option } from "@usenullish/nullish-common";
 import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-env";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
@@ -18,7 +12,7 @@ import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
 import { type PaymentEvent, PaymentProvider } from "./_payment-provider";
 
-type Plan = Records["Subscription"]["Plans"]["Select"];
+type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
 type StripePlanPrice = Stripe.Price & {
   unit_amount: number;
@@ -56,11 +50,14 @@ export class StripePaymentProvider extends PaymentProvider<
     };
   }
 
-  protected override async loadPlans({ plans }: { plans: Plan[] }): Promise<Payments["Plan"][]> {
-    const productIds = plans
+  protected override async loadPlans({
+    products,
+  }: {
+    products: ExternalProduct[];
+  }): Promise<Payments["Plan"][]> {
+    const productIds = products
       .filter(({ provider }) => provider === SubscriptionProvider.STRIPE)
-      .map(({ externalProductId }) => externalProductId)
-      .filter(notEmptyString);
+      .map(({ externalProductId }) => externalProductId);
 
     const loadedPlans = await Promise.all(
       productIds.map((productId) => this.#loadPlan({ productId })),

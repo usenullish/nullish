@@ -13,18 +13,10 @@ export const PlansSchema = SubscriptionSchema.table(
     trialDays: pg.integer(),
     expiresAt: timestamp(),
     provider: subscriptionProvider().notNull(),
-    externalProductId: pg.text(),
   },
   (table) => [
     pg.check("plans_trial_days_positive", sql`${table.trialDays} >= 1`),
     pg.unique("plans_id_provider_unique").on(table.id, table.provider),
-    pg.check(
-      "plans_provider_external_product",
-      sql`(${table.provider} = 'self') = (${table.externalProductId} IS NULL)`,
-    ),
-    pg
-      .uniqueIndex("plans_provider_external_product_uidx")
-      .on(table.provider, table.externalProductId),
     ...readonlyPolicies({ tableName: "plans" }),
   ],
 );

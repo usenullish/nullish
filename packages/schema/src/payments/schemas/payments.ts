@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { SelectMembershipsSchema } from "../../records/schemas/core/memberships";
-import { SelectPlansSchema } from "../../records/schemas/subscription/plans";
+import { SelectExternalProductsSchema } from "../../records/schemas/subscription/external-products";
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 import { SelectSubscriptionTaxRatesSchema } from "../../records/schemas/subscription/subscription-tax-rates";
@@ -44,7 +44,7 @@ export const PaymentMetadataSchema = z.object({
 export const PaymentExternalIdsSchema = z.strictObject({
   subscriptionId: SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
   customerId: SelectSubscriptionReferencesSchema.shape.externalCustomerId,
-  productId: SelectPlansSchema.shape.externalProductId.unwrap(),
+  productId: SelectExternalProductsSchema.shape.externalProductId,
 });
 
 export const PaymentSchema = z.strictObject({

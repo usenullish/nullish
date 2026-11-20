@@ -2,7 +2,7 @@ import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import { type Tx } from "@usenullish/nullish-db";
 import type { Payments } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { getPlanByExternalProduct } from "./_helpers/plans";
+import { getExternalProduct } from "./_helpers/external-products";
 import {
   getSubscriptionReference,
   insertSubscriptionReference,
@@ -63,7 +63,7 @@ export class PaymentSubscriptionService extends AdminServiceContext {
     }
 
     // 5. Get the plan configured for the product
-    const { id: planId } = await getPlanByExternalProduct({
+    const { planId } = await getExternalProduct({
       tx,
       provider,
       externalProductId: externalIds.productId,

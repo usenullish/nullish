@@ -14,6 +14,7 @@ import {
 } from "../../../admin/tests/_test-utils";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
+const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
 
@@ -68,9 +69,11 @@ describe("PaymentSubscriptionService", () => {
       .where(eq(plans.id, planId));
 
   beforeAll(async () => {
-    const [plan] = await db.insert(plans).values({ provider, externalProductId }).returning();
+    const [plan] = await db.insert(plans).values({ provider }).returning();
     assertNonNullish(plan);
     planId = plan.id;
+
+    await db.insert(externalProducts).values({ planId, provider, externalProductId });
   });
 
   beforeEach(async () => {

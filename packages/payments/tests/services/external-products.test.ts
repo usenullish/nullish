@@ -2,15 +2,16 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { inArray } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
-import { PlansService } from "../../src/services/plans";
+import { ExternalProductsService } from "../../src/services/external-products";
 import { openTestDb } from "../../../admin/tests/_test-utils";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
+const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 
 const instance = await openTestDb();
 const db = instance.connection;
 
-describe("PlansService", () => {
+describe("ExternalProductsService", () => {
   const externalProductId = `prod_${crypto.randomUUID()}`;
 
   let withProductId: string;
@@ -19,10 +20,16 @@ describe("PlansService", () => {
   beforeAll(async () => {
     const [withProduct] = await db
       .insert(plans)
-      .values({ provider: SubscriptionProvider.STRIPE, externalProductId })
+      .values({ provider: SubscriptionProvider.STRIPE })
       .returning();
     assertNonNullish(withProduct);
     withProductId = withProduct.id;
+
+    await db.insert(externalProducts).values({
+      planId: withProductId,
+      provider: SubscriptionProvider.STRIPE,
+      externalProductId,
+    });
 
     const [withoutProduct] = await db
       .insert(plans)
@@ -37,14 +44,20 @@ describe("PlansService", () => {
     await instance.close();
   });
 
-  test("lists the plans linked to a product", async () => {
-    const result = await PlansService.create({ db }).listPlans();
+  test("lists the products linked to a plan", async () => {
+    const result = await ExternalProductsService.create({ db }).list();
 
     expect(result.status).toBe("success");
 
-    const ids = result.status === "success" ? result.result.map(({ id }) => id) : [];
+    const products = result.status === "success" ? result.result : [];
 
-    expect(ids).toContain(withProductId);
-    expect(ids).not.toContain(withoutProductId);
+    expect(products).toContainEqual(
+      expect.objectContaining({
+        planId: withProductId,
+        provider: SubscriptionProvider.STRIPE,
+        externalProductId,
+      }),
+    );
+    expect(products.map(({ planId }) => planId)).not.toContain(withoutProductId);
   });
 });
