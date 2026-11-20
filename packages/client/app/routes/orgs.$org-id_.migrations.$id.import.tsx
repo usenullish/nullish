@@ -5,7 +5,7 @@ import { MigrationWizard } from "~/components/settings/migrations/wizard/migrati
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { loadMigrationImportData } from "~/context/loaders/migration-import.loader.server";
-import { OrganizationPath } from "~/navigation";
+import { OrganizationPath, UnscopedPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
   return await loadMigrationImportData(args);
@@ -21,7 +21,7 @@ const MigrationPage = ({ loaderData, params }: Route.ComponentProps) => {
   const alreadyImportedDatasets = loaderData?.alreadyImportedDatasets?.datasetSummaries ?? [];
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   if (isNullish(migration)) {

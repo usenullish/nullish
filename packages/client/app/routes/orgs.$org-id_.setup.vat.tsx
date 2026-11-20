@@ -6,6 +6,7 @@ import { SetupStep } from "~/components/settings/organizations/setup/setup-step"
 import { SETUP_STEPS, setupPath } from "~/components/settings/organizations/setup/setup.hooks";
 import { OrganizationsSetupServer } from "~/context/server/organizations+setup.server";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { UnscopedPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
   return await OrganizationsSetupServer.create().load(args);
@@ -17,7 +18,7 @@ const SetupVatPage = ({ loaderData, params }: Route.ComponentProps) => {
   const organizationId = params["org-id"];
 
   if (isNullish(organizationId)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   const ready = setupPath({ organizationId, step: "ready" });

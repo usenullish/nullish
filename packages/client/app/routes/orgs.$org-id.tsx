@@ -12,6 +12,7 @@ import { BillingSettingsContext } from "~/context/contexts/billing-settings.cont
 import { ClientsContext } from "~/context/contexts/clients.context";
 import { SubscriptionSummaryContext } from "~/context/contexts/subscription-summary.context";
 import { loadOrganizationData } from "~/context/loaders/organization.loader.server";
+import { UnscopedPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
   return await loadOrganizationData(args);
@@ -29,7 +30,7 @@ const Layout = ({ loaderData }: Route.ComponentProps) => {
   const organization = organizations?.find((org) => org.id === loaderData.orgId);
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   return (

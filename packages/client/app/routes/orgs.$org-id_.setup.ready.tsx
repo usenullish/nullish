@@ -5,6 +5,7 @@ import { WizardLayout } from "~/components/layout/wizard-layout";
 import { NewOrganizationReady } from "~/components/settings/organizations/new/new-organization-ready";
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { UnscopedPath } from "~/navigation";
 
 // /orgs/:orgId/setup/ready
 const SetupReadyPage = ({ params }: Route.ComponentProps) => {
@@ -13,7 +14,7 @@ const SetupReadyPage = ({ params }: Route.ComponentProps) => {
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
 
   if (isNullish(organization)) {
-    return <Navigate to="/orgs" replace />;
+    return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
   return (

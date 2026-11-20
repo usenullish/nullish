@@ -12,6 +12,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "~/ui/components/s
 import { HeaderActions } from "~/components/layout/header-actions";
 import { HomeSidebar } from "./home-sidebar";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { UnscopedPath } from "~/navigation";
 
 export const HomeLayout = ({ page, children }: { page?: string; children: React.ReactNode }) => {
   const { i18n } = useI18n();
@@ -33,7 +34,7 @@ export const HomeLayout = ({ page, children }: { page?: string; children: React.
               ) : (
                 <>
                   <BreadcrumbItem>
-                    <BreadcrumbLink render={<Link to="/orgs" />}>
+                    <BreadcrumbLink render={<Link to={UnscopedPath.create().toOrganizations()} />}>
                       {i18n.navigation.organizations}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
