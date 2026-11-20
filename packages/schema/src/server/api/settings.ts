@@ -4,8 +4,13 @@ export const MailSettingsSchema = z.strictObject({
   enabled: z.boolean(),
 });
 
+export const PaymentsSettingsSchema = z.strictObject({
+  enabled: z.boolean(),
+});
+
 export const SettingsSchema = z.strictObject({
   mail: MailSettingsSchema,
+  payments: PaymentsSettingsSchema,
 });
 
 export const GetSettingsResponseSchema = z.strictObject({

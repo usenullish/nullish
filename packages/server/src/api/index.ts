@@ -53,7 +53,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
 
   webhooks.forEach((webhook) => webhook.register());
 
-  app.openapi(settingsRoute, defineSettings({ mail }));
+  app.openapi(settingsRoute, defineSettings({ mail, payments }));
   app.openapi(healthRoute, defineHealth);
 
   app.openAPIRegistry.registerComponent("securitySchemes", "ApiKey", {
