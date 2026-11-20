@@ -226,6 +226,14 @@ interface Records {
       Insert: z.infer<typeof RecordsSchema.Subscription.PlansSchema.InsertPlansSchema>;
       Update: z.infer<typeof RecordsSchema.Subscription.PlansSchema.UpdatePlansSchema>;
     };
+    ExternalProducts: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.ExternalProductsSchema.InsertExternalProductsSchema
+      >;
+    };
     SubscriptionSettings: {
       Select: z.infer<
         typeof RecordsSchema.Subscription.SubscriptionSettingsSchema.SelectSubscriptionSettingsSchema

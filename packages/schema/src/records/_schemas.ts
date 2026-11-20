@@ -29,6 +29,7 @@ import * as ConversationsSchema from "./schemas/chat/conversations";
 import * as MessagesSchema from "./schemas/chat/messages";
 import * as MigrationsSchema from "./schemas/migration/migrations";
 import * as PlansSchema from "./schemas/subscription/plans";
+import * as ExternalProductsSchema from "./schemas/subscription/external-products";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
@@ -85,6 +86,7 @@ const RecordsSchema = {
   },
   Subscription: {
     PlansSchema,
+    ExternalProductsSchema,
     SubscriptionSettingsSchema,
     SubscriptionsSchema,
     SubscriptionReferencesSchema,
