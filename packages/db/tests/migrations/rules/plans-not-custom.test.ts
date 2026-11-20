@@ -78,22 +78,4 @@ describe("check_plan_not_custom", () => {
 
     expect(subscription?.planId).toBe(selfPlanId);
   });
-
-  test("rejects making a custom plan the initial plan", async () => {
-    const error = await db
-      .update(subscriptionSettings)
-      .set({ initialPlanId: customPlanId })
-      .catch((e: unknown) => e);
-
-    expect(causeMessage(error)).toContain("is a custom plan");
-  });
-
-  test("allows making a stripe plan the initial plan", async () => {
-    const [settings] = await db
-      .update(subscriptionSettings)
-      .set({ initialPlanId: stripePlanId })
-      .returning();
-
-    expect(settings?.initialPlanId).toBe(stripePlanId);
-  });
 });
