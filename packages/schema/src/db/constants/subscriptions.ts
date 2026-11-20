@@ -6,6 +6,8 @@ export enum SubscriptionStatus {
 }
 
 export enum SubscriptionProvider {
+  SELF = "self",
+  CUSTOM = "custom",
   STRIPE = "stripe",
 }
 

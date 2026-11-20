@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { causeMessage, createOrganization, resetDb, seedUsers } from "../_test-utils";
 
 const client = new BunSQL(envDbUrl());
@@ -17,7 +17,10 @@ const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 const insertPlan = async (expiresAt: Date): Promise<string> => {
-  const [plan] = await db.insert(plans).values({ expiresAt }).returning();
+  const [plan] = await db
+    .insert(plans)
+    .values({ provider: SubscriptionProvider.SELF, expiresAt })
+    .returning();
   assertNonNullish(plan);
   return plan.id;
 };

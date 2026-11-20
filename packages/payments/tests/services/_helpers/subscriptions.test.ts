@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:test";
 import { eq, inArray, sql } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   getExistingSubscription,
   updateSubscription,
@@ -29,8 +29,13 @@ describe("subscriptions helpers", () => {
 
   let organizationId: string;
 
-  const insertPlan = async (values: typeof plans.$inferInsert = {}): Promise<string> => {
-    const [plan] = await db.insert(plans).values(values).returning();
+  const insertPlan = async (
+    values: Omit<typeof plans.$inferInsert, "provider"> = {},
+  ): Promise<string> => {
+    const [plan] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.SELF, ...values })
+      .returning();
     assertNonNullish(plan);
     planIds.push(plan.id);
 

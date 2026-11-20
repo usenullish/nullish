@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { SubscriptionSettingsService } from "../../src/subscription/services/subscription-settings";
 import { openTestDb } from "../_test-utils";
 
@@ -22,7 +22,10 @@ describe("SubscriptionSettingsService", () => {
     assertNonNullish(settings);
     initialPlanId = settings.initialPlanId;
 
-    const [plan] = await db.insert(plans).values({ trialDays: 30 }).returning();
+    const [plan] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.SELF, trialDays: 30 })
+      .returning();
     assertNonNullish(plan);
     otherPlanId = plan.id;
   });
