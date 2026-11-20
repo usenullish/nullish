@@ -16,3 +16,4 @@ export enum OrganizationSubscriptionStatus {
   GRACE = "grace",
   LOCKED = "locked",
 }
+
