@@ -5,7 +5,6 @@ import {
   DateCodec,
   isArrayExactlyOne,
   nonNullish,
-  NotEmptyStringSchema,
   type Result,
 } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
@@ -25,40 +24,32 @@ const {
   CustomProductsSchema: { InsertCustomProductsSchema },
   CustomPricesSchema: { InsertCustomPricesSchema },
   SubscriptionTaxRatesSchema: { InsertSubscriptionTaxRatesSchema },
-  SubscriptionSettingsSchema: { UpdateSubscriptionSettingsSchema },
 } = RecordsSchema.Subscription;
 
-const BootstrapPlanBaseSchema = z.strictObject({
-  key: NotEmptyStringSchema,
+const ExternalProviderSchema = z.enum(SubscriptionProvider).exclude(["SELF", "CUSTOM"]);
+
+const BootstrapSelfPlanSchema = z.strictObject({
+  provider: z.literal(SubscriptionProvider.SELF),
   trialDays: InsertPlansSchema.shape.trialDays,
 });
 
-const BootstrapPlanSchema = z.discriminatedUnion("provider", [
-  BootstrapPlanBaseSchema.extend({
-    provider: z.literal(SubscriptionProvider.SELF),
-  }),
-  BootstrapPlanBaseSchema.extend({
-    provider: z.literal(SubscriptionProvider.CUSTOM),
-    product: InsertCustomProductsSchema.pick({ name: true, contactUrl: true }),
-    prices: z
-      .array(
-        InsertCustomPricesSchema.pick({ currency: true, billingPeriod: true }).extend({
-          amount: BigIntCodec,
-        }),
-      )
-      .default([]),
-  }),
-]);
-
-const BootstrapProviderSchema = z.strictObject({
-  provider: z.enum(SubscriptionProvider).exclude(["SELF", "CUSTOM"]),
-  plans: z
+const BootstrapCustomPlanSchema = z.strictObject({
+  provider: z.literal(SubscriptionProvider.CUSTOM),
+  name: InsertCustomProductsSchema.shape.name,
+  contactUrl: InsertCustomProductsSchema.shape.contactUrl,
+  prices: z
     .array(
-      BootstrapPlanBaseSchema.extend({
-        externalProductId: InsertExternalProductsSchema.shape.externalProductId,
+      InsertCustomPricesSchema.pick({ currency: true, billingPeriod: true }).extend({
+        amount: BigIntCodec,
       }),
     )
     .default([]),
+});
+
+const BootstrapExternalPlanSchema = z.strictObject({
+  provider: ExternalProviderSchema,
+  trialDays: InsertPlansSchema.shape.trialDays,
+  externalProductId: InsertExternalProductsSchema.shape.externalProductId,
   taxRates: z
     .array(
       InsertSubscriptionTaxRatesSchema.pick({ externalTaxRateId: true }).extend({
@@ -69,42 +60,25 @@ const BootstrapProviderSchema = z.strictObject({
     .default([]),
 });
 
-const planKeysOf = ({
-  plans,
-  providers,
-}: {
-  plans: Pick<BootstrapPlan, "key">[];
-  providers: { plans: Pick<BootstrapPlan, "key">[] }[];
-}): BootstrapPlan["key"][] =>
-  [...plans, ...providers.flatMap((provider) => provider.plans)].map(({ key }) => key);
+const BootstrapPlanSchema = z.discriminatedUnion("provider", [
+  BootstrapSelfPlanSchema,
+  BootstrapCustomPlanSchema,
+  BootstrapExternalPlanSchema,
+]);
 
 export const SubscriptionBootstrapSchema = z
-  .strictObject({
-    plans: z.array(BootstrapPlanSchema).default([]),
-    providers: z.array(BootstrapProviderSchema).default([]),
-    settings: z.strictObject({
-      initialPlan: BootstrapPlanBaseSchema.shape.key,
-      graceDays: UpdateSubscriptionSettingsSchema.shape.graceDays,
-    }),
-  })
+  .array(BootstrapPlanSchema)
   .refine(
-    (setup) => {
-      const keys = planKeysOf(setup);
-      return new Set(keys).size === keys.length;
-    },
-    { message: "Every plan needs its own key.", path: ["plans"] },
-  )
-  .refine((setup) => planKeysOf(setup).includes(setup.settings.initialPlan), {
-    message: "The initial plan is not one of the plans.",
-    path: ["settings", "initialPlan"],
-  });
+    (plans) => plans.filter(({ provider }) => provider === SubscriptionProvider.SELF).length === 1,
+    { message: "Exactly one self plan is required, the initial plan." },
+  );
 
 export type SubscriptionBootstrap = z.input<typeof SubscriptionBootstrapSchema>;
 
 type BootstrapPlan = z.output<typeof BootstrapPlanSchema>;
-type BootstrapProvider = z.output<typeof BootstrapProviderSchema>;
+type BootstrapCustomPlan = z.output<typeof BootstrapCustomPlanSchema>;
+type BootstrapExternalPlan = z.output<typeof BootstrapExternalPlanSchema>;
 type Plan = Records["Subscription"]["Plans"]["Select"];
-type SeededPlan = { key: BootstrapPlan["key"]; plan: Plan };
 
 export class SubscriptionBootstrapService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
@@ -117,58 +91,27 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
 
   bootstrap({ setup }: { setup: SubscriptionBootstrap }): Promise<Result<void>> {
     return this._withDbContext(async (tx) => {
-      const { plans, providers, settings } = SubscriptionBootstrapSchema.parse(setup);
+      const plans = SubscriptionBootstrapSchema.parse(setup);
 
       const defaultPlan = await this.#findAndAssertDefaultPlan({ tx });
 
       await disablePlan({ tx, planId: defaultPlan.id });
 
-      const seeded: SeededPlan[] = [];
+      const seeded: Plan[] = [];
 
       for (const plan of plans) {
         seeded.push(await this.#seedPlan({ tx, plan }));
       }
 
-      for (const provider of providers) {
-        seeded.push(...(await this.#seedProvider({ tx, provider })));
-      }
-
-      const initialPlan = seeded.find(({ key }) => key === settings.initialPlan);
+      const initialPlan = seeded.find(({ provider }) => provider === SubscriptionProvider.SELF);
 
       assertNonNullish(initialPlan);
 
       await updateSubscriptionSettings({
         tx,
-        settings: { initialPlanId: initialPlan.plan.id, graceDays: settings.graceDays },
+        settings: { initialPlanId: initialPlan.id },
       });
     });
-  }
-
-  async #seedProvider({
-    tx,
-    provider: { provider, plans, taxRates },
-  }: {
-    tx: Tx;
-    provider: BootstrapProvider;
-  }): Promise<SeededPlan[]> {
-    const seeded: SeededPlan[] = [];
-
-    for (const { key, trialDays, externalProductId } of plans) {
-      const plan = await insertPlan({ tx, plan: { provider, trialDays } });
-
-      await insertExternalProduct({
-        tx,
-        externalProduct: { planId: plan.id, provider, externalProductId },
-      });
-
-      seeded.push({ key, plan });
-    }
-
-    for (const taxRate of taxRates) {
-      await insertSubscriptionTaxRate({ tx, taxRate: { provider, ...taxRate } });
-    }
-
-    return seeded;
   }
 
   async #findAndAssertDefaultPlan({ tx }: { tx: Tx }): Promise<Plan> {
@@ -192,38 +135,56 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
     return plan;
   }
 
-  async #seedPlan({ tx, plan }: { tx: Tx; plan: BootstrapPlan }): Promise<SeededPlan> {
-    const { key, provider, trialDays } = plan;
-
-    const row = await insertPlan({ tx, plan: { provider, trialDays } });
-
-    await this.#seedProduct({ tx, planId: row.id, plan });
-
-    return { key, plan: row };
+  async #seedPlan({ tx, plan }: { tx: Tx; plan: BootstrapPlan }): Promise<Plan> {
+    switch (plan.provider) {
+      case SubscriptionProvider.SELF:
+        return await insertPlan({ tx, plan });
+      case SubscriptionProvider.CUSTOM:
+        return await this.#seedCustomPlan({ tx, plan });
+      default:
+        return await this.#seedExternalPlan({ tx, plan });
+    }
   }
 
-  async #seedProduct({
+  async #seedCustomPlan({
     tx,
-    planId,
-    plan,
+    plan: { provider, name, contactUrl, prices },
   }: {
     tx: Tx;
-    planId: Plan["id"];
-    plan: BootstrapPlan;
-  }): Promise<void> {
-    if (plan.provider === SubscriptionProvider.SELF) {
-      return;
-    }
-
-    const { provider, product, prices } = plan;
+    plan: BootstrapCustomPlan;
+  }): Promise<Plan> {
+    const plan = await insertPlan({ tx, plan: { provider } });
 
     const { id: productId } = await insertCustomProduct({
       tx,
-      customProduct: { planId, provider, ...product },
+      customProduct: { planId: plan.id, provider, name, contactUrl },
     });
 
     for (const price of prices) {
       await insertCustomPrice({ tx, customPrice: { productId, ...price } });
     }
+
+    return plan;
+  }
+
+  async #seedExternalPlan({
+    tx,
+    plan: { provider, trialDays, externalProductId, taxRates },
+  }: {
+    tx: Tx;
+    plan: BootstrapExternalPlan;
+  }): Promise<Plan> {
+    const plan = await insertPlan({ tx, plan: { provider, trialDays } });
+
+    await insertExternalProduct({
+      tx,
+      externalProduct: { planId: plan.id, provider, externalProductId },
+    });
+
+    for (const taxRate of taxRates) {
+      await insertSubscriptionTaxRate({ tx, taxRate: { provider, ...taxRate } });
+    }
+
+    return plan;
   }
 }

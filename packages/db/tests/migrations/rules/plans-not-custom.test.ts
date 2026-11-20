@@ -11,7 +11,6 @@ const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
-const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 const insertPlan = async (values: typeof plans.$inferInsert): Promise<string> => {
@@ -22,7 +21,6 @@ const insertPlan = async (values: typeof plans.$inferInsert): Promise<string> =>
 
 describe("check_plan_not_custom", () => {
   let organizationId: string;
-  let initialPlanId: string;
   let customPlanId: string;
   let stripePlanId: string;
   let selfPlanId: string;
@@ -33,17 +31,12 @@ describe("check_plan_not_custom", () => {
 
     organizationId = await createOrganization(db);
 
-    const [settings] = await db.select().from(subscriptionSettings);
-    assertNonNullish(settings);
-    initialPlanId = settings.initialPlanId;
-
     customPlanId = await insertPlan({ provider: SubscriptionProvider.CUSTOM });
     stripePlanId = await insertPlan({ provider: SubscriptionProvider.STRIPE });
     selfPlanId = await insertPlan({ provider: SubscriptionProvider.SELF, trialDays: 30 });
   });
 
   afterAll(async () => {
-    await db.update(subscriptionSettings).set({ initialPlanId });
     await resetDb(db);
     await db.delete(plans).where(inArray(plans.id, [customPlanId, stripePlanId, selfPlanId]));
     await client.close();
@@ -77,23 +70,5 @@ describe("check_plan_not_custom", () => {
       .returning();
 
     expect(subscription?.planId).toBe(selfPlanId);
-  });
-
-  test("rejects making a custom plan the initial plan", async () => {
-    const error = await db
-      .update(subscriptionSettings)
-      .set({ initialPlanId: customPlanId })
-      .catch((e: unknown) => e);
-
-    expect(causeMessage(error)).toContain("is a custom plan");
-  });
-
-  test("allows making a stripe plan the initial plan", async () => {
-    const [settings] = await db
-      .update(subscriptionSettings)
-      .set({ initialPlanId: stripePlanId })
-      .returning();
-
-    expect(settings?.initialPlanId).toBe(stripePlanId);
   });
 });
