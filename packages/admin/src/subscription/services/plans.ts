@@ -1,14 +1,10 @@
 import { asc, eq } from "drizzle-orm";
-import {
-  assertArrayAtMostOne,
-  assertNonNullish,
-  type Option,
-  type Result,
-} from "@usenullish/nullish-common";
+import { assertArrayAtMostOne, type Option, type Result } from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import { insertMany, selectMany, updateMany } from "@usenullish/nullish-db";
+import { selectMany, updateMany } from "@usenullish/nullish-db";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
+import { insertPlan } from "../_helpers/plans";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
 
@@ -38,16 +34,7 @@ export class PlansService extends AdminServiceContext {
     return this._withDbContext(async (tx) => {
       const values = RecordsSchema.Subscription.PlansSchema.InsertPlansSchema.parse(plan);
 
-      const [row] = await insertMany({
-        tx,
-        table: plans,
-        values,
-        returningSchema: RecordsSchema.Subscription.PlansSchema.SelectPlansSchema,
-      });
-
-      assertNonNullish(row);
-
-      return row;
+      return await insertPlan({ tx, plan: values });
     });
   }
 

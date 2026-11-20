@@ -1,14 +1,10 @@
 import { asc, eq } from "drizzle-orm";
-import {
-  assertArrayAtMostOne,
-  assertNonNullish,
-  type Option,
-  type Result,
-} from "@usenullish/nullish-common";
+import { assertArrayAtMostOne, type Option, type Result } from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import { deleteMany, insertMany, selectMany } from "@usenullish/nullish-db";
+import { deleteMany, selectMany } from "@usenullish/nullish-db";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
+import { insertExternalProduct } from "../_helpers/external-products";
 
 const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 
@@ -45,17 +41,7 @@ export class ExternalProductsService extends AdminServiceContext {
           externalProduct,
         );
 
-      const [row] = await insertMany({
-        tx,
-        table: externalProducts,
-        values,
-        returningSchema:
-          RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema,
-      });
-
-      assertNonNullish(row);
-
-      return row;
+      return await insertExternalProduct({ tx, externalProduct: values });
     });
   }
 
