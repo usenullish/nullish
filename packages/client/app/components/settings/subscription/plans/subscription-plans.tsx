@@ -1,4 +1,10 @@
-import { startTransition, useState, ViewTransition } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  startTransition,
+  useState,
+  ViewTransition,
+} from "react";
 import { CheckIcon } from "lucide-react";
 import { isEmptyString, nonNullish, type Nullable, type Option } from "@usenullish/nullish-common";
 import { PaymentInterval } from "@usenullish/nullish-schema/payments";
@@ -243,10 +249,12 @@ const PriceLabel = ({
   const yearly = interval === PaymentInterval.YEAR;
 
   return (
-    <p className="flex items-baseline gap-1">
-      <span className="text-sm font-medium">{format(yearly ? (amount + 6n) / 12n : amount)}</span>
+    <p>
+      <span className="text-base font-medium">{format(yearly ? (amount + 6n) / 12n : amount)}</span>{" "}
       <span className="text-xs text-muted-foreground">
-        {i18n.subscription.interval[yearly ? PaymentInterval.MONTH : interval]}
+        {yearly
+          ? i18n.subscription.text.per_month_billed_yearly
+          : i18n.subscription.interval[interval]}
       </span>
     </p>
   );
@@ -275,7 +283,9 @@ const InstanceCard = ({
         <FeatureList features={i18n.subscription.instance_features} />
       </CardContent>
 
-      <ContactFooter contactUrl={contactUrl} />
+      <ContactFooter contactUrl={contactUrl} variant="default">
+        {i18n.subscription.action.request_instance}
+      </ContactFooter>
     </Card>
   );
 };
@@ -284,39 +294,44 @@ const OnPremCard = ({ plan: { name, contactUrl } }: { plan: OnPremPlan }) => {
   const { i18n } = useI18n();
 
   return (
-    <Card>
+    <Card className="mt-4 sm:col-span-2">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
         <CardDescription>{i18n.subscription.text.on_prem_description}</CardDescription>
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col gap-4">
-        <p className="text-sm font-medium">{i18n.subscription.text.on_request}</p>
+        <p className="text-base font-medium">{i18n.subscription.text.custom_pricing}</p>
         <FeatureList features={i18n.subscription.on_prem_features} />
       </CardContent>
 
-      <ContactFooter contactUrl={contactUrl} />
+      <ContactFooter contactUrl={contactUrl} variant="outline">
+        {i18n.subscription.action.get_in_touch}
+      </ContactFooter>
     </Card>
   );
 };
 
-const ContactFooter = ({ contactUrl }: { contactUrl: string }) => {
-  const { i18n } = useI18n();
-
-  return (
-    <CardFooter>
-      <Button
-        variant="outline"
-        className="w-full"
-        disabled={isEmptyString(contactUrl)}
-        nativeButton={false}
-        render={
-          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
-          <a href={contactUrl} target="_blank" rel="noreferrer" />
-        }
-      >
-        {i18n.subscription.action.get_in_touch}
-      </Button>
-    </CardFooter>
-  );
-};
+const ContactFooter = ({
+  contactUrl,
+  variant,
+  children,
+}: { contactUrl: string; children: ReactNode } & Pick<
+  ComponentProps<typeof Button>,
+  "variant"
+>) => (
+  <CardFooter>
+    <Button
+      variant={variant}
+      className="w-full"
+      disabled={isEmptyString(contactUrl)}
+      nativeButton={false}
+      render={
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
+        <a href={contactUrl} target="_blank" rel="noreferrer" />
+      }
+    >
+      {children}
+    </Button>
+  </CardFooter>
+);

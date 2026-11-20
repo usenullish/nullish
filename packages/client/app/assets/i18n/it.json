@@ -1434,6 +1434,7 @@
     "action": {
       "subscribe": "Abbonati",
       "get_in_touch": "Scrivici",
+      "request_instance": "Richiedi la mia istanza",
       "back_to_organization": "Torna all'organizzazione"
     },
     "step": {
@@ -1454,10 +1455,10 @@
       "year": "Annuale"
     },
     "interval": {
-      "day": "al giorno",
-      "week": "alla settimana",
-      "month": "al mese",
-      "year": "all'anno"
+      "day": "/ giorno",
+      "week": "/ settimana",
+      "month": "/ mese",
+      "year": "/ anno"
     },
     "cloud_features": {
       "accounting": "Contabilità",
@@ -1489,10 +1490,11 @@
       "admins_only": "Solo gli admin dell'organizzazione possono scegliere un piano.",
       "no_plans": "Nessun piano disponibile per ora.",
       "vat_excluded": "Tutti i prezzi IVA esclusa.",
+      "per_month_billed_yearly": "/ mese, fatturato annualmente",
       "cloud_description": "Per freelance e piccole imprese",
       "instance_description": "Per più sovranità e prestazioni",
       "on_prem_description": "Per gestire la tua contabilità in casa",
-      "on_request": "Su richiesta",
+      "custom_pricing": "Prezzo su misura",
       "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
       "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
       "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."

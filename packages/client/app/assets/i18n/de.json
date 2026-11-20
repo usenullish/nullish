@@ -1434,6 +1434,7 @@
     "action": {
       "subscribe": "Abonnieren",
       "get_in_touch": "Schreib uns",
+      "request_instance": "Meine Instanz anfragen",
       "back_to_organization": "Zurück zur Organisation"
     },
     "step": {
@@ -1454,10 +1455,10 @@
       "year": "Jährlich"
     },
     "interval": {
-      "day": "pro Tag",
-      "week": "pro Woche",
-      "month": "pro Monat",
-      "year": "pro Jahr"
+      "day": "/ Tag",
+      "week": "/ Woche",
+      "month": "/ Monat",
+      "year": "/ Jahr"
     },
     "cloud_features": {
       "accounting": "Buchhaltung",
@@ -1489,10 +1490,11 @@
       "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
       "no_plans": "Im Moment ist kein Plan verfügbar.",
       "vat_excluded": "Alle Preise exkl. MWST.",
+      "per_month_billed_yearly": "/ Monat, jährlich verrechnet",
       "cloud_description": "Für Freelancer und kleine Unternehmen",
       "instance_description": "Für mehr Souveränität und Leistung",
       "on_prem_description": "Für deine Buchhaltung im eigenen Haus",
-      "on_request": "Auf Anfrage",
+      "custom_pricing": "Individueller Preis",
       "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",
       "success_description": "Dein Abo wird aktiviert, das dauert nur ein paar Sekunden.",
       "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist."

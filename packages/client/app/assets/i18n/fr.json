@@ -1434,6 +1434,7 @@
     "action": {
       "subscribe": "S'abonner",
       "get_in_touch": "Écris-nous",
+      "request_instance": "Demander mon instance",
       "back_to_organization": "Retour à l'organisation"
     },
     "step": {
@@ -1454,10 +1455,10 @@
       "year": "Annuel"
     },
     "interval": {
-      "day": "par jour",
-      "week": "par semaine",
-      "month": "par mois",
-      "year": "par an"
+      "day": "/ jour",
+      "week": "/ semaine",
+      "month": "/ mois",
+      "year": "/ an"
     },
     "cloud_features": {
       "accounting": "Comptabilité",
@@ -1489,10 +1490,11 @@
       "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
       "no_plans": "Aucune offre disponible pour le moment.",
       "vat_excluded": "Prix hors TVA.",
+      "per_month_billed_yearly": "/ mois, facturé annuellement",
       "cloud_description": "Pour les indépendants et les petites entreprises",
       "instance_description": "Pour plus de souveraineté et de performance",
       "on_prem_description": "Pour tenir ta compta en interne",
-      "on_request": "Sur demande",
+      "custom_pricing": "Tarif sur mesure",
       "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
       "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
       "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
