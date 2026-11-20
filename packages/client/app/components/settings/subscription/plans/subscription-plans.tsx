@@ -8,9 +8,8 @@ import {
 } from "react";
 import { CheckIcon } from "lucide-react";
 import { isEmptyString, nonNullish, type Nullable, type Option } from "@usenullish/nullish-common";
-import { PaymentInterval } from "@usenullish/nullish-schema/payments";
-import { type Api, ApiSchema } from "@usenullish/nullish-schema/server";
-import * as z from "zod";
+import { BillingPeriod } from "@usenullish/nullish-schema/db";
+import type { Api } from "@usenullish/nullish-schema/server";
 import { PaymentsCheckoutService } from "~/lib/services/payments+checkout.services";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useCurrencies } from "~/context/contexts/currencies.context";
@@ -28,58 +27,31 @@ import {
   CardTitle,
 } from "~/ui/components/card";
 import { ToggleGroup, ToggleGroupItem } from "~/ui/components/toggle-group";
-import contactPlansJson from "~/assets/subscription/plans.json";
 
-type Plan = Api["PaymentsPlans"]["Client"]["Plan"];
-type PlanPrice = Api["PaymentsPlans"]["Client"]["PlanPrice"];
+type Plan = Api["ExternalPlans"]["Client"]["ExternalPlan"];
+type PlanPrice = Api["ExternalPlans"]["Client"]["ExternalPlanPrice"];
+type CustomPlan = Api["CustomPlans"]["Client"]["CustomPlan"];
+type CustomPlanPrice = Api["CustomPlans"]["Client"]["CustomPlanPrice"];
 
-enum ContactPlanType {
-  INSTANCE = "instance",
-  ON_PREM = "on_prem",
-}
-
-const ContactPlanPriceSchema = ApiSchema.PaymentsPlans.PlanPriceSchema.omit({ priceId: true });
-
-const ContactPlanBaseSchema = z.strictObject({
-  name: z.string(),
-  contactUrl: z.string(),
-});
-
-const InstancePlanSchema = ContactPlanBaseSchema.extend({
-  type: z.literal(ContactPlanType.INSTANCE),
-  prices: z.array(ContactPlanPriceSchema).min(1),
-});
-
-const OnPremPlanSchema = ContactPlanBaseSchema.extend({
-  type: z.literal(ContactPlanType.ON_PREM),
-});
-
-const ContactPlansSchema = z.array(
-  z.discriminatedUnion("type", [InstancePlanSchema, OnPremPlanSchema]),
-);
-
-type ContactPlanPrice = z.infer<typeof ContactPlanPriceSchema>;
-type InstancePlan = z.infer<typeof InstancePlanSchema>;
-type OnPremPlan = z.infer<typeof OnPremPlanSchema>;
-
-const contactPlans = ContactPlansSchema.safeParse(contactPlansJson).data ?? [];
-
-export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
+export const SubscriptionPlans = ({
+  plans,
+  customPlans,
+}: {
+  plans: Plan[];
+  customPlans: CustomPlan[];
+}) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
 
-  const intervals = Object.values(PaymentInterval).filter((interval) =>
-    [
-      ...plans.flatMap(({ prices }) => prices),
-      ...contactPlans.flatMap((plan) =>
-        plan.type === ContactPlanType.INSTANCE ? plan.prices : [],
-      ),
-    ].some((price) => price.interval === interval),
+  const billingPeriods = Object.values(BillingPeriod).filter((billingPeriod) =>
+    [...plans.flatMap(({ prices }) => prices), ...customPlans.flatMap(({ prices }) => prices)].some(
+      (price) => price.billingPeriod === billingPeriod,
+    ),
   );
 
-  const [billing, setBilling] = useState<Option<PaymentInterval>>(
-    intervals.includes(PaymentInterval.YEAR) ? PaymentInterval.YEAR : intervals[0],
+  const [billing, setBilling] = useState<Option<BillingPeriod>>(
+    billingPeriods.includes(BillingPeriod.YEAR) ? BillingPeriod.YEAR : billingPeriods[0],
   );
 
   const [pendingPriceId, setPendingPriceId] = useState<Option<PlanPrice["priceId"]>>(undefined);
@@ -120,13 +92,13 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
   };
 
   const pricedPlans = plans.flatMap((plan) => {
-    const price = plan.prices.find((price) => price.interval === billing);
+    const price = plan.prices.find((price) => price.billingPeriod === billing);
     return nonNullish(price) ? [{ plan, price }] : [];
   });
 
   return (
     <div className="flex flex-col gap-4">
-      {intervals.length > 1 && (
+      {billingPeriods.length > 1 && (
         <ToggleGroup
           value={nonNullish(billing) ? [billing] : []}
           onValueChange={(values) => {
@@ -139,7 +111,7 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
           aria-label={i18n.subscription.label.billing}
           className="self-end"
         >
-          {intervals.map((value) => (
+          {billingPeriods.map((value) => (
             <ToggleGroupItem key={value} value={value}>
               {i18n.subscription.billing[value]}
             </ToggleGroupItem>
@@ -175,11 +147,11 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
           />
         ))}
 
-        {contactPlans.map((plan) =>
-          plan.type === ContactPlanType.INSTANCE ? (
-            <InstanceCard key={plan.name} plan={plan} billing={billing} />
+        {customPlans.map((plan) =>
+          plan.prices.length > 0 ? (
+            <InstanceCard key={plan.plan.id} plan={plan} billing={billing} />
           ) : (
-            <OnPremCard key={plan.name} plan={plan} />
+            <OnPremCard key={plan.plan.id} plan={plan} />
           ),
         )}
       </div>
@@ -246,9 +218,9 @@ const FeatureList = ({ features }: { features: Record<string, string> }) => (
 );
 
 const PriceLabel = ({
-  price: { amount, currency: code, interval },
+  price: { amount, currency: code, billingPeriod },
 }: {
-  price: ContactPlanPrice;
+  price: Pick<CustomPlanPrice, "amount" | "currency" | "billingPeriod">;
 }) => {
   const { i18n } = useI18n();
   const formatAmount = useFormatAmount();
@@ -259,7 +231,7 @@ const PriceLabel = ({
   const format = (value: bigint): string =>
     nonNullish(currency) ? (formatAmount({ currency, amount: value }) ?? code) : code;
 
-  const yearly = interval === PaymentInterval.YEAR;
+  const yearly = billingPeriod === BillingPeriod.YEAR;
 
   return (
     <p>
@@ -267,22 +239,25 @@ const PriceLabel = ({
       <span className="text-xs text-muted-foreground">
         {yearly
           ? i18n.subscription.text.per_month_billed_yearly
-          : i18n.subscription.interval[interval]}
+          : i18n.subscription.billing_period[billingPeriod]}
       </span>
     </p>
   );
 };
 
 const InstanceCard = ({
-  plan: { name, prices, contactUrl },
+  plan: {
+    product: { name, contactUrl },
+    prices,
+  },
   billing,
 }: {
-  plan: InstancePlan;
-  billing: Option<PaymentInterval>;
+  plan: CustomPlan;
+  billing: Option<BillingPeriod>;
 }) => {
   const { i18n } = useI18n();
 
-  const price = prices.find(({ interval }) => interval === billing);
+  const price = prices.find(({ billingPeriod }) => billingPeriod === billing);
 
   return (
     <Card>
@@ -303,7 +278,13 @@ const InstanceCard = ({
   );
 };
 
-const OnPremCard = ({ plan: { name, contactUrl } }: { plan: OnPremPlan }) => {
+const OnPremCard = ({
+  plan: {
+    product: { name, contactUrl },
+  },
+}: {
+  plan: CustomPlan;
+}) => {
   const { i18n } = useI18n();
 
   return (

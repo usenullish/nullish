@@ -1302,7 +1302,7 @@ const I18nSubscriptionSchema = z.strictObject({
     month: z.string(),
     year: z.string(),
   }),
-  interval: z.strictObject({
+  billing_period: z.strictObject({
     day: z.string(),
     week: z.string(),
     month: z.string(),

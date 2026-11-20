@@ -1,23 +1,23 @@
 import type { Cookie } from "~/lib/schemas/cookie";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
 import type { Api } from "@usenullish/nullish-schema/server";
-import { ApiPaymentsPlansSsr } from "~/lib/api/payments+plans.ssr.api";
+import { ApiCustomPlansSsr } from "~/lib/api/subscription+custom-plans.ssr.api";
 import { Service } from "./_services";
 
-export class PaymentsPlansService extends Service {
+export class CustomPlansService extends Service {
   private constructor() {
     super();
   }
 
-  static create(): PaymentsPlansService {
+  static create(): CustomPlansService {
     return new this();
   }
 
   get = async (args: {
     cookie: Cookie;
-  }): Promise<Result<Api["PaymentsPlans"]["Client"]["GetPlansResponse"]>> => {
+  }): Promise<Result<Api["CustomPlans"]["Client"]["GetCustomPlansResponse"]>> => {
     return await tryCatch(async () => {
-      return await ApiPaymentsPlansSsr.create(args).get();
+      return await ApiCustomPlansSsr.create(args).get();
     });
   };
 }

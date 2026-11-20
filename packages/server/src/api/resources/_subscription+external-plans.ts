@@ -6,10 +6,10 @@ import type { OpenAPIHandlerContext } from "../types/openapi";
 import { errorResponse, toApiError } from "../_errors";
 
 const getRoute = defineGetRoute({
-  spec: { tag: "Payments" },
-  path: "/payments/plans",
+  spec: { tag: "Subscriptions" },
+  path: "/subscription/external-plans",
   response: {
-    body: { schema: ApiSchema.PaymentsPlans.GetPlansResponseSchema },
+    body: { schema: ApiSchema.ExternalPlans.GetExternalPlansResponseSchema },
     description: "Returns the plans that can be subscribed to, with their prices",
   },
 });
@@ -17,12 +17,12 @@ const getRoute = defineGetRoute({
 type GetRoute = typeof getRoute;
 
 @ResourceProvider
-export class PaymentsPlansHandlers extends Resource {
+export class ExternalPlansHandlers extends Resource {
   private constructor(args: Omit<ResourceArgs, "paths">) {
     super({ paths: [getRoute.path], ...args });
   }
 
-  static create(args: Omit<ResourceArgs, "paths">): PaymentsPlansHandlers {
+  static create(args: Omit<ResourceArgs, "paths">): ExternalPlansHandlers {
     return new this(args);
   }
 
@@ -73,8 +73,8 @@ export class PaymentsPlansHandlers extends Resource {
 
     return context.json(
       encodeWithCodecs({
-        schema: ApiSchema.PaymentsPlans.GetPlansResponseSchema,
-        value: { plans: result.result },
+        schema: ApiSchema.ExternalPlans.GetExternalPlansResponseSchema,
+        value: { externalPlans: result.result },
       }),
       200,
     );

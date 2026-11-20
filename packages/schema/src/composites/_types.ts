@@ -36,6 +36,9 @@ interface Composites {
       typeof CompositesSchema.SubscriptionSummariesSchema.SelectSubscriptionSummariesSchema
     >;
   };
+  CustomPlans: {
+    Select: z.infer<typeof CompositesSchema.CustomPlansSchema.SelectCustomPlansSchema>;
+  };
   DatasetSummaries: {
     Select: z.infer<typeof CompositesSchema.DatasetSummariesSchema.SelectDatasetSummariesSchema>;
     Filter: z.infer<typeof CompositesSchema.DatasetSummariesSchema.FilterDatasetSummariesSchema>;

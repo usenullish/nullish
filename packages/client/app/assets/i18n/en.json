@@ -1455,7 +1455,7 @@
       "month": "Monthly",
       "year": "Yearly"
     },
-    "interval": {
+    "billing_period": {
       "day": "/ day",
       "week": "/ week",
       "month": "/ month",

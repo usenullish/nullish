@@ -5,13 +5,19 @@ import { SubscriptionStep } from "~/components/settings/subscription/subscriptio
 import { SubscriptionPlans } from "~/components/settings/subscription/plans/subscription-plans";
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
-import { PaymentsPlansServer } from "~/context/server/payments+plans.server";
+import { ExternalPlansServer } from "~/context/server/subscription+external-plans.server";
+import { CustomPlansServer } from "~/context/server/subscription+custom-plans.server";
 import { OrganizationPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
 export const loader = async (args: Route.LoaderArgs) => {
-  return await PaymentsPlansServer.create().get(args);
+  const [externalPlans, customPlans] = await Promise.all([
+    ExternalPlansServer.create().get(args),
+    CustomPlansServer.create().get(args),
+  ]);
+
+  return { externalPlans, customPlans };
 };
 
 // /orgs/:orgId/subscription/plans
@@ -34,7 +40,10 @@ const SubscriptionPlansPage = ({ params, loaderData }: Route.ComponentProps) => 
           "{name}": organization.name,
         })}
       >
-        <SubscriptionPlans plans={loaderData?.plans ?? []} />
+        <SubscriptionPlans
+          plans={loaderData.externalPlans?.externalPlans ?? []}
+          customPlans={loaderData.customPlans?.customPlans ?? []}
+        />
       </SubscriptionStep>
     </NonNullishOrganizationContext.Provider>
   );
