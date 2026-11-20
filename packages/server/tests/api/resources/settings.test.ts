@@ -15,6 +15,7 @@ describe("settings", () => {
       jobs: {} as TriggerJobs,
       storage: FsStorageProvider.create(),
       mail,
+      payments: null,
     });
 
     return await fetch(new Request("http://localhost/settings"));
