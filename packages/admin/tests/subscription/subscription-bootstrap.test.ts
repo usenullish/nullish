@@ -102,6 +102,10 @@ describe("SubscriptionBootstrapService", () => {
   });
 
   afterEach(async () => {
+    for (const { id, expiresAt } of defaultPlans) {
+      await db.update(plans).set({ expiresAt }).where(eq(plans.id, id));
+    }
+
     await db.update(subscriptionSettings).set({
       initialPlanId: settingsBefore.initialPlanId,
       graceDays: settingsBefore.graceDays,
@@ -109,10 +113,6 @@ describe("SubscriptionBootstrapService", () => {
 
     await db.delete(plans).where(inArray(plans.id, insertedPlanIds.splice(0)));
     await db.delete(taxRates).where(inArray(taxRates.id, insertedTaxRateIds.splice(0)));
-
-    for (const { id, expiresAt } of defaultPlans) {
-      await db.update(plans).set({ expiresAt }).where(eq(plans.id, id));
-    }
   });
 
   afterAll(async () => {
