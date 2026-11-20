@@ -144,9 +144,9 @@ describe("subscription custom plans", () => {
 
     expect(customPlan?.product.name).toBe("Instance");
     expect(customPlan?.product.contactUrl).toBe("https://example.com/contact");
-    expect(customPlan?.prices.map(({ amount, billingPeriod }) => [amount, billingPeriod])).toEqual(
-      [[24000n, BillingPeriod.MONTH]],
-    );
+    expect(customPlan?.prices.map(({ amount, billingPeriod }) => [amount, billingPeriod])).toEqual([
+      [24000n, BillingPeriod.MONTH],
+    ]);
   });
 
   test("encodes the amounts as bigint", async () => {
