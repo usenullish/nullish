@@ -1,10 +1,10 @@
 import { logHelpSubscriptionTaxRate } from "../../help/subscription/tax-rate/help";
 import { logHelpSubscriptionTaxRateCreate } from "../../help/subscription/tax-rate/create.help";
-import { logHelpSubscriptionTaxRateEnd } from "../../help/subscription/tax-rate/end.help";
+import { logHelpSubscriptionTaxRateDisable } from "../../help/subscription/tax-rate/disable.help";
 import { logHelpSubscriptionTaxRateList } from "../../help/subscription/tax-rate/list.help";
 import { error } from "../../utils/log";
 import { subscriptionTaxRateCreate } from "./_tax-rate/create";
-import { subscriptionTaxRateEnd } from "./_tax-rate/end";
+import { subscriptionTaxRateDisable } from "./_tax-rate/disable";
 import { subscriptionTaxRateList } from "./_tax-rate/list";
 
 export const subscriptionTaxRate = async (args?: string[]) => {
@@ -17,8 +17,8 @@ export const subscriptionTaxRate = async (args?: string[]) => {
     case "create":
       await subscriptionTaxRateCreate(args);
       break;
-    case "end":
-      await subscriptionTaxRateEnd(args);
+    case "disable":
+      await subscriptionTaxRateDisable(args);
       break;
 
     default:
@@ -37,8 +37,8 @@ export const helpSubscriptionTaxRate = (args?: string[]) => {
     case "create":
       logHelpSubscriptionTaxRateCreate();
       break;
-    case "end":
-      logHelpSubscriptionTaxRateEnd();
+    case "disable":
+      logHelpSubscriptionTaxRateDisable();
       break;
 
     default:

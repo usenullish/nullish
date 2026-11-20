@@ -7,7 +7,7 @@ import * as pg from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { SubscriptionStatus } from "../../constants/subscriptions";
 import { subscriptionPolicies } from "../_policies";
-import { claimIdReference } from "./claims";
+import { planIdReference } from "./plans";
 
 export const subscriptionStatus = SubscriptionSchema.enum(
   "subscription_status",
@@ -27,7 +27,7 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
   {
     id: primaryKey(),
     organizationId: deferredOrganizationIdReference(),
-    claimId: claimIdReference(),
+    planId: planIdReference(),
     status: subscriptionStatus().notNull(),
     periodEnd: timestamp(),
     ...auditFields(),

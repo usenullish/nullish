@@ -13,7 +13,8 @@ import {
   TEST_USER_ID,
 } from "../../../admin/tests/_test-utils";
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
+const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
 
@@ -29,7 +30,7 @@ describe("PaymentSubscriptionService", () => {
   const externalProductId = `prod_${crypto.randomUUID()}`;
   const provider = SubscriptionProvider.STRIPE;
 
-  let claimId: string;
+  let planId: string;
   let organizationId: string;
 
   const paymentOf = (payment: Partial<Payments["Payment"]> = {}): Payments["Payment"] => ({
@@ -61,34 +62,36 @@ describe("PaymentSubscriptionService", () => {
     return db.select().from(references).where(eq(references.subscriptionId, id));
   };
 
-  const expireClaim = () =>
+  const expirePlan = () =>
     db
-      .update(claims)
+      .update(plans)
       .set({ expiresAt: new Date(Date.now() - DAY_MS) })
-      .where(eq(claims.id, claimId));
+      .where(eq(plans.id, planId));
 
   beforeAll(async () => {
-    const [claim] = await db.insert(claims).values({ provider, externalProductId }).returning();
-    assertNonNullish(claim);
-    claimId = claim.id;
+    const [plan] = await db.insert(plans).values({ provider }).returning();
+    assertNonNullish(plan);
+    planId = plan.id;
+
+    await db.insert(externalProducts).values({ planId, provider, externalProductId });
   });
 
   beforeEach(async () => {
     await resetDb(db);
     await seedUsers(db);
-    await db.update(claims).set({ expiresAt: null }).where(eq(claims.id, claimId));
+    await db.update(plans).set({ expiresAt: null }).where(eq(plans.id, planId));
 
     organizationId = await createOrganization(db, TEST_USER_ID);
   });
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, claimId));
+    await db.delete(plans).where(eq(plans.id, planId));
     await dbContext.close();
   });
 
   describe("with an organization", () => {
-    test("updates the subscription with the claim of the product", async () => {
+    test("updates the subscription with the plan of the product", async () => {
       const payment = paymentOf();
 
       const result = await sync({ payment });
@@ -97,7 +100,7 @@ describe("PaymentSubscriptionService", () => {
 
       expect(result).toEqual({ status: "success", result: subscription });
       expect(subscription.status).toBe(SubscriptionStatus.ACTIVE);
-      expect(subscription.claimId).toBe(claimId);
+      expect(subscription.planId).toBe(planId);
       expect(subscription.periodEnd).toEqual(payment.periodEnd ?? null);
     });
 
@@ -190,12 +193,12 @@ describe("PaymentSubscriptionService", () => {
       expect(subscription.periodEnd).toEqual(payment.periodEnd ?? null);
     });
 
-    test("renews a subscription on a claim that has expired since", async () => {
+    test("renews a subscription on a plan that has expired since", async () => {
       const payment = paymentOf();
       const periodEnd = new Date(Date.now() + 60 * DAY_MS);
 
       await sync({ payment });
-      await expireClaim();
+      await expirePlan();
 
       const result = await sync({ payment: { ...payment, periodEnd } });
 
@@ -203,17 +206,17 @@ describe("PaymentSubscriptionService", () => {
       expect((await subscriptionOf()).periodEnd).toEqual(periodEnd);
     });
 
-    test("rejects moving a subscription to an expired claim", async () => {
-      await expireClaim();
+    test("rejects moving a subscription to an expired plan", async () => {
+      await expirePlan();
 
       const result = await sync({ payment: paymentOf() });
 
       expect(result.status).toBe("error");
-      expect((await subscriptionOf()).claimId).not.toBe(claimId);
+      expect((await subscriptionOf()).planId).not.toBe(planId);
       expect(await referencesOf()).toHaveLength(0);
     });
 
-    test("changes nothing for a product without claim", async () => {
+    test("changes nothing for a product without plan", async () => {
       const payment = paymentOf({ status: SubscriptionStatus.INACTIVE });
 
       const result = await sync({

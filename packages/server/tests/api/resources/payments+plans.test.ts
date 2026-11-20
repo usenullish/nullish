@@ -13,9 +13,9 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
-import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
+import { BillingPeriod, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
-import { PaymentInterval, type ProcessPayments } from "@usenullish/nullish-schema/payments";
+import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { assertNonNullish, type Nullable, nonNullish } from "@usenullish/nullish-common";
 import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
@@ -31,8 +31,18 @@ const PLANS = [
   {
     productName: "10 users",
     prices: [
-      { priceId: "price_monthly", amount: 2900n, currency: "CHF", interval: PaymentInterval.MONTH },
-      { priceId: "price_yearly", amount: 29000n, currency: "CHF", interval: PaymentInterval.YEAR },
+      {
+        priceId: "price_monthly",
+        amount: 2900n,
+        currency: "CHF",
+        billingPeriod: BillingPeriod.MONTH,
+      },
+      {
+        priceId: "price_yearly",
+        amount: 29000n,
+        currency: "CHF",
+        billingPeriod: BillingPeriod.YEAR,
+      },
     ],
   },
 ];

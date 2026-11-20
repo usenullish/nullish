@@ -3,7 +3,7 @@ import {
   OPTION_HELP,
   SUBSCRIPTION_TAX_RATE_CREATE_DESCRIPTION,
   SUBSCRIPTION_TAX_RATE_DESCRIPTION,
-  SUBSCRIPTION_TAX_RATE_END_DESCRIPTION,
+  SUBSCRIPTION_TAX_RATE_DISABLE_DESCRIPTION,
   SUBSCRIPTION_TAX_RATE_LIST_DESCRIPTION,
   TITLE_AND_VERSION,
 } from "../../../_constants";
@@ -14,7 +14,7 @@ const usage = `Usage: ${lime("nullish")} ${cyan("subscription")} ${cyan("tax-rat
 Commands:
   ${cyan("list")}                ${SUBSCRIPTION_TAX_RATE_LIST_DESCRIPTION}
   ${cyan("create")}              ${SUBSCRIPTION_TAX_RATE_CREATE_DESCRIPTION}
-  ${cyan("end")}                 ${SUBSCRIPTION_TAX_RATE_END_DESCRIPTION}
+  ${cyan("disable")}             ${SUBSCRIPTION_TAX_RATE_DISABLE_DESCRIPTION}
 
 Options:
   ${OPTION_HELP}

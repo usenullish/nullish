@@ -4,10 +4,10 @@
 -- already exists. New organizations get theirs from
 -- 20261117102252_trigger_create_organization_subscription.
 INSERT INTO
-  subscription.subscriptions (organization_id, claim_id, status)
+  subscription.subscriptions (organization_id, plan_id, status)
 SELECT
   o.id,
-  s.initial_claim_id,
+  s.initial_plan_id,
   'active'
 FROM
   core.organizations o

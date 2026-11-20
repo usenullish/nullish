@@ -4,7 +4,7 @@ import { isNullish } from "@usenullish/nullish-common";
 import { withDbContext } from "../../../db";
 import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
-import { claimLabel, listClaims } from "../../_claim/_claims";
+import { planLabel, listPlans } from "../_plan/_plans";
 import { getSubscriptionSettings, settingsLabel } from "./_settings";
 
 export const subscriptionSettingsUpdate = async (_args?: string[]) => {
@@ -12,17 +12,17 @@ export const subscriptionSettingsUpdate = async (_args?: string[]) => {
   intro(lime("nullish"));
 
   await withDbContext(async (dbContext) => {
-    const { initialClaimId, graceDays } = await getSubscriptionSettings({ dbContext });
+    const { initialPlanId, graceDays } = await getSubscriptionSettings({ dbContext });
 
-    const claims = await listClaims({ dbContext });
+    const plans = await listPlans({ dbContext });
 
-    const newInitialClaimId = await select({
-      message: "Which claim should newly created organizations be subscribed to?",
-      options: claims.map((claim) => ({ label: claimLabel(claim), value: claim.id })),
-      initialValue: initialClaimId,
+    const newInitialPlanId = await select({
+      message: "Which plan should newly created organizations be subscribed to?",
+      options: plans.map((plan) => ({ label: planLabel(plan), value: plan.id })),
+      initialValue: initialPlanId,
     });
 
-    if (isCancel(newInitialClaimId)) {
+    if (isCancel(newInitialPlanId)) {
       cancel();
     }
 
@@ -39,7 +39,7 @@ export const subscriptionSettingsUpdate = async (_args?: string[]) => {
     }
 
     const result = await SubscriptionSettingsService.create({ db: dbContext.connection }).update({
-      settings: { initialClaimId: newInitialClaimId, graceDays: Number(newGraceDays) },
+      settings: { initialPlanId: newInitialPlanId, graceDays: Number(newGraceDays) },
     });
 
     if (result.status === "error") {

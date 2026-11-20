@@ -221,10 +221,34 @@ interface Records {
     };
   };
   Subscription: {
-    Claims: {
-      Select: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.SelectClaimsSchema>;
-      Insert: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.InsertClaimsSchema>;
-      Update: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.UpdateClaimsSchema>;
+    Plans: {
+      Select: z.infer<typeof RecordsSchema.Subscription.PlansSchema.SelectPlansSchema>;
+      Insert: z.infer<typeof RecordsSchema.Subscription.PlansSchema.InsertPlansSchema>;
+      Update: z.infer<typeof RecordsSchema.Subscription.PlansSchema.UpdatePlansSchema>;
+    };
+    ExternalProducts: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.ExternalProductsSchema.InsertExternalProductsSchema
+      >;
+    };
+    CustomProducts: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.CustomProductsSchema.SelectCustomProductsSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.CustomProductsSchema.InsertCustomProductsSchema
+      >;
+    };
+    CustomPrices: {
+      Select: z.infer<
+        typeof RecordsSchema.Subscription.CustomPricesSchema.SelectCustomPricesSchema
+      >;
+      Insert: z.infer<
+        typeof RecordsSchema.Subscription.CustomPricesSchema.InsertCustomPricesSchema
+      >;
     };
     SubscriptionSettings: {
       Select: z.infer<

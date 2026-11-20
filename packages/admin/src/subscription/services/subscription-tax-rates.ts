@@ -1,14 +1,10 @@
 import { asc, eq } from "drizzle-orm";
-import {
-  assertArrayAtMostOne,
-  assertNonNullish,
-  type Option,
-  type Result,
-} from "@usenullish/nullish-common";
+import { assertArrayAtMostOne, type Option, type Result } from "@usenullish/nullish-common";
 import { DbSchema, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import { insertMany, selectMany, updateMany } from "@usenullish/nullish-db";
+import { selectMany, updateMany } from "@usenullish/nullish-db";
 import { AdminServiceContext, type AdminServiceContextArgs } from "../../_service";
+import { insertSubscriptionTaxRate } from "../_helpers/subscription-tax-rates";
 
 const taxRates = DbSchema.Subscription.SubscriptionTaxRates.SubscriptionTaxRatesSchema;
 
@@ -46,17 +42,7 @@ export class SubscriptionTaxRatesService extends AdminServiceContext {
           taxRate,
         );
 
-      const [row] = await insertMany({
-        tx,
-        table: taxRates,
-        values,
-        returningSchema:
-          RecordsSchema.Subscription.SubscriptionTaxRatesSchema.SelectSubscriptionTaxRatesSchema,
-      });
-
-      assertNonNullish(row);
-
-      return row;
+      return await insertSubscriptionTaxRate({ tx, taxRate: values });
     });
   }
 

@@ -2,7 +2,7 @@ import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import { type Tx } from "@usenullish/nullish-db";
 import type { Payments } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { getClaimByExternalProduct } from "./_helpers/claims";
+import { getExternalProduct } from "./_helpers/external-products";
 import {
   getSubscriptionReference,
   insertSubscriptionReference,
@@ -62,8 +62,8 @@ export class PaymentSubscriptionService extends AdminServiceContext {
       });
     }
 
-    // 5. Get the claim configured for the product
-    const { id: claimId } = await getClaimByExternalProduct({
+    // 5. Get the plan configured for the product
+    const { planId } = await getExternalProduct({
       tx,
       provider,
       externalProductId: externalIds.productId,
@@ -71,11 +71,11 @@ export class PaymentSubscriptionService extends AdminServiceContext {
 
     const { status, periodEnd } = payment;
 
-    // 6. Update the subscription with the claim (new or same), period end and status
+    // 6. Update the subscription with the plan (new or same), period end and status
     return await updateSubscription({
       tx,
       subscription,
-      claimId,
+      planId,
       status,
       periodEnd,
     });

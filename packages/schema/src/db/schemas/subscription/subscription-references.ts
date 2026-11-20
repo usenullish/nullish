@@ -1,6 +1,7 @@
 import { SubscriptionSchema } from "./_schema";
 import { primaryKey } from "../_common";
 import * as pg from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { subscriptionProvider } from "./provider";
 import { SubscriptionsSchema } from "./subscriptions";
 
@@ -17,6 +18,10 @@ export const SubscriptionReferencesSchema = SubscriptionSchema.table(
     externalSubscriptionId: pg.text().notNull(),
   },
   (table) => [
+    pg.check(
+      "subscription_references_provider_third_party",
+      sql`${table.provider} NOT IN ('self', 'custom')`,
+    ),
     pg.uniqueIndex("subscription_references_subscription_uidx").on(table.subscriptionId),
     pg
       .uniqueIndex("subscription_references_provider_external_subscription_uidx")

@@ -10,7 +10,7 @@ import { causeMessage, resetDb, seedUsers, TEST_USER_ID } from "../_test-utils";
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 
 const asUser = <T>(
@@ -23,7 +23,7 @@ const asUser = <T>(
   });
 
 describe("subscription.subscription_settings", () => {
-  let initialClaimId: string;
+  let initialPlanId: string;
 
   beforeAll(async () => {
     await resetDb(db);
@@ -31,18 +31,18 @@ describe("subscription.subscription_settings", () => {
 
     const [settings] = await db.select().from(subscriptionSettings);
     assertNonNullish(settings);
-    initialClaimId = settings.initialClaimId;
+    initialPlanId = settings.initialPlanId;
   });
 
   afterAll(async () => {
     await client.close();
   });
 
-  test("holds a single row pointing to an initial claim without trial", async () => {
+  test("holds a single row pointing to an initial plan without trial", async () => {
     const rows = await db
-      .select({ id: subscriptionSettings.id, trialDays: claims.trialDays })
+      .select({ id: subscriptionSettings.id, trialDays: plans.trialDays })
       .from(subscriptionSettings)
-      .innerJoin(claims, eq(claims.id, subscriptionSettings.initialClaimId));
+      .innerJoin(plans, eq(plans.id, subscriptionSettings.initialPlanId));
 
     expect(rows).toHaveLength(1);
     expect(rows[0]?.id).toBe(1);
@@ -67,7 +67,7 @@ describe("subscription.subscription_settings", () => {
   test("rejects a second row", async () => {
     const error = await db
       .insert(subscriptionSettings)
-      .values({ id: 1, initialClaimId })
+      .values({ id: 1, initialPlanId })
       .catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("subscription_settings_pkey");
@@ -76,7 +76,7 @@ describe("subscription.subscription_settings", () => {
   test("rejects a row with another id", async () => {
     const error = await db
       .insert(subscriptionSettings)
-      .values({ id: 2, initialClaimId })
+      .values({ id: 2, initialPlanId })
       .catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("subscription_settings_single_row");
@@ -96,13 +96,13 @@ describe("subscription.subscription_settings", () => {
     expect(causeMessage(error)).toContain("The subscription settings cannot be deleted");
   });
 
-  test("rejects deleting the initial claim", async () => {
+  test("rejects deleting the initial plan", async () => {
     const error = await db
-      .delete(claims)
-      .where(eq(claims.id, initialClaimId))
+      .delete(plans)
+      .where(eq(plans.id, initialPlanId))
       .catch((e: unknown) => e);
 
-    expect(causeMessage(error)).toContain("subscription_settings_initial_claim_id_claims_id_fkey");
+    expect(causeMessage(error)).toContain("subscription_settings_initial_plan_id_plans_id_fkey");
   });
 
   test("lets a user read the settings", async () => {

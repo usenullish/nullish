@@ -1,10 +1,10 @@
 import * as z from "zod";
 import { SelectMembershipsSchema } from "../../records/schemas/core/memberships";
-import { SelectClaimsSchema } from "../../records/schemas/subscription/claims";
+import { SelectExternalProductsSchema } from "../../records/schemas/subscription/external-products";
 import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscription/subscription-references";
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 import { SelectSubscriptionTaxRatesSchema } from "../../records/schemas/subscription/subscription-tax-rates";
-import { PaymentInterval } from "../constants";
+import { SelectCustomPricesSchema } from "../../records/schemas/subscription/custom-prices";
 
 export const HandlePaymentsArgsSchema = z.strictObject({
   payload: z.string(),
@@ -27,7 +27,7 @@ export const PaymentPlanPriceSchema = z.strictObject({
   priceId: CheckoutPaymentsArgsSchema.shape.priceId,
   amount: z.bigint(),
   currency: z.currencyCode(),
-  interval: z.enum(PaymentInterval),
+  billingPeriod: SelectCustomPricesSchema.shape.billingPeriod,
 });
 
 export const PaymentPlanSchema = z.strictObject({
@@ -44,7 +44,7 @@ export const PaymentMetadataSchema = z.object({
 export const PaymentExternalIdsSchema = z.strictObject({
   subscriptionId: SelectSubscriptionReferencesSchema.shape.externalSubscriptionId,
   customerId: SelectSubscriptionReferencesSchema.shape.externalCustomerId,
-  productId: SelectClaimsSchema.shape.externalProductId.unwrap(),
+  productId: SelectExternalProductsSchema.shape.externalProductId,
 });
 
 export const PaymentSchema = z.strictObject({

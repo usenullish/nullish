@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -17,7 +17,7 @@ import {
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 const asUser = <T>({
@@ -35,7 +35,7 @@ const asUser = <T>({
 
 describe("subscription schema permissions", () => {
   let organizationId: string;
-  let claimId: string;
+  let planId: string;
   let subscriptionId: string;
 
   beforeAll(async () => {
@@ -50,7 +50,7 @@ describe("subscription schema permissions", () => {
       .where(eq(subscriptions.organizationId, organizationId));
     assertNonNullish(subscription);
     subscriptionId = subscription.id;
-    claimId = subscription.claimId;
+    planId = subscription.planId;
   });
 
   afterAll(async () => {
@@ -58,19 +58,19 @@ describe("subscription schema permissions", () => {
     await client.close();
   });
 
-  test("lets a user read the claims", async () => {
+  test("lets a user read the plans", async () => {
     const rows = await asUser({
       userId: TEST_USER_ID,
-      fn: (tx) => tx.select().from(claims).where(eq(claims.id, claimId)),
+      fn: (tx) => tx.select().from(plans).where(eq(plans.id, planId)),
     });
 
     expect(rows).toHaveLength(1);
   });
 
-  test("rejects a user writing a claim", async () => {
+  test("rejects a user writing a plan", async () => {
     const error = await asUser({
       userId: TEST_USER_ID,
-      fn: (tx) => tx.insert(claims).values({}),
+      fn: (tx) => tx.insert(plans).values({ provider: SubscriptionProvider.SELF }),
     }).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("permission denied");
@@ -100,7 +100,7 @@ describe("subscription schema permissions", () => {
       fn: (tx) =>
         tx
           .insert(subscriptions)
-          .values({ organizationId, claimId, status: SubscriptionStatus.ACTIVE }),
+          .values({ organizationId, planId, status: SubscriptionStatus.ACTIVE }),
     }).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("permission denied");

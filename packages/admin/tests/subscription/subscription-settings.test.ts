@@ -1,11 +1,11 @@
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { SubscriptionSettingsService } from "../../src/subscription/services/subscription-settings";
 import { openTestDb } from "../_test-utils";
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 
 const instance = await openTestDb();
@@ -14,25 +14,28 @@ const db = instance.connection;
 const service = SubscriptionSettingsService.create({ db });
 
 describe("SubscriptionSettingsService", () => {
-  let initialClaimId: string;
-  let otherClaimId: string;
+  let initialPlanId: string;
+  let otherPlanId: string;
 
   beforeAll(async () => {
     const [settings] = await db.select().from(subscriptionSettings);
     assertNonNullish(settings);
-    initialClaimId = settings.initialClaimId;
+    initialPlanId = settings.initialPlanId;
 
-    const [claim] = await db.insert(claims).values({ trialDays: 30 }).returning();
-    assertNonNullish(claim);
-    otherClaimId = claim.id;
+    const [plan] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.SELF, trialDays: 30 })
+      .returning();
+    assertNonNullish(plan);
+    otherPlanId = plan.id;
   });
 
   afterEach(async () => {
-    await db.update(subscriptionSettings).set({ initialClaimId, graceDays: 7 });
+    await db.update(subscriptionSettings).set({ initialPlanId, graceDays: 7 });
   });
 
   afterAll(async () => {
-    await db.delete(claims).where(eq(claims.id, otherClaimId));
+    await db.delete(plans).where(eq(plans.id, otherPlanId));
     await instance.close();
   });
 
@@ -41,18 +44,18 @@ describe("SubscriptionSettingsService", () => {
 
     expect(result).toEqual({
       status: "success",
-      result: { id: 1, initialClaimId, graceDays: 7 },
+      result: { id: 1, initialPlanId, graceDays: 7 },
     });
   });
 
-  test("changes the initial claim and the grace days", async () => {
+  test("changes the initial plan and the grace days", async () => {
     const result = await service.update({
-      settings: { initialClaimId: otherClaimId, graceDays: 10 },
+      settings: { initialPlanId: otherPlanId, graceDays: 10 },
     });
 
     expect(result).toEqual({
       status: "success",
-      result: { id: 1, initialClaimId: otherClaimId, graceDays: 10 },
+      result: { id: 1, initialPlanId: otherPlanId, graceDays: 10 },
     });
   });
 

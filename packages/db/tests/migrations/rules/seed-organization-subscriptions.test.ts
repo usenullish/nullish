@@ -31,7 +31,7 @@ const subscriptionsOf = (organizationId: string) =>
   db.select().from(subscriptions).where(eq(subscriptions.organizationId, organizationId));
 
 describe("seed_organization_subscriptions", () => {
-  let initialClaimId: string;
+  let initialPlanId: string;
 
   beforeAll(async () => {
     await resetDb(db);
@@ -39,7 +39,7 @@ describe("seed_organization_subscriptions", () => {
 
     const [settings] = await db.select().from(subscriptionSettings);
     assertNonNullish(settings);
-    initialClaimId = settings.initialClaimId;
+    initialPlanId = settings.initialPlanId;
   });
 
   afterAll(async () => {
@@ -47,7 +47,7 @@ describe("seed_organization_subscriptions", () => {
     await client.close();
   });
 
-  test("gives an organization without subscription an active one on the initial claim without end", async () => {
+  test("gives an organization without subscription an active one on the initial plan without end", async () => {
     const organizationId = await createOrganization(db);
     await db.delete(subscriptions).where(eq(subscriptions.organizationId, organizationId));
 
@@ -56,7 +56,7 @@ describe("seed_organization_subscriptions", () => {
     const rows = await subscriptionsOf(organizationId);
 
     expect(rows).toHaveLength(1);
-    expect(rows[0]?.claimId).toBe(initialClaimId);
+    expect(rows[0]?.planId).toBe(initialPlanId);
     expect(rows[0]?.status).toBe(SubscriptionStatus.ACTIVE);
     expect(rows[0]?.periodEnd).toBeNull();
   });

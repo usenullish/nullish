@@ -6,7 +6,16 @@ export enum SubscriptionStatus {
 }
 
 export enum SubscriptionProvider {
+  SELF = "self",
+  CUSTOM = "custom",
   STRIPE = "stripe",
+}
+
+export enum BillingPeriod {
+  DAY = "day",
+  WEEK = "week",
+  MONTH = "month",
+  YEAR = "year",
 }
 
 export enum OrganizationSubscriptionStatus {

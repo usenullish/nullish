@@ -10,7 +10,7 @@ import { createOrganization, resetDb, seedUsers } from "../_test-utils";
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
@@ -20,7 +20,7 @@ const subscriptionsOf = (organizationId: string) =>
   db.select().from(subscriptions).where(eq(subscriptions.organizationId, organizationId));
 
 describe("seed_subscription_for_organization", () => {
-  let initialClaimId: string;
+  let initialPlanId: string;
 
   beforeAll(async () => {
     await resetDb(db);
@@ -28,11 +28,11 @@ describe("seed_subscription_for_organization", () => {
 
     const [settings] = await db.select().from(subscriptionSettings);
     assertNonNullish(settings);
-    initialClaimId = settings.initialClaimId;
+    initialPlanId = settings.initialPlanId;
   });
 
   afterEach(async () => {
-    await db.update(claims).set({ trialDays: null }).where(eq(claims.id, initialClaimId));
+    await db.update(plans).set({ trialDays: null }).where(eq(plans.id, initialPlanId));
   });
 
   afterAll(async () => {
@@ -40,19 +40,19 @@ describe("seed_subscription_for_organization", () => {
     await client.close();
   });
 
-  test("creates an active subscription on the initial claim without end", async () => {
+  test("creates an active subscription on the initial plan without end", async () => {
     const organizationId = await createOrganization(db);
 
     const rows = await subscriptionsOf(organizationId);
 
     expect(rows).toHaveLength(1);
-    expect(rows[0]?.claimId).toBe(initialClaimId);
+    expect(rows[0]?.planId).toBe(initialPlanId);
     expect(rows[0]?.status).toBe(SubscriptionStatus.ACTIVE);
     expect(rows[0]?.periodEnd).toBeNull();
   });
 
-  test("creates a trialing subscription ending after the trial of the initial claim", async () => {
-    await db.update(claims).set({ trialDays: 14 }).where(eq(claims.id, initialClaimId));
+  test("creates a trialing subscription ending after the trial of the initial plan", async () => {
+    await db.update(plans).set({ trialDays: 14 }).where(eq(plans.id, initialPlanId));
 
     const before = Date.now();
     const organizationId = await createOrganization(db);

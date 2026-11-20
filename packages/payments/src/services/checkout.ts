@@ -7,7 +7,7 @@ import {
 } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
-import { getClaimByExternalProduct } from "./_helpers/claims";
+import { getExternalProduct } from "./_helpers/external-products";
 import { getMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
 import { getExistingSubscription } from "./_helpers/subscriptions";
@@ -15,9 +15,7 @@ import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
 
 type Membership = Records["Core"]["Memberships"]["Select"];
 type SubscriptionTaxRate = Records["Subscription"]["SubscriptionTaxRates"]["Select"];
-type ExternalProductId = NonNullable<
-  Records["Subscription"]["Claims"]["Select"]["externalProductId"]
->;
+type ExternalProductId = Records["Subscription"]["ExternalProducts"]["Select"]["externalProductId"];
 
 export class CheckoutService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
@@ -71,7 +69,7 @@ export class CheckoutService extends AdminServiceContext {
   }): Promise<void> {
     await this.#assertAdmin({ tx, organizationId, userId });
 
-    await this.#assertProductHasClaim({ tx, provider, externalProductId });
+    await this.#assertProductHasPlan({ tx, provider, externalProductId });
 
     await this.#assertNotLinked({ tx, organizationId });
   }
@@ -92,7 +90,7 @@ export class CheckoutService extends AdminServiceContext {
     }
   }
 
-  async #assertProductHasClaim({
+  async #assertProductHasPlan({
     tx,
     provider,
     externalProductId,
@@ -101,8 +99,8 @@ export class CheckoutService extends AdminServiceContext {
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
   }): Promise<void> {
-    // Claim not found throw
-    await getClaimByExternalProduct({ tx, provider, externalProductId });
+    // Product not found throw
+    await getExternalProduct({ tx, provider, externalProductId });
   }
 
   async #assertNotLinked({
