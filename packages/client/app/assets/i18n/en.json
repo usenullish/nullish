@@ -267,7 +267,8 @@
       "lets_go": "Let's go!",
       "delete": "Delete organization",
       "back_to_organizations": "Back to my organizations",
-      "see_plans": "See the plans"
+      "see_plans": "See the plans",
+      "choose_plan": "Pick a plan"
     },
     "state": {
       "creating": "Creating…"
@@ -301,7 +302,9 @@
       "deleted": "This organization was marked as deleted on {date}.",
       "locked_title": "{name} is locked",
       "locked_description": "Its subscription is no longer active, so its data can't be accessed for now. Nothing is lost.",
-      "grace": "The last payment failed. This organization will be locked on {date}."
+      "grace": "The last payment failed. This organization will be locked on {date}.",
+      "trial": "The trial ends on {date}.",
+      "trial_keep_going": " to keep going."
     },
     "toast": {
       "create_error": "The organization could not be created.",
@@ -1429,12 +1432,26 @@
   },
   "subscription": {
     "action": {
-      "choose": "Choose",
+      "subscribe": "Subscribe",
       "get_in_touch": "Get in touch",
       "back_to_organization": "Back to the organization"
     },
+    "step": {
+      "plan": "Plan",
+      "payment": "Payment",
+      "done": "Done"
+    },
     "state": {
       "activating": "Activating…"
+    },
+    "label": {
+      "billing": "Billing"
+    },
+    "billing": {
+      "day": "Daily",
+      "week": "Weekly",
+      "month": "Monthly",
+      "year": "Yearly"
     },
     "interval": {
       "day": "per day",
@@ -1442,16 +1459,41 @@
       "month": "per month",
       "year": "per year"
     },
+    "cloud_features": {
+      "accounting": "Accounting",
+      "invoices": "Invoices",
+      "banking": "Banking",
+      "vat": "VAT",
+      "ai_assistant": "AI assistant",
+      "mcp_api": "MCP + API",
+      "organizations": "1 organization",
+      "users": "3 users"
+    },
+    "instance_features": {
+      "cloud": "Everything in Cloud",
+      "server": "Your own server in Switzerland",
+      "domain": "Custom domain",
+      "support": "Priority support",
+      "organizations": "Up to 10 organizations",
+      "users": "Up to 100 users"
+    },
+    "on_prem_features": {
+      "cloud": "Everything in Cloud",
+      "infrastructure": "Your own company infrastructure",
+      "setup": "Installation and setup",
+      "maintenance": "Updates and maintenance",
+      "development": "Custom development"
+    },
     "text": {
-      "plans_title": "Pick a plan",
-      "plans_description": "Pick the plan for {name}. The payment happens on Stripe.",
+      "plans_description": "Pick a plan for {name}.",
       "admins_only": "Only the admins of the organization can pick a plan.",
       "no_plans": "No plan available for now.",
       "vat_excluded": "All prices excluding VAT.",
-      "instance_title": "Your own instance",
-      "instance_description": "A nullish instance of your own, billed separately.",
+      "cloud_description": "For freelancers and small businesses",
+      "instance_description": "For more sovereignty and performance",
+      "on_prem_description": "For running your accounting in-house",
+      "on_request": "On request",
       "checkout_error": "The payment page could not be opened.",
-      "success_title": "Thank you!",
       "success_description": "Your subscription is being activated, it only takes a few seconds.",
       "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed."
     }

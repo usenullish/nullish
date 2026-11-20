@@ -1,6 +1,9 @@
 import { startTransition, useState, ViewTransition } from "react";
+import { CheckIcon } from "lucide-react";
 import { isEmptyString, nonNullish, type Nullable, type Option } from "@usenullish/nullish-common";
-import type { Api } from "@usenullish/nullish-schema/server";
+import { PaymentInterval } from "@usenullish/nullish-schema/payments";
+import { type Api, ApiSchema } from "@usenullish/nullish-schema/server";
+import * as z from "zod";
 import { PaymentsCheckoutService } from "~/lib/services/payments+checkout.services";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useCurrencies } from "~/context/contexts/currencies.context";
@@ -8,7 +11,6 @@ import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { errorReason } from "~/kit/error-drawer/errors.utils";
 import { useFormatAmount } from "~/kit/format/amount.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
-import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { Button } from "~/ui/components/button";
 import {
   Card,
@@ -18,17 +20,60 @@ import {
   CardHeader,
   CardTitle,
 } from "~/ui/components/card";
+import { ToggleGroup, ToggleGroupItem } from "~/ui/components/toggle-group";
+import contactPlansJson from "~/assets/subscription/plans.json";
 
 type Plan = Api["PaymentsPlans"]["Client"]["Plan"];
 type PlanPrice = Api["PaymentsPlans"]["Client"]["PlanPrice"];
 
-// TODO: link to the contact form on the website once it exists.
-const INSTANCE_CONTACT_URL = "";
+enum ContactPlanType {
+  INSTANCE = "instance",
+  ON_PREM = "on_prem",
+}
+
+const ContactPlanPriceSchema = ApiSchema.PaymentsPlans.PlanPriceSchema.omit({ priceId: true });
+
+const ContactPlanBaseSchema = z.strictObject({
+  name: z.string(),
+  contactUrl: z.string(),
+});
+
+const InstancePlanSchema = ContactPlanBaseSchema.extend({
+  type: z.literal(ContactPlanType.INSTANCE),
+  prices: z.array(ContactPlanPriceSchema).min(1),
+});
+
+const OnPremPlanSchema = ContactPlanBaseSchema.extend({
+  type: z.literal(ContactPlanType.ON_PREM),
+});
+
+const ContactPlansSchema = z.array(
+  z.discriminatedUnion("type", [InstancePlanSchema, OnPremPlanSchema]),
+);
+
+type ContactPlanPrice = z.infer<typeof ContactPlanPriceSchema>;
+type InstancePlan = z.infer<typeof InstancePlanSchema>;
+type OnPremPlan = z.infer<typeof OnPremPlanSchema>;
+
+const contactPlans = ContactPlansSchema.safeParse(contactPlansJson).data ?? [];
 
 export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
+
+  const intervals = Object.values(PaymentInterval).filter((interval) =>
+    [
+      ...plans.flatMap(({ prices }) => prices),
+      ...contactPlans.flatMap((plan) =>
+        plan.type === ContactPlanType.INSTANCE ? plan.prices : [],
+      ),
+    ].some((price) => price.interval === interval),
+  );
+
+  const [billing, setBilling] = useState<Option<PaymentInterval>>(
+    intervals.includes(PaymentInterval.YEAR) ? PaymentInterval.YEAR : intervals[0],
+  );
 
   const [pendingPriceId, setPendingPriceId] = useState<Option<PlanPrice["priceId"]>>(undefined);
   const [error, setError] = useState<Nullable<string>>(null);
@@ -55,16 +100,33 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
     window.location.assign(result.result.url);
   };
 
+  const pricedPlans = plans.flatMap((plan) => {
+    const price = plan.prices.find((price) => price.interval === billing);
+    return nonNullish(price) ? [{ plan, price }] : [];
+  });
+
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 py-10">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-xs font-medium">{i18n.subscription.text.plans_title}</h1>
-        <p className="text-xs text-muted-foreground">
-          {replacePlaceholders(i18n.subscription.text.plans_description, {
-            "{name}": organization.name,
-          })}
-        </p>
-      </div>
+    <div className="flex flex-col gap-4">
+      {intervals.length > 1 && (
+        <ToggleGroup
+          value={nonNullish(billing) ? [billing] : []}
+          onValueChange={(values) => {
+            const [value] = values;
+
+            if (nonNullish(value)) {
+              startTransition(() => setBilling(value));
+            }
+          }}
+          aria-label={i18n.subscription.label.billing}
+          className="self-end"
+        >
+          {intervals.map((value) => (
+            <ToggleGroupItem key={value} value={value}>
+              {i18n.subscription.billing[value]}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      )}
 
       {!admin && (
         <p className="text-xs text-muted-foreground">{i18n.subscription.text.admins_only}</p>
@@ -83,108 +145,178 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {plans.map((plan) => (
+        {pricedPlans.map(({ plan, price }) => (
           <PlanCard
             key={plan.productName}
             plan={plan}
+            price={price}
             admin={admin}
             pendingPriceId={pendingPriceId}
-            onChoose={checkout}
+            onSubscribe={checkout}
           />
         ))}
 
-        <InstanceCard />
+        {contactPlans.map((plan) =>
+          plan.type === ContactPlanType.INSTANCE ? (
+            <InstanceCard key={plan.name} plan={plan} billing={billing} />
+          ) : (
+            <OnPremCard key={plan.name} plan={plan} />
+          ),
+        )}
       </div>
 
       {plans.length > 0 && (
-        <p className="text-xs text-muted-foreground">{i18n.subscription.text.vat_excluded}</p>
+        <p className="mt-2 text-xs text-muted-foreground">{i18n.subscription.text.vat_excluded}</p>
       )}
     </div>
   );
 };
 
 const PlanCard = ({
-  plan: { productName, prices },
+  plan: { productName },
+  price,
   admin,
   pendingPriceId,
-  onChoose,
+  onSubscribe,
 }: {
   plan: Plan;
+  price: PlanPrice;
   admin: boolean;
   pendingPriceId: Option<PlanPrice["priceId"]>;
-  onChoose: (args: Pick<PlanPrice, "priceId">) => Promise<void>;
+  onSubscribe: (args: Pick<PlanPrice, "priceId">) => Promise<void>;
 }) => {
   const { i18n } = useI18n();
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{productName}</CardTitle>
+        <CardTitle className="text-2xl font-semibold">{productName}</CardTitle>
+        <CardDescription>{i18n.subscription.text.cloud_description}</CardDescription>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-3">
-        {prices.map((price) => (
-          <div key={price.priceId} className="flex items-center justify-between gap-4">
-            <PriceLabel price={price} />
-
-            {admin && (
-              <Button
-                type="button"
-                size="sm"
-                disabled={nonNullish(pendingPriceId)}
-                onClick={() => void onChoose({ priceId: price.priceId })}
-              >
-                {i18n.subscription.action.choose}
-              </Button>
-            )}
-          </div>
-        ))}
+      <CardContent className="flex flex-1 flex-col gap-4">
+        <PriceLabel price={price} />
+        <FeatureList features={i18n.subscription.cloud_features} />
       </CardContent>
+
+      {admin && (
+        <CardFooter>
+          <Button
+            type="button"
+            className="w-full"
+            disabled={nonNullish(pendingPriceId)}
+            onClick={() => void onSubscribe({ priceId: price.priceId })}
+          >
+            {i18n.subscription.action.subscribe}
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };
 
-const PriceLabel = ({ price: { amount, currency: code, interval } }: { price: PlanPrice }) => {
+const FeatureList = ({ features }: { features: Record<string, string> }) => (
+  <ul className="flex flex-col gap-2">
+    {Object.entries(features).map(([key, feature]) => (
+      <li key={key} className="flex items-center gap-2">
+        <CheckIcon className="size-3.5 text-muted-foreground" />
+        {feature}
+      </li>
+    ))}
+  </ul>
+);
+
+const PriceLabel = ({
+  price: { amount, currency: code, interval },
+}: {
+  price: ContactPlanPrice;
+}) => {
   const { i18n } = useI18n();
   const formatAmount = useFormatAmount();
   const currencies = useCurrencies();
 
   const currency = currencies?.find((currency) => currency.code === code);
 
+  const format = (value: bigint): string =>
+    nonNullish(currency) ? (formatAmount({ currency, amount: value }) ?? code) : code;
+
+  const yearly = interval === PaymentInterval.YEAR;
+
   return (
-    <p className="text-sm">
-      <span className="font-medium">
-        {nonNullish(currency) ? formatAmount({ currency, amount }) : code}
-      </span>{" "}
-      <span className="text-muted-foreground">{i18n.subscription.interval[interval]}</span>
+    <p className="flex items-baseline gap-1">
+      <span className="text-sm font-medium">{format(yearly ? (amount + 6n) / 12n : amount)}</span>
+      <span className="text-xs text-muted-foreground">
+        {i18n.subscription.interval[yearly ? PaymentInterval.MONTH : interval]}
+      </span>
     </p>
   );
 };
 
-const InstanceCard = () => {
+const InstanceCard = ({
+  plan: { name, prices, contactUrl },
+  billing,
+}: {
+  plan: InstancePlan;
+  billing: Option<PaymentInterval>;
+}) => {
+  const { i18n } = useI18n();
+
+  const price = prices.find(({ interval }) => interval === billing);
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
+        <CardDescription>{i18n.subscription.text.instance_description}</CardDescription>
+      </CardHeader>
+
+      <CardContent className="flex flex-1 flex-col gap-4">
+        {nonNullish(price) && <PriceLabel price={price} />}
+        <FeatureList features={i18n.subscription.instance_features} />
+      </CardContent>
+
+      <ContactFooter contactUrl={contactUrl} />
+    </Card>
+  );
+};
+
+const OnPremCard = ({ plan: { name, contactUrl } }: { plan: OnPremPlan }) => {
   const { i18n } = useI18n();
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{i18n.subscription.text.instance_title}</CardTitle>
-        <CardDescription>{i18n.subscription.text.instance_description}</CardDescription>
+        <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
+        <CardDescription>{i18n.subscription.text.on_prem_description}</CardDescription>
       </CardHeader>
 
-      <CardFooter>
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={isEmptyString(INSTANCE_CONTACT_URL)}
-          nativeButton={false}
-          render={
-            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
-            <a href={INSTANCE_CONTACT_URL} target="_blank" rel="noreferrer" />
-          }
-        >
-          {i18n.subscription.action.get_in_touch}
-        </Button>
-      </CardFooter>
+      <CardContent className="flex flex-1 flex-col gap-4">
+        <p className="text-sm font-medium">{i18n.subscription.text.on_request}</p>
+        <FeatureList features={i18n.subscription.on_prem_features} />
+      </CardContent>
+
+      <ContactFooter contactUrl={contactUrl} />
     </Card>
+  );
+};
+
+const ContactFooter = ({ contactUrl }: { contactUrl: string }) => {
+  const { i18n } = useI18n();
+
+  return (
+    <CardFooter>
+      <Button
+        variant="outline"
+        className="w-full"
+        disabled={isEmptyString(contactUrl)}
+        nativeButton={false}
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
+          <a href={contactUrl} target="_blank" rel="noreferrer" />
+        }
+      >
+        {i18n.subscription.action.get_in_touch}
+      </Button>
+    </CardFooter>
   );
 };

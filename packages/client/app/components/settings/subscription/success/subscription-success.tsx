@@ -3,12 +3,11 @@ import { Link, Navigate, useRevalidator } from "react-router";
 import type { Option } from "@usenullish/nullish-common";
 import { SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import type { Api } from "@usenullish/nullish-schema/server";
-import { CenteredLayout } from "~/components/layout/centered-layout";
+import { SubscriptionStep } from "~/components/settings/subscription/subscription-step";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { OrganizationPath } from "~/navigation";
 import { Button } from "~/ui/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/card";
 import { TextShimmerLoader } from "~/ui/components/loader";
 
 type SubscriptionSummary = Api["SubscriptionSummaries"]["Client"]["SubscriptionSummary"];
@@ -63,35 +62,28 @@ export const SubscriptionSuccess = ({
   }
 
   return (
-    <CenteredLayout>
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-lg">{i18n.subscription.text.success_title}</CardTitle>
-          <CardDescription>{i18n.subscription.text.success_description}</CardDescription>
-        </CardHeader>
+    <SubscriptionStep
+      closeTo={organizationPath}
+      current="done"
+      intro={i18n.subscription.text.success_description}
+    >
+      {timedOut ? (
+        <ViewTransition>
+          <div className="flex flex-col items-start gap-4">
+            <p className="text-xs text-muted-foreground">
+              {i18n.subscription.text.success_timeout}
+            </p>
 
-        <CardContent className="grid gap-4">
-          {timedOut ? (
-            <ViewTransition>
-              <p className="text-xs text-muted-foreground">
-                {i18n.subscription.text.success_timeout}
-              </p>
-
-              <Button
-                className="w-full"
-                nativeButton={false}
-                render={<Link to={organizationPath} />}
-              >
-                {i18n.subscription.action.back_to_organization}
-              </Button>
-            </ViewTransition>
-          ) : (
-            <div className="flex justify-center">
-              <TextShimmerLoader text={i18n.subscription.state.activating} size="sm" />
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </CenteredLayout>
+            <Button nativeButton={false} render={<Link to={organizationPath} />}>
+              {i18n.subscription.action.back_to_organization}
+            </Button>
+          </div>
+        </ViewTransition>
+      ) : (
+        <div className="flex justify-center">
+          <TextShimmerLoader text={i18n.subscription.state.activating} size="sm" />
+        </div>
+      )}
+    </SubscriptionStep>
   );
 };

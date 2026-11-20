@@ -267,7 +267,8 @@
       "lets_go": "Los geht's!",
       "delete": "Organisation löschen",
       "back_to_organizations": "Zurück zu meinen Organisationen",
-      "see_plans": "Pläne ansehen"
+      "see_plans": "Pläne ansehen",
+      "choose_plan": "Wähle einen Plan"
     },
     "state": {
       "creating": "Wird erstellt…"
@@ -301,7 +302,9 @@
       "deleted": "Diese Organisation wurde am {date} als gelöscht markiert.",
       "locked_title": "{name} ist gesperrt",
       "locked_description": "Ihr Abo ist nicht mehr aktiv, deshalb sind ihre Daten im Moment nicht zugänglich. Es geht nichts verloren.",
-      "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt."
+      "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt.",
+      "trial": "Die Testphase endet am {date}.",
+      "trial_keep_going": ", um weiterzumachen."
     },
     "toast": {
       "create_error": "Die Organisation konnte nicht erstellt werden.",
@@ -1429,12 +1432,26 @@
   },
   "subscription": {
     "action": {
-      "choose": "Auswählen",
+      "subscribe": "Abonnieren",
       "get_in_touch": "Schreib uns",
       "back_to_organization": "Zurück zur Organisation"
     },
+    "step": {
+      "plan": "Plan",
+      "payment": "Zahlung",
+      "done": "Fertig"
+    },
     "state": {
       "activating": "Wird aktiviert…"
+    },
+    "label": {
+      "billing": "Abrechnung"
+    },
+    "billing": {
+      "day": "Täglich",
+      "week": "Wöchentlich",
+      "month": "Monatlich",
+      "year": "Jährlich"
     },
     "interval": {
       "day": "pro Tag",
@@ -1442,16 +1459,41 @@
       "month": "pro Monat",
       "year": "pro Jahr"
     },
+    "cloud_features": {
+      "accounting": "Buchhaltung",
+      "invoices": "Rechnungen",
+      "banking": "Banking",
+      "vat": "MWST",
+      "ai_assistant": "KI-Assistent",
+      "mcp_api": "MCP + API",
+      "organizations": "1 Organisation",
+      "users": "3 Benutzer"
+    },
+    "instance_features": {
+      "cloud": "Alles aus Cloud",
+      "server": "Dein eigener Server in der Schweiz",
+      "domain": "Eigene Domain",
+      "support": "Priorisierter Support",
+      "organizations": "Bis zu 10 Organisationen",
+      "users": "Bis zu 100 Benutzer"
+    },
+    "on_prem_features": {
+      "cloud": "Alles aus Cloud",
+      "infrastructure": "Die Infrastruktur deines Unternehmens",
+      "setup": "Installation und Einrichtung",
+      "maintenance": "Updates und Wartung",
+      "development": "Individuelle Entwicklung"
+    },
     "text": {
-      "plans_title": "Wähle einen Plan",
-      "plans_description": "Wähle den Plan für {name}. Die Zahlung läuft über Stripe.",
+      "plans_description": "Wähle einen Plan für {name}.",
       "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
       "no_plans": "Im Moment ist kein Plan verfügbar.",
       "vat_excluded": "Alle Preise exkl. MWST.",
-      "instance_title": "Deine eigene Instanz",
-      "instance_description": "Eine eigene nullish-Instanz, separat verrechnet.",
+      "cloud_description": "Für Freelancer und kleine Unternehmen",
+      "instance_description": "Für mehr Souveränität und Leistung",
+      "on_prem_description": "Für deine Buchhaltung im eigenen Haus",
+      "on_request": "Auf Anfrage",
       "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",
-      "success_title": "Danke!",
       "success_description": "Dein Abo wird aktiviert, das dauert nur ein paar Sekunden.",
       "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist."
     }
