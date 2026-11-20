@@ -6,6 +6,7 @@ import {
   SubscriptionProvider,
   SubscriptionStatus,
 } from "@usenullish/nullish-schema/db";
+import { envAppUrl } from "@usenullish/nullish-env";
 
 const withDbContext = mock(async () => ({
   status: "success",
@@ -394,8 +395,7 @@ describe("StripePaymentProvider", () => {
       userId: "user-1",
       organizationId: ORGANIZATION_ID,
       priceId: "price_1",
-      successUrl: "https://app.nullish.test/orgs/success",
-      cancelUrl: "https://app.nullish.test/orgs/cancel",
+      billingPeriod: BillingPeriod.YEAR,
     };
 
     const mockCheckout = ({ url }: { url: string | null }) => {
@@ -444,8 +444,26 @@ describe("StripePaymentProvider", () => {
       expect(params.get("mode")).toBe("subscription");
       expect(params.get("line_items[0][price]")).toBe("price_1");
       expect(params.get("line_items[0][quantity]")).toBe("1");
-      expect(params.get("success_url")).toBe(args.successUrl);
-      expect(params.get("cancel_url")).toBe(args.cancelUrl);
+    });
+
+    test("returns to the success page of the organization", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().get("success_url")).toBe(
+        `${envAppUrl()}/orgs/${ORGANIZATION_ID}/subscription/success`,
+      );
+    });
+
+    test("returns to the plans of the organization with the billing period on cancel", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().get("cancel_url")).toBe(
+        `${envAppUrl()}/orgs/${ORGANIZATION_ID}/subscription/plans?billing=year`,
+      );
     });
 
     test("applies the tax rate valid today to the subscription", async () => {

@@ -1,6 +1,5 @@
 import { Resource, type ResourceArgs, ResourceProvider } from "./_factories/resource";
 import { isInvalidUuid, isNullish, tryCatch } from "@usenullish/nullish-common";
-import { envAppUrl } from "@usenullish/nullish-env";
 import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import { defineActionWithRequestBodyRoute } from "./_factories/action-route-config";
 import type { OpenAPIHandlerContext, Response200 } from "../types/openapi";
@@ -76,18 +75,14 @@ export class PaymentsCheckoutHandlers extends Resource {
       });
     }
 
-    const { priceId } = req.valid("json");
-
-    // TODO: return to the plans page once it exists.
-    const returnUrl = `${envAppUrl()}/orgs/${parentId}`;
+    const { priceId, billingPeriod } = req.valid("json");
 
     const result = await tryCatch(async () => {
       return await payments.checkout({
         userId: caller.userId,
         organizationId: parentId,
         priceId,
-        successUrl: returnUrl,
-        cancelUrl: returnUrl,
+        billingPeriod,
       });
     });
 
