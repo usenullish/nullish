@@ -35,6 +35,7 @@
     "fmt:check": "bun run oxfmt:fmt:check && bun run prettier:fmt:check",
     "env:dev": "./env.run.sh dev",
     "env:test": "./env.run.sh test",
+    "env:stripe": "./env.stripe.sh",
     "db:bootstrap": "./db.bootstrap.sh",
     "db:generate": "drizzle-kit generate",
     "db:view": "drizzle-kit studio --port=3100",
