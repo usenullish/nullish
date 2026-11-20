@@ -105,6 +105,7 @@ describe("POST /chat of a locked organization", () => {
       jobs: {} as TriggerJobs,
       storage: FsStorageProvider.create(),
       mail: null,
+      payments: null,
     });
 
     const response = await fetch(

@@ -15,7 +15,7 @@ export type DefineApi = (args: {
   jobs: TriggerJobs;
   storage: Storage;
   mail: Nullable<SendMail>;
-  payments?: Nullable<ProcessPayments>;
+  payments: Nullable<ProcessPayments>;
 }) => {
   fetch: Hono["fetch"];
 };

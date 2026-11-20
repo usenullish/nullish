@@ -22,6 +22,7 @@ describe("secure headers", () => {
       jobs: {} as TriggerJobs,
       storage: FsStorageProvider.create(),
       mail: null,
+      payments: null,
     });
 
     response = await fetch(new Request("http://localhost/health"));

@@ -22,6 +22,7 @@ describe("robots", () => {
       jobs: {} as TriggerJobs,
       storage: FsStorageProvider.create(),
       mail: null,
+      payments: null,
     }));
   });
 

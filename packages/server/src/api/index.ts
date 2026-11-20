@@ -30,7 +30,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   app.use("*", noRobotsMiddleware);
   app.use("*", loadDbMiddleware({ db }));
   app.use("*", loadAuthMiddleware({ db, mail }));
-  app.use("*", loadWorkersMiddleware({ jobs, storage, mail, payments: payments ?? null }));
+  app.use("*", loadWorkersMiddleware({ jobs, storage, mail, payments }));
   app.use("*", loadCallerMiddleware());
   app.use("*", userRateLimitMiddleware({ limit: RATE_LIMITS.api }));
 
