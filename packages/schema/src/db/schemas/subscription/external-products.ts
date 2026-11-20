@@ -22,7 +22,10 @@ export const ExternalProductsSchema = SubscriptionSchema.table(
         foreignColumns: [PlansSchema.id, PlansSchema.provider],
       })
       .onDelete("cascade"),
-    pg.check("external_products_provider_stripe", sql`${table.provider} = 'stripe'`),
+    pg.check(
+      "external_products_provider_third_party",
+      sql`${table.provider} NOT IN ('self', 'custom')`,
+    ),
     pg.uniqueIndex("external_products_plan_uidx").on(table.planId),
     pg
       .uniqueIndex("external_products_provider_external_product_uidx")

@@ -15,6 +15,10 @@ export const SubscriptionTaxRatesSchema = SubscriptionSchema.table(
     endOn: date(),
   },
   (table) => [
+    pg.check(
+      "subscription_tax_rates_provider_third_party",
+      sql`${table.provider} NOT IN ('self', 'custom')`,
+    ),
     pg.uniqueIndex("subscription_tax_rates_provider_start_uidx").on(table.provider, table.startOn),
     pg.check(
       "subscription_tax_rates_end_after_start",

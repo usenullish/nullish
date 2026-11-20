@@ -58,6 +58,32 @@ describe("subscription tax rates", () => {
     await client.close();
   });
 
+  test("rejects a rate of a self provider", async () => {
+    const error = await db
+      .insert(taxRates)
+      .values({
+        provider: SubscriptionProvider.SELF,
+        externalTaxRateId: `txr_${crypto.randomUUID()}`,
+        startOn: new Date("2026-01-01"),
+      })
+      .catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("subscription_tax_rates_provider_third_party");
+  });
+
+  test("rejects a rate of a custom provider", async () => {
+    const error = await db
+      .insert(taxRates)
+      .values({
+        provider: SubscriptionProvider.CUSTOM,
+        externalTaxRateId: `txr_${crypto.randomUUID()}`,
+        startOn: new Date("2026-01-01"),
+      })
+      .catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("subscription_tax_rates_provider_third_party");
+  });
+
   test("rejects a rate whose range overlaps an existing one", async () => {
     await insertTaxRate({ startOn: new Date("2026-01-01"), endOn: new Date("2026-12-31") });
 
