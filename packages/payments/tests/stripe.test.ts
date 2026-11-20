@@ -537,6 +537,7 @@ describe("StripePaymentProvider", () => {
       planId: crypto.randomUUID(),
       provider: SubscriptionProvider.STRIPE,
       externalProductId,
+      name: `Plan ${externalProductId}`,
     });
 
     const priceOf = ({
@@ -567,11 +568,6 @@ describe("StripePaymentProvider", () => {
     const mockStripe = ({ prices }: { prices: Record<string, ReturnType<typeof priceOf>[]> }) => {
       fetchSpy.mockImplementation((async (input: Parameters<typeof fetch>[0]) => {
         const url = new URL(String(input));
-
-        if (url.pathname.startsWith("/v1/products/")) {
-          const id = url.pathname.replace("/v1/products/", "");
-          return Response.json({ id, object: "product", name: `Plan ${id}` });
-        }
 
         const product = url.searchParams.get("product") ?? "";
 
@@ -618,6 +614,19 @@ describe("StripePaymentProvider", () => {
       ]);
     });
 
+    test("does not ask Stripe for the product", async () => {
+      mockPlans([planOf({ externalProductId: "prod_10users" })]);
+      mockStripe({ prices: { prod_10users: [priceOf({ id: "price_monthly" })] } });
+
+      await StripePaymentProvider.create().listPlans();
+
+      expect(
+        fetchSpy.mock.calls
+          .map(([input]) => new URL(String(input)))
+          .filter(({ pathname }) => pathname.startsWith("/v1/products")),
+      ).toEqual([]);
+    });
+
     test("only asks for the active recurring prices of the product", async () => {
       mockPlans([planOf({ externalProductId: "prod_10users" })]);
       mockStripe({ prices: { prod_10users: [priceOf({ id: "price_monthly" })] } });
@@ -638,14 +647,6 @@ describe("StripePaymentProvider", () => {
 
       fetchSpy.mockImplementation((async (input: Parameters<typeof fetch>[0]) => {
         const url = new URL(String(input));
-
-        if (url.pathname.startsWith("/v1/products/")) {
-          return Response.json({
-            id: "prod_10users",
-            object: "product",
-            name: "Plan prod_10users",
-          });
-        }
 
         const firstPage = isNullish(url.searchParams.get("starting_after"));
 
