@@ -30,6 +30,8 @@ import * as MigrationsSchema from "./schemas/migration/migrations";
 import * as MigrationDatasetsSchema from "./schemas/migration/datasets";
 import * as PlansSchema from "./schemas/subscription/plans";
 import * as ExternalProductsSchema from "./schemas/subscription/external-products";
+import * as CustomProductsSchema from "./schemas/subscription/custom-products";
+import * as CustomPricesSchema from "./schemas/subscription/custom-prices";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
@@ -87,6 +89,8 @@ const DbSchema = {
   Subscription: {
     Plans: PlansSchema,
     ExternalProducts: ExternalProductsSchema,
+    CustomProducts: CustomProductsSchema,
+    CustomPrices: CustomPricesSchema,
     SubscriptionSettings: SubscriptionSettingsSchema,
     Subscriptions: SubscriptionsSchema,
     SubscriptionReferences: SubscriptionReferencesSchema,
