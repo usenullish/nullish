@@ -1,5 +1,7 @@
 import { logHelpSubscription } from "../help/subscription/help";
+import { logHelpSubscriptionBootstrap } from "../help/subscription/bootstrap.help";
 import { error } from "../utils/log";
+import { subscriptionBootstrap } from "./_subscription/bootstrap";
 import { helpSubscriptionPlan, subscriptionPlan } from "./_subscription/plan";
 import { helpSubscriptionProduct, subscriptionProduct } from "./_subscription/product";
 import { helpSubscriptionSettings, subscriptionSettings } from "./_subscription/settings";
@@ -9,6 +11,9 @@ export const subscription = async (args?: string[]) => {
   const [subCommand] = args ?? [];
 
   switch (subCommand) {
+    case "bootstrap":
+      await subscriptionBootstrap(args);
+      break;
     case "plan":
       await subscriptionPlan(args);
       break;
@@ -32,6 +37,9 @@ export const helpSubscription = (args?: string[]) => {
   const [subCommand] = args ?? [];
 
   switch (subCommand) {
+    case "bootstrap":
+      logHelpSubscriptionBootstrap();
+      break;
     case "plan":
       helpSubscriptionPlan(args);
       break;
