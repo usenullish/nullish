@@ -3,7 +3,7 @@ export enum PaymentEventType {
   INVOICE = "invoice",
 }
 
-export enum PaymentInterval {
+export enum BillingPeriod {
   DAY = "day",
   WEEK = "week",
   MONTH = "month",
