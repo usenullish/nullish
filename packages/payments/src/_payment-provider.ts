@@ -6,6 +6,12 @@ import {
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
+import {
+  SUBSCRIPTION_BILLING_PARAM,
+  SUBSCRIPTION_PLANS_PATH,
+  SUBSCRIPTION_SUCCESS_PATH,
+} from "@usenullish/nullish-schema/server";
+import { envAppUrl } from "@usenullish/nullish-env";
 import { withDbContext } from "./_db";
 import { CheckoutService } from "./services/checkout";
 import { PaymentInvoiceService } from "./services/payment-invoice";
@@ -15,6 +21,15 @@ import { ExternalProductsService } from "./services/external-products";
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 type ExternalTaxRateId =
   Records["Subscription"]["SubscriptionTaxRates"]["Select"]["externalTaxRateId"];
+
+export type CheckoutSessionArgs = Pick<
+  Payments["Checkout"]["Args"],
+  "organizationId" | "priceId"
+> & {
+  successUrl: Payments["Checkout"]["Result"]["url"];
+  cancelUrl: Payments["Checkout"]["Result"]["url"];
+  externalTaxRateId: ExternalTaxRateId;
+};
 
 type CheckoutProduct = Pick<Payments["Payment"], "provider"> & {
   externalProductId: Payments["ExternalIds"]["productId"];
@@ -51,7 +66,7 @@ export abstract class PaymentProvider<
   async checkout(args: Payments["Checkout"]["Args"]): Promise<Payments["Checkout"]["Result"]> {
     const parsedArgs = PaymentsSchema.CheckoutPaymentsArgsSchema.parse(args);
 
-    const { userId, organizationId, priceId } = parsedArgs;
+    const { userId, organizationId, priceId, billingPeriod } = parsedArgs;
 
     // 1. Load product at the provider ("from Stripe")
     const product = await this.loadProduct({ priceId });
@@ -73,9 +88,32 @@ export abstract class PaymentProvider<
     } = result;
 
     // 3. Create the checkout with the provider ("in Stripe")
-    const checkout = await this.createCheckoutSession({ ...parsedArgs, externalTaxRateId });
+    const checkout = await this.createCheckoutSession({
+      organizationId,
+      priceId,
+      ...this.#checkoutUrls({ organizationId, billingPeriod }),
+      externalTaxRateId,
+    });
 
     return PaymentsSchema.PaymentCheckoutSchema.parse(checkout);
+  }
+
+  #checkoutUrls({
+    organizationId,
+    billingPeriod,
+  }: Pick<Payments["Checkout"]["Args"], "organizationId" | "billingPeriod">): Pick<
+    CheckoutSessionArgs,
+    "successUrl" | "cancelUrl"
+  > {
+    const organizationUrl = `${envAppUrl()}/orgs/${organizationId}`;
+
+    const cancelUrl = new URL(`${organizationUrl}${SUBSCRIPTION_PLANS_PATH}`);
+    cancelUrl.searchParams.set(SUBSCRIPTION_BILLING_PARAM, billingPeriod);
+
+    return {
+      successUrl: `${organizationUrl}${SUBSCRIPTION_SUCCESS_PATH}`,
+      cancelUrl: cancelUrl.toString(),
+    };
   }
 
   async handle(args: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
@@ -183,7 +221,7 @@ export abstract class PaymentProvider<
   protected abstract loadPlans(args: { products: ExternalProduct[] }): Promise<Payments["Plan"][]>;
 
   protected abstract createCheckoutSession(
-    args: Payments["Checkout"]["Args"] & { externalTaxRateId: ExternalTaxRateId },
+    args: CheckoutSessionArgs,
   ): Promise<Payments["Checkout"]["Result"]>;
 
   protected abstract decode(

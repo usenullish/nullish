@@ -15,8 +15,7 @@ export const CheckoutPaymentsArgsSchema = z.strictObject({
   userId: SelectMembershipsSchema.shape.userId,
   organizationId: SelectSubscriptionsSchema.shape.organizationId,
   priceId: z.string().min(1),
-  successUrl: z.url(),
-  cancelUrl: z.url(),
+  billingPeriod: SelectCustomPricesSchema.shape.billingPeriod,
 });
 
 export const PaymentCheckoutSchema = z.strictObject({
