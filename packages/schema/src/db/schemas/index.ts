@@ -58,6 +58,8 @@ export * from "./audit/logs";
 export * from "./subscription/provider";
 export * from "./subscription/plans";
 export * from "./subscription/external-products";
+export * from "./subscription/custom-products";
+export * from "./subscription/custom-prices";
 export * from "./subscription/subscription-settings";
 export * from "./subscription/subscriptions";
 export * from "./subscription/subscription-references";
