@@ -50,6 +50,7 @@ const BootstrapExternalPlanSchema = z.strictObject({
   provider: ExternalProviderSchema,
   trialDays: InsertPlansSchema.shape.trialDays,
   externalProductId: InsertExternalProductsSchema.shape.externalProductId,
+  name: InsertExternalProductsSchema.shape.name,
   taxRates: z
     .array(
       InsertSubscriptionTaxRatesSchema.pick({ externalTaxRateId: true }).extend({
@@ -169,7 +170,7 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
 
   async #seedExternalPlan({
     tx,
-    plan: { provider, trialDays, externalProductId, taxRates },
+    plan: { provider, trialDays, externalProductId, name, taxRates },
   }: {
     tx: Tx;
     plan: BootstrapExternalPlan;
@@ -178,7 +179,7 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
 
     await insertExternalProduct({
       tx,
-      externalProduct: { planId: plan.id, provider, externalProductId },
+      externalProduct: { planId: plan.id, provider, externalProductId, name },
     });
 
     for (const taxRate of taxRates) {

@@ -73,7 +73,9 @@ describe("PaymentSubscriptionService", () => {
     assertNonNullish(plan);
     planId = plan.id;
 
-    await db.insert(externalProducts).values({ planId, provider, externalProductId });
+    await db
+      .insert(externalProducts)
+      .values({ planId, provider, externalProductId, name: "Cloud" });
   });
 
   beforeEach(async () => {

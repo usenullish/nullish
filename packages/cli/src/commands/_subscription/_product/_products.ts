@@ -27,5 +27,6 @@ export const productLabel = ({
   planId,
   provider,
   externalProductId,
+  name,
 }: ExternalProduct): string =>
-  `${id} (plan: ${planId}, provider: ${provider}, product: ${externalProductId})`;
+  `${id} ${name} (plan: ${planId}, provider: ${provider}, product: ${externalProductId})`;

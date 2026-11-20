@@ -30,7 +30,9 @@ describe("external products", () => {
     assertNonNullish(plan);
     planId = plan.id;
 
-    await db.insert(externalProducts).values({ planId, provider, externalProductId });
+    await db
+      .insert(externalProducts)
+      .values({ planId, provider, externalProductId, name: "Cloud" });
 
     const [withoutProduct] = await db
       .insert(plans)

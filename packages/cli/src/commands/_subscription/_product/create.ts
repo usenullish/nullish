@@ -43,8 +43,18 @@ export const subscriptionProductCreate = async (_args?: string[]) => {
       cancel();
     }
 
+    const name = await text({
+      message: "What is the name of the product?",
+      placeholder: "e.g. Cloud",
+      validate: (input) => (isEmptyString(input) ? "Enter the name of the product." : undefined),
+    });
+
+    if (isCancel(name)) {
+      cancel();
+    }
+
     const result = await ExternalProductsService.create({ db: dbContext.connection }).insert({
-      externalProduct: { planId, provider, externalProductId },
+      externalProduct: { planId, provider, externalProductId, name },
     });
 
     if (result.status === "error") {
@@ -54,6 +64,6 @@ export const subscriptionProductCreate = async (_args?: string[]) => {
       });
     }
 
-    note(`${planLabel(plan)} → ${externalProductId}`, "Product created.");
+    note(`${planLabel(plan)} → ${name} (${externalProductId})`, "Product created.");
   });
 };
