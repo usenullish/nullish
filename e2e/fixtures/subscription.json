@@ -1,0 +1,39 @@
+{
+  "plans": [
+    {
+      "key": "instance",
+      "provider": "custom",
+      "product": {
+        "name": "Instance",
+        "contactUrl": "https://example.com/contact"
+      },
+      "prices": [
+        { "amount": { "__bigint__": "24000" }, "currency": "CHF", "billingPeriod": "month" },
+        { "amount": { "__bigint__": "240000" }, "currency": "CHF", "billingPeriod": "year" }
+      ]
+    },
+    {
+      "key": "on_prem",
+      "provider": "custom",
+      "product": {
+        "name": "On-Prem",
+        "contactUrl": "https://example.com/contact"
+      }
+    }
+  ],
+  "providers": [
+    {
+      "provider": "stripe",
+      "plans": [{ "key": "cloud", "externalProductId": "prod_VfEEsXNtixb0JX" }],
+      "taxRates": [
+        {
+          "externalTaxRateId": "txr_1UdTNc2dZiHhTnyYJPdhsYgK",
+          "startOn": { "__date__": "2024-01-01" }
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "initialPlan": "cloud"
+  }
+}
