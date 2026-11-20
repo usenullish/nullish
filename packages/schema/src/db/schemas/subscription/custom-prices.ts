@@ -8,7 +8,7 @@ import { currencyValue } from "../_currency";
 import { customProductIdReference } from "./custom-products";
 import { BillingPeriod } from "../../constants/subscriptions";
 
-const billingPeriod = SubscriptionSchema.enum("billing_period", BillingPeriod);
+export const billingPeriod = SubscriptionSchema.enum("billing_period", BillingPeriod);
 
 export const CustomPricesSchema = SubscriptionSchema.table(
   "custom_prices",
