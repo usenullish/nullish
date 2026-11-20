@@ -13,7 +13,7 @@ import {
   TEST_USER_ID,
 } from "../../../admin/tests/_test-utils";
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const references = DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
@@ -26,7 +26,7 @@ describe("CheckoutService", () => {
   const provider = SubscriptionProvider.STRIPE;
   const externalProductId = `prod_${crypto.randomUUID()}`;
 
-  let claimId: string;
+  let planId: string;
   let organizationId: string;
 
   const checkout = ({
@@ -58,9 +58,9 @@ describe("CheckoutService", () => {
       .insert(memberships)
       .values({ organizationId, userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT });
 
-    const [claim] = await db.insert(claims).values({ provider, externalProductId }).returning();
-    assertNonNullish(claim);
-    claimId = claim.id;
+    const [plan] = await db.insert(plans).values({ provider, externalProductId }).returning();
+    assertNonNullish(plan);
+    planId = plan.id;
 
     await db.delete(taxRates);
     await db.insert(taxRates).values([
@@ -81,12 +81,12 @@ describe("CheckoutService", () => {
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, claimId));
+    await db.delete(plans).where(eq(plans.id, planId));
     await db.delete(taxRates);
     await instance.close();
   });
 
-  test("allows an admin to check out a product with a claim", async () => {
+  test("allows an admin to check out a product with a plan", async () => {
     const result = await checkout();
 
     expect(result.status).toBe("success");
@@ -116,7 +116,7 @@ describe("CheckoutService", () => {
     expect(result.status).toBe("error");
   });
 
-  test("refuses a product without claim", async () => {
+  test("refuses a product without plan", async () => {
     const result = await checkout({ externalProductId: `prod_${crypto.randomUUID()}` });
 
     expect(result.status).toBe("error");

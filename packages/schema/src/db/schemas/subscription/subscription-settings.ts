@@ -2,13 +2,13 @@ import { SubscriptionSchema } from "./_schema";
 import * as pg from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { readonlyPolicies } from "../_policies";
-import { claimIdReference } from "./claims";
+import { planIdReference } from "./plans";
 
 export const SubscriptionSettingsSchema = SubscriptionSchema.table(
   "subscription_settings",
   {
     id: pg.integer().primaryKey().default(1),
-    initialClaimId: claimIdReference(),
+    initialPlanId: planIdReference(),
     graceDays: pg.integer().notNull().default(7),
   },
   (table) => [

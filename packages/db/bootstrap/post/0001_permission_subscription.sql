@@ -1,4 +1,4 @@
--- Users can read the claims and the subscriptions, never write them: only the
+-- Users can read the plans and the subscriptions, never write them: only the
 -- database (triggers) and the admin tooling change them. Granting SELECT only,
 -- like the templates and the metering, keeps them read-only even if a policy
 -- were too permissive.

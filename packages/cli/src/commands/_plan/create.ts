@@ -1,12 +1,12 @@
 import { intro, isCancel, note, text } from "@clack/prompts";
-import { ClaimsService } from "@usenullish/nullish-admin/subscription";
+import { PlansService } from "@usenullish/nullish-admin/subscription";
 import { isEmptyString } from "@usenullish/nullish-common";
 import { withDbContext } from "../../db";
 import { lime } from "../../utils/colors";
 import { cancel, exit } from "../../utils/exit";
-import { claimLabel, promptClaimExpiresAt, promptClaimProduct } from "./_claims";
+import { planLabel, promptPlanExpiresAt, promptPlanProduct } from "./_plans";
 
-export const claimCreate = async (_args?: string[]) => {
+export const planCreate = async (_args?: string[]) => {
   console.log();
   intro(lime("nullish"));
 
@@ -23,13 +23,13 @@ export const claimCreate = async (_args?: string[]) => {
     cancel();
   }
 
-  const expiresAt = await promptClaimExpiresAt({ message: "Until when can the claim be given?" });
+  const expiresAt = await promptPlanExpiresAt({ message: "Until when can the plan be given?" });
 
-  const product = await promptClaimProduct();
+  const product = await promptPlanProduct();
 
   await withDbContext(async (dbContext) => {
-    const result = await ClaimsService.create({ db: dbContext.connection }).insert({
-      claim: {
+    const result = await PlansService.create({ db: dbContext.connection }).insert({
+      plan: {
         trialDays: isEmptyString(trialDays) ? null : Number(trialDays),
         expiresAt: expiresAt ?? null,
         ...product,
@@ -38,11 +38,11 @@ export const claimCreate = async (_args?: string[]) => {
 
     if (result.status === "error") {
       exit({
-        msg: "Cannot create the claim.",
+        msg: "Cannot create the plan.",
         err: result.err,
       });
     }
 
-    note(claimLabel(result.result), "Claim created.");
+    note(planLabel(result.result), "Plan created.");
   });
 };

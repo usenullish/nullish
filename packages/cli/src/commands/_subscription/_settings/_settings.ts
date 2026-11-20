@@ -24,5 +24,5 @@ export const getSubscriptionSettings = async ({
   return result.result;
 };
 
-export const settingsLabel = ({ initialClaimId, graceDays }: SubscriptionSettings): string =>
-  `Initial claim: ${initialClaimId}\nGrace days: ${graceDays}`;
+export const settingsLabel = ({ initialPlanId, graceDays }: SubscriptionSettings): string =>
+  `Initial plan: ${initialPlanId}\nGrace days: ${graceDays}`;

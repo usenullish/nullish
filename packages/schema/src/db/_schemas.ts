@@ -28,7 +28,7 @@ import * as MessagesSchema from "./schemas/chat/messages";
 import * as LogsSchema from "./schemas/audit/logs";
 import * as MigrationsSchema from "./schemas/migration/migrations";
 import * as MigrationDatasetsSchema from "./schemas/migration/datasets";
-import * as ClaimsSchema from "./schemas/subscription/claims";
+import * as PlansSchema from "./schemas/subscription/plans";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
@@ -84,7 +84,7 @@ const DbSchema = {
     Datasets: MigrationDatasetsSchema,
   },
   Subscription: {
-    Claims: ClaimsSchema,
+    Plans: PlansSchema,
     SubscriptionSettings: SubscriptionSettingsSchema,
     Subscriptions: SubscriptionsSchema,
     SubscriptionReferences: SubscriptionReferencesSchema,

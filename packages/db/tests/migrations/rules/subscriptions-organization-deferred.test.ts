@@ -49,7 +49,7 @@ describe("subscriptions_organization_id_organizations_id_fkey", () => {
       .transaction(async (tx) => {
         await tx.insert(subscriptions).values({
           organizationId: crypto.randomUUID(),
-          claimId: settings.initialClaimId,
+          planId: settings.initialPlanId,
           status: SubscriptionStatus.ACTIVE,
         });
       })

@@ -18,7 +18,7 @@ import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
 import { type PaymentEvent, PaymentProvider } from "./_payment-provider";
 
-type Claim = Records["Subscription"]["Claims"]["Select"];
+type Plan = Records["Subscription"]["Plans"]["Select"];
 
 type StripePlanPrice = Stripe.Price & {
   unit_amount: number;
@@ -56,15 +56,17 @@ export class StripePaymentProvider extends PaymentProvider<
     };
   }
 
-  protected override async loadPlans({ claims }: { claims: Claim[] }): Promise<Payments["Plan"][]> {
-    const productIds = claims
+  protected override async loadPlans({ plans }: { plans: Plan[] }): Promise<Payments["Plan"][]> {
+    const productIds = plans
       .filter(({ provider }) => provider === SubscriptionProvider.STRIPE)
       .map(({ externalProductId }) => externalProductId)
       .filter(notEmptyString);
 
-    const plans = await Promise.all(productIds.map((productId) => this.#loadPlan({ productId })));
+    const loadedPlans = await Promise.all(
+      productIds.map((productId) => this.#loadPlan({ productId })),
+    );
 
-    return plans.filter(nonNullish);
+    return loadedPlans.filter(nonNullish);
   }
 
   async #loadPlan({

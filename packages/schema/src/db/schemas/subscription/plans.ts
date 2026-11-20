@@ -6,8 +6,8 @@ import { sql } from "drizzle-orm";
 import { readonlyPolicies } from "../_policies";
 import { subscriptionProvider } from "./provider";
 
-export const ClaimsSchema = SubscriptionSchema.table(
-  "claims",
+export const PlansSchema = SubscriptionSchema.table(
+  "plans",
   {
     id: primaryKey(),
     trialDays: pg.integer(),
@@ -16,20 +16,20 @@ export const ClaimsSchema = SubscriptionSchema.table(
     externalProductId: pg.text(),
   },
   (table) => [
-    pg.check("claims_trial_days_positive", sql`${table.trialDays} >= 1`),
+    pg.check("plans_trial_days_positive", sql`${table.trialDays} >= 1`),
     pg.check(
-      "claims_provider_external_product",
+      "plans_provider_external_product",
       sql`(${table.provider} IS NULL) = (${table.externalProductId} IS NULL)`,
     ),
     pg
-      .uniqueIndex("claims_provider_external_product_uidx")
+      .uniqueIndex("plans_provider_external_product_uidx")
       .on(table.provider, table.externalProductId),
-    ...readonlyPolicies({ tableName: "claims" }),
+    ...readonlyPolicies({ tableName: "plans" }),
   ],
 );
 
-export const claimIdReference = () =>
+export const planIdReference = () =>
   pg
     .uuid()
-    .references(() => ClaimsSchema.id)
+    .references(() => PlansSchema.id)
     .notNull();

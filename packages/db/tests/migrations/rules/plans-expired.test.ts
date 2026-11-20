@@ -10,63 +10,63 @@ import { causeMessage, createOrganization, resetDb, seedUsers } from "../_test-u
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-const insertClaim = async (expiresAt: Date): Promise<string> => {
-  const [claim] = await db.insert(claims).values({ expiresAt }).returning();
-  assertNonNullish(claim);
-  return claim.id;
+const insertPlan = async (expiresAt: Date): Promise<string> => {
+  const [plan] = await db.insert(plans).values({ expiresAt }).returning();
+  assertNonNullish(plan);
+  return plan.id;
 };
 
-describe("check_claim_not_expired", () => {
+describe("check_plan_not_expired", () => {
   let organizationId: string;
-  let expiredClaimId: string;
-  let openClaimId: string;
+  let expiredPlanId: string;
+  let openPlanId: string;
 
   beforeAll(async () => {
     await resetDb(db);
     await seedUsers(db);
 
     organizationId = await createOrganization(db);
-    expiredClaimId = await insertClaim(new Date(Date.now() - DAY_MS));
-    openClaimId = await insertClaim(new Date(Date.now() + DAY_MS));
+    expiredPlanId = await insertPlan(new Date(Date.now() - DAY_MS));
+    openPlanId = await insertPlan(new Date(Date.now() + DAY_MS));
   });
 
   afterAll(async () => {
     await resetDb(db);
-    await db.delete(claims).where(eq(claims.id, expiredClaimId));
-    await db.delete(claims).where(eq(claims.id, openClaimId));
+    await db.delete(plans).where(eq(plans.id, expiredPlanId));
+    await db.delete(plans).where(eq(plans.id, openPlanId));
     await client.close();
   });
 
-  test("rejects putting a subscription on an expired claim", async () => {
+  test("rejects putting a subscription on an expired plan", async () => {
     const error = await db
       .update(subscriptions)
-      .set({ claimId: expiredClaimId })
+      .set({ planId: expiredPlanId })
       .where(eq(subscriptions.organizationId, organizationId))
       .catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("has expired");
   });
 
-  test("allows putting a subscription on a claim that has not expired yet", async () => {
+  test("allows putting a subscription on a plan that has not expired yet", async () => {
     const [subscription] = await db
       .update(subscriptions)
-      .set({ claimId: openClaimId })
+      .set({ planId: openPlanId })
       .where(eq(subscriptions.organizationId, organizationId))
       .returning();
 
-    expect(subscription?.claimId).toBe(openClaimId);
+    expect(subscription?.planId).toBe(openPlanId);
   });
 
-  test("rejects making an expired claim the initial claim", async () => {
+  test("rejects making an expired plan the initial plan", async () => {
     const error = await db
       .update(subscriptionSettings)
-      .set({ initialClaimId: expiredClaimId })
+      .set({ initialPlanId: expiredPlanId })
       .catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("has expired");

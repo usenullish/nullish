@@ -12,7 +12,7 @@ import { PaymentInvoiceService } from "./services/payment-invoice";
 import { PaymentSubscriptionService } from "./services/payment-subscription";
 import { PlansService } from "./services/plans";
 
-type Claim = Records["Subscription"]["Claims"]["Select"];
+type Plan = Records["Subscription"]["Plans"]["Select"];
 type ExternalTaxRateId =
   Records["Subscription"]["SubscriptionTaxRates"]["Select"]["externalTaxRateId"];
 
@@ -31,11 +31,11 @@ export abstract class PaymentProvider<
   protected constructor() {}
 
   async listPlans(): Promise<Payments["Plan"][]> {
-    // 1. Load the claims that are linked with a product
+    // 1. Load the plans that are linked with a product
     const result = await withDbContext(async (dbContext) => {
       return await PlansService.create({
         db: dbContext,
-      }).listClaims();
+      }).listPlans();
     });
 
     if (result.status === "error") {
@@ -43,7 +43,7 @@ export abstract class PaymentProvider<
     }
 
     // 2. Load the plans of those products with the provider ("from Stripe")
-    const plans = await this.loadPlans({ claims: result.result });
+    const plans = await this.loadPlans({ plans: result.result });
 
     return PaymentsSchema.PaymentPlansSchema.parse(plans);
   }
@@ -56,7 +56,7 @@ export abstract class PaymentProvider<
     // 1. Load product at the provider ("from Stripe")
     const product = await this.loadProduct({ priceId });
 
-    // 2. Assert user own the org, claim is related to this product and has never been used (referenced)
+    // 2. Assert user own the org, plan is related to this product and has never been used (referenced)
     // and load the tax rate valid today
     const result = await withDbContext(async (dbContext) => {
       return await CheckoutService.create({
@@ -180,7 +180,7 @@ export abstract class PaymentProvider<
     args: Pick<Payments["Checkout"]["Args"], "priceId">,
   ): Promise<CheckoutProduct>;
 
-  protected abstract loadPlans(args: { claims: Claim[] }): Promise<Payments["Plan"][]>;
+  protected abstract loadPlans(args: { plans: Plan[] }): Promise<Payments["Plan"][]>;
 
   protected abstract createCheckoutSession(
     args: Payments["Checkout"]["Args"] & { externalTaxRateId: ExternalTaxRateId },

@@ -2,9 +2,9 @@ import type { Result } from "@usenullish/nullish-common";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
-import { listClaimsWithProduct } from "./_helpers/claims";
+import { listPlansWithProduct } from "./_helpers/plans";
 
-type Claim = Records["Subscription"]["Claims"]["Select"];
+type Plan = Records["Subscription"]["Plans"]["Select"];
 
 export class PlansService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
@@ -15,9 +15,9 @@ export class PlansService extends AdminServiceContext {
     return new this(args);
   }
 
-  listClaims(): Promise<Result<Claim[]>> {
+  listPlans(): Promise<Result<Plan[]>> {
     return this._withDbContext(async (tx) => {
-      return await listClaimsWithProduct({ tx });
+      return await listPlansWithProduct({ tx });
     });
   }
 }
