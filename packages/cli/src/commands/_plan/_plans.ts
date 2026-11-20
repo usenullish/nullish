@@ -38,7 +38,7 @@ export const promptPlanProduct = async (): Promise<{
     cancel();
   }
 
-  if (provider !== SubscriptionProvider.STRIPE) {
+  if ([SubscriptionProvider.SELF, SubscriptionProvider.CUSTOM].includes(provider)) {
     return { provider, externalProductId: undefined };
   }
 
