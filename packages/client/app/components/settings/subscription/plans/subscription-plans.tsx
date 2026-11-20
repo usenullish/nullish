@@ -2,6 +2,7 @@ import {
   type ComponentProps,
   type ReactNode,
   startTransition,
+  useEffect,
   useState,
   ViewTransition,
 } from "react";
@@ -83,6 +84,18 @@ export const SubscriptionPlans = ({ plans }: { plans: Plan[] }) => {
 
   const [pendingPriceId, setPendingPriceId] = useState<Option<PlanPrice["priceId"]>>(undefined);
   const [error, setError] = useState<Nullable<string>>(null);
+
+  useEffect(() => {
+    const onPageShow = ({ persisted }: PageTransitionEvent) => {
+      if (persisted) {
+        startTransition(() => setPendingPriceId(undefined));
+      }
+    };
+
+    window.addEventListener("pageshow", onPageShow);
+
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, []);
 
   const checkout = async ({ priceId }: Pick<PlanPrice, "priceId">) => {
     startTransition(() => {
