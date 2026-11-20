@@ -5,9 +5,12 @@ import { SubscriptionSuccess } from "~/components/settings/subscription/success/
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { SubscriptionSummariesServer } from "~/context/server/subscription-summaries.server";
+import { assertPaymentsEnabled } from "~/context/loaders/_payments.loader.server";
 import { UnscopedPath } from "~/navigation";
 
 export const loader = async (args: Route.LoaderArgs) => {
+  await assertPaymentsEnabled(args);
+
   return await SubscriptionSummariesServer.create().listAll(args);
 };
 
