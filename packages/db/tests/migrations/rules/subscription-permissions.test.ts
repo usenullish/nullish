@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   causeMessage,
   createOrganization,
@@ -70,7 +70,7 @@ describe("subscription schema permissions", () => {
   test("rejects a user writing a plan", async () => {
     const error = await asUser({
       userId: TEST_USER_ID,
-      fn: (tx) => tx.insert(plans).values({}),
+      fn: (tx) => tx.insert(plans).values({ provider: SubscriptionProvider.SELF }),
     }).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("permission denied");

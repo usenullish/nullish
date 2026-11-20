@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, test } from "bun:test";
 import { inArray } from "drizzle-orm";
-import { DbSchema } from "@usenullish/nullish-schema/db";
+import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { PlansService } from "../../src/subscription/services/plans";
 import { openTestDb } from "../_test-utils";
 
@@ -24,7 +24,9 @@ describe("PlansService", () => {
   test("inserts a plan with its trial days and end date", async () => {
     const expiresAt = new Date(Date.now() + DAY_MS);
 
-    const result = await service.insert({ plan: { trialDays: 14, expiresAt } });
+    const result = await service.insert({
+      plan: { provider: SubscriptionProvider.SELF, trialDays: 14, expiresAt },
+    });
 
     if (result.status === "error") {
       expect(true).toBeFalse();
@@ -49,7 +51,7 @@ describe("PlansService", () => {
   });
 
   test("sets the end date of a plan", async () => {
-    const inserted = await service.insert({ plan: {} });
+    const inserted = await service.insert({ plan: { provider: SubscriptionProvider.SELF } });
 
     if (inserted.status === "error") {
       expect(true).toBeFalse();
@@ -71,7 +73,9 @@ describe("PlansService", () => {
   });
 
   test("rejects a trial of zero days", async () => {
-    const result = await service.insert({ plan: { trialDays: 0 } });
+    const result = await service.insert({
+      plan: { provider: SubscriptionProvider.SELF, trialDays: 0 },
+    });
 
     expect(result.status).toBe("error");
   });

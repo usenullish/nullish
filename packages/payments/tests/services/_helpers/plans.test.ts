@@ -70,7 +70,10 @@ describe("listPlansWithProduct", () => {
     assertNonNullish(withProduct);
     withProductId = withProduct.id;
 
-    const [withoutProduct] = await db.insert(plans).values({ trialDays: 30 }).returning();
+    const [withoutProduct] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.SELF, trialDays: 30 })
+      .returning();
     assertNonNullish(withoutProduct);
     withoutProductId = withoutProduct.id;
   });

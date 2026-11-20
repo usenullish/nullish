@@ -35,7 +35,7 @@ describe("plans provider and external product", () => {
     await client.close();
   });
 
-  test("allows a plan with a provider and an external product", async () => {
+  test("allows a stripe plan with an external product", async () => {
     const externalProductId = `prod_${crypto.randomUUID()}`;
 
     const [plan] = await insertPlans([
@@ -46,13 +46,27 @@ describe("plans provider and external product", () => {
     expect(plan?.externalProductId).toBe(externalProductId);
   });
 
-  test("allows several plans without provider and external product", async () => {
-    const rows = await insertPlans([{}, {}]);
+  test("allows a custom plan with a product", async () => {
+    const externalProductId = `instance_${crypto.randomUUID()}`;
+
+    const [plan] = await insertPlans([
+      { provider: SubscriptionProvider.CUSTOM, externalProductId },
+    ]);
+
+    expect(plan?.provider).toBe(SubscriptionProvider.CUSTOM);
+    expect(plan?.externalProductId).toBe(externalProductId);
+  });
+
+  test("allows several self plans without external product", async () => {
+    const rows = await insertPlans([
+      { provider: SubscriptionProvider.SELF },
+      { provider: SubscriptionProvider.SELF },
+    ]);
 
     expect(rows).toHaveLength(2);
   });
 
-  test("rejects a provider without external product", async () => {
+  test("rejects a stripe plan without external product", async () => {
     const error = await insertPlans([{ provider: SubscriptionProvider.STRIPE }]).catch(
       (e: unknown) => e,
     );
@@ -60,10 +74,18 @@ describe("plans provider and external product", () => {
     expect(causeMessage(error)).toContain("plans_provider_external_product");
   });
 
-  test("rejects an external product without provider", async () => {
-    const error = await insertPlans([{ externalProductId: `prod_${crypto.randomUUID()}` }]).catch(
+  test("rejects a custom plan without external product", async () => {
+    const error = await insertPlans([{ provider: SubscriptionProvider.CUSTOM }]).catch(
       (e: unknown) => e,
     );
+
+    expect(causeMessage(error)).toContain("plans_provider_external_product");
+  });
+
+  test("rejects a self plan with an external product", async () => {
+    const error = await insertPlans([
+      { provider: SubscriptionProvider.SELF, externalProductId: `prod_${crypto.randomUUID()}` },
+    ]).catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("plans_provider_external_product");
   });

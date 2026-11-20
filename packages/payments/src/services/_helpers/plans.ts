@@ -35,6 +35,6 @@ export const listPlansWithProduct = async ({ tx }: { tx: Tx }): Promise<Plan[]> 
     tx,
     table: plans,
     schema: RecordsSchema.Subscription.PlansSchema.SelectPlansSchema,
-    where: and(isNotNull(plans.provider), isNotNull(plans.externalProductId)),
+    where: isNotNull(plans.externalProductId),
   });
 };
