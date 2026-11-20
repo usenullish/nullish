@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:
 import Stripe from "stripe";
 import { isNullish, type Nullable } from "@usenullish/nullish-common";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
-import { PaymentInterval } from "@usenullish/nullish-schema/payments";
+import { BillingPeriod } from "@usenullish/nullish-schema/payments";
 
 const withDbContext = mock(async () => ({
   status: "success",
@@ -521,17 +521,17 @@ describe("StripePaymentProvider", () => {
     const priceOf = ({
       id,
       unitAmount = 2900,
-      interval = "month",
+      billingPeriod = "month",
     }: {
       id: string;
       unitAmount?: number | null;
-      interval?: string;
+      billingPeriod?: string;
     }) => ({
       id,
       object: "price",
       unit_amount: unitAmount,
       currency: "chf",
-      recurring: { interval, interval_count: 1 },
+      recurring: { interval: billingPeriod, interval_count: 1 },
     });
 
     const mockPlans = (plans: ReturnType<typeof planOf>[]) => {
@@ -568,8 +568,8 @@ describe("StripePaymentProvider", () => {
       mockStripe({
         prices: {
           prod_10users: [
-            priceOf({ id: "price_monthly", unitAmount: 2900, interval: "month" }),
-            priceOf({ id: "price_yearly", unitAmount: 29000, interval: "year" }),
+            priceOf({ id: "price_monthly", unitAmount: 2900, billingPeriod: "month" }),
+            priceOf({ id: "price_yearly", unitAmount: 29000, billingPeriod: "year" }),
           ],
         },
       });
@@ -584,13 +584,13 @@ describe("StripePaymentProvider", () => {
               priceId: "price_monthly",
               amount: 2900n,
               currency: "CHF",
-              interval: PaymentInterval.MONTH,
+              billingPeriod: BillingPeriod.MONTH,
             },
             {
               priceId: "price_yearly",
               amount: 29000n,
               currency: "CHF",
-              interval: PaymentInterval.YEAR,
+              billingPeriod: BillingPeriod.YEAR,
             },
           ],
         },
@@ -634,8 +634,8 @@ describe("StripePaymentProvider", () => {
           has_more: firstPage,
           data: [
             firstPage
-              ? priceOf({ id: "price_monthly", interval: "month" })
-              : priceOf({ id: "price_yearly", interval: "year" }),
+              ? priceOf({ id: "price_monthly", billingPeriod: "month" })
+              : priceOf({ id: "price_yearly", billingPeriod: "year" }),
           ],
         });
       }) as unknown as typeof fetch);
@@ -657,14 +657,14 @@ describe("StripePaymentProvider", () => {
       ]);
     });
 
-    test("skips the prices without amount or with an unknown interval", async () => {
+    test("skips the prices without amount or with an unknown billing period", async () => {
       mockPlans([planOf({ externalProductId: "prod_10users" })]);
       mockStripe({
         prices: {
           prod_10users: [
             priceOf({ id: "price_monthly" }),
             priceOf({ id: "price_custom", unitAmount: null }),
-            priceOf({ id: "price_unknown", interval: "fortnight" }),
+            priceOf({ id: "price_unknown", billingPeriod: "fortnight" }),
           ],
         },
       });

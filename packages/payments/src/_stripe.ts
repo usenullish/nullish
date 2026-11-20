@@ -4,8 +4,8 @@ import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import {
   type Payments,
+  BillingPeriod,
   PaymentEventType,
-  PaymentInterval,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
@@ -16,7 +16,7 @@ type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
 type StripePlanPrice = Stripe.Price & {
   unit_amount: number;
-  recurring: Stripe.Price.Recurring & { interval: PaymentInterval };
+  recurring: Stripe.Price.Recurring;
 };
 
 @PaymentFactory
@@ -76,32 +76,36 @@ export class StripePaymentProvider extends PaymentProvider<
       this.#listPrices({ productId }),
     ]);
 
-    const isValidPlanPrice = (price: Stripe.Price): price is StripePlanPrice => {
+    const isRecurringPrice = (price: Stripe.Price): price is StripePlanPrice => {
       const { unit_amount: amount, recurring } = price;
-
-      // Does the interval (week, month etc.) matches with our enums
-      const isPaymentInterval = (
-        interval: Stripe.Price.Recurring.Interval,
-      ): interval is PaymentInterval => {
-        return Object.values<string>(PaymentInterval).includes(interval);
-      };
-
-      return nonNullish(amount) && nonNullish(recurring) && isPaymentInterval(recurring.interval);
+      return nonNullish(amount) && nonNullish(recurring);
     };
+
+    // Does Stripe's interval (week, month etc.) match one of our billing periods
+    const toBillingPeriod = (interval: Stripe.Price.Recurring.Interval): Option<BillingPeriod> =>
+      Object.values(BillingPeriod).find((billingPeriod) => billingPeriod === interval);
 
     const mapPlanPrice = ({
       id: priceId,
       unit_amount: amount,
       currency,
       recurring: { interval },
-    }: StripePlanPrice): Payments["PlanPrice"] => ({
-      priceId,
-      amount: BigInt(amount),
-      currency: currency.toUpperCase(),
-      interval,
-    });
+    }: StripePlanPrice): Option<Payments["PlanPrice"]> => {
+      const billingPeriod = toBillingPeriod(interval);
 
-    const planPrices = prices.filter(isValidPlanPrice).map(mapPlanPrice);
+      if (isNullish(billingPeriod)) {
+        return undefined;
+      }
+
+      return {
+        priceId,
+        amount: BigInt(amount),
+        currency: currency.toUpperCase(),
+        billingPeriod,
+      };
+    };
+
+    const planPrices = prices.filter(isRecurringPrice).map(mapPlanPrice).filter(nonNullish);
 
     if (planPrices.length === 0) {
       return undefined;
