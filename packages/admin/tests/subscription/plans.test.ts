@@ -1,30 +1,30 @@
 import { afterAll, describe, expect, test } from "bun:test";
 import { inArray } from "drizzle-orm";
 import { DbSchema } from "@usenullish/nullish-schema/db";
-import { ClaimsService } from "../../src/subscription/services/claims";
+import { PlansService } from "../../src/subscription/services/plans";
 import { openTestDb } from "../_test-utils";
 
-const claims = DbSchema.Subscription.Claims.ClaimsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
 
 const instance = await openTestDb();
 const db = instance.connection;
 
-const service = ClaimsService.create({ db });
+const service = PlansService.create({ db });
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-describe("ClaimsService", () => {
+describe("PlansService", () => {
   const insertedIds: string[] = [];
 
   afterAll(async () => {
-    await db.delete(claims).where(inArray(claims.id, insertedIds));
+    await db.delete(plans).where(inArray(plans.id, insertedIds));
     await instance.close();
   });
 
-  test("inserts a claim with its trial days and end date", async () => {
+  test("inserts a plan with its trial days and end date", async () => {
     const expiresAt = new Date(Date.now() + DAY_MS);
 
-    const result = await service.insert({ claim: { trialDays: 14, expiresAt } });
+    const result = await service.insert({ plan: { trialDays: 14, expiresAt } });
 
     if (result.status === "error") {
       expect(true).toBeFalse();
@@ -37,7 +37,7 @@ describe("ClaimsService", () => {
     expect(result.result.expiresAt?.getTime()).toBe(expiresAt.getTime());
   });
 
-  test("lists the claims, the seeded one included", async () => {
+  test("lists the plans, the seeded one included", async () => {
     const result = await service.list();
 
     if (result.status === "error") {
@@ -48,8 +48,8 @@ describe("ClaimsService", () => {
     expect(result.result.length).toBeGreaterThanOrEqual(2);
   });
 
-  test("sets the end date of a claim", async () => {
-    const inserted = await service.insert({ claim: {} });
+  test("sets the end date of a plan", async () => {
+    const inserted = await service.insert({ plan: {} });
 
     if (inserted.status === "error") {
       expect(true).toBeFalse();
@@ -60,7 +60,7 @@ describe("ClaimsService", () => {
 
     const expiresAt = new Date(Date.now() + 2 * DAY_MS);
 
-    const result = await service.update({ claimId: inserted.result.id, claim: { expiresAt } });
+    const result = await service.update({ planId: inserted.result.id, plan: { expiresAt } });
 
     if (result.status === "error") {
       expect(true).toBeFalse();
@@ -71,7 +71,7 @@ describe("ClaimsService", () => {
   });
 
   test("rejects a trial of zero days", async () => {
-    const result = await service.insert({ claim: { trialDays: 0 } });
+    const result = await service.insert({ plan: { trialDays: 0 } });
 
     expect(result.status).toBe("error");
   });

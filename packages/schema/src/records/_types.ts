@@ -221,10 +221,10 @@ interface Records {
     };
   };
   Subscription: {
-    Claims: {
-      Select: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.SelectClaimsSchema>;
-      Insert: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.InsertClaimsSchema>;
-      Update: z.infer<typeof RecordsSchema.Subscription.ClaimsSchema.UpdateClaimsSchema>;
+    Plans: {
+      Select: z.infer<typeof RecordsSchema.Subscription.PlansSchema.SelectPlansSchema>;
+      Insert: z.infer<typeof RecordsSchema.Subscription.PlansSchema.InsertPlansSchema>;
+      Update: z.infer<typeof RecordsSchema.Subscription.PlansSchema.UpdatePlansSchema>;
     };
     SubscriptionSettings: {
       Select: z.infer<

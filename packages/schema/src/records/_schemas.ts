@@ -28,7 +28,7 @@ import * as LlmReservationsSchema from "./schemas/metering/llm-reservations";
 import * as ConversationsSchema from "./schemas/chat/conversations";
 import * as MessagesSchema from "./schemas/chat/messages";
 import * as MigrationsSchema from "./schemas/migration/migrations";
-import * as ClaimsSchema from "./schemas/subscription/claims";
+import * as PlansSchema from "./schemas/subscription/plans";
 import * as SubscriptionSettingsSchema from "./schemas/subscription/subscription-settings";
 import * as SubscriptionsSchema from "./schemas/subscription/subscriptions";
 import * as SubscriptionReferencesSchema from "./schemas/subscription/subscription-references";
@@ -84,7 +84,7 @@ const RecordsSchema = {
     DatasetsSchema,
   },
   Subscription: {
-    ClaimsSchema,
+    PlansSchema,
     SubscriptionSettingsSchema,
     SubscriptionsSchema,
     SubscriptionReferencesSchema,

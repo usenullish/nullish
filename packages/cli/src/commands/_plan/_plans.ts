@@ -1,5 +1,5 @@
 import { isCancel, select, text } from "@clack/prompts";
-import { ClaimsService } from "@usenullish/nullish-admin/subscription";
+import { PlansService } from "@usenullish/nullish-admin/subscription";
 import {
   DateStringCodec,
   isEmptyString,
@@ -12,18 +12,14 @@ import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { cancel, exit } from "../../utils/exit";
 
-type Claim = Records["Subscription"]["Claims"]["Select"];
+type Plan = Records["Subscription"]["Plans"]["Select"];
 
-export const listClaims = async ({
-  dbContext,
-}: {
-  dbContext: DbAdminContext;
-}): Promise<Claim[]> => {
-  const result = await ClaimsService.create({ db: dbContext.connection }).list();
+export const listPlans = async ({ dbContext }: { dbContext: DbAdminContext }): Promise<Plan[]> => {
+  const result = await PlansService.create({ db: dbContext.connection }).list();
 
   if (result.status === "error") {
     exit({
-      msg: "Cannot list the claims.",
+      msg: "Cannot list the plans.",
       err: result.err,
     });
   }
@@ -31,20 +27,20 @@ export const listClaims = async ({
   return result.result;
 };
 
-export const claimLabel = ({
+export const planLabel = ({
   id,
   trialDays,
   expiresAt,
   provider,
   externalProductId,
-}: Claim): string =>
+}: Plan): string =>
   `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"}, product: ${nonNullish(provider) ? `${provider} ${externalProductId}` : "none"})`;
 
-export const promptClaimProduct = async (): Promise<
-  Pick<Claim, "provider" | "externalProductId">
+export const promptPlanProduct = async (): Promise<
+  Pick<Plan, "provider" | "externalProductId">
 > => {
-  const provider = await select<Claim["provider"]>({
-    message: "Which payment provider is this claim linked to?",
+  const provider = await select<Plan["provider"]>({
+    message: "Which payment provider is this plan linked to?",
     options: [
       { label: "None", value: null },
       ...Object.values(SubscriptionProvider).map((value) => ({ label: value, value })),
@@ -72,7 +68,7 @@ export const promptClaimProduct = async (): Promise<
   return { provider, externalProductId };
 };
 
-export const promptClaimExpiresAt = async ({
+export const promptPlanExpiresAt = async ({
   message,
 }: {
   message: string;

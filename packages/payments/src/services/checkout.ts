@@ -7,7 +7,7 @@ import {
 } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
-import { getClaimByExternalProduct } from "./_helpers/claims";
+import { getPlanByExternalProduct } from "./_helpers/plans";
 import { getMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
 import { getExistingSubscription } from "./_helpers/subscriptions";
@@ -16,7 +16,7 @@ import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
 type Membership = Records["Core"]["Memberships"]["Select"];
 type SubscriptionTaxRate = Records["Subscription"]["SubscriptionTaxRates"]["Select"];
 type ExternalProductId = NonNullable<
-  Records["Subscription"]["Claims"]["Select"]["externalProductId"]
+  Records["Subscription"]["Plans"]["Select"]["externalProductId"]
 >;
 
 export class CheckoutService extends AdminServiceContext {
@@ -71,7 +71,7 @@ export class CheckoutService extends AdminServiceContext {
   }): Promise<void> {
     await this.#assertAdmin({ tx, organizationId, userId });
 
-    await this.#assertProductHasClaim({ tx, provider, externalProductId });
+    await this.#assertProductHasPlan({ tx, provider, externalProductId });
 
     await this.#assertNotLinked({ tx, organizationId });
   }
@@ -92,7 +92,7 @@ export class CheckoutService extends AdminServiceContext {
     }
   }
 
-  async #assertProductHasClaim({
+  async #assertProductHasPlan({
     tx,
     provider,
     externalProductId,
@@ -101,8 +101,8 @@ export class CheckoutService extends AdminServiceContext {
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
   }): Promise<void> {
-    // Claim not found throw
-    await getClaimByExternalProduct({ tx, provider, externalProductId });
+    // Plan not found throw
+    await getPlanByExternalProduct({ tx, provider, externalProductId });
   }
 
   async #assertNotLinked({
