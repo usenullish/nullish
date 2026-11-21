@@ -24,10 +24,18 @@ export const SubscriptionOverview = () => {
   }
 
   const {
-    subscription: { status, periodEnd },
+    subscription: { status, periodEnd, cancelAtPeriodEnd },
     plan,
     product,
   } = subscriptionSummary;
+
+  const periodEndLabel = cancelAtPeriodEnd
+    ? i18n.subscription.label.ends_on
+    : status === SubscriptionStatus.TRIALING
+      ? i18n.subscription.label.trial_ends
+      : status === SubscriptionStatus.ACTIVE
+        ? i18n.subscription.label.renews_on
+        : i18n.subscription.label.period_ends;
 
   const rows = [
     {
@@ -39,10 +47,7 @@ export const SubscriptionOverview = () => {
       value: <Badge variant="outline">{i18n.subscription.status[status]}</Badge>,
     },
     {
-      label:
-        status === SubscriptionStatus.TRIALING
-          ? i18n.subscription.label.trial_ends
-          : i18n.subscription.label.period_ends,
+      label: periodEndLabel,
       value: nonNullish(periodEnd) ? formatDate(periodEnd) : null,
     },
   ];
