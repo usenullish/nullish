@@ -69,15 +69,16 @@ export class PaymentSubscriptionService extends AdminServiceContext {
       externalProductId: externalIds.productId,
     });
 
-    const { status, periodEnd } = payment;
+    const { status, periodEnd, cancelAtPeriodEnd } = payment;
 
-    // 6. Update the subscription with the plan (new or same), period end and status
+    // 6. Update the subscription with the plan (new or same), period end, cancellation and status
     return await updateSubscription({
       tx,
       subscription,
       planId,
       status,
       periodEnd,
+      cancelAtPeriodEnd,
     });
   }
 
