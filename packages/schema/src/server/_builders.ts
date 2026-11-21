@@ -34,6 +34,9 @@ export const encodeSubscriptionResponse = (
   periodEnd: nonNullish(subscription.periodEnd)
     ? encodeWithCodecs({ schema: TimestampCodec, value: subscription.periodEnd })
     : null,
+  cancelAt: nonNullish(subscription.cancelAt)
+    ? encodeWithCodecs({ schema: TimestampCodec, value: subscription.cancelAt })
+    : null,
 });
 
 const encodeSubscriptionOrganizationResponse = (
