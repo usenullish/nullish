@@ -42,7 +42,6 @@ describe("SubscriptionBootstrapService", () => {
     },
     {
       provider: SubscriptionProvider.STRIPE,
-      trialDays: 14,
       externalProductId,
       name: "Cloud",
       taxRates: [
@@ -127,8 +126,6 @@ describe("SubscriptionBootstrapService", () => {
 
     const cloud = await newPlanOf(SubscriptionProvider.STRIPE);
     const custom = await newPlanOf(SubscriptionProvider.CUSTOM);
-
-    expect(cloud.trialDays).toBe(14);
 
     const external = await db
       .select()

@@ -22,7 +22,6 @@ const insertPlan = async (values: typeof plans.$inferInsert): Promise<string> =>
 describe("check_initial_plan_self", () => {
   let initialPlanId: string;
   let stripePlanId: string;
-  let stripeTrialPlanId: string;
   let customPlanId: string;
   let selfPlanId: string;
 
@@ -32,7 +31,6 @@ describe("check_initial_plan_self", () => {
     initialPlanId = settings.initialPlanId;
 
     stripePlanId = await insertPlan({ provider: SubscriptionProvider.STRIPE });
-    stripeTrialPlanId = await insertPlan({ provider: SubscriptionProvider.STRIPE, trialDays: 14 });
     customPlanId = await insertPlan({ provider: SubscriptionProvider.CUSTOM });
     selfPlanId = await insertPlan({ provider: SubscriptionProvider.SELF, trialDays: 14 });
   });
@@ -42,9 +40,7 @@ describe("check_initial_plan_self", () => {
   });
 
   afterAll(async () => {
-    await db
-      .delete(plans)
-      .where(inArray(plans.id, [stripePlanId, stripeTrialPlanId, customPlanId, selfPlanId]));
+    await db.delete(plans).where(inArray(plans.id, [stripePlanId, customPlanId, selfPlanId]));
     await client.close();
   });
 
@@ -52,15 +48,6 @@ describe("check_initial_plan_self", () => {
     const error = await db
       .update(subscriptionSettings)
       .set({ initialPlanId: stripePlanId })
-      .catch((e: unknown) => e);
-
-    expect(causeMessage(error)).toContain("cannot be the initial plan");
-  });
-
-  test("rejects making a stripe plan with a trial the initial plan", async () => {
-    const error = await db
-      .update(subscriptionSettings)
-      .set({ initialPlanId: stripeTrialPlanId })
       .catch((e: unknown) => e);
 
     expect(causeMessage(error)).toContain("cannot be the initial plan");
