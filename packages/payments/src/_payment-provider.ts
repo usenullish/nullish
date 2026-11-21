@@ -8,12 +8,14 @@ import {
 import type { Records } from "@usenullish/nullish-schema/records";
 import {
   SUBSCRIPTION_BILLING_PARAM,
+  SUBSCRIPTION_DETAILS_PATH,
   SUBSCRIPTION_PLANS_PATH,
   SUBSCRIPTION_SUCCESS_PATH,
 } from "@usenullish/nullish-schema/server";
 import { envAppUrl } from "@usenullish/nullish-env";
 import { withDbContext } from "./_db";
 import { CheckoutService } from "./services/checkout";
+import { ManageService } from "./services/manage";
 import { PaymentInvoiceService } from "./services/payment-invoice";
 import { PaymentSubscriptionService } from "./services/payment-subscription";
 import { ExternalProductsService } from "./services/external-products";
@@ -21,6 +23,13 @@ import { ExternalProductsService } from "./services/external-products";
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 type ExternalTaxRateId =
   Records["Subscription"]["SubscriptionTaxRates"]["Select"]["externalTaxRateId"];
+
+export type PortalSessionArgs = Pick<
+  Records["Subscription"]["SubscriptionReferences"]["Select"],
+  "externalCustomerId"
+> & {
+  returnUrl: Payments["Manage"]["Result"]["url"];
+};
 
 export type CheckoutSessionArgs = Pick<
   Payments["Checkout"]["Args"],
@@ -114,6 +123,33 @@ export abstract class PaymentProvider<
       successUrl: `${organizationUrl}${SUBSCRIPTION_SUCCESS_PATH}`,
       cancelUrl: cancelUrl.toString(),
     };
+  }
+
+  async manage(args: Payments["Manage"]["Args"]): Promise<Payments["Manage"]["Result"]> {
+    const { userId, organizationId } = PaymentsSchema.ManagePaymentsArgsSchema.parse(args);
+
+    // 1. Assert the user is an admin of the organization and load its customer at the provider
+    const result = await withDbContext(async (dbContext) => {
+      return await ManageService.create({
+        db: dbContext,
+      }).prepare({ userId, organizationId });
+    });
+
+    if (result.status === "error") {
+      throw result.err;
+    }
+
+    const {
+      result: { externalCustomerId },
+    } = result;
+
+    // 2. Create the portal session of the customer with the provider ("in Stripe")
+    const portal = await this.createPortalSession({
+      externalCustomerId,
+      returnUrl: `${envAppUrl()}/orgs/${organizationId}${SUBSCRIPTION_DETAILS_PATH}`,
+    });
+
+    return PaymentsSchema.PaymentManageSchema.parse(portal);
   }
 
   async handle(args: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
@@ -223,6 +259,10 @@ export abstract class PaymentProvider<
   protected abstract createCheckoutSession(
     args: CheckoutSessionArgs,
   ): Promise<Payments["Checkout"]["Result"]>;
+
+  protected abstract createPortalSession(
+    args: PortalSessionArgs,
+  ): Promise<Payments["Manage"]["Result"]>;
 
   protected abstract decode(
     args: Payments["Handle"]["Args"],
