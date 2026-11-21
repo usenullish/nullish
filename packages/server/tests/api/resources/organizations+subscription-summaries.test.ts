@@ -8,6 +8,7 @@ import {
   DbSchema,
   OrganizationSubscriptionStatus,
   type PostgresDbInstance,
+  SubscriptionProvider,
   SubscriptionStatus,
 } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
@@ -119,6 +120,14 @@ describe("organization subscription summaries", () => {
       status: OrganizationSubscriptionStatus.OPEN,
       expiresAt: null,
     });
+  });
+
+  test("returns the provider of the plan of the subscription", async () => {
+    const response = await listSummaries({ cookie: member.cookie });
+
+    const summaries = await parseSummaries(response);
+
+    expect(summaries[0]?.plan).toEqual({ provider: SubscriptionProvider.SELF });
   });
 
   test("returns nothing to a user outside the organization", async () => {

@@ -60,9 +60,11 @@ const encodeSubscriptionOrganizationResponse = (
 
 export const encodeSubscriptionSummaryResponse = ({
   subscription,
+  plan,
   organization,
 }: Composites["SubscriptionSummaries"]["Select"]) => ({
   subscription: encodeSubscriptionResponse(subscription),
+  plan,
   organization: encodeSubscriptionOrganizationResponse(organization),
 });
 
