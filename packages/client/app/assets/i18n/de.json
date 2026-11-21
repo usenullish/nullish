@@ -1446,8 +1446,17 @@
     "state": {
       "activating": "Wird aktiviert…"
     },
+    "status": {
+      "trialing": "Testphase",
+      "active": "Aktiv",
+      "past_due": "Zahlung überfällig",
+      "inactive": "Inaktiv"
+    },
     "label": {
-      "billing": "Abrechnung"
+      "billing": "Abrechnung",
+      "status": "Status",
+      "trial_ends": "Testphase endet",
+      "period_ends": "Aktuelle Periode endet"
     },
     "billing": {
       "day": "Täglich",

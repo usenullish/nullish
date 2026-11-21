@@ -1446,8 +1446,17 @@
     "state": {
       "activating": "Activating…"
     },
+    "status": {
+      "trialing": "Trial",
+      "active": "Active",
+      "past_due": "Payment overdue",
+      "inactive": "Inactive"
+    },
     "label": {
-      "billing": "Billing"
+      "billing": "Billing",
+      "status": "Status",
+      "trial_ends": "Trial ends",
+      "period_ends": "Current period ends"
     },
     "billing": {
       "day": "Daily",

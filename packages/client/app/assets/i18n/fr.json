@@ -1446,8 +1446,17 @@
     "state": {
       "activating": "Activation…"
     },
+    "status": {
+      "trialing": "Essai",
+      "active": "Actif",
+      "past_due": "Paiement en retard",
+      "inactive": "Inactif"
+    },
     "label": {
-      "billing": "Facturation"
+      "billing": "Facturation",
+      "status": "Statut",
+      "trial_ends": "Fin de l'essai",
+      "period_ends": "Fin de la période en cours"
     },
     "billing": {
       "day": "Quotidien",

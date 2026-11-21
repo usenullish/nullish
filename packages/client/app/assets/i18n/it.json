@@ -1446,8 +1446,17 @@
     "state": {
       "activating": "Attivazione…"
     },
+    "status": {
+      "trialing": "Prova",
+      "active": "Attivo",
+      "past_due": "Pagamento in ritardo",
+      "inactive": "Inattivo"
+    },
     "label": {
-      "billing": "Fatturazione"
+      "billing": "Fatturazione",
+      "status": "Stato",
+      "trial_ends": "Fine della prova",
+      "period_ends": "Fine del periodo in corso"
     },
     "billing": {
       "day": "Giornaliero",
