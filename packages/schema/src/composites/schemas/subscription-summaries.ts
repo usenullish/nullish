@@ -16,7 +16,12 @@ export const SubscriptionOrganizationSchema = z.discriminatedUnion("status", [
   }),
 ]);
 
+export const SubscriptionPlanSchema = RecordsSchema.Subscription.PlansSchema.SelectPlansSchema.pick(
+  { provider: true },
+);
+
 export const SelectSubscriptionSummariesSchema = z.strictObject({
   subscription: RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
+  plan: SubscriptionPlanSchema,
   organization: SubscriptionOrganizationSchema,
 });
