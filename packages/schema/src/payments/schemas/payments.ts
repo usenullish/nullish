@@ -22,6 +22,15 @@ export const PaymentCheckoutSchema = z.strictObject({
   url: z.url(),
 });
 
+export const ManagePaymentsArgsSchema = CheckoutPaymentsArgsSchema.pick({
+  userId: true,
+  organizationId: true,
+});
+
+export const PaymentManageSchema = z.strictObject({
+  url: z.url(),
+});
+
 export const PaymentPlanPriceSchema = z.strictObject({
   priceId: CheckoutPaymentsArgsSchema.shape.priceId,
   amount: z.bigint(),
