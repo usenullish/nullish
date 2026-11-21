@@ -25,9 +25,14 @@ export const SubscriptionOverview = () => {
   const {
     subscription: { status, periodEnd },
     plan,
+    product,
   } = subscriptionSummary;
 
   const rows = [
+    {
+      label: i18n.subscription.label.plan,
+      value: product?.name,
+    },
     {
       label: i18n.subscription.label.status,
       value: <Badge variant="outline">{i18n.subscription.status[status]}</Badge>,

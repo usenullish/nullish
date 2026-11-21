@@ -21,6 +21,7 @@ const SubscriptionOrganizationResponseSchema = z.discriminatedUnion("status", [
 export const SubscriptionSummarySchema = z.strictObject({
   subscription: SubscriptionResponseSchema,
   plan: CompositesSchema.SubscriptionSummariesSchema.SubscriptionPlanSchema,
+  product: CompositesSchema.SubscriptionSummariesSchema.SubscriptionProductSchema.nullable(),
   organization: SubscriptionOrganizationResponseSchema,
 });
 
