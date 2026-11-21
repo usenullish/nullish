@@ -6,4 +6,5 @@ export const SubscriptionResponseSchema = withAuditFieldsCodecs(
   RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
 ).extend({
   periodEnd: TimestampCodec.nullable(),
+  cancelAt: TimestampCodec.nullable(),
 });
