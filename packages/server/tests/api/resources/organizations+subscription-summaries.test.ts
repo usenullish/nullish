@@ -122,12 +122,13 @@ describe("organization subscription summaries", () => {
     });
   });
 
-  test("returns the provider of the plan of the subscription", async () => {
+  test("returns the self plan of the subscription without product", async () => {
     const response = await listSummaries({ cookie: member.cookie });
 
     const summaries = await parseSummaries(response);
 
     expect(summaries[0]?.plan).toEqual({ provider: SubscriptionProvider.SELF });
+    expect(summaries[0]?.product).toBeNull();
   });
 
   test("returns nothing to a user outside the organization", async () => {

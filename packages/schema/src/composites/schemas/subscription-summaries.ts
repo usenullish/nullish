@@ -20,8 +20,14 @@ export const SubscriptionPlanSchema = RecordsSchema.Subscription.PlansSchema.Sel
   { provider: true },
 );
 
+export const SubscriptionProductSchema =
+  RecordsSchema.Subscription.ExternalProductsSchema.SelectExternalProductsSchema.pick({
+    name: true,
+  });
+
 export const SelectSubscriptionSummariesSchema = z.strictObject({
   subscription: RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
   plan: SubscriptionPlanSchema,
+  product: SubscriptionProductSchema.nullable(),
   organization: SubscriptionOrganizationSchema,
 });

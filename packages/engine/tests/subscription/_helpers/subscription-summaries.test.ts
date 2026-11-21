@@ -1,7 +1,8 @@
 import { afterAll, afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, inArray } from "drizzle-orm";
+import { assertNonNullish } from "@usenullish/nullish-common";
 import {
   DbSchema,
   OrganizationSubscriptionStatus,
@@ -17,6 +18,8 @@ const db = drizzle({ client });
 
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
+const plans = DbSchema.Subscription.Plans.PlansSchema;
+const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 
 const HOUR_MS = 60 * 60 * 1000;
 const DAY_MS = 24 * HOUR_MS;
@@ -40,6 +43,8 @@ const updateSubscription = ({
 }) => db.update(subscriptions).set(values).where(eq(subscriptions.organizationId, organizationId));
 
 describe("subscription/_helpers/subscription-summaries", () => {
+  const stripePlanIds: string[] = [];
+
   beforeEach(async () => {
     await resetDb(db);
     await seedUsers(db);
@@ -51,6 +56,7 @@ describe("subscription/_helpers/subscription-summaries", () => {
 
   afterAll(async () => {
     await resetDb(db);
+    await db.delete(plans).where(inArray(plans.id, stripePlanIds));
     await client.close();
   });
 
@@ -65,12 +71,38 @@ describe("subscription/_helpers/subscription-summaries", () => {
     ]);
   });
 
-  test("returns the provider of the plan of the subscription", async () => {
+  test("returns the self plan of the subscription without product", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
 
     const [summary] = await list(organizationId);
 
     expect(summary?.plan).toEqual({ provider: SubscriptionProvider.SELF });
+    expect(summary?.product).toBeNull();
+  });
+
+  test("returns the product of a stripe plan", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    const [plan] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.STRIPE })
+      .returning();
+    assertNonNullish(plan);
+    stripePlanIds.push(plan.id);
+
+    await db.insert(externalProducts).values({
+      planId: plan.id,
+      provider: SubscriptionProvider.STRIPE,
+      externalProductId: `prod_${crypto.randomUUID()}`,
+      name: "Cloud",
+    });
+
+    await updateSubscription({ organizationId, values: { planId: plan.id } });
+
+    const [summary] = await list(organizationId);
+
+    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.STRIPE });
+    expect(summary?.product).toEqual({ name: "Cloud" });
   });
 
   test("returns an open organization without end", async () => {

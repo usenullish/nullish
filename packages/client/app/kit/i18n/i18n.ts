@@ -1303,6 +1303,7 @@ const I18nSubscriptionSchema = z.strictObject({
   }),
   label: z.strictObject({
     billing: z.string(),
+    plan: z.string(),
     status: z.string(),
     trial_ends: z.string(),
     period_ends: z.string(),

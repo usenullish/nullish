@@ -1454,6 +1454,7 @@
     },
     "label": {
       "billing": "Facturation",
+      "plan": "Offre",
       "status": "Statut",
       "trial_ends": "Fin de l'essai",
       "period_ends": "Fin de la période en cours"

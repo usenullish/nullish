@@ -1454,6 +1454,7 @@
     },
     "label": {
       "billing": "Abrechnung",
+      "plan": "Plan",
       "status": "Status",
       "trial_ends": "Testphase endet",
       "period_ends": "Aktuelle Periode endet"

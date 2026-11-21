@@ -1454,6 +1454,7 @@
     },
     "label": {
       "billing": "Billing",
+      "plan": "Plan",
       "status": "Status",
       "trial_ends": "Trial ends",
       "period_ends": "Current period ends"
