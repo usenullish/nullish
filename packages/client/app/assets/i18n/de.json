@@ -1436,7 +1436,8 @@
       "get_in_touch": "Schreib uns",
       "request_instance": "Meine Instanz anfragen",
       "continue": "Weiter",
-      "back_to_organization": "Zurück zur Organisation"
+      "back_to_organization": "Zurück zur Organisation",
+      "manage": "Abo verwalten"
     },
     "step": {
       "plan": "Plan",
@@ -1507,6 +1508,7 @@
       "on_prem_description": "Für deine Buchhaltung im eigenen Haus",
       "custom_pricing": "Individueller Preis",
       "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",
+      "manage_error": "Die Abo-Seite konnte nicht geöffnet werden.",
       "success_description": "Dein Abo wird aktiviert, das dauert nur ein paar Sekunden.",
       "success_ready": "Alles bereit, danke!",
       "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist."

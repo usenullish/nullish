@@ -13,7 +13,12 @@ import {
 } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
-import { type CheckoutSessionArgs, type PaymentEvent, PaymentProvider } from "./_payment-provider";
+import {
+  type CheckoutSessionArgs,
+  type PaymentEvent,
+  PaymentProvider,
+  type PortalSessionArgs,
+} from "./_payment-provider";
 
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
@@ -162,6 +167,19 @@ export class StripePaymentProvider extends PaymentProvider<
     });
 
     assertNonNullish(url);
+
+    return { url };
+  }
+
+  protected override async createPortalSession({
+    externalCustomerId,
+    returnUrl,
+  }: PortalSessionArgs): Promise<Payments["Manage"]["Result"]> {
+    // https://docs.stripe.com/customer-management/integrate-customer-portal
+    const { url } = await this.#stripe.billingPortal.sessions.create({
+      customer: externalCustomerId,
+      return_url: returnUrl,
+    });
 
     return { url };
   }

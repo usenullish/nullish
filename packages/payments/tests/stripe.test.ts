@@ -531,6 +531,86 @@ describe("StripePaymentProvider", () => {
     });
   });
 
+  describe("manage", () => {
+    const PORTAL_URL = "https://billing.stripe.com/p/session/bps_1";
+
+    const args = { userId: "user-1", organizationId: ORGANIZATION_ID };
+
+    const mockCustomer = () => {
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "success", result: { externalCustomerId: "cus_1" } }) as unknown as Awaited<
+            ReturnType<typeof withDbContext>
+          >,
+      );
+    };
+
+    const mockPortal = () => {
+      fetchSpy.mockImplementation((async () =>
+        Response.json({
+          id: "bps_1",
+          object: "billing_portal.session",
+          url: PORTAL_URL,
+        })) as unknown as typeof fetch);
+    };
+
+    const sentParams = (): URLSearchParams => {
+      const [[, init] = []] = fetchSpy.mock.calls.filter(([input]) =>
+        String(input).includes("/v1/billing_portal/sessions"),
+      );
+
+      return new URLSearchParams(String(init?.body));
+    };
+
+    test("returns the url of the portal", async () => {
+      mockCustomer();
+      mockPortal();
+
+      expect(await StripePaymentProvider.create().manage(args)).toEqual({ url: PORTAL_URL });
+    });
+
+    test("opens the portal of the customer of the organization", async () => {
+      mockCustomer();
+      mockPortal();
+
+      await StripePaymentProvider.create().manage(args);
+
+      expect(sentParams().get("customer")).toBe("cus_1");
+    });
+
+    test("returns to the subscription of the organization", async () => {
+      mockCustomer();
+      mockPortal();
+
+      await StripePaymentProvider.create().manage(args);
+
+      expect(sentParams().get("return_url")).toBe(
+        `${envAppUrl()}/orgs/${ORGANIZATION_ID}/subscription/details`,
+      );
+    });
+
+    test("rejects an invalid organization without calling Stripe", async () => {
+      await expect(
+        StripePaymentProvider.create().manage({ ...args, organizationId: "not-an-organization" }),
+      ).rejects.toThrow();
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("does not open the portal when the customer cannot be loaded", async () => {
+      const err = new Error("Not an admin");
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await expect(StripePaymentProvider.create().manage(args)).rejects.toThrow(err);
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe("listPlans", () => {
     const planOf = ({ externalProductId }: { externalProductId: string }) => ({
       id: crypto.randomUUID(),
