@@ -179,6 +179,7 @@ const I18nNavigationSchema = z.strictObject({
   invitations: z.string(),
   migrations: z.string(),
   subscription: z.string(),
+  overview: z.string(),
   plans: z.string(),
 });
 
@@ -1295,6 +1296,12 @@ const I18nSubscriptionSchema = z.strictObject({
   }),
   step: z.strictObject({ plan: z.string(), payment: z.string(), done: z.string() }),
   state: z.strictObject({ activating: z.string() }),
+  status: z.strictObject({
+    trialing: z.string(),
+    active: z.string(),
+    past_due: z.string(),
+    inactive: z.string(),
+  }),
   label: z.strictObject({ billing: z.string() }),
   billing: z.strictObject({
     day: z.string(),
@@ -1347,6 +1354,8 @@ const I18nSubscriptionSchema = z.strictObject({
     success_description: z.string(),
     success_ready: z.string(),
     success_timeout: z.string(),
+    trial_ends: z.string(),
+    period_ends: z.string(),
   }),
 });
 

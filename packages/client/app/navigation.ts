@@ -80,7 +80,10 @@ export const SUBSCRIPTION_NAVIGATION_GROUP: NavigationGroup = {
   label: "subscription",
   icon: CreditCard,
   collapsible: true,
-  items: [{ title: "plans", path: SUBSCRIPTION_PLANS_PATH }],
+  items: [
+    { title: "overview", path: "/subscription" },
+    { title: "plans", path: SUBSCRIPTION_PLANS_PATH },
+  ],
 };
 
 // Only shown to the admins of the organization.

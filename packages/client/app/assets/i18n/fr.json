@@ -191,6 +191,7 @@
     "invitations": "Invitations",
     "migrations": "Migrations",
     "subscription": "Abonnement",
+    "overview": "Aperçu",
     "plans": "Offres"
   },
   "greeting": {
@@ -1446,6 +1447,12 @@
     "state": {
       "activating": "Activation…"
     },
+    "status": {
+      "trialing": "Essai",
+      "active": "Actif",
+      "past_due": "Paiement en retard",
+      "inactive": "Inactif"
+    },
     "label": {
       "billing": "Facturation"
     },
@@ -1499,7 +1506,9 @@
       "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
       "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
       "success_ready": "Tout est prêt, merci !",
-      "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
+      "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé.",
+      "trial_ends": "Ton essai se termine le {date}.",
+      "period_ends": "La période en cours se termine le {date}."
     }
   }
 }
