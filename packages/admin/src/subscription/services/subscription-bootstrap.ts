@@ -48,7 +48,6 @@ const BootstrapCustomPlanSchema = z.strictObject({
 
 const BootstrapExternalPlanSchema = z.strictObject({
   provider: ExternalProviderSchema,
-  trialDays: InsertPlansSchema.shape.trialDays,
   externalProductId: InsertExternalProductsSchema.shape.externalProductId,
   name: InsertExternalProductsSchema.shape.name,
   taxRates: z
@@ -170,12 +169,12 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
 
   async #seedExternalPlan({
     tx,
-    plan: { provider, trialDays, externalProductId, name, taxRates },
+    plan: { provider, externalProductId, name, taxRates },
   }: {
     tx: Tx;
     plan: BootstrapExternalPlan;
   }): Promise<Plan> {
-    const plan = await insertPlan({ tx, plan: { provider, trialDays } });
+    const plan = await insertPlan({ tx, plan: { provider } });
 
     await insertExternalProduct({
       tx,

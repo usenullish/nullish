@@ -16,6 +16,10 @@ export const PlansSchema = SubscriptionSchema.table(
   },
   (table) => [
     pg.check("plans_trial_days_positive", sql`${table.trialDays} >= 1`),
+    pg.check(
+      "plans_trial_days_self",
+      sql`${table.provider} = 'self' OR ${table.trialDays} IS NULL`,
+    ),
     pg.unique("plans_id_provider_unique").on(table.id, table.provider),
     ...readonlyPolicies({ tableName: "plans" }),
   ],
