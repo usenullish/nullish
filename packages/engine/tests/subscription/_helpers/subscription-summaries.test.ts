@@ -5,6 +5,7 @@ import { asc, eq } from "drizzle-orm";
 import {
   DbSchema,
   OrganizationSubscriptionStatus,
+  SubscriptionProvider,
   SubscriptionStatus,
 } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
@@ -62,6 +63,14 @@ describe("subscription/_helpers/subscription-summaries", () => {
     expect(summaries.map(({ subscription }) => subscription.organizationId)).toEqual([
       organizationId,
     ]);
+  });
+
+  test("returns the provider of the plan of the subscription", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    const [summary] = await list(organizationId);
+
+    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.SELF });
   });
 
   test("returns an open organization without end", async () => {

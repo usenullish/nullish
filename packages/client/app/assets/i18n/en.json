@@ -191,7 +191,6 @@
     "invitations": "Invitations",
     "migrations": "Migrations",
     "subscription": "Subscription",
-    "overview": "Overview",
     "plans": "Plans"
   },
   "greeting": {
@@ -1454,7 +1453,10 @@
       "inactive": "Inactive"
     },
     "label": {
-      "billing": "Billing"
+      "billing": "Billing",
+      "status": "Status",
+      "trial_ends": "Trial ends",
+      "period_ends": "Current period ends"
     },
     "billing": {
       "day": "Daily",
@@ -1506,9 +1508,7 @@
       "checkout_error": "The payment page could not be opened.",
       "success_description": "Your subscription is being activated, it only takes a few seconds.",
       "success_ready": "All set, thanks!",
-      "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed.",
-      "trial_ends": "Your trial ends on {date}.",
-      "period_ends": "The current period ends on {date}."
+      "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed."
     }
   }
 }

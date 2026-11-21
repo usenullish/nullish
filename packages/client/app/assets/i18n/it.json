@@ -191,7 +191,6 @@
     "invitations": "Inviti",
     "migrations": "Migrazioni",
     "subscription": "Abbonamento",
-    "overview": "Panoramica",
     "plans": "Piani"
   },
   "greeting": {
@@ -1454,7 +1453,10 @@
       "inactive": "Inattivo"
     },
     "label": {
-      "billing": "Fatturazione"
+      "billing": "Fatturazione",
+      "status": "Stato",
+      "trial_ends": "Fine della prova",
+      "period_ends": "Fine del periodo in corso"
     },
     "billing": {
       "day": "Giornaliero",
@@ -1506,9 +1508,7 @@
       "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
       "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
       "success_ready": "Tutto pronto, grazie!",
-      "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato.",
-      "trial_ends": "La tua prova termina il {date}.",
-      "period_ends": "Il periodo in corso termina il {date}."
+      "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."
     }
   }
 }

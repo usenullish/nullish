@@ -1,4 +1,4 @@
-import { INVITATION_ACCEPT_PATH, SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
+import { INVITATION_ACCEPT_PATH } from "@usenullish/nullish-schema/server";
 import {
   BookOpen,
   CreditCard,
@@ -80,10 +80,7 @@ export const SUBSCRIPTION_NAVIGATION_GROUP: NavigationGroup = {
   label: "subscription",
   icon: CreditCard,
   collapsible: true,
-  items: [
-    { title: "overview", path: "/subscription" },
-    { title: "plans", path: SUBSCRIPTION_PLANS_PATH },
-  ],
+  items: [{ title: "subscription", path: "/subscription/details", match: "/subscription" }],
 };
 
 // Only shown to the admins of the organization.
@@ -159,6 +156,10 @@ export const NAVIGATION: NavigationGroup[] = [
 
 export const ORGANIZATION_TABS: NavigationItem[] = [
   { title: "details", path: "/settings/organization/details" },
+];
+
+export const SUBSCRIPTION_TABS: NavigationItem[] = [
+  { title: "details", path: "/subscription/details" },
 ];
 
 export const BILLING_TABS: NavigationItem[] = [

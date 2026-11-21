@@ -191,7 +191,6 @@
     "invitations": "Einladungen",
     "migrations": "Migrationen",
     "subscription": "Abo",
-    "overview": "Übersicht",
     "plans": "Pläne"
   },
   "greeting": {
@@ -1454,7 +1453,10 @@
       "inactive": "Inaktiv"
     },
     "label": {
-      "billing": "Abrechnung"
+      "billing": "Abrechnung",
+      "status": "Status",
+      "trial_ends": "Testphase endet",
+      "period_ends": "Aktuelle Periode endet"
     },
     "billing": {
       "day": "Täglich",
@@ -1506,9 +1508,7 @@
       "checkout_error": "Die Zahlungsseite konnte nicht geöffnet werden.",
       "success_description": "Dein Abo wird aktiviert, das dauert nur ein paar Sekunden.",
       "success_ready": "Alles bereit, danke!",
-      "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist.",
-      "trial_ends": "Deine Testphase endet am {date}.",
-      "period_ends": "Die aktuelle Periode endet am {date}."
+      "success_timeout": "Das dauert länger als üblich. Dein Abo wird aktiviert, sobald die Zahlung bestätigt ist."
     }
   }
 }

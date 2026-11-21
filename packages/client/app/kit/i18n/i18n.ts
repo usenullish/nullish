@@ -179,7 +179,6 @@ const I18nNavigationSchema = z.strictObject({
   invitations: z.string(),
   migrations: z.string(),
   subscription: z.string(),
-  overview: z.string(),
   plans: z.string(),
 });
 
@@ -1302,7 +1301,12 @@ const I18nSubscriptionSchema = z.strictObject({
     past_due: z.string(),
     inactive: z.string(),
   }),
-  label: z.strictObject({ billing: z.string() }),
+  label: z.strictObject({
+    billing: z.string(),
+    status: z.string(),
+    trial_ends: z.string(),
+    period_ends: z.string(),
+  }),
   billing: z.strictObject({
     day: z.string(),
     week: z.string(),
@@ -1354,8 +1358,6 @@ const I18nSubscriptionSchema = z.strictObject({
     success_description: z.string(),
     success_ready: z.string(),
     success_timeout: z.string(),
-    trial_ends: z.string(),
-    period_ends: z.string(),
   }),
 });
 
