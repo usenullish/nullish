@@ -1458,7 +1458,8 @@
       "plan": "Plan",
       "status": "Status",
       "trial_ends": "Testphase endet",
-      "period_ends": "Aktuelle Periode endet"
+      "period_ends": "Aktuelle Periode endet",
+      "ends_on": "Endet am"
     },
     "billing": {
       "day": "Täglich",

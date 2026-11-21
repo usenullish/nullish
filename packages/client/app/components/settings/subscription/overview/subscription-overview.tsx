@@ -24,7 +24,7 @@ export const SubscriptionOverview = () => {
   }
 
   const {
-    subscription: { status, periodEnd },
+    subscription: { status, periodEnd, cancelAt },
     plan,
     product,
   } = subscriptionSummary;
@@ -38,13 +38,15 @@ export const SubscriptionOverview = () => {
       label: i18n.subscription.label.status,
       value: <Badge variant="outline">{i18n.subscription.status[status]}</Badge>,
     },
-    {
-      label:
-        status === SubscriptionStatus.TRIALING
-          ? i18n.subscription.label.trial_ends
-          : i18n.subscription.label.period_ends,
-      value: nonNullish(periodEnd) ? formatDate(periodEnd) : null,
-    },
+    nonNullish(cancelAt)
+      ? { label: i18n.subscription.label.ends_on, value: formatDate(cancelAt) }
+      : {
+          label:
+            status === SubscriptionStatus.TRIALING
+              ? i18n.subscription.label.trial_ends
+              : i18n.subscription.label.period_ends,
+          value: nonNullish(periodEnd) ? formatDate(periodEnd) : null,
+        },
   ];
 
   return (

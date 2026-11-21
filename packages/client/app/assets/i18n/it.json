@@ -1458,7 +1458,8 @@
       "plan": "Piano",
       "status": "Stato",
       "trial_ends": "Fine della prova",
-      "period_ends": "Fine del periodo in corso"
+      "period_ends": "Fine del periodo in corso",
+      "ends_on": "Termina il"
     },
     "billing": {
       "day": "Giornaliero",

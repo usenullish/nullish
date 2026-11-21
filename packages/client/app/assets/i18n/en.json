@@ -1458,7 +1458,8 @@
       "plan": "Plan",
       "status": "Status",
       "trial_ends": "Trial ends",
-      "period_ends": "Current period ends"
+      "period_ends": "Current period ends",
+      "ends_on": "Ends on"
     },
     "billing": {
       "day": "Daily",
