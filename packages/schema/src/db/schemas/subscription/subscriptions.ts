@@ -30,7 +30,7 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
     planId: planIdReference(),
     status: subscriptionStatus().notNull(),
     periodEnd: timestamp(),
-    cancelAtPeriodEnd: pg.boolean().notNull().default(false),
+    cancelAt: timestamp(),
     ...auditFields(),
   },
   (table) => [
@@ -44,8 +44,8 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
       sql`${table.status} <> 'past_due' OR ${table.periodEnd} IS NOT NULL`,
     ),
     pg.check(
-      "subscriptions_cancel_at_period_end_period_end",
-      sql`NOT ${table.cancelAtPeriodEnd} OR ${table.periodEnd} IS NOT NULL`,
+      "subscriptions_inactive_cancel_at",
+      sql`${table.status} <> 'inactive' OR ${table.cancelAt} IS NULL`,
     ),
     ...subscriptionPolicies({ organizationId: table.organizationId }),
   ],
