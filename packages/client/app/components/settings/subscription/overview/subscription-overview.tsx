@@ -33,9 +33,7 @@ export const SubscriptionOverview = () => {
     ? i18n.subscription.label.ends_on
     : status === SubscriptionStatus.TRIALING
       ? i18n.subscription.label.trial_ends
-      : status === SubscriptionStatus.ACTIVE
-        ? i18n.subscription.label.renews_on
-        : i18n.subscription.label.period_ends;
+      : i18n.subscription.label.period_ends;
 
   const rows = [
     {

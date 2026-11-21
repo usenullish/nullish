@@ -1459,7 +1459,6 @@
       "status": "Status",
       "trial_ends": "Testphase endet",
       "period_ends": "Aktuelle Periode endet",
-      "renews_on": "Verlängert sich am",
       "ends_on": "Endet am"
     },
     "billing": {

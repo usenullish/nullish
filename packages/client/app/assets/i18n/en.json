@@ -1459,7 +1459,6 @@
       "status": "Status",
       "trial_ends": "Trial ends",
       "period_ends": "Current period ends",
-      "renews_on": "Renews on",
       "ends_on": "Ends on"
     },
     "billing": {
