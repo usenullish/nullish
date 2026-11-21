@@ -10,6 +10,7 @@ import { Button } from "~/ui/components/button";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { Badge } from "~/ui/components/badge";
+import { ManageSubscription } from "./manage-subscription";
 
 export const SubscriptionOverview = () => {
   const { i18n } = useI18n();
@@ -74,6 +75,8 @@ export const SubscriptionOverview = () => {
           {i18n.organizations.action.choose_plan}
         </Button>
       )}
+
+      {admin && plan.provider !== SubscriptionProvider.SELF && <ManageSubscription />}
     </div>
   );
 };

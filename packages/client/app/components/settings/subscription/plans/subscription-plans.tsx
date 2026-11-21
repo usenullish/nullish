@@ -2,10 +2,10 @@ import {
   type ComponentProps,
   type ReactNode,
   startTransition,
-  useEffect,
   useState,
   ViewTransition,
 } from "react";
+import { usePageRestore } from "~/kit/utils/page-restore.hook";
 import { useSearchParams } from "react-router";
 import { CheckIcon } from "lucide-react";
 import { isEmptyString, nonNullish, type Nullable, type Option } from "@usenullish/nullish-common";
@@ -80,17 +80,7 @@ export const SubscriptionPlans = ({
   const [pendingPriceId, setPendingPriceId] = useState<Option<PlanPrice["priceId"]>>(undefined);
   const [error, setError] = useState<Nullable<string>>(null);
 
-  useEffect(() => {
-    const onPageShow = ({ persisted }: PageTransitionEvent) => {
-      if (persisted) {
-        startTransition(() => setPendingPriceId(undefined));
-      }
-    };
-
-    window.addEventListener("pageshow", onPageShow);
-
-    return () => window.removeEventListener("pageshow", onPageShow);
-  }, []);
+  usePageRestore({ onRestore: () => startTransition(() => setPendingPriceId(undefined)) });
 
   const checkout = async ({
     priceId,
