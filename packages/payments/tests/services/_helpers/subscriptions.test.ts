@@ -130,12 +130,30 @@ describe("subscriptions helpers", () => {
           planId,
           status: SubscriptionStatus.PAST_DUE,
           periodEnd,
+          cancelAtPeriodEnd: false,
         }),
       );
 
       expect(updated.status).toBe(SubscriptionStatus.PAST_DUE);
       expect(updated.periodEnd).toEqual(periodEnd);
       expect(updated.planId).toBe(planId);
+    });
+
+    test("updates the cancellation at the end of the period", async () => {
+      const subscription = await subscriptionOf();
+
+      const updated = await db.transaction((tx) =>
+        updateSubscription({
+          tx,
+          subscription,
+          planId: subscription.planId,
+          status: SubscriptionStatus.ACTIVE,
+          periodEnd: new Date(Date.now() + DAY_MS),
+          cancelAtPeriodEnd: true,
+        }),
+      );
+
+      expect(updated.cancelAtPeriodEnd).toBe(true);
     });
 
     test("keeps the end when none is given", async () => {
@@ -155,6 +173,7 @@ describe("subscriptions helpers", () => {
           planId: subscription.planId,
           status: SubscriptionStatus.INACTIVE,
           periodEnd: undefined,
+          cancelAtPeriodEnd: false,
         }),
       );
 
@@ -183,6 +202,7 @@ describe("subscriptions helpers", () => {
           planId,
           status: SubscriptionStatus.INACTIVE,
           periodEnd: undefined,
+          cancelAtPeriodEnd: false,
         }),
       );
 
@@ -202,6 +222,7 @@ describe("subscriptions helpers", () => {
             planId,
             status: SubscriptionStatus.ACTIVE,
             periodEnd: undefined,
+            cancelAtPeriodEnd: false,
           }),
         ),
       ).rejects.toThrow();
@@ -220,6 +241,7 @@ describe("subscriptions helpers", () => {
             planId: subscription.planId,
             status: SubscriptionStatus.INACTIVE,
             periodEnd: undefined,
+            cancelAtPeriodEnd: false,
           }),
         ),
       ).rejects.toThrow();

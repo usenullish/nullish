@@ -61,6 +61,7 @@ export const PaymentSchema = z.strictObject({
   externalIds: PaymentExternalIdsSchema,
   status: SelectSubscriptionsSchema.shape.status,
   periodEnd: SelectSubscriptionsSchema.shape.periodEnd.unwrap().optional(),
+  cancelAtPeriodEnd: SelectSubscriptionsSchema.shape.cancelAtPeriodEnd,
 });
 
 export const PaymentInvoiceSchema = z.strictObject({

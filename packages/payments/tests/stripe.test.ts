@@ -25,15 +25,18 @@ const PERIOD_END = 1_798_761_600;
 const subscriptionOf = ({
   status,
   metadata = { organizationId: ORGANIZATION_ID },
+  cancelAtPeriodEnd = false,
 }: {
   status: Stripe.Subscription.Status;
   metadata?: Record<string, string>;
+  cancelAtPeriodEnd?: boolean;
 }) => ({
   id: "sub_123",
   object: "subscription",
   customer: "cus_456",
   status,
   metadata,
+  cancel_at_period_end: cancelAtPeriodEnd,
   items: {
     object: "list",
     data: [
@@ -150,6 +153,7 @@ describe("StripePaymentProvider", () => {
       },
       status: SubscriptionStatus.ACTIVE,
       periodEnd: new Date(PERIOD_END * 1000),
+      cancelAtPeriodEnd: false,
     });
   });
 
@@ -244,6 +248,25 @@ describe("StripePaymentProvider", () => {
 
     expect(result?.status).toBe(expected);
     expect(result?.periodEnd).toEqual(periodEnd);
+  });
+
+  test.each(["active", "past_due"] as const)(
+    "maps the cancellation at the end of the period of a %s subscription",
+    async (status) => {
+      mockSubscription(subscriptionOf({ status, cancelAtPeriodEnd: true }));
+
+      const result = await handle(subscriptionUpdated);
+
+      expect(result?.cancelAtPeriodEnd).toBe(true);
+    },
+  );
+
+  test("drops the cancellation at the end of the period of an ended subscription", async () => {
+    mockSubscription(subscriptionOf({ status: "canceled", cancelAtPeriodEnd: true }));
+
+    const result = await handle(subscriptionUpdated);
+
+    expect(result?.cancelAtPeriodEnd).toBe(false);
   });
 
   test("throws when the subscription cannot be synced", async () => {

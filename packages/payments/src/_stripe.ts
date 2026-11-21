@@ -341,12 +341,12 @@ export class StripePaymentProvider extends PaymentProvider<
   }
 
   #mapPaymentStatus({
-    subscription: { status },
+    subscription: { status, cancel_at_period_end: cancelAtPeriodEnd },
     item: { current_period_start: periodStart, current_period_end: periodEnd },
   }: {
     subscription: Stripe.Subscription;
     item: Stripe.SubscriptionItem;
-  }): Option<Pick<Payments["Payment"], "status" | "periodEnd">> {
+  }): Option<Pick<Payments["Payment"], "status" | "periodEnd" | "cancelAtPeriodEnd">> {
     const secondsToDate = (seconds: number): Date => {
       return new Date(seconds * 1000);
     };
@@ -356,22 +356,29 @@ export class StripePaymentProvider extends PaymentProvider<
         return {
           status: SubscriptionStatus.TRIALING,
           periodEnd: secondsToDate(periodEnd),
+          cancelAtPeriodEnd,
         };
       case "active":
         return {
           status: SubscriptionStatus.ACTIVE,
           periodEnd: secondsToDate(periodEnd),
+          cancelAtPeriodEnd,
         };
       case "past_due":
         return {
           status: SubscriptionStatus.PAST_DUE,
           periodEnd: secondsToDate(periodStart),
+          cancelAtPeriodEnd,
         };
       case "canceled":
       case "unpaid":
       case "paused":
       case "incomplete_expired":
-        return { status: SubscriptionStatus.INACTIVE, periodEnd: undefined };
+        return {
+          status: SubscriptionStatus.INACTIVE,
+          periodEnd: undefined,
+          cancelAtPeriodEnd: false,
+        };
       case "incomplete":
         // The first payment is still pending and can succeed within 23 hours,
         // for example a declined card or a pending 3D Secure confirmation.
