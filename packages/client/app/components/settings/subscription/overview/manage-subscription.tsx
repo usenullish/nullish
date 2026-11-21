@@ -1,4 +1,5 @@
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useState } from "react";
+import { usePageRestore } from "~/kit/utils/page-restore.hook";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { PaymentsManageService } from "~/lib/services/payments+manage.services";
 import { useI18n } from "~/kit/i18n/i18n.context";
@@ -12,17 +13,7 @@ export const ManageSubscription = () => {
 
   const [pending, setPending] = useState(false);
 
-  useEffect(() => {
-    const onPageShow = ({ persisted }: PageTransitionEvent) => {
-      if (persisted) {
-        startTransition(() => setPending(false));
-      }
-    };
-
-    window.addEventListener("pageshow", onPageShow);
-
-    return () => window.removeEventListener("pageshow", onPageShow);
-  }, []);
+  usePageRestore({ onRestore: () => startTransition(() => setPending(false)) });
 
   const manage = async () => {
     startTransition(() => setPending(true));
