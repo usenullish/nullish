@@ -39,19 +39,16 @@ export const updateSubscription = async ({
   planId,
   status,
   periodEnd,
-  cancelAtPeriodEnd,
+  cancelAt,
 }: {
   tx: Tx;
   subscription: Subscription;
   planId: Subscription["planId"];
-} & Pick<
-  Payments["Payment"],
-  "status" | "periodEnd" | "cancelAtPeriodEnd"
->): Promise<Subscription> => {
+} & Pick<Payments["Payment"], "status" | "periodEnd" | "cancelAt">): Promise<Subscription> => {
   const rows = await updateMany({
     tx,
     table: subscriptions,
-    values: { status, periodEnd, cancelAtPeriodEnd, ...(planId !== currentPlanId && { planId }) },
+    values: { status, periodEnd, cancelAt, ...(planId !== currentPlanId && { planId }) },
     returningSchema: RecordsSchema.Subscription.SubscriptionsSchema.SelectSubscriptionsSchema,
     where: eq(subscriptions.id, id),
   });

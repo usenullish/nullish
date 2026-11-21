@@ -25,18 +25,18 @@ const PERIOD_END = 1_798_761_600;
 const subscriptionOf = ({
   status,
   metadata = { organizationId: ORGANIZATION_ID },
-  cancelAtPeriodEnd = false,
+  cancelAt = null,
 }: {
   status: Stripe.Subscription.Status;
   metadata?: Record<string, string>;
-  cancelAtPeriodEnd?: boolean;
+  cancelAt?: Nullable<number>;
 }) => ({
   id: "sub_123",
   object: "subscription",
   customer: "cus_456",
   status,
   metadata,
-  cancel_at_period_end: cancelAtPeriodEnd,
+  cancel_at: cancelAt,
   items: {
     object: "list",
     data: [
@@ -153,7 +153,7 @@ describe("StripePaymentProvider", () => {
       },
       status: SubscriptionStatus.ACTIVE,
       periodEnd: new Date(PERIOD_END * 1000),
-      cancelAtPeriodEnd: false,
+      cancelAt: null,
     });
   });
 
@@ -251,22 +251,22 @@ describe("StripePaymentProvider", () => {
   });
 
   test.each(["active", "past_due"] as const)(
-    "maps the cancellation at the end of the period of a %s subscription",
+    "maps the scheduled cancellation of a %s subscription",
     async (status) => {
-      mockSubscription(subscriptionOf({ status, cancelAtPeriodEnd: true }));
+      mockSubscription(subscriptionOf({ status, cancelAt: PERIOD_END }));
 
       const result = await handle(subscriptionUpdated);
 
-      expect(result?.cancelAtPeriodEnd).toBe(true);
+      expect(result?.cancelAt).toEqual(new Date(PERIOD_END * 1000));
     },
   );
 
-  test("drops the cancellation at the end of the period of an ended subscription", async () => {
-    mockSubscription(subscriptionOf({ status: "canceled", cancelAtPeriodEnd: true }));
+  test("drops the scheduled cancellation of an ended subscription", async () => {
+    mockSubscription(subscriptionOf({ status: "canceled", cancelAt: PERIOD_END }));
 
     const result = await handle(subscriptionUpdated);
 
-    expect(result?.cancelAtPeriodEnd).toBe(false);
+    expect(result?.cancelAt).toBeNull();
   });
 
   test("throws when the subscription cannot be synced", async () => {
