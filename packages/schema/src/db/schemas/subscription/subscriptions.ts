@@ -43,6 +43,10 @@ export const SubscriptionsSchema = SubscriptionSchema.table(
       "subscriptions_past_due_period_end",
       sql`${table.status} <> 'past_due' OR ${table.periodEnd} IS NOT NULL`,
     ),
+    pg.check(
+      "subscriptions_inactive_cancel_at",
+      sql`${table.status} <> 'inactive' OR ${table.cancelAt} IS NULL`,
+    ),
     ...subscriptionPolicies({ organizationId: table.organizationId }),
   ],
 );
