@@ -1,6 +1,6 @@
 <div align="center" style="display:flex;flex-direction:column;">
   <a href="https://nullish.ch">
-    <img src="https://github.com/usenullish/nullish/raw/main/packages/client/public/social-image.jpg" width="100%" alt="nullish social banner" role="presentation"/>
+    <img src="https://github.com/usenullish/nullish/raw/main/packages/client/public/social-image.png" width="100%" alt="nullish social banner" role="presentation"/>
   </a>
 </div>
 
