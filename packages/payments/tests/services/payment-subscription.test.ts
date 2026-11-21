@@ -43,7 +43,7 @@ describe("PaymentSubscriptionService", () => {
     },
     status: SubscriptionStatus.ACTIVE,
     periodEnd: new Date(Date.now() + 30 * DAY_MS),
-    cancelAtPeriodEnd: false,
+    cancelAt: null,
     ...payment,
   });
 
@@ -196,13 +196,14 @@ describe("PaymentSubscriptionService", () => {
       expect(subscription.periodEnd).toEqual(payment.periodEnd ?? null);
     });
 
-    test("stores a cancellation at the end of the period", async () => {
+    test("stores the scheduled cancellation", async () => {
       const payment = paymentOf();
+      const cancelAt = new Date(Date.now() + 30 * DAY_MS);
 
       await sync({ payment });
-      await sync({ payment: { ...payment, cancelAtPeriodEnd: true } });
+      await sync({ payment: { ...payment, cancelAt } });
 
-      expect((await subscriptionOf()).cancelAtPeriodEnd).toBe(true);
+      expect((await subscriptionOf()).cancelAt).toEqual(cancelAt);
     });
 
     test("renews a subscription on a plan that has expired since", async () => {

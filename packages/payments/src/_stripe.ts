@@ -341,34 +341,36 @@ export class StripePaymentProvider extends PaymentProvider<
   }
 
   #mapPaymentStatus({
-    subscription: { status, cancel_at_period_end: cancelAtPeriodEnd },
+    subscription: { status, cancel_at: cancelAt },
     item: { current_period_start: periodStart, current_period_end: periodEnd },
   }: {
     subscription: Stripe.Subscription;
     item: Stripe.SubscriptionItem;
-  }): Option<Pick<Payments["Payment"], "status" | "periodEnd" | "cancelAtPeriodEnd">> {
+  }): Option<Pick<Payments["Payment"], "status" | "periodEnd" | "cancelAt">> {
     const secondsToDate = (seconds: number): Date => {
       return new Date(seconds * 1000);
     };
+
+    const scheduledCancelAt = isNullish(cancelAt) ? null : secondsToDate(cancelAt);
 
     switch (status) {
       case "trialing":
         return {
           status: SubscriptionStatus.TRIALING,
           periodEnd: secondsToDate(periodEnd),
-          cancelAtPeriodEnd,
+          cancelAt: scheduledCancelAt,
         };
       case "active":
         return {
           status: SubscriptionStatus.ACTIVE,
           periodEnd: secondsToDate(periodEnd),
-          cancelAtPeriodEnd,
+          cancelAt: scheduledCancelAt,
         };
       case "past_due":
         return {
           status: SubscriptionStatus.PAST_DUE,
           periodEnd: secondsToDate(periodStart),
-          cancelAtPeriodEnd,
+          cancelAt: scheduledCancelAt,
         };
       case "canceled":
       case "unpaid":
@@ -377,7 +379,7 @@ export class StripePaymentProvider extends PaymentProvider<
         return {
           status: SubscriptionStatus.INACTIVE,
           periodEnd: undefined,
-          cancelAtPeriodEnd: false,
+          cancelAt: null,
         };
       case "incomplete":
         // The first payment is still pending and can succeed within 23 hours,
