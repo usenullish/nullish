@@ -41,6 +41,9 @@ describe("organization payments checkout", () => {
   const handle = mock<ProcessPayments["handle"]>(async () => undefined);
   const checkout = mock<ProcessPayments["checkout"]>(async () => ({ url: CHECKOUT_URL }));
   const listPlans = mock<ProcessPayments["listPlans"]>(async () => []);
+  const manage = mock<ProcessPayments["manage"]>(async () => ({
+    url: "https://billing.stripe.com/p/session/bps_1",
+  }));
 
   const signUp = async ({ email }: { email: string }): Promise<{ id: string; cookie: string }> => {
     const { headers, response } = await auth.api.signUpEmail({
@@ -57,7 +60,7 @@ describe("organization payments checkout", () => {
   const post = async ({
     cookie,
     parentId = organizationId,
-    payments = { handle, checkout, listPlans },
+    payments = { handle, checkout, manage, listPlans },
   }: {
     cookie?: string;
     parentId?: string;

@@ -984,6 +984,14 @@ interface Api {
       >;
     };
   };
+  PaymentsManage: {
+    Server: {
+      ManagePaymentsResponse: z.input<typeof ApiSchema.PaymentsManage.ManagePaymentsResponseSchema>;
+    };
+    Client: {
+      ManagePaymentsResponse: z.infer<typeof ApiSchema.PaymentsManage.ManagePaymentsResponseSchema>;
+    };
+  };
   ExternalPlans: {
     Server: {
       GetExternalPlansResponse: z.input<

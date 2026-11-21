@@ -22,6 +22,7 @@ import { AccountingSettingsHandlers } from "./_organizations+accouting+settings"
 import { BillingSettingsHandlers } from "./_organizations+billing+settings";
 import { SubscriptionSummariesHandlers } from "./_organizations+subscription-summaries";
 import { PaymentsCheckoutHandlers } from "./_organizations+payments+checkout";
+import { PaymentsManageHandlers } from "./_organizations+payments+manage";
 import { ExternalPlansHandlers } from "./_subscription+external-plans";
 import { CustomPlansHandlers } from "./_subscription+custom-plans";
 import { DocumentTemplatesHandlers } from "./_organizations+document-templates";
@@ -94,6 +95,7 @@ const RESOURCES = [
   BillingSettingsHandlers,
   SubscriptionSummariesHandlers,
   PaymentsCheckoutHandlers,
+  PaymentsManageHandlers,
   ExternalPlansHandlers,
   CustomPlansHandlers,
   DocumentTemplatesHandlers,

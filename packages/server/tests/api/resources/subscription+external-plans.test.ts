@@ -59,6 +59,9 @@ describe("subscription external plans", () => {
     url: "https://checkout.stripe.com/c/pay/cs_1",
   }));
   const listPlans = mock<ProcessPayments["listPlans"]>(async () => PLANS);
+  const manage = mock<ProcessPayments["manage"]>(async () => ({
+    url: "https://billing.stripe.com/p/session/bps_1",
+  }));
 
   const signUp = async ({ email }: { email: string }): Promise<{ id: string; cookie: string }> => {
     const { headers, response } = await auth.api.signUpEmail({
@@ -74,7 +77,7 @@ describe("subscription external plans", () => {
 
   const get = async ({
     cookie,
-    payments = { handle, checkout, listPlans },
+    payments = { handle, checkout, manage, listPlans },
   }: {
     cookie?: string;
     payments?: Nullable<ProcessPayments>;
