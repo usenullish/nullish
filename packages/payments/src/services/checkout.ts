@@ -3,7 +3,7 @@ import type { Tx } from "@usenullish/nullish-db";
 import { type PostgresDbInstance, type SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type AdminServiceContextArgs } from "./_admin-service";
-import { getExternalProduct } from "./_helpers/external-products";
+import { getAvailableExternalProduct } from "./_helpers/external-products";
 import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
 import { PaymentsServiceContext } from "./_payments-service";
 
@@ -83,8 +83,8 @@ export class CheckoutService extends PaymentsServiceContext {
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
   }): Promise<void> {
-    // Product not found throw
-    await getExternalProduct({ tx, provider, externalProductId });
+    // Product not found or its plan expired throw
+    await getAvailableExternalProduct({ tx, provider, externalProductId });
   }
 
   async #assertNotLinked({
