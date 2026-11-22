@@ -7,13 +7,17 @@ import { useOrganizations } from "~/context/contexts/organizations.context";
 import { NonNullishOrganizationContext } from "~/context/contexts/organization.context";
 import { ExternalPlansServer } from "~/context/server/subscription+external-plans.server";
 import { CustomPlansServer } from "~/context/server/subscription+custom-plans.server";
-import { assertPaymentsEnabled } from "~/context/loaders/_payments.loader.server";
+import {
+  assertCanCheckout,
+  assertPaymentsEnabled,
+} from "~/context/loaders/_payments.loader.server";
 import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
 export const loader = async (args: Route.LoaderArgs) => {
   await assertPaymentsEnabled(args);
+  await assertCanCheckout(args);
 
   const [externalPlans, customPlans] = await Promise.all([
     ExternalPlansServer.create().get(args),
