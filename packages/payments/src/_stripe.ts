@@ -20,6 +20,7 @@ import {
   PaymentProvider,
   type PortalSessionArgs,
 } from "./_payment-provider";
+import { timestampsToDate } from "./utils/date";
 
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
@@ -196,7 +197,7 @@ export class StripePaymentProvider extends PaymentProvider<
     const [item] = subscription.items.data;
     assertNonNullish(item);
 
-    return { cancelAt: new Date(item.current_period_end * 1000) };
+    return { cancelAt: timestampsToDate(item.current_period_end) };
   }
 
   protected override async decode({
@@ -243,7 +244,7 @@ export class StripePaymentProvider extends PaymentProvider<
         subscriptionId: this.#id(subscription),
         taxRateIds: taxRates.map(({ id }) => id),
       },
-      validOn: new Date(created * 1000),
+      validOn: timestampsToDate(created),
     };
   }
 
@@ -362,29 +363,25 @@ export class StripePaymentProvider extends PaymentProvider<
     subscription: Stripe.Subscription;
     item: Stripe.SubscriptionItem;
   }): Option<Pick<Payments["Payment"], "status" | "periodEnd" | "cancelAt">> {
-    const secondsToDate = (seconds: number): Date => {
-      return new Date(seconds * 1000);
-    };
-
-    const scheduledCancelAt = isNullish(cancelAt) ? null : secondsToDate(cancelAt);
+    const scheduledCancelAt = isNullish(cancelAt) ? null : timestampsToDate(cancelAt);
 
     switch (status) {
       case "trialing":
         return {
           status: SubscriptionStatus.TRIALING,
-          periodEnd: secondsToDate(periodEnd),
+          periodEnd: timestampsToDate(periodEnd),
           cancelAt: scheduledCancelAt,
         };
       case "active":
         return {
           status: SubscriptionStatus.ACTIVE,
-          periodEnd: secondsToDate(periodEnd),
+          periodEnd: timestampsToDate(periodEnd),
           cancelAt: scheduledCancelAt,
         };
       case "past_due":
         return {
           status: SubscriptionStatus.PAST_DUE,
-          periodEnd: secondsToDate(periodStart),
+          periodEnd: timestampsToDate(periodStart),
           cancelAt: scheduledCancelAt,
         };
       case "canceled":
