@@ -46,6 +46,7 @@ export class OrganizationsDeleteHandlers extends Resource {
     const {
       var: {
         db: { connection },
+        workers: { payments },
         caller,
       },
     } = context;
@@ -74,6 +75,7 @@ export class OrganizationsDeleteHandlers extends Resource {
       db: connection,
       userId: caller.userId,
       organizationId: parentId,
+      payments,
     }).delete();
 
     if (result.status === "error") {
