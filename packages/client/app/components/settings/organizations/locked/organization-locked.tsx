@@ -6,7 +6,9 @@ import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { CenteredLayout } from "~/components/layout/centered-layout";
 import { OrganizationDeletedBanner } from "~/components/layout/organization-deleted-banner";
 import { DeleteOrganization } from "~/components/settings/organizations/delete/delete-organization";
+import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { useOrganization } from "~/context/contexts/organization.context";
+import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
@@ -17,7 +19,13 @@ export const OrganizationLocked = () => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const isAdmin = useIsOrganizationAdmin({ organizationId: organization.id });
+  const subscriptionSummary = useSubscriptionSummary();
   const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const choosePlan =
+    isAdmin &&
+    isNullish(organization.deletedAt) &&
+    subscriptionSummary?.plan.provider === SubscriptionProvider.SELF;
 
   return (
     <>
@@ -37,7 +45,7 @@ export const OrganizationLocked = () => {
           </CardHeader>
 
           <CardContent className="grid gap-2">
-            {isAdmin && isNullish(organization.deletedAt) && (
+            {choosePlan && (
               <Button
                 className="w-full"
                 nativeButton={false}
@@ -52,15 +60,6 @@ export const OrganizationLocked = () => {
                 {i18n.organizations.action.see_plans}
               </Button>
             )}
-
-            <Button
-              className="w-full"
-              variant={isAdmin && isNullish(organization.deletedAt) ? "outline" : "default"}
-              nativeButton={false}
-              render={<Link to={UnscopedPath.create().toOrganizations()} />}
-            >
-              {i18n.organizations.action.back_to_organizations}
-            </Button>
 
             {isAdmin && isNullish(organization.deletedAt) && (
               <>
@@ -80,6 +79,15 @@ export const OrganizationLocked = () => {
                 />
               </>
             )}
+
+            <Button
+              className="w-full"
+              variant={choosePlan ? "outline" : "default"}
+              nativeButton={false}
+              render={<Link to={UnscopedPath.create().toOrganizations()} />}
+            >
+              {i18n.organizations.action.back_to_organizations}
+            </Button>
           </CardContent>
         </Card>
       </CenteredLayout>

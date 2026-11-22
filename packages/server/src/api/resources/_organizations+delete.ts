@@ -22,7 +22,7 @@ const actionRoute = defineActionWithoutRequestBodyRoute({
   response: {
     body: { schema: ApiSchema.OrganizationsDelete.DeleteOrganizationResponseSchema },
     description:
-      "Mark an organization as deleted. It stays readable by its members but can no longer be modified, and it is deleted with all its records after a grace period of 30 days. Only admins mark an organization as deleted.",
+      "Mark an organization as deleted. It stays readable by its members but can no longer be modified, until it is deleted for good with all its records. Only admins mark an organization as deleted.",
   },
 });
 

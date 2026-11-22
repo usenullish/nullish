@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Info } from "lucide-react";
-import { isNullish } from "@usenullish/nullish-common";
+import { isNullish, nonNullish } from "@usenullish/nullish-common";
 import { SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
 import { useOrganization } from "~/context/contexts/organization.context";
@@ -25,6 +25,7 @@ export const OrganizationTrialBanner = () => {
   const periodEnd = subscriptionSummary?.subscription.periodEnd;
 
   if (
+    nonNullish(organization.deletedAt) ||
     subscriptionSummary?.subscription.status !== SubscriptionStatus.TRIALING ||
     isNullish(periodEnd)
   ) {
