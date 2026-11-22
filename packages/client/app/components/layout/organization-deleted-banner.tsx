@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Info } from "lucide-react";
 import { isNullish } from "@usenullish/nullish-common";
 import { useOrganization } from "~/context/contexts/organization.context";
@@ -9,6 +10,7 @@ export const OrganizationDeletedBanner = () => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const formatDate = useFormatDate();
+  const [now] = useState(() => new Date());
 
   if (isNullish(organization.deletedAt)) {
     return null;
@@ -22,7 +24,7 @@ export const OrganizationDeletedBanner = () => {
       <Info className="size-4 shrink-0" />
       <p>
         {replacePlaceholders(
-          organization.deletedAt > new Date()
+          organization.deletedAt > now
             ? i18n.organizations.text.deletion_scheduled
             : i18n.organizations.text.deleted,
           {

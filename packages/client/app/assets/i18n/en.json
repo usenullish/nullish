@@ -299,6 +299,7 @@
       "danger_zone": "Deleting the organization makes it read-only. It is deleted for good, with all its data, after 30 days.",
       "delete_title": "Delete {name}?",
       "delete_description": "The organization becomes read-only right away and is deleted for good, with all its data, after 30 days. This action is irreversible.",
+      "delete_description_payments": "Its subscription is cancelled. The organization becomes read-only at the end of the period already paid and is deleted for good, with all its data, 30 days later. This action is irreversible.",
       "deleted": "This organization was marked as deleted on {date}.",
       "deletion_scheduled": "This organization will be deleted on {date}.",
       "locked_title": "{name} is locked",
