@@ -1461,7 +1461,8 @@
       "status": "Stato",
       "trial_ends": "Fine della prova",
       "period_ends": "Fine del periodo in corso",
-      "ends_on": "Termina il"
+      "ends_on": "Termina il",
+      "valid": "Valido"
     },
     "billing": {
       "day": "Giornaliero",
@@ -1501,6 +1502,7 @@
       "development": "Sviluppi su misura"
     },
     "text": {
+      "unlimited": "Illimitato",
       "plans_description": "Perché {name} vada avanti, scegli il piano che fa per te.",
       "admins_only": "Solo gli admin dell'organizzazione possono scegliere un piano.",
       "no_plans": "Nessun piano disponibile per ora.",

@@ -1311,6 +1311,7 @@ const I18nSubscriptionSchema = z.strictObject({
     trial_ends: z.string(),
     period_ends: z.string(),
     ends_on: z.string(),
+    valid: z.string(),
   }),
   billing: z.strictObject({
     day: z.string(),
@@ -1350,6 +1351,7 @@ const I18nSubscriptionSchema = z.strictObject({
     development: z.string(),
   }),
   text: z.strictObject({
+    unlimited: z.string(),
     plans_description: z.string(),
     admins_only: z.string(),
     no_plans: z.string(),

@@ -1461,7 +1461,8 @@
       "status": "Status",
       "trial_ends": "Trial ends",
       "period_ends": "Current period ends",
-      "ends_on": "Ends on"
+      "ends_on": "Ends on",
+      "valid": "Valid"
     },
     "billing": {
       "day": "Daily",
@@ -1501,6 +1502,7 @@
       "development": "Custom development"
     },
     "text": {
+      "unlimited": "Unlimited",
       "plans_description": "Keep {name} going: pick the plan that suits you.",
       "admins_only": "Only the admins of the organization can pick a plan.",
       "no_plans": "No plan available for now.",
