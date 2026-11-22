@@ -14,6 +14,11 @@ import { DbAdminContext } from "@usenullish/nullish-db";
 // TODO: maybe use another locale? like OS or something
 const LOCALE = "de-CH";
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const daysSince = ({ date }: { date: Date }): number =>
+  Math.floor((Date.now() - date.getTime()) / DAY_MS);
+
 export const organizationDelete = async (args?: string[]) => {
   console.log();
   intro(lime("nullish"));
@@ -31,7 +36,7 @@ export const organizationDelete = async (args?: string[]) => {
     const organizationIds = await multiselect({
       message: "Which organizations would you like to delete?",
       options: organizations.map(({ id, name, deletedAt }) => ({
-        label: `${name} (on ${formatDate({ locale: LOCALE, date: deletedAt })})`,
+        label: `${name} (on ${formatDate({ locale: LOCALE, date: deletedAt })}, ${daysSince({ date: deletedAt })} day(s) ago)`,
         value: id,
       })),
       required: true,

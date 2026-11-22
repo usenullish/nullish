@@ -69,23 +69,18 @@ describe("DeleteOrganizationService", () => {
       });
     });
 
-    test("lists an organization marked deleted less than 30 days ago", async () => {
+    test("does not list an organization marked deleted less than 30 days ago", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
-      await markDeleted({ organizationId, daysAgo: 1 });
+      await markDeleted({ organizationId, daysAgo: 29 });
 
       const result = await service.list();
 
-      if (result.status === "error") {
-        expect(true).toBeFalse();
-        return;
-      }
-
-      expect(result.result.map(({ id }) => id)).toEqual([organizationId]);
+      expect(result).toEqual({ status: "success", result: [] });
     });
 
     test("lists the organizations in the order they were marked deleted", async () => {
       const recentId = await createOrganization(db, TEST_USER_ID);
-      await markDeleted({ organizationId: recentId, daysAgo: 1 });
+      await markDeleted({ organizationId: recentId, daysAgo: 31 });
       const oldestId = await createOrganization(db, TEST_USER_ID);
       await markDeleted({ organizationId: oldestId, daysAgo: 40 });
 
@@ -120,7 +115,7 @@ describe("DeleteOrganizationService", () => {
   describe("delete", () => {
     test("deletes the organization", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
-      await markDeleted({ organizationId, daysAgo: 1 });
+      await markDeleted({ organizationId, daysAgo: 31 });
 
       const result = await service.delete({ organizationId });
 
@@ -163,7 +158,7 @@ describe("DeleteOrganizationService", () => {
 
       expect(await countAuditLogs({ recordIds })).toBeGreaterThan(0);
 
-      await markDeleted({ organizationId, daysAgo: 1 });
+      await markDeleted({ organizationId, daysAgo: 31 });
       await service.delete({ organizationId });
 
       expect(await countAuditLogs({ recordIds })).toBe(0);
@@ -174,7 +169,7 @@ describe("DeleteOrganizationService", () => {
       const otherOrganizationId = await createOrganization(db, TEST_USER_ID);
       const otherClientId = await createClient(db, otherOrganizationId);
 
-      await markDeleted({ organizationId, daysAgo: 1 });
+      await markDeleted({ organizationId, daysAgo: 31 });
       await service.delete({ organizationId });
 
       expect(

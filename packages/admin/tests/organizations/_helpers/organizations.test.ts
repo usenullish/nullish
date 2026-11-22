@@ -22,7 +22,7 @@ const selectOrganization = (organizationId: string) =>
 const markDeleted = (organizationId: string) =>
   db
     .update(organizations)
-    .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+    .set({ deletedAt: new Date(Date.now() - 31 * 24 * 60 * 60 * 1000) })
     .where(eq(organizations.id, organizationId));
 
 describe("deleteOrganization", () => {
