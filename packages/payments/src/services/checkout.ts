@@ -8,12 +8,13 @@ import { assertAdminMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
 import { getExistingSubscription } from "./_helpers/subscriptions";
 import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
+import { PaymentsServiceContext } from "./_payments-service";
 
 type Membership = Records["Core"]["Memberships"]["Select"];
 type SubscriptionTaxRate = Records["Subscription"]["SubscriptionTaxRates"]["Select"];
 type ExternalProductId = Records["Subscription"]["ExternalProducts"]["Select"]["externalProductId"];
 
-export class CheckoutService extends AdminServiceContext {
+export class CheckoutService extends PaymentsServiceContext {
   private constructor(args: AdminServiceContextArgs) {
     super(args);
   }
@@ -36,7 +37,13 @@ export class CheckoutService extends AdminServiceContext {
     validOn: SubscriptionTaxRate["startOn"];
   }): Promise<Result<{ externalTaxRateId: SubscriptionTaxRate["externalTaxRateId"] }>> {
     return this._withDbContext(async (tx) => {
-      await this.#assert({ tx, userId, organizationId, provider, externalProductId });
+      await this.#assert({
+        tx,
+        userId,
+        organizationId,
+        provider,
+        externalProductId,
+      });
 
       const taxRate = await getSubscriptionTaxRate({ tx, provider, validOn });
 
@@ -90,13 +97,17 @@ export class CheckoutService extends AdminServiceContext {
     tx: Tx;
     organizationId: Membership["organizationId"];
   }): Promise<void> {
-    const subscription = await getExistingSubscription({ tx, organizationId });
-
-    const reference = await getSubscriptionReference({ tx, subscriptionId: subscription.id });
+    const {
+      reference,
+      subscription: { id: subscriptionId },
+    } = await this._getSubscription({
+      tx,
+      organizationId,
+    });
 
     if (nonNullish(reference)) {
       throw new Error(
-        `Subscription ${subscription.id} is already linked to an external subscription.`,
+        `Subscription ${subscriptionId} is already linked to an external subscription.`,
       );
     }
   }

@@ -5,11 +5,12 @@ import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-serv
 import { assertAdminMembership } from "./_helpers/memberships";
 import { getSubscriptionReference } from "./_helpers/subscription-references";
 import { getExistingSubscription } from "./_helpers/subscriptions";
+import { PaymentsServiceContext } from "./_payments-service";
 
 type Membership = Records["Core"]["Memberships"]["Select"];
 type SubscriptionReference = Records["Subscription"]["SubscriptionReferences"]["Select"];
 
-export class ManageService extends AdminServiceContext {
+export class ManageService extends PaymentsServiceContext {
   private constructor(args: AdminServiceContextArgs) {
     super(args);
   }
@@ -28,13 +29,17 @@ export class ManageService extends AdminServiceContext {
     return this._withDbContext(async (tx) => {
       await assertAdminMembership({ tx, organizationId, userId });
 
-      const subscription = await getExistingSubscription({ tx, organizationId });
-
-      const reference = await getSubscriptionReference({ tx, subscriptionId: subscription.id });
+      const {
+        reference,
+        subscription: { id: subscriptionId },
+      } = await this._getSubscription({
+        tx,
+        organizationId,
+      });
 
       if (isNullish(reference)) {
         throw new Error(
-          `Subscription ${subscription.id} is not linked to an external subscription.`,
+          `Subscription ${subscriptionId} is not linked to an external subscription.`,
         );
       }
 
