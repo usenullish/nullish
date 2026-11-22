@@ -14,6 +14,7 @@ import {
 import type { Records } from "@usenullish/nullish-schema/records";
 import { PaymentFactory } from "./_factory";
 import {
+  type CancelSubscriptionArgs,
   type CheckoutSessionArgs,
   type PaymentEvent,
   PaymentProvider,
@@ -182,6 +183,20 @@ export class StripePaymentProvider extends PaymentProvider<
     });
 
     return { url };
+  }
+
+  protected override async cancelSubscription({
+    externalSubscriptionId,
+  }: CancelSubscriptionArgs): Promise<Payments["Cancel"]["Result"]> {
+    // https://docs.stripe.com/billing/subscriptions/cancel
+    const subscription = await this.#stripe.subscriptions.update(externalSubscriptionId, {
+      cancel_at_period_end: true,
+    });
+
+    const [item] = subscription.items.data;
+    assertNonNullish(item);
+
+    return { cancelAt: new Date(item.current_period_end * 1000) };
   }
 
   protected override async decode({

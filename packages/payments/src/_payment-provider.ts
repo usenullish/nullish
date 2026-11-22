@@ -14,6 +14,7 @@ import {
 } from "@usenullish/nullish-schema/server";
 import { envAppUrl } from "@usenullish/nullish-env";
 import { withDbContext } from "./_db";
+import { CancelService } from "./services/cancel";
 import { CheckoutService } from "./services/checkout";
 import { ManageService } from "./services/manage";
 import { PaymentInvoiceService } from "./services/payment-invoice";
@@ -30,6 +31,11 @@ export type PortalSessionArgs = Pick<
 > & {
   returnUrl: Payments["Manage"]["Result"]["url"];
 };
+
+export type CancelSubscriptionArgs = Pick<
+  Records["Subscription"]["SubscriptionReferences"]["Select"],
+  "externalSubscriptionId"
+>;
 
 export type CheckoutSessionArgs = Pick<
   Payments["Checkout"]["Args"],
@@ -152,6 +158,33 @@ export abstract class PaymentProvider<
     return PaymentsSchema.PaymentManageSchema.parse(portal);
   }
 
+  async cancel(args: Payments["Cancel"]["Args"]): Promise<Option<Payments["Cancel"]["Result"]>> {
+    const { userId, organizationId } = PaymentsSchema.CancelPaymentsArgsSchema.parse(args);
+
+    // 1. Assert the user is an admin of the organization and load its subscription at the provider
+    const result = await withDbContext(async (dbContext) => {
+      return await CancelService.create({
+        db: dbContext,
+      }).prepare({ userId, organizationId });
+    });
+
+    if (result.status === "error") {
+      throw result.err;
+    }
+
+    const { result: reference } = result;
+
+    // Not subscribed with the provider (e.g. trial or custom offer), so nothing to cancel
+    if (isNullish(reference)) {
+      return undefined;
+    }
+
+    // 2. Cancel the subscription at the end of its period with the provider ("in Stripe")
+    const cancel = await this.cancelSubscription(reference);
+
+    return PaymentsSchema.PaymentCancelSchema.parse(cancel);
+  }
+
   async handle(args: Payments["Handle"]["Args"]): Promise<Option<Payments["Payment"]>> {
     const parsedArgs = PaymentsSchema.HandlePaymentsArgsSchema.parse(args);
 
@@ -263,6 +296,10 @@ export abstract class PaymentProvider<
   protected abstract createPortalSession(
     args: PortalSessionArgs,
   ): Promise<Payments["Manage"]["Result"]>;
+
+  protected abstract cancelSubscription(
+    args: CancelSubscriptionArgs,
+  ): Promise<Payments["Cancel"]["Result"]>;
 
   protected abstract decode(
     args: Payments["Handle"]["Args"],
