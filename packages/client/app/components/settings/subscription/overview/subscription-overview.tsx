@@ -40,13 +40,15 @@ export const SubscriptionOverview = () => {
     },
     nonNullish(cancelAt)
       ? { label: i18n.subscription.label.ends_on, value: formatDate(cancelAt) }
-      : {
-          label:
-            status === SubscriptionStatus.TRIALING
-              ? i18n.subscription.label.trial_ends
-              : i18n.subscription.label.period_ends,
-          value: nonNullish(periodEnd) ? formatDate(periodEnd) : null,
-        },
+      : isNullish(periodEnd)
+        ? { label: i18n.subscription.label.valid, value: i18n.subscription.text.unlimited }
+        : {
+            label:
+              status === SubscriptionStatus.TRIALING
+                ? i18n.subscription.label.trial_ends
+                : i18n.subscription.label.period_ends,
+            value: formatDate(periodEnd),
+          },
   ];
 
   return (
@@ -62,7 +64,7 @@ export const SubscriptionOverview = () => {
           ))}
       </dl>
 
-      {admin && plan.provider === SubscriptionProvider.SELF && (
+      {admin && status === SubscriptionStatus.TRIALING && (
         <Button
           className="self-start"
           nativeButton={false}

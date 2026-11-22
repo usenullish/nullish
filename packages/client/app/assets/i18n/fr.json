@@ -1461,7 +1461,8 @@
       "status": "Statut",
       "trial_ends": "Fin de l'essai",
       "period_ends": "Fin de la période en cours",
-      "ends_on": "Se termine le"
+      "ends_on": "Se termine le",
+      "valid": "Valable"
     },
     "billing": {
       "day": "Quotidien",
@@ -1501,7 +1502,8 @@
       "development": "Développements sur mesure"
     },
     "text": {
-      "plans_description": "Pour que {name} continue sur sa lancée, choisis le plan qui te convient.",
+      "unlimited": "Sans limite",
+      "plans_description": "Pour que {name} continue sur sa lancée, choisis le forfait qui te convient.",
       "admins_only": "Seuls les admins de l'organisation peuvent choisir un forfait.",
       "no_plans": "Aucun forfait disponible pour le moment.",
       "vat_excluded": "Prix hors TVA.",

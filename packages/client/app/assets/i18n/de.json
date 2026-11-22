@@ -1461,7 +1461,8 @@
       "status": "Status",
       "trial_ends": "Testphase endet",
       "period_ends": "Aktuelle Periode endet",
-      "ends_on": "Endet am"
+      "ends_on": "Endet am",
+      "valid": "Gültig"
     },
     "billing": {
       "day": "Täglich",
@@ -1501,6 +1502,7 @@
       "development": "Individuelle Entwicklung"
     },
     "text": {
+      "unlimited": "Unbegrenzt",
       "plans_description": "Damit es mit {name} weitergeht: Wähl den Plan, der zu dir passt.",
       "admins_only": "Nur die Admins der Organisation können einen Plan wählen.",
       "no_plans": "Im Moment ist kein Plan verfügbar.",
