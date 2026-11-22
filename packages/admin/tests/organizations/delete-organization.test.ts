@@ -120,6 +120,7 @@ describe("DeleteOrganizationService", () => {
   describe("delete", () => {
     test("deletes the organization", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
+      await markDeleted({ organizationId, daysAgo: 1 });
 
       const result = await service.delete({ organizationId });
 
@@ -131,6 +132,15 @@ describe("DeleteOrganizationService", () => {
         .where(eq(organizations.id, organizationId));
 
       expect(rows).toEqual([]);
+    });
+
+    test("returns an error Result for an organization whose deletion date is still to come", async () => {
+      const organizationId = await createOrganization(db, TEST_USER_ID);
+      await markDeleted({ organizationId, daysAgo: -10 });
+
+      const result = await service.delete({ organizationId });
+
+      expect(result.status).toBe("error");
     });
 
     test("deletes the audit logs of the organization and of its records", async () => {
@@ -153,6 +163,7 @@ describe("DeleteOrganizationService", () => {
 
       expect(await countAuditLogs({ recordIds })).toBeGreaterThan(0);
 
+      await markDeleted({ organizationId, daysAgo: 1 });
       await service.delete({ organizationId });
 
       expect(await countAuditLogs({ recordIds })).toBe(0);
@@ -163,6 +174,7 @@ describe("DeleteOrganizationService", () => {
       const otherOrganizationId = await createOrganization(db, TEST_USER_ID);
       const otherClientId = await createClient(db, otherOrganizationId);
 
+      await markDeleted({ organizationId, daysAgo: 1 });
       await service.delete({ organizationId });
 
       expect(

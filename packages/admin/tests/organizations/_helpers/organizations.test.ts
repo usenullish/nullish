@@ -19,6 +19,12 @@ const db = instance.connection;
 const selectOrganization = (organizationId: string) =>
   db.select().from(organizations).where(eq(organizations.id, organizationId));
 
+const markDeleted = (organizationId: string) =>
+  db
+    .update(organizations)
+    .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+    .where(eq(organizations.id, organizationId));
+
 describe("deleteOrganization", () => {
   beforeEach(async () => {
     await resetDb(db);
@@ -32,6 +38,7 @@ describe("deleteOrganization", () => {
 
   test("deletes the organization and returns its id", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
+    await markDeleted(organizationId);
 
     const result = await db.transaction((tx) => deleteOrganization({ tx, organizationId }));
 
@@ -50,6 +57,7 @@ describe("deleteOrganization", () => {
   test("keeps the other organizations", async () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
     const otherOrganizationId = await createOrganization(db, TEST_USER_ID);
+    await markDeleted(organizationId);
 
     await db.transaction((tx) => deleteOrganization({ tx, organizationId }));
 

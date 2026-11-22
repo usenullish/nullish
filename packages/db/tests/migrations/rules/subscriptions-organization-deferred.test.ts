@@ -61,6 +61,10 @@ describe("subscriptions_organization_id_organizations_id_fkey", () => {
   test("deletes the subscription with its organization", async () => {
     const organizationId = await createOrganization(db);
 
+    await db
+      .update(organizations)
+      .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+      .where(eq(organizations.id, organizationId));
     await db.delete(organizations).where(eq(organizations.id, organizationId));
 
     const rows = await db
