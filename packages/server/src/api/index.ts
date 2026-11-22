@@ -24,7 +24,7 @@ export const defineApi: DefineApi = ({ db, jobs, storage, mail, payments }) => {
   const app = new OpenAPIHono<ApiEnv>();
 
   const resources = initResources({ app });
-  const webhooks = initWebhooks({ app });
+  const webhooks = initWebhooks({ app, payments });
 
   app.use("*", secureHeaders({ strictTransportSecurity: "max-age=31536000; includeSubDomains" }));
   app.use("*", noRobotsMiddleware);
