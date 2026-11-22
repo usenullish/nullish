@@ -277,6 +277,7 @@ const I18nOrganizationsSchema = z.strictObject({
     danger_zone: z.string(),
     delete_title: z.string(),
     delete_description: z.string(),
+    delete_description_payments: z.string(),
     deleted: z.string(),
     deletion_scheduled: z.string(),
     locked_title: z.string(),

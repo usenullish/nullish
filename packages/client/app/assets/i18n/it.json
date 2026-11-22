@@ -299,6 +299,7 @@
       "danger_zone": "L'eliminazione rende l'organizzazione di sola lettura. Viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni.",
       "delete_title": "Eliminare {name}?",
       "delete_description": "L'organizzazione passa subito in sola lettura e viene eliminata definitivamente, con tutti i suoi dati, dopo 30 giorni. Questa azione è irreversibile.",
+      "delete_description_payments": "Il suo abbonamento viene disdetto. L'organizzazione passa in sola lettura alla fine del periodo già pagato e viene eliminata definitivamente, con tutti i suoi dati, 30 giorni dopo. Questa azione è irreversibile.",
       "deleted": "Questa organizzazione è stata contrassegnata come eliminata il {date}.",
       "deletion_scheduled": "Questa organizzazione sarà eliminata il {date}.",
       "locked_title": "{name} è bloccata",
