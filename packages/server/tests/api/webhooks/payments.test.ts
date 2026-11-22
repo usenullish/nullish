@@ -80,10 +80,10 @@ describe("POST /payments/stripe/webhook", () => {
     await instance.close();
   });
 
-  test("answers 503 without a payment provider", async () => {
+  test("is not mounted without a payment provider", async () => {
     const response = await post({ payments: null });
 
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(404);
   });
 
   test("passes the raw payload and the signature to the provider", async () => {
