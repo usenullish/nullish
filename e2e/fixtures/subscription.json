@@ -5,8 +5,8 @@
     "name": "Instance",
     "contactUrl": "https://example.com/contact",
     "prices": [
-      { "amount": { "__bigint__": "24000" }, "currency": "CHF", "billingPeriod": "month" },
-      { "amount": { "__bigint__": "240000" }, "currency": "CHF", "billingPeriod": "year" }
+      { "amount": { "__bigint__": "16500" }, "currency": "CHF", "billingPeriod": "month" },
+      { "amount": { "__bigint__": "200000" }, "currency": "CHF", "billingPeriod": "year" }
     ]
   },
   {
