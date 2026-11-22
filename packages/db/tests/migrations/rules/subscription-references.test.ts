@@ -137,6 +137,10 @@ describe("subscription references", () => {
   test("deletes the reference with its organization", async () => {
     await db.insert(references).values(referenceOf({ subscriptionId }));
 
+    await db
+      .update(organizations)
+      .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+      .where(eq(organizations.id, organizationId));
     await db.delete(organizations).where(eq(organizations.id, organizationId));
 
     const rows = await db
