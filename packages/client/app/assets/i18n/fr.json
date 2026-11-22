@@ -1447,7 +1447,7 @@
       "done": "Terminé"
     },
     "state": {
-      "activating": "Activation…"
+      "activating": "Activation de ton abonnement ({seconds} s)…"
     },
     "status": {
       "trialing": "Essai",
@@ -1514,7 +1514,6 @@
       "custom_pricing": "Tarif sur mesure",
       "checkout_error": "La page de paiement n'a pas pu s'ouvrir.",
       "manage_error": "La page de l'abonnement n'a pas pu s'ouvrir.",
-      "success_description": "Ton abonnement est en cours d'activation, ça ne prend que quelques secondes.",
       "success_ready": "Tout est prêt, merci !",
       "success_timeout": "Ça prend plus de temps que d'habitude. Ton abonnement sera activé dès que le paiement sera confirmé."
     }

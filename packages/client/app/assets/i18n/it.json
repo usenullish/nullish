@@ -1447,7 +1447,7 @@
       "done": "Fatto"
     },
     "state": {
-      "activating": "Attivazione…"
+      "activating": "Attivazione del tuo abbonamento ({seconds} s)…"
     },
     "status": {
       "trialing": "Prova",
@@ -1514,7 +1514,6 @@
       "custom_pricing": "Prezzo su misura",
       "checkout_error": "Non è stato possibile aprire la pagina di pagamento.",
       "manage_error": "Non è stato possibile aprire la pagina dell'abbonamento.",
-      "success_description": "Il tuo abbonamento è in fase di attivazione, ci vuole solo qualche secondo.",
       "success_ready": "Tutto pronto, grazie!",
       "success_timeout": "Ci vuole più del solito. Il tuo abbonamento sarà attivato non appena il pagamento sarà confermato."
     }

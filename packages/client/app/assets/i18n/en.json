@@ -1447,7 +1447,7 @@
       "done": "Done"
     },
     "state": {
-      "activating": "Activating…"
+      "activating": "Activating your subscription ({seconds}s)…"
     },
     "status": {
       "trialing": "Trial",
@@ -1514,7 +1514,6 @@
       "custom_pricing": "Custom pricing",
       "checkout_error": "The payment page could not be opened.",
       "manage_error": "The subscription page could not be opened.",
-      "success_description": "Your subscription is being activated, it only takes a few seconds.",
       "success_ready": "All set, thanks!",
       "success_timeout": "This takes longer than usual. Your subscription will be activated as soon as the payment is confirmed."
     }

@@ -1363,7 +1363,6 @@ const I18nSubscriptionSchema = z.strictObject({
     custom_pricing: z.string(),
     checkout_error: z.string(),
     manage_error: z.string(),
-    success_description: z.string(),
     success_ready: z.string(),
     success_timeout: z.string(),
   }),

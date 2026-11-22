@@ -7,6 +7,7 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { SubscriptionStep } from "~/components/settings/subscription/subscription-step";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { OrganizationPath } from "~/navigation";
 import { Button } from "~/ui/components/button";
 import { TextShimmerLoader } from "~/ui/components/loader";
@@ -15,6 +16,7 @@ type SubscriptionSummary = Api["SubscriptionSummaries"]["Client"]["SubscriptionS
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 30;
+const POLL_TIMEOUT_SECONDS = (POLL_INTERVAL_MS * POLL_MAX_ATTEMPTS) / 1000;
 
 export const SubscriptionSuccess = ({
   subscriptionSummary,
@@ -49,6 +51,20 @@ export const SubscriptionSuccess = ({
     return () => clearTimeout(timeout.current);
   }, [activated, subscriptionSummary, revalidate]);
 
+  const [secondsLeft, setSecondsLeft] = useState(POLL_TIMEOUT_SECONDS);
+
+  useEffect(() => {
+    if (activated || timedOut) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setSecondsLeft((seconds) => Math.max(seconds - 1, 1));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [activated, timedOut]);
+
   const organizationPath = OrganizationPath.create({ organizationId: organization.id }).to();
 
   if (activated) {
@@ -69,11 +85,7 @@ export const SubscriptionSuccess = ({
   }
 
   return (
-    <SubscriptionStep
-      closeTo={organizationPath}
-      current="done"
-      intro={i18n.subscription.text.success_description}
-    >
+    <SubscriptionStep closeTo={organizationPath} current="payment">
       {timedOut ? (
         <ViewTransition>
           <div className="flex flex-col items-start gap-4">
@@ -87,9 +99,12 @@ export const SubscriptionSuccess = ({
           </div>
         </ViewTransition>
       ) : (
-        <div className="flex justify-center">
-          <TextShimmerLoader text={i18n.subscription.state.activating} size="sm" />
-        </div>
+        <TextShimmerLoader
+          text={replacePlaceholders(i18n.subscription.state.activating, {
+            "{seconds}": String(secondsLeft),
+          })}
+          size="sm"
+        />
       )}
     </SubscriptionStep>
   );
