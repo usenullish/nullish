@@ -43,7 +43,7 @@ export class DeleteOrganizationService extends AdminServiceContext {
           name: organizations.name,
           deletedAt: organizations.deletedAt,
         },
-        where: lte(organizations.deletedAt, sql`now()`),
+        where: lte(organizations.deletedAt, sql`now() - interval '30 days'`),
         orderBy: [asc(organizations.deletedAt)],
       }),
     );
