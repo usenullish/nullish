@@ -1,4 +1,4 @@
-import { asc, isNotNull } from "drizzle-orm";
+import { asc, lte, sql } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-orm/zod";
 import type * as z from "zod";
 import { type Option, type Result } from "@usenullish/nullish-common";
@@ -43,7 +43,7 @@ export class DeleteOrganizationService extends AdminServiceContext {
           name: organizations.name,
           deletedAt: organizations.deletedAt,
         },
-        where: isNotNull(organizations.deletedAt),
+        where: lte(organizations.deletedAt, sql`now()`),
         orderBy: [asc(organizations.deletedAt)],
       }),
     );
