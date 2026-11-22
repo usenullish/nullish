@@ -24,7 +24,7 @@ WHERE i.token_hash = encode(sha256(convert_to(p_token, 'UTF8')), 'hex')
   AND EXISTS (
     SELECT 1 FROM core.organizations o
     WHERE o.id = i.organization_id
-      AND (o.deleted_at IS NULL OR o.deleted_at > now())
+      AND core.organization_is_not_deleted(o.deleted_at)
       AND subscription.organization_subscription_is_valid(o.id)
   )
 FOR UPDATE;

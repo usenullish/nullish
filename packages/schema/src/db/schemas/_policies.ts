@@ -57,7 +57,7 @@ export const coreOrganizationPolicies = ({
     pg.pgPolicy(`${tableName}_update_policy`, {
       for: "update",
       to: [authenticatedUser],
-      using: sql`(${deletedAt} IS NULL OR ${deletedAt} > now()) AND ${isAdmin}`,
+      using: sql`core.organization_is_not_deleted(${deletedAt}) AND ${isAdmin}`,
       withCheck: isAdmin,
     }),
     // Any registered user can create organizations
@@ -304,7 +304,7 @@ const userIsOrgEditor = ({
 }) => sql`${organizationId} IN (
   SELECT m.organization_id FROM core.memberships m
   JOIN core.organizations o ON o.id = m.organization_id
-  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND (o.deleted_at IS NULL OR o.deleted_at > now())
+  WHERE m.user_id = auth.current_user_id() AND m.role IN ('admin', 'accountant') AND core.organization_is_not_deleted(o.deleted_at)
 )`;
 
 export const userIsOrgAdmin = ({
@@ -314,5 +314,5 @@ export const userIsOrgAdmin = ({
 }) => sql`${organizationId} IN (
   SELECT m.organization_id FROM core.memberships m
   JOIN core.organizations o ON o.id = m.organization_id
-  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND (o.deleted_at IS NULL OR o.deleted_at > now())
+  WHERE m.user_id = auth.current_user_id() AND m.role = 'admin' AND core.organization_is_not_deleted(o.deleted_at)
 )`;
