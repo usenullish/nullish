@@ -8,6 +8,7 @@ import {
 } from "@usenullish/nullish-schema/db";
 import {
   type Payments,
+  PaymentCancelStatus,
   PaymentEventType,
   PaymentsSchema,
 } from "@usenullish/nullish-schema/payments";
@@ -188,7 +189,7 @@ export class StripePaymentProvider extends PaymentProvider<
 
   protected override async cancelSubscription({
     externalSubscriptionId,
-  }: CancelSubscriptionArgs): Promise<Option<Payments["Cancel"]["Result"]>> {
+  }: CancelSubscriptionArgs): Promise<Payments["Cancel"]["Result"]> {
     const {
       subscription: { status },
     } = await this.#retrieveSubscription({
@@ -198,7 +199,7 @@ export class StripePaymentProvider extends PaymentProvider<
     // From the doc: After it’s canceled, you can no longer update the subscription except for its metadata and cancellation_details.
     // https://docs.stripe.com/billing/subscriptions/cancel
     if (["canceled", "incomplete_expired"].includes(status)) {
-      return undefined;
+      return { status: PaymentCancelStatus.ALREADY_CANCELLED };
     }
 
     // https://docs.stripe.com/billing/subscriptions/cancel
@@ -209,7 +210,10 @@ export class StripePaymentProvider extends PaymentProvider<
     const [item] = subscription.items.data;
     assertNonNullish(item);
 
-    return { cancelAt: timestampsToDate(item.current_period_end) };
+    return {
+      status: PaymentCancelStatus.CANCELLED,
+      cancelAt: timestampsToDate(item.current_period_end),
+    };
   }
 
   protected override async decode({

@@ -7,6 +7,7 @@ import {
   SubscriptionStatus,
 } from "@usenullish/nullish-schema/db";
 import { envAppUrl } from "@usenullish/nullish-env";
+import { PaymentCancelStatus } from "@usenullish/nullish-schema/payments";
 
 const withDbContext = mock(async () => ({
   status: "success",
@@ -660,12 +661,14 @@ describe("StripePaymentProvider", () => {
     };
 
     test.each(["canceled", "incomplete_expired"] as const)(
-      "returns nothing without updating a %s subscription",
+      "answers already cancelled without updating a %s subscription",
       async (status) => {
         mockReference();
         mockSubscription(subscriptionOf({ status }));
 
-        expect(await StripePaymentProvider.create().cancel(args)).toBeUndefined();
+        expect(await StripePaymentProvider.create().cancel(args)).toEqual({
+          status: PaymentCancelStatus.ALREADY_CANCELLED,
+        });
 
         expect(updateCalls()).toHaveLength(0);
       },
@@ -676,6 +679,7 @@ describe("StripePaymentProvider", () => {
       mockSubscription(subscriptionOf({ status: "active" }));
 
       expect(await StripePaymentProvider.create().cancel(args)).toEqual({
+        status: PaymentCancelStatus.CANCELLED,
         cancelAt: new Date(PERIOD_END * 1000),
       });
     });
@@ -689,7 +693,7 @@ describe("StripePaymentProvider", () => {
       expect(sentParams().get("cancel_at_period_end")).toBe("true");
     });
 
-    test("returns nothing without calling Stripe for an organization without subscription", async () => {
+    test("answers not subscribed without calling Stripe for an organization without subscription", async () => {
       withDbContext.mockImplementationOnce(
         async () =>
           ({ status: "success", result: undefined }) as unknown as Awaited<
@@ -697,7 +701,9 @@ describe("StripePaymentProvider", () => {
           >,
       );
 
-      expect(await StripePaymentProvider.create().cancel(args)).toBeUndefined();
+      expect(await StripePaymentProvider.create().cancel(args)).toEqual({
+        status: PaymentCancelStatus.NOT_SUBSCRIBED,
+      });
 
       expect(fetchSpy).not.toHaveBeenCalled();
     });

@@ -5,6 +5,7 @@ import { SelectSubscriptionReferencesSchema } from "../../records/schemas/subscr
 import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 import { SelectSubscriptionTaxRatesSchema } from "../../records/schemas/subscription/subscription-tax-rates";
 import { SelectCustomPricesSchema } from "../../records/schemas/subscription/custom-prices";
+import { PaymentCancelStatus } from "../constants";
 
 export const HandlePaymentsArgsSchema = z.strictObject({
   payload: z.string(),
@@ -33,9 +34,14 @@ export const PaymentManageSchema = z.strictObject({
 
 export const CancelPaymentsArgsSchema = ManagePaymentsArgsSchema;
 
-export const PaymentCancelSchema = z.strictObject({
-  cancelAt: z.date(),
-});
+export const PaymentCancelSchema = z.discriminatedUnion("status", [
+  z.strictObject({
+    status: z.literal(PaymentCancelStatus.CANCELLED),
+    cancelAt: z.date(),
+  }),
+  z.strictObject({ status: z.literal(PaymentCancelStatus.ALREADY_CANCELLED) }),
+  z.strictObject({ status: z.literal(PaymentCancelStatus.NOT_SUBSCRIBED) }),
+]);
 
 export const PaymentPlanPriceSchema = z.strictObject({
   priceId: CheckoutPaymentsArgsSchema.shape.priceId,
