@@ -31,6 +31,12 @@ export const PaymentManageSchema = z.strictObject({
   url: z.url(),
 });
 
+export const CancelPaymentsArgsSchema = ManagePaymentsArgsSchema;
+
+export const PaymentCancelSchema = z.strictObject({
+  cancelAt: z.date(),
+});
+
 export const PaymentPlanPriceSchema = z.strictObject({
   priceId: CheckoutPaymentsArgsSchema.shape.priceId,
   amount: z.bigint(),

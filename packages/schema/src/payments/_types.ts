@@ -14,6 +14,10 @@ interface Payments {
     Args: z.infer<typeof PaymentsSchema.ManagePaymentsArgsSchema>;
     Result: z.infer<typeof PaymentsSchema.PaymentManageSchema>;
   };
+  Cancel: {
+    Args: z.infer<typeof PaymentsSchema.CancelPaymentsArgsSchema>;
+    Result: z.infer<typeof PaymentsSchema.PaymentCancelSchema>;
+  };
   Plan: z.infer<typeof PaymentsSchema.PaymentPlanSchema>;
   PlanPrice: z.infer<typeof PaymentsSchema.PaymentPlanPriceSchema>;
   Payment: z.infer<typeof PaymentsSchema.PaymentSchema>;

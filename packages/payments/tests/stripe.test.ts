@@ -634,6 +634,80 @@ describe("StripePaymentProvider", () => {
     });
   });
 
+  describe("cancel", () => {
+    const args = { userId: "user-1", organizationId: ORGANIZATION_ID };
+
+    const mockReference = () => {
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({
+            status: "success",
+            result: { externalSubscriptionId: "sub_123" },
+          }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+    };
+
+    const sentParams = (): URLSearchParams => {
+      const [[, init] = []] = fetchSpy.mock.calls.filter(([input]) =>
+        String(input).includes("/v1/subscriptions/sub_123"),
+      );
+
+      return new URLSearchParams(String(init?.body));
+    };
+
+    test("returns the end of the current period as the cancellation date", async () => {
+      mockReference();
+      mockSubscription(subscriptionOf({ status: "active" }));
+
+      expect(await StripePaymentProvider.create().cancel(args)).toEqual({
+        cancelAt: new Date(PERIOD_END * 1000),
+      });
+    });
+
+    test("cancels the subscription at the end of its period", async () => {
+      mockReference();
+      mockSubscription(subscriptionOf({ status: "active" }));
+
+      await StripePaymentProvider.create().cancel(args);
+
+      expect(sentParams().get("cancel_at_period_end")).toBe("true");
+    });
+
+    test("returns nothing without calling Stripe for an organization without subscription", async () => {
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "success", result: undefined }) as unknown as Awaited<
+            ReturnType<typeof withDbContext>
+          >,
+      );
+
+      expect(await StripePaymentProvider.create().cancel(args)).toBeUndefined();
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("rejects an invalid organization without calling Stripe", async () => {
+      await expect(
+        StripePaymentProvider.create().cancel({ ...args, organizationId: "not-an-organization" }),
+      ).rejects.toThrow();
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    test("does not cancel when the subscription cannot be loaded", async () => {
+      const err = new Error("Not an admin");
+
+      withDbContext.mockImplementationOnce(
+        async () =>
+          ({ status: "error", err }) as unknown as Awaited<ReturnType<typeof withDbContext>>,
+      );
+
+      await expect(StripePaymentProvider.create().cancel(args)).rejects.toThrow(err);
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe("listPlans", () => {
     const planOf = ({ externalProductId }: { externalProductId: string }) => ({
       id: crypto.randomUUID(),
