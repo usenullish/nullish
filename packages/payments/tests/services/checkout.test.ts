@@ -1,7 +1,12 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
-import { DbSchema, MembershipRole, SubscriptionProvider } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  MembershipRole,
+  SubscriptionProvider,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 import { CheckoutService } from "../../src/services/checkout";
 import {
   createOrganization,
@@ -49,11 +54,32 @@ describe("CheckoutService", () => {
       validOn,
     });
 
+  const updateSubscription = async ({
+    organizationId: subscriptionOrganizationId,
+    status,
+    periodEnd,
+  }: {
+    organizationId: string;
+    status: SubscriptionStatus;
+    periodEnd: Date | null;
+  }) => {
+    await db
+      .update(subscriptions)
+      .set({ status, periodEnd })
+      .where(eq(subscriptions.organizationId, subscriptionOrganizationId));
+  };
+
   beforeAll(async () => {
     await resetDb(db);
     await seedUsers(db);
 
     organizationId = await createOrganization(db, TEST_USER_ID);
+
+    await updateSubscription({
+      organizationId,
+      status: SubscriptionStatus.TRIALING,
+      periodEnd: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    });
 
     await db
       .insert(memberships)
@@ -148,8 +174,34 @@ describe("CheckoutService", () => {
     await db.delete(plans).where(eq(plans.id, expired.id));
   });
 
+  test("allows an organization whose subscription is inactive", async () => {
+    const inactiveOrganizationId = await createOrganization(db, TEST_USER_ID);
+    await updateSubscription({
+      organizationId: inactiveOrganizationId,
+      status: SubscriptionStatus.INACTIVE,
+      periodEnd: null,
+    });
+
+    const result = await checkout({ organizationId: inactiveOrganizationId });
+
+    expect(result.status).toBe("success");
+  });
+
+  test("refuses an organization whose subscription is active and never ends", async () => {
+    const activeOrganizationId = await createOrganization(db, TEST_USER_ID);
+
+    const result = await checkout({ organizationId: activeOrganizationId });
+
+    expect(result.status).toBe("error");
+  });
+
   test("refuses an organization already linked to an external subscription", async () => {
     const linkedOrganizationId = await createOrganization(db, TEST_USER_ID);
+    await updateSubscription({
+      organizationId: linkedOrganizationId,
+      status: SubscriptionStatus.TRIALING,
+      periodEnd: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    });
 
     const [subscription] = await db
       .select()
