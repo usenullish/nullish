@@ -9,10 +9,13 @@ type PaymentCheckout = z.infer<typeof PaymentsSchema.PaymentCheckoutSchema>;
 type PaymentPlan = z.infer<typeof PaymentsSchema.PaymentPlanSchema>;
 type ManagePaymentsArgs = z.infer<typeof PaymentsSchema.ManagePaymentsArgsSchema>;
 type PaymentManage = z.infer<typeof PaymentsSchema.PaymentManageSchema>;
+type CancelPaymentsArgs = z.infer<typeof PaymentsSchema.CancelPaymentsArgsSchema>;
+type PaymentCancel = z.infer<typeof PaymentsSchema.PaymentCancelSchema>;
 
 export interface ProcessPayments {
   handle(args: HandlePaymentsArgs): Promise<Option<PaymentSubscription>>;
   checkout(args: CheckoutPaymentsArgs): Promise<PaymentCheckout>;
   manage(args: ManagePaymentsArgs): Promise<PaymentManage>;
+  cancel(args: CancelPaymentsArgs): Promise<Option<PaymentCancel>>;
   listPlans(): Promise<PaymentPlan[]>;
 }

@@ -42,6 +42,7 @@ describe("organization payments manage", () => {
     url: "https://checkout.stripe.com/c/pay/cs_1",
   }));
   const manage = mock<ProcessPayments["manage"]>(async () => ({ url: MANAGE_URL }));
+  const cancel = mock<ProcessPayments["cancel"]>(async () => undefined);
   const listPlans = mock<ProcessPayments["listPlans"]>(async () => []);
 
   const signUp = async ({ email }: { email: string }): Promise<{ id: string; cookie: string }> => {
@@ -59,7 +60,7 @@ describe("organization payments manage", () => {
   const post = async ({
     cookie,
     parentId = organizationId,
-    payments = { handle, checkout, manage, listPlans },
+    payments = { handle, checkout, manage, cancel, listPlans },
   }: {
     cookie?: string;
     parentId?: string;
