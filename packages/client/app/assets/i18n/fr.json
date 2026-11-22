@@ -191,7 +191,7 @@
     "invitations": "Invitations",
     "migrations": "Migrations",
     "subscription": "Abonnement",
-    "plans": "Offres"
+    "plans": "Forfaits"
   },
   "greeting": {
     "morning": "Bonjour, {name}",
@@ -267,8 +267,8 @@
       "lets_go": "C'est parti !",
       "delete": "Supprimer l'organisation",
       "back_to_organizations": "Retour à mes organisations",
-      "see_plans": "Voir les offres",
-      "choose_plan": "Choisis une offre"
+      "see_plans": "Voir les forfaits",
+      "choose_plan": "Choisis un forfait"
     },
     "state": {
       "creating": "Création…"
@@ -1442,7 +1442,7 @@
       "manage": "Gérer l'abonnement"
     },
     "step": {
-      "plan": "Offre",
+      "plan": "Forfait",
       "payment": "Paiement",
       "done": "Terminé"
     },
@@ -1457,7 +1457,7 @@
     },
     "label": {
       "billing": "Facturation",
-      "plan": "Offre",
+      "plan": "Forfait",
       "status": "Statut",
       "trial_ends": "Fin de l'essai",
       "period_ends": "Fin de la période en cours",
@@ -1502,8 +1502,8 @@
     },
     "text": {
       "plans_description": "Pour que {name} continue sur sa lancée, choisis le plan qui te convient.",
-      "admins_only": "Seuls les admins de l'organisation peuvent choisir une offre.",
-      "no_plans": "Aucune offre disponible pour le moment.",
+      "admins_only": "Seuls les admins de l'organisation peuvent choisir un forfait.",
+      "no_plans": "Aucun forfait disponible pour le moment.",
       "vat_excluded": "Prix hors TVA.",
       "per_month_billed_yearly": "/ mois, facturé annuellement",
       "cloud_description": "Pour les indépendants et les petites entreprises",
