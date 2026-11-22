@@ -36,13 +36,21 @@ const asUser = <T>({
     return await fn(tx);
   });
 
-const markDeleted = (organizationId: string) =>
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const markDeleted = ({
+  organizationId,
+  deletedAt = new Date(),
+}: {
+  organizationId: string;
+  deletedAt?: Date;
+}) =>
   asUser({
     userId: TEST_USER_ID,
     fn: (tx) =>
       tx
         .update(organizations)
-        .set({ deletedAt: new Date() })
+        .set({ deletedAt })
         .where(eq(organizations.id, organizationId))
         .returning(),
   });
@@ -109,7 +117,7 @@ describe("core.organizations", () => {
   });
 
   test("lets an admin mark the organization deleted", async () => {
-    const rows = await markDeleted(organizationId);
+    const rows = await markDeleted({ organizationId });
 
     expect(rows).toHaveLength(1);
     expect(rows[0]?.deletedAt).toBeInstanceOf(Date);
@@ -134,7 +142,7 @@ describe("core.organizations", () => {
 
     beforeEach(async () => {
       clientId = await createClient(db, organizationId);
-      await markDeleted(organizationId);
+      await markDeleted({ organizationId });
     });
 
     test("is still readable by its members", async () => {
@@ -247,6 +255,66 @@ describe("core.organizations", () => {
       }).catch((e: unknown) => e);
 
       expect(causeMessage(error)).toContain("row-level security");
+    });
+  });
+
+  describe("with a deletion date still to come", () => {
+    let clientId: string;
+
+    beforeEach(async () => {
+      clientId = await createClient(db, organizationId);
+      await markDeleted({ organizationId, deletedAt: new Date(Date.now() + 10 * DAY_MS) });
+    });
+
+    test("can still be updated by its admin", async () => {
+      const rows = await asUser({
+        userId: TEST_USER_ID,
+        fn: (tx) =>
+          tx
+            .update(organizations)
+            .set({ name: "Renamed" })
+            .where(eq(organizations.id, organizationId))
+            .returning(),
+      });
+
+      expect(rows.map(({ name }) => name)).toEqual(["Renamed"]);
+    });
+
+    test("lets its members create a record", async () => {
+      const rows = await asUser({
+        userId: TEST_OTHER_USER_ID,
+        fn: (tx) => tx.insert(clients).values({ organizationId, name: "New client" }).returning(),
+      });
+
+      expect(rows).toHaveLength(1);
+    });
+
+    test("lets its members update a record", async () => {
+      const rows = await asUser({
+        userId: TEST_OTHER_USER_ID,
+        fn: (tx) =>
+          tx.update(clients).set({ name: "Renamed" }).where(eq(clients.id, clientId)).returning(),
+      });
+
+      expect(rows.map(({ name }) => name)).toEqual(["Renamed"]);
+    });
+
+    test("lets its admin create an invitation", async () => {
+      const rows = await asUser({
+        userId: TEST_USER_ID,
+        fn: (tx) =>
+          tx
+            .insert(invitations)
+            .values({
+              organizationId,
+              email: "invited@test.dev",
+              role: MembershipRole.REVIEWER,
+              tokenHash: new CryptoHasher("sha256").update(crypto.randomUUID()).digest("hex"),
+            })
+            .returning(),
+      });
+
+      expect(rows).toHaveLength(1);
     });
   });
 });

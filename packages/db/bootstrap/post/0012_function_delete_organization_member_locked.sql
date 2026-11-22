@@ -14,7 +14,7 @@ WHERE m.id = p_membership_id
   AND EXISTS (
     SELECT 1 FROM core.organizations org
     WHERE org.id = m.organization_id
-      AND org.deleted_at IS NULL
+      AND (org.deleted_at IS NULL OR org.deleted_at > now())
       AND subscription.organization_subscription_is_valid(org.id)
   )
   AND (
