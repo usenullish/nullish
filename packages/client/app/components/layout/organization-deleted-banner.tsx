@@ -21,9 +21,14 @@ export const OrganizationDeletedBanner = () => {
     >
       <Info className="size-4 shrink-0" />
       <p>
-        {replacePlaceholders(i18n.organizations.text.deleted, {
-          "{date}": formatDate(organization.deletedAt),
-        })}
+        {replacePlaceholders(
+          organization.deletedAt > new Date()
+            ? i18n.organizations.text.deletion_scheduled
+            : i18n.organizations.text.deleted,
+          {
+            "{date}": formatDate(organization.deletedAt),
+          },
+        )}
       </p>
     </div>
   );
