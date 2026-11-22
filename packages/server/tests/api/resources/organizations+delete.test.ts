@@ -14,12 +14,15 @@ import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
 import { DbSchema, MembershipRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
+import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
+import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { eq } from "drizzle-orm";
 import type { ApiEnv } from "../../../src/api/types/api";
 import { loadDbMiddleware } from "../../../src/api/middlewares/db";
 import { loadAuthMiddleware } from "../../../src/api/middlewares/auth";
 import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
+import { loadWorkersMiddleware } from "../../../src/api/middlewares/workers";
 import { OrganizationsDeleteHandlers } from "../../../src/api/resources/_organizations+delete";
 import { createOrganization, resetDb } from "../../../../engine/tests/_test-utils";
 import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
@@ -60,6 +63,15 @@ describe("delete organization", () => {
 
     app.use("*", loadDbMiddleware({ db: instance }));
     app.use("*", loadAuthMiddleware({ db: instance, mail: null }));
+    app.use(
+      "*",
+      loadWorkersMiddleware({
+        jobs: {} as TriggerJobs,
+        storage: FsStorageProvider.create(),
+        mail: null,
+        payments: null,
+      }),
+    );
     app.use("*", loadCallerMiddleware());
 
     OrganizationsDeleteHandlers.create({ app }).register();
