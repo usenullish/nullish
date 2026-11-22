@@ -647,13 +647,29 @@ describe("StripePaymentProvider", () => {
       );
     };
 
-    const sentParams = (): URLSearchParams => {
-      const [[, init] = []] = fetchSpy.mock.calls.filter(([input]) =>
-        String(input).includes("/v1/subscriptions/sub_123"),
+    const updateCalls = () =>
+      fetchSpy.mock.calls.filter(
+        ([input, init]) =>
+          String(input).includes("/v1/subscriptions/sub_123") && init?.method === "POST",
       );
+
+    const sentParams = (): URLSearchParams => {
+      const [[, init] = []] = updateCalls();
 
       return new URLSearchParams(String(init?.body));
     };
+
+    test.each(["canceled", "incomplete_expired"] as const)(
+      "returns nothing without updating a %s subscription",
+      async (status) => {
+        mockReference();
+        mockSubscription(subscriptionOf({ status }));
+
+        expect(await StripePaymentProvider.create().cancel(args)).toBeUndefined();
+
+        expect(updateCalls()).toHaveLength(0);
+      },
+    );
 
     test("returns the end of the current period as the cancellation date", async () => {
       mockReference();
