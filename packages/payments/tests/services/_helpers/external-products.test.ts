@@ -3,6 +3,7 @@ import { inArray } from "drizzle-orm";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import {
+  getAvailableExternalProduct,
   getExternalProduct,
   listExternalProducts,
 } from "../../../src/services/_helpers/external-products";
@@ -22,7 +23,10 @@ describe("external products", () => {
   const provider = SubscriptionProvider.STRIPE;
   const externalProductId = `prod_${crypto.randomUUID()}`;
 
+  const expiredProductId = `prod_${crypto.randomUUID()}`;
+
   let planId: string;
+  let expiredPlanId: string;
   let withoutProductId: string;
 
   beforeAll(async () => {
@@ -34,6 +38,20 @@ describe("external products", () => {
       .insert(externalProducts)
       .values({ planId, provider, externalProductId, name: "Cloud" });
 
+    const [expired] = await db
+      .insert(plans)
+      .values({ provider, expiresAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+      .returning();
+    assertNonNullish(expired);
+    expiredPlanId = expired.id;
+
+    await db.insert(externalProducts).values({
+      planId: expiredPlanId,
+      provider,
+      externalProductId: expiredProductId,
+      name: "Expired",
+    });
+
     const [withoutProduct] = await db
       .insert(plans)
       .values({ provider: SubscriptionProvider.SELF, trialDays: 30 })
@@ -43,7 +61,7 @@ describe("external products", () => {
   });
 
   afterAll(async () => {
-    await db.delete(plans).where(inArray(plans.id, [planId, withoutProductId]));
+    await db.delete(plans).where(inArray(plans.id, [planId, expiredPlanId, withoutProductId]));
   });
 
   describe("getExternalProduct", () => {
@@ -70,7 +88,41 @@ describe("external products", () => {
     });
   });
 
+  describe("getAvailableExternalProduct", () => {
+    test("returns the product of a plan not expired", async () => {
+      const product = await db.transaction((tx) =>
+        getAvailableExternalProduct({ tx, provider, externalProductId }),
+      );
+
+      expect(product.planId).toBe(planId);
+    });
+
+    test("throws for a product whose plan has expired", async () => {
+      await expect(
+        db.transaction((tx) =>
+          getAvailableExternalProduct({ tx, provider, externalProductId: expiredProductId }),
+        ),
+      ).rejects.toThrow();
+    });
+  });
+
+  describe("getExternalProduct with an expired plan", () => {
+    test("still returns the product, for the subscriptions already on it", async () => {
+      const product = await db.transaction((tx) =>
+        getExternalProduct({ tx, provider, externalProductId: expiredProductId }),
+      );
+
+      expect(product.planId).toBe(expiredPlanId);
+    });
+  });
+
   describe("listExternalProducts", () => {
+    test("leaves out the products whose plan has expired", async () => {
+      const result = await db.transaction((tx) => listExternalProducts({ tx }));
+
+      expect(result.map(({ planId }) => planId)).not.toContain(expiredPlanId);
+    });
+
     test("returns the products of the plans", async () => {
       const result = await db.transaction((tx) => listExternalProducts({ tx }));
 

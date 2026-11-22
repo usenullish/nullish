@@ -127,6 +127,27 @@ describe("CheckoutService", () => {
     expect(result.status).toBe("error");
   });
 
+  test("refuses a product whose plan has expired", async () => {
+    const expiredProductId = `prod_${crypto.randomUUID()}`;
+    const [expired] = await db
+      .insert(plans)
+      .values({ provider, expiresAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
+      .returning();
+    assertNonNullish(expired);
+    await db.insert(externalProducts).values({
+      planId: expired.id,
+      provider,
+      externalProductId: expiredProductId,
+      name: "Expired",
+    });
+
+    const result = await checkout({ externalProductId: expiredProductId });
+
+    expect(result.status).toBe("error");
+
+    await db.delete(plans).where(eq(plans.id, expired.id));
+  });
+
   test("refuses an organization already linked to an external subscription", async () => {
     const linkedOrganizationId = await createOrganization(db, TEST_USER_ID);
 
