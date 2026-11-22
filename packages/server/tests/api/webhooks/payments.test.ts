@@ -12,7 +12,7 @@ import {
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import type { Nullable } from "@usenullish/nullish-common";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
-import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
+import { PaymentCancelStatus, type ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { ErrorCode, PAYMENT_EVENT_MAX_SIZE } from "@usenullish/nullish-schema/server";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
 import { defineApi } from "../../../src/api";
@@ -29,7 +29,9 @@ describe("POST /payments/stripe/webhook", () => {
   const manage = mock<ProcessPayments["manage"]>(async () => ({
     url: "https://billing.stripe.com/p/session/bps_1",
   }));
-  const cancel = mock<ProcessPayments["cancel"]>(async () => undefined);
+  const cancel = mock<ProcessPayments["cancel"]>(async () => ({
+    status: PaymentCancelStatus.NOT_SUBSCRIBED,
+  }));
 
   let instance: DbInstance;
 

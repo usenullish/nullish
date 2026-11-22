@@ -16,6 +16,6 @@ export interface ProcessPayments {
   handle(args: HandlePaymentsArgs): Promise<Option<PaymentSubscription>>;
   checkout(args: CheckoutPaymentsArgs): Promise<PaymentCheckout>;
   manage(args: ManagePaymentsArgs): Promise<PaymentManage>;
-  cancel(args: CancelPaymentsArgs): Promise<Option<PaymentCancel>>;
+  cancel(args: CancelPaymentsArgs): Promise<PaymentCancel>;
   listPlans(): Promise<PaymentPlan[]>;
 }

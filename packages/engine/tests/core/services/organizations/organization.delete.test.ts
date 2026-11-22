@@ -7,7 +7,7 @@ import { envDbUrl } from "@usenullish/nullish-env";
 import { DeleteOrganizationService } from "../../../../src/core/services/organizations/organization.delete";
 import { EngineError } from "../../../../src/errors";
 import { InvalidArrayLengthError, type Nullable } from "@usenullish/nullish-common";
-import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
+import { PaymentCancelStatus, type ProcessPayments } from "@usenullish/nullish-schema/payments";
 import {
   createOrganization,
   resetDb,
@@ -23,7 +23,9 @@ const memberships = DbSchema.Core.Memberships.MembershipsSchema;
 const client = new BunSQL(envDbUrl());
 const db = drizzle({ client });
 
-const cancel = mock<ProcessPayments["cancel"]>(async () => undefined);
+const cancel = mock<ProcessPayments["cancel"]>(async () => ({
+  status: PaymentCancelStatus.NOT_SUBSCRIBED,
+}));
 
 const payments: ProcessPayments = {
   handle: mock<ProcessPayments["handle"]>(async () => undefined),
@@ -69,14 +71,14 @@ describe("DeleteOrganizationService", () => {
 
   afterEach(() => {
     cancel.mockReset();
-    cancel.mockImplementation(async () => undefined);
+    cancel.mockImplementation(async () => ({ status: PaymentCancelStatus.NOT_SUBSCRIBED }));
   });
 
   describe("with payments", () => {
     test("marks the organization as deleted at the end of its cancelled subscription", async () => {
       const organizationId = await createOrganization(db, TEST_USER_ID);
       const cancelAt = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000);
-      cancel.mockImplementation(async () => ({ cancelAt }));
+      cancel.mockImplementation(async () => ({ status: PaymentCancelStatus.CANCELLED, cancelAt }));
 
       const result = await deleteOrganization({ organizationId, payments });
 
@@ -102,6 +104,21 @@ describe("DeleteOrganizationService", () => {
       }
 
       expect(cancel).toHaveBeenCalledTimes(1);
+      expect(result.result.deletedAt?.getTime()).toBeGreaterThanOrEqual(before.getTime());
+    });
+
+    test("marks the organization as deleted now when its subscription is already cancelled", async () => {
+      const organizationId = await createOrganization(db, TEST_USER_ID);
+      const before = new Date();
+      cancel.mockImplementation(async () => ({ status: PaymentCancelStatus.ALREADY_CANCELLED }));
+
+      const result = await deleteOrganization({ organizationId, payments });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
       expect(result.result.deletedAt?.getTime()).toBeGreaterThanOrEqual(before.getTime());
     });
 

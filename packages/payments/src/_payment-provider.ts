@@ -1,5 +1,6 @@
 import { isArrayExactlyOne, isNullish, type Option } from "@usenullish/nullish-common";
 import {
+  PaymentCancelStatus,
   PaymentEventType,
   type ProcessPayments,
   type Payments,
@@ -158,7 +159,7 @@ export abstract class PaymentProvider<
     return PaymentsSchema.PaymentManageSchema.parse(portal);
   }
 
-  async cancel(args: Payments["Cancel"]["Args"]): Promise<Option<Payments["Cancel"]["Result"]>> {
+  async cancel(args: Payments["Cancel"]["Args"]): Promise<Payments["Cancel"]["Result"]> {
     const { userId, organizationId } = PaymentsSchema.CancelPaymentsArgsSchema.parse(args);
 
     // 1. Assert the user is an admin of the organization and load its subscription at the provider
@@ -176,15 +177,11 @@ export abstract class PaymentProvider<
 
     // Not subscribed with the provider (e.g. trial or custom offer), so nothing to cancel
     if (isNullish(reference)) {
-      return undefined;
+      return { status: PaymentCancelStatus.NOT_SUBSCRIBED };
     }
 
     // 2. Cancel the subscription at the end of its period with the provider ("in Stripe")
     const cancel = await this.cancelSubscription(reference);
-
-    if (isNullish(cancel)) {
-      return undefined;
-    }
 
     return PaymentsSchema.PaymentCancelSchema.parse(cancel);
   }
@@ -303,7 +300,7 @@ export abstract class PaymentProvider<
 
   protected abstract cancelSubscription(
     args: CancelSubscriptionArgs,
-  ): Promise<Option<Payments["Cancel"]["Result"]>>;
+  ): Promise<Payments["Cancel"]["Result"]>;
 
   protected abstract decode(
     args: Payments["Handle"]["Args"],

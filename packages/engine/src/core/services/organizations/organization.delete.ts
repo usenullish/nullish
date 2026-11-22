@@ -7,7 +7,11 @@ import {
   type Result,
   tryCatch,
 } from "@usenullish/nullish-common";
-import type { Payments, ProcessPayments } from "@usenullish/nullish-schema/payments";
+import {
+  PaymentCancelStatus,
+  type Payments,
+  type ProcessPayments,
+} from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { ServiceContext } from "../../../_service/service";
 import { EngineError } from "../../../errors";
@@ -50,7 +54,10 @@ export class DeleteOrganizationService extends ServiceContext {
       const cancelledSubscription = await this.#cancelSubscription();
 
       return await this.#markDeleted({
-        deletedAt: cancelledSubscription?.cancelAt ?? new Date(),
+        deletedAt:
+          cancelledSubscription?.status === PaymentCancelStatus.CANCELLED
+            ? cancelledSubscription.cancelAt
+            : new Date(),
       });
     });
   }
@@ -61,7 +68,6 @@ export class DeleteOrganizationService extends ServiceContext {
       return null;
     }
 
-    // The result is optional because the user might be deleting an organization on trial
     return await this.#payments.cancel({
       userId: this.#userId,
       organizationId: this.#organizationId,

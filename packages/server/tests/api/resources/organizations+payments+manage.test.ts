@@ -15,7 +15,7 @@ import { createAuth } from "@usenullish/nullish-auth/server";
 import { ApiSchema, ErrorCode } from "@usenullish/nullish-schema/server";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import type { TriggerJobs } from "@usenullish/nullish-schema/jobs";
-import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
+import { PaymentCancelStatus, type ProcessPayments } from "@usenullish/nullish-schema/payments";
 import { assertNonNullish, type Nullable, nonNullish } from "@usenullish/nullish-common";
 import { envAuthSecret, envAuthUrl } from "@usenullish/nullish-env";
 import { FsStorageProvider } from "@usenullish/nullish-storage/fs";
@@ -42,7 +42,9 @@ describe("organization payments manage", () => {
     url: "https://checkout.stripe.com/c/pay/cs_1",
   }));
   const manage = mock<ProcessPayments["manage"]>(async () => ({ url: MANAGE_URL }));
-  const cancel = mock<ProcessPayments["cancel"]>(async () => undefined);
+  const cancel = mock<ProcessPayments["cancel"]>(async () => ({
+    status: PaymentCancelStatus.NOT_SUBSCRIBED,
+  }));
   const listPlans = mock<ProcessPayments["listPlans"]>(async () => []);
 
   const signUp = async ({ email }: { email: string }): Promise<{ id: string; cookie: string }> => {
