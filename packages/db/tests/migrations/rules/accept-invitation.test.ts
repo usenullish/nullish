@@ -209,6 +209,18 @@ describe("accept_invitation", () => {
     expect(await invitationExists(id)).toBeTrue();
   });
 
+  test("accepts an invitation of an organization whose deletion date is still to come", async () => {
+    const { token } = await insertInvitation({ organizationId });
+    await db
+      .update(organizations)
+      .set({ deletedAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000) })
+      .where(eq(organizations.id, organizationId));
+
+    await acceptAs({ userId: TEST_OTHER_USER_ID, token });
+
+    expect(await membershipOf({ organizationId, userId: TEST_OTHER_USER_ID })).toBeDefined();
+  });
+
   test("rejects a caller who is not signed in", async () => {
     const { id, token } = await insertInvitation({ organizationId });
 

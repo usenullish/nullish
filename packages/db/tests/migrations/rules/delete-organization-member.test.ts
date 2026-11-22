@@ -265,6 +265,23 @@ describe("delete_organization_member", () => {
     expect(await membershipExists(memberId)).toBeTrue();
   });
 
+  test("deletes the membership in an organization whose deletion date is still to come", async () => {
+    const memberId = await addMembership({
+      organizationId,
+      userId: TEST_OTHER_USER_ID,
+      role: MembershipRole.ACCOUNTANT,
+    });
+    await db
+      .update(organizations)
+      .set({ deletedAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000) })
+      .where(eq(organizations.id, organizationId));
+
+    const rows = await deleteOrganizationMemberAs({ userId: TEST_USER_ID, membershipId: memberId });
+
+    expect(rows.map(({ id }) => id)).toEqual([memberId]);
+    expect(await membershipExists(memberId)).toBeFalse();
+  });
+
   test("keeps the organization of the deleted membership", async () => {
     const memberId = await addMembership({
       organizationId,
