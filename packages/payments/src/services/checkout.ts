@@ -1,6 +1,10 @@
 import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
-import { type PostgresDbInstance, type SubscriptionProvider } from "@usenullish/nullish-schema/db";
+import {
+  type PostgresDbInstance,
+  type SubscriptionProvider,
+  SubscriptionStatus,
+} from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type AdminServiceContextArgs } from "./_admin-service";
 import { getAvailableExternalProduct } from "./_helpers/external-products";
@@ -72,6 +76,8 @@ export class CheckoutService extends PaymentsServiceContext {
     await this.#assertProductHasPlan({ tx, provider, externalProductId });
 
     await this.#assertNotLinked({ tx, organizationId });
+
+    await this.#assertTrialingOrInactive({ tx, organizationId });
   }
 
   async #assertProductHasPlan({
@@ -106,6 +112,25 @@ export class CheckoutService extends PaymentsServiceContext {
       throw new Error(
         `Subscription ${subscriptionId} is already linked to an external subscription.`,
       );
+    }
+  }
+
+  async #assertTrialingOrInactive({
+    tx,
+    organizationId,
+  }: {
+    tx: Tx;
+    organizationId: Membership["organizationId"];
+  }): Promise<void> {
+    const {
+      subscription: { id: subscriptionId, status },
+    } = await this._getSubscription({
+      tx,
+      organizationId,
+    });
+
+    if (status !== SubscriptionStatus.TRIALING && status !== SubscriptionStatus.INACTIVE) {
+      throw new Error(`Subscription ${subscriptionId} is ${status} and cannot be checked out.`);
     }
   }
 }
