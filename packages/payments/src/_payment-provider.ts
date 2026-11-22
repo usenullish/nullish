@@ -182,6 +182,10 @@ export abstract class PaymentProvider<
     // 2. Cancel the subscription at the end of its period with the provider ("in Stripe")
     const cancel = await this.cancelSubscription(reference);
 
+    if (isNullish(cancel)) {
+      return undefined;
+    }
+
     return PaymentsSchema.PaymentCancelSchema.parse(cancel);
   }
 
@@ -299,7 +303,7 @@ export abstract class PaymentProvider<
 
   protected abstract cancelSubscription(
     args: CancelSubscriptionArgs,
-  ): Promise<Payments["Cancel"]["Result"]>;
+  ): Promise<Option<Payments["Cancel"]["Result"]>>;
 
   protected abstract decode(
     args: Payments["Handle"]["Args"],
