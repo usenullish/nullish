@@ -106,6 +106,15 @@ describe("DeleteOrganizationService", () => {
 
       expect(result).toEqual({ status: "success", result: [] });
     });
+
+    test("does not list an organization whose deletion date is still to come", async () => {
+      const organizationId = await createOrganization(db, TEST_USER_ID);
+      await markDeleted({ organizationId, daysAgo: -10 });
+
+      const result = await service.list();
+
+      expect(result).toEqual({ status: "success", result: [] });
+    });
   });
 
   describe("delete", () => {
