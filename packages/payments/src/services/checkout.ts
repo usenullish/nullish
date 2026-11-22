@@ -2,11 +2,8 @@ import { isNullish, nonNullish, type Result } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
 import { type PostgresDbInstance, type SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
-import { AdminServiceContext, type AdminServiceContextArgs } from "./_admin-service";
+import { type AdminServiceContextArgs } from "./_admin-service";
 import { getExternalProduct } from "./_helpers/external-products";
-import { assertAdminMembership } from "./_helpers/memberships";
-import { getSubscriptionReference } from "./_helpers/subscription-references";
-import { getExistingSubscription } from "./_helpers/subscriptions";
 import { getSubscriptionTaxRate } from "./_helpers/subscription-tax-rates";
 import { PaymentsServiceContext } from "./_payments-service";
 
@@ -70,7 +67,7 @@ export class CheckoutService extends PaymentsServiceContext {
     provider: SubscriptionProvider;
     externalProductId: ExternalProductId;
   }): Promise<void> {
-    await assertAdminMembership({ tx, organizationId, userId });
+    await this._assertAdminMembership({ tx, organizationId, userId });
 
     await this.#assertProductHasPlan({ tx, provider, externalProductId });
 

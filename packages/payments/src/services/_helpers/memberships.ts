@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { assertArrayExactlyOne } from "@usenullish/nullish-common";
 import { selectMany, type Tx } from "@usenullish/nullish-db";
-import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
+import { DbSchema } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
 
 const memberships = DbSchema.Core.Memberships.MembershipsSchema;
@@ -28,20 +28,4 @@ export const getMembership = async ({
 
   const [membership] = rows;
   return membership;
-};
-
-export const assertAdminMembership = async ({
-  tx,
-  organizationId,
-  userId,
-}: {
-  tx: Tx;
-  organizationId: Membership["organizationId"];
-  userId: Membership["userId"];
-}): Promise<void> => {
-  const membership = await getMembership({ tx, organizationId, userId });
-
-  if (membership.role !== MembershipRole.ADMIN) {
-    throw new Error(`User ${userId} is not an admin of organization ${organizationId}.`);
-  }
 };
