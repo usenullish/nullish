@@ -1,9 +1,9 @@
--- An organization can only be deleted for good once its deletion date has
--- passed. Until then, it stays editable and must be kept.
+-- An organization can only be deleted for good 30 days after its deletion
+-- date. Until then, it stays editable and then read-only, and must be kept.
 CREATE OR REPLACE FUNCTION core.check_organization_deletable () RETURNS TRIGGER AS $$
 BEGIN
-  IF core.organization_is_not_deleted(OLD.deleted_at) THEN
-    RAISE EXCEPTION 'Organization % is not deleted yet', OLD.id
+  IF OLD.deleted_at IS NULL OR OLD.deleted_at > now() - interval '30 days' THEN
+    RAISE EXCEPTION 'Organization % cannot be deleted yet', OLD.id
       USING ERRCODE = 'R0001';
   END IF;
 

@@ -39,18 +39,26 @@ describe("check_organization_deletable", () => {
     await client.close();
   });
 
-  test("allows deleting an organization whose deletion date has passed", async () => {
-    await setDeletedAt(new Date(Date.now() - DAY_MS));
+  test("allows deleting an organization deleted more than 30 days ago", async () => {
+    await setDeletedAt(new Date(Date.now() - 31 * DAY_MS));
 
     const rows = await deleteOrganization();
 
     expect(rows.map(({ id }) => id)).toEqual([organizationId]);
   });
 
+  test("rejects deleting an organization deleted less than 30 days ago", async () => {
+    await setDeletedAt(new Date(Date.now() - 29 * DAY_MS));
+
+    const error = await deleteOrganization().catch((e: unknown) => e);
+
+    expect(causeMessage(error)).toContain("cannot be deleted yet");
+  });
+
   test("rejects deleting an organization that is not marked as deleted", async () => {
     const error = await deleteOrganization().catch((e: unknown) => e);
 
-    expect(causeMessage(error)).toContain("is not deleted yet");
+    expect(causeMessage(error)).toContain("cannot be deleted yet");
   });
 
   test("rejects deleting an organization whose deletion date is still to come", async () => {
@@ -58,6 +66,6 @@ describe("check_organization_deletable", () => {
 
     const error = await deleteOrganization().catch((e: unknown) => e);
 
-    expect(causeMessage(error)).toContain("is not deleted yet");
+    expect(causeMessage(error)).toContain("cannot be deleted yet");
   });
 });
