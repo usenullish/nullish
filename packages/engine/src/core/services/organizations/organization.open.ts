@@ -11,7 +11,7 @@ import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { ServiceContext } from "../../../_service/service";
 import { DbOrganizations } from "../../records/organizations";
-import { getSelfSubscriptionTrialEnd } from "../../_helpers/subscriptions";
+import { getSelfSubscriptionTrialEnd, trialReminderDelay } from "../../_helpers/subscriptions";
 
 type Organization = Records["Core"]["Organizations"]["Select"];
 type InsertOrganization = Records["Core"]["Organizations"]["Insert"];
@@ -22,19 +22,12 @@ export type OpenOrganizationServiceArgs = DbUserContextArgs & {
   payments: Nullable<ProcessPayments>;
 };
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-const TRIAL_REMINDER_MAX_NOTICE_MS = 3 * DAY_MS;
-
-const trialReminderDelay = ({ trialEnd }: { trialEnd: Date }): number => {
-  const trialMs = trialEnd.getTime() - Date.now();
-  return trialMs - Math.min(TRIAL_REMINDER_MAX_NOTICE_MS, trialMs / 2);
-};
-
 export class OpenOrganizationService extends ServiceContext {
-  readonly #userId: OpenOrganizationServiceArgs["userId"];
+  readonly #db: DbUserContextArgs["db"];
+  readonly #userId: DbUserContextArgs["userId"];
+
   readonly #jobs: TriggerJobs;
   readonly #payments: Nullable<ProcessPayments>;
-  readonly #organizations: DbOrganizations;
 
   private constructor({ jobs, payments, ...rest }: OpenOrganizationServiceArgs) {
     super(rest);
@@ -42,7 +35,7 @@ export class OpenOrganizationService extends ServiceContext {
     this.#userId = rest.userId;
     this.#jobs = jobs;
     this.#payments = payments;
-    this.#organizations = DbOrganizations.create(rest);
+    this.#db = rest.db;
   }
 
   static create(args: OpenOrganizationServiceArgs): OpenOrganizationService {
@@ -50,13 +43,20 @@ export class OpenOrganizationService extends ServiceContext {
   }
 
   async open({
-    values,
-    lang,
+    organization,
+    reminder: { lang },
   }: {
-    values: InsertOrganization;
-    lang: DefaultTemplateLanguage;
+    organization: InsertOrganization;
+    reminder: { lang: DefaultTemplateLanguage };
   }): Promise<Result<Organization>> {
-    const result = await this.#organizations.insert({ values });
+    // We do not use _withAuth here because creating an organization is a bit particular.
+    // See comment in DbOrganizations.insert.
+    const result = await DbOrganizations.create({
+      db: this.#db,
+      userId: this.#userId,
+    }).insert({
+      values: organization,
+    });
 
     if (result.status === "error") {
       return result;
@@ -100,7 +100,7 @@ export class OpenOrganizationService extends ServiceContext {
           organizationId,
           lang,
         },
-        delay: trialReminderDelay({ trialEnd }),
+        delay: trialReminderDelay({ trialEnd, now: new Date() }),
       });
     });
   }

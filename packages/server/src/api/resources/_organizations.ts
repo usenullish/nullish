@@ -4,7 +4,9 @@ import { defineListHandler } from "../handlers/root/list";
 import { _defineCreateHandler } from "../handlers/_create";
 import { defineUpdateHandler } from "../handlers/root/update";
 import { defineGetByIdHandler } from "../handlers/root/get-by-id";
-import { nonNullish } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, preferredLanguage } from "@usenullish/nullish-common";
+import { DefaultTemplateLanguage } from "@usenullish/nullish-schema/db";
+import * as z from "zod";
 import { RouteResource } from "./_factories/crud-resource";
 import { type ResourceArgs, ResourceProvider } from "./_factories/resource";
 import type { Records } from "@usenullish/nullish-schema/records";
@@ -117,8 +119,37 @@ export class OrganizationsHandlers extends RouteResource<{
   protected override readonly defineCreate = {
     route: createRoute,
     handler: _defineCreateHandler<CreateRoute, Records["Core"]["Organizations"]["Select"]>({
-      insert: async ({ db, userId, values }) =>
-        await OpenOrganizationService.create({ db, userId }).open({ values }),
+      insert: async ({
+        db,
+        userId,
+        context: {
+          req,
+          var: {
+            workers: { jobs, payments },
+          },
+        },
+        values: organization,
+      }) => {
+        // TODO: refactor in case ore more usages
+        // Similar as detecting the lang when sending the authentication email
+        const lang =
+          preferredLanguage({
+            request: req.raw,
+            languages: z.enum(DefaultTemplateLanguage),
+          }) ?? DefaultTemplateLanguage.EN;
+
+        return await OpenOrganizationService.create({
+          db,
+          userId,
+          jobs,
+          payments,
+        }).open({
+          organization,
+          reminder: {
+            lang,
+          },
+        });
+      },
       resourceKey: "organization",
       build: ({ result: organization }) => ({
         organization: encodeOrganizationResponse(organization),

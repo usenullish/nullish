@@ -53,8 +53,8 @@ describe("OpenOrganizationService", () => {
       jobs,
       payments: withPayments ? payments : (null as Nullable<ProcessPayments>),
     }).open({
-      values: { name: "Opened Org", legalForm: LegalForm.LLC },
-      lang: DefaultTemplateLanguage.FR,
+      organization: { name: "Opened Org", legalForm: LegalForm.LLC },
+      reminder: { lang: DefaultTemplateLanguage.FR },
     });
 
   const useInitialPlan = async ({ trialDays }: { trialDays: number }) => {

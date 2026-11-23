@@ -1,7 +1,12 @@
 import type { Tx } from "@usenullish/nullish-db";
 import { and, eq } from "drizzle-orm";
 import { assertArrayAtMostOne, type Option } from "@usenullish/nullish-common";
-import { DbSchema, SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
+import {
+  DbSchema,
+  SubscriptionProvider,
+  SubscriptionStatus,
+  TRIAL_REMINDER_DAYS,
+} from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 
 type Subscription = Records["Subscription"]["Subscriptions"]["Select"];
@@ -33,4 +38,17 @@ export const getSelfSubscriptionTrialEnd = async ({
   const [row] = rows;
 
   return row?.periodEnd ?? undefined;
+};
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+export const trialReminderDelay = ({
+  trialEnd,
+  now,
+}: {
+  trialEnd: NonNullable<Subscription["periodEnd"]>;
+  now: Date;
+}): number => {
+  const trialMs = trialEnd.getTime() - now.getTime();
+  return trialMs - Math.min(TRIAL_REMINDER_DAYS * DAY_MS, trialMs / 2);
 };
