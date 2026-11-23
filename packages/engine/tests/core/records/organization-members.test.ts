@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { DbSchema, MembershipRole } from "@usenullish/nullish-schema/db";
+import { DbSchema, MembershipRole, type QueryCount } from "@usenullish/nullish-schema/db";
 import { DbCollectionOrganizationMembers } from "../../../src/core/records/organization-members";
 import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
@@ -29,12 +29,14 @@ const list = ({
   limit = 100,
   field = "createdAt",
   direction = "asc",
+  count,
 }: {
   userId: string;
   organizationId: string;
   limit?: number;
   field?: string;
   direction?: "asc" | "desc";
+  count?: QueryCount;
 }) =>
   DbCollectionOrganizationMembers.create({
     db: db as unknown as DbStoreInitArgs["db"],
@@ -43,6 +45,7 @@ const list = ({
   }).list({
     pagination: { limit, offset: 0 },
     sort: { field, direction },
+    count,
   });
 
 describe("organization-members", () => {
@@ -133,6 +136,44 @@ describe("organization-members", () => {
       }
 
       expect(result.result.data).toHaveLength(1);
+    });
+
+    test("returns no pagination without count", async () => {
+      const result = await list({ userId: TEST_USER_ID, organizationId });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.pagination).toBeUndefined();
+    });
+
+    test("returns the total of the members beyond the page", async () => {
+      const result = await list({
+        userId: TEST_USER_ID,
+        organizationId,
+        limit: 1,
+        count: { mode: "exact" },
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.pagination).toEqual({ total: 2 });
+    });
+
+    test("counts no member to a member who is not an admin", async () => {
+      const result = await list({
+        userId: TEST_OTHER_USER_ID,
+        organizationId,
+        count: { mode: "exact" },
+      });
+
+      expect(result).toEqual({ status: "success", result: { data: [], pagination: { total: 0 } } });
     });
 
     test("sorts the members by a column of the view", async () => {

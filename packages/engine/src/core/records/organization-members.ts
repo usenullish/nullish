@@ -1,11 +1,11 @@
 import { eq, getColumns } from "drizzle-orm";
-import { DbUserContext, selectMany } from "@usenullish/nullish-db";
+import { countMany, DbUserContext, selectMany } from "@usenullish/nullish-db";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbView, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type Views, ViewsSchema } from "@usenullish/nullish-schema/views";
 import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
-import { parseQueryArgs } from "../../_query/helpers";
+import { parseCount, parseQueryArgs } from "../../_query/helpers";
 
 type OrganizationMember = Views["Core"]["OrganizationMembers"]["Select"];
 
@@ -34,6 +34,7 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
   list({
     pagination,
     sort,
+    count,
   }: DbListArgs<string>): Promise<Result<DbListResult<OrganizationMember>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
@@ -43,16 +44,26 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
         pKey: view.id,
       });
 
+      const { mode: countMode } = parseCount(count);
+
+      const where = eq(view.organizationId, this.#organizationId);
+
       return await this._withAuth(async (tx) => {
         const data = await selectMany({
           tx,
           table: view,
           schema: ViewsSchema.Core.OrganizationMembersView.SelectOrganizationMembersView,
-          where: eq(view.organizationId, this.#organizationId),
+          where,
           ...queryArgs,
         });
 
-        return { data };
+        if (countMode !== "exact") {
+          return { data };
+        }
+
+        const total = await countMany({ tx, table: view, where });
+
+        return { data, pagination: { total } };
       });
     });
   }

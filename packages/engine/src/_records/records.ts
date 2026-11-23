@@ -12,14 +12,15 @@ import * as z from "zod";
 import { type DbListResult, type DbStoreInitArgs } from "../store";
 import { assertArrayAtMostOne, assertArrayExactlyOne } from "@usenullish/nullish-common";
 import { DbUserContext } from "@usenullish/nullish-db";
-import { deleteMany, insertMany, selectMany, updateMany } from "@usenullish/nullish-db";
+import { countMany, deleteMany, insertMany, selectMany, updateMany } from "@usenullish/nullish-db";
 import {
   QUERY_MAX_PAGINATION,
   type QueryArgs,
   queryArgsSchema,
+  type QueryCount,
   type QueryPagination,
 } from "@usenullish/nullish-schema/db";
-import { parseQueryArgs, parseFilters } from "../_query/helpers";
+import { parseCount, parseQueryArgs, parseFilters } from "../_query/helpers";
 
 export type DbRecordsSortField<TTable extends AnyPgTable> = Extract<
   keyof TTable["_"]["columns"],
@@ -111,6 +112,7 @@ export abstract class DbRecords<
   protected async _query<T, TFilters = never>({
     pagination,
     sort,
+    count,
     where,
     filters,
     ...rest
@@ -118,6 +120,7 @@ export abstract class DbRecords<
     schema: z.ZodType<T>;
     where?: SQL;
     filters?: DbRecordsFilters<TFilters>;
+    count?: QueryCount;
   } & QueryArgs<DbRecordsSortField<TTable>>): Promise<Result<DbListResult<T>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
@@ -129,6 +132,8 @@ export abstract class DbRecords<
 
       const { where: filtersWhere } = parseFilters(filters);
 
+      const { mode: countMode } = parseCount(count);
+
       return await this._withAuth(async (tx) => {
         const data = await selectMany({
           tx,
@@ -138,7 +143,13 @@ export abstract class DbRecords<
           where: and(where, filtersWhere),
         });
 
-        return { data };
+        if (countMode !== "exact") {
+          return { data };
+        }
+
+        const total = await countMany({ tx, table: this.#table, where: and(where, filtersWhere) });
+
+        return { data, pagination: { total } };
       });
     });
   }

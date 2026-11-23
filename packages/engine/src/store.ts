@@ -1,6 +1,6 @@
 import type { Option, Result } from "@usenullish/nullish-common";
 import type { DbUserContextArgs } from "@usenullish/nullish-db";
-import type { QueryArgs, QueryDefaultSortField } from "@usenullish/nullish-schema/db";
+import type { QueryArgs, QueryCount, QueryDefaultSortField } from "@usenullish/nullish-schema/db";
 
 export interface DbStore<TSelect, TSelectId, TUpdate> {
   find(args: { pKey: TSelectId }): Promise<Result<Option<TSelect>>>;
@@ -13,12 +13,13 @@ export interface DbDeletableStore<TSelect, TSelectId> {
 
 export interface DbListResult<TSelect> {
   data: TSelect[];
+  pagination?: { total: number };
 }
 
 export type DbListArgs<
   TSortField extends string = QueryDefaultSortField,
   TFilters = never,
-> = QueryArgs<TSortField> & { filters?: TFilters };
+> = QueryArgs<TSortField> & { filters?: TFilters; count?: QueryCount };
 
 export interface DbCollectionStore<
   TSelect,

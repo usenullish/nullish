@@ -1,4 +1,4 @@
-import { type InferInsertModel, type SQL, sql } from "drizzle-orm";
+import { count, type InferInsertModel, type SQL, sql } from "drizzle-orm";
 import type { AnyPgColumn, AnyPgTable, LockStrength } from "drizzle-orm/pg-core";
 import * as z from "zod";
 import { isArrayAtLeastOne, nonNullish } from "@usenullish/nullish-common";
@@ -50,6 +50,15 @@ export const selectMany = async <T, Selection extends SelectedFields>({
 
   const rows = await locked;
   return rows.map((row) => schema.parse(row));
+};
+
+export const countMany = async ({
+  tx,
+  table,
+  where,
+}: ReadStatementArgs & { where?: SQL }): Promise<number> => {
+  const [row] = await tx.select({ total: count() }).from(table).where(where);
+  return row?.total ?? 0;
 };
 
 export async function insertMany<T, TTable extends AnyPgTable & { id: AnyPgColumn }>({
