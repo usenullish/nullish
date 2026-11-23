@@ -22,6 +22,10 @@ export const PlansSchema = SubscriptionSchema.table(
       "plans_trial_days_self",
       sql`${table.provider} = 'self' OR ${table.trialDays} IS NULL`,
     ),
+    pg.check(
+      "plans_rules_not_custom",
+      sql`${table.provider} <> 'custom' OR ${table.planRulesId} IS NULL`,
+    ),
     pg.unique("plans_id_provider_unique").on(table.id, table.provider),
     ...readonlyPolicies({ tableName: "plans" }),
   ],
