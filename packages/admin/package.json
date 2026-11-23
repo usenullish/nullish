@@ -9,7 +9,8 @@
     "./auth": "./src/auth/index.ts",
     "./organizations": "./src/organizations/index.ts",
     "./metering": "./src/metering/index.ts",
-    "./subscription": "./src/subscription/index.ts"
+    "./subscription": "./src/subscription/index.ts",
+    "./instance": "./src/instance/index.ts"
   },
   "scripts": {
     "test": "bun test",
