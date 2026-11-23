@@ -12,6 +12,8 @@ import type { ProcessPayments } from "@usenullish/nullish-schema/payments";
 // https://zod.dev/blog/zod-4-5#zcompile
 import "zod/compile";
 
+// 1. Open DB
+
 const dbResult = await openDb();
 
 if (dbResult.status === "error") {
@@ -19,12 +21,9 @@ if (dbResult.status === "error") {
   process.exit(1);
 }
 
-const jobsResult = await startJobs();
+const { result: db } = dbResult;
 
-if (jobsResult.status === "error") {
-  console.error("Cannot start the jobs:", jobsResult.err);
-  process.exit(1);
-}
+// 2. Create mail provider
 
 const mailResult: Result<Nullable<SendMail>> = envMailEnabled()
   ? createMailProvider()
@@ -35,6 +34,23 @@ if (mailResult.status === "error") {
   process.exit(1);
 }
 
+const { result: mail } = mailResult;
+
+// 3. Init the jobs
+
+const jobsResult = await startJobs();
+
+if (jobsResult.status === "error") {
+  console.error("Cannot start the jobs:", jobsResult.err);
+  process.exit(1);
+}
+
+const {
+  result: { triggered: triggeredJobs, close: closeJobs },
+} = jobsResult;
+
+// 4. Create the payment provider
+
 const paymentsResult: Result<Nullable<ProcessPayments>> = envPaymentsEnabled()
   ? createPaymentProvider()
   : { status: "success", result: null };
@@ -44,12 +60,9 @@ if (paymentsResult.status === "error") {
   process.exit(1);
 }
 
-const { result: db } = dbResult;
-const {
-  result: { triggered: triggeredJobs, close: closeJobs },
-} = jobsResult;
-const { result: mail } = mailResult;
 const { result: payments } = paymentsResult;
+
+// 5. Define API and serve
 
 const { fetch: apiFetch } = defineApi({
   db,
@@ -64,6 +77,8 @@ const apiServer = Bun.serve({
   fetch: apiFetch,
   hostname: process.env.NODE_ENV === "development" ? "127.0.0.1" : "0.0.0.0",
 });
+
+// Stop services and close connections
 
 const close = async () => {
   try {
