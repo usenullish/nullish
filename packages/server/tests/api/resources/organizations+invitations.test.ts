@@ -72,9 +72,9 @@ describe("organization invitations", () => {
     });
   };
 
-  const listInvitations = ({ cookie }: { cookie?: string }) =>
+  const listInvitations = ({ cookie, query = LIST_QUERY }: { cookie?: string; query?: string }) =>
     request({
-      path: `/organizations/${organizationId}/invitations?${LIST_QUERY}`,
+      path: `/organizations/${organizationId}/invitations?${query}`,
       method: "GET",
       cookie,
     });
@@ -161,6 +161,28 @@ describe("organization invitations", () => {
       );
 
       expect(listed.map(({ id }) => id)).toContain(invitationId);
+    });
+
+    test("returns the total of the pending invitations with count=exact", async () => {
+      await invite({ email: "counted@test.local" });
+
+      const pending = await db
+        .select()
+        .from(invitations)
+        .where(eq(invitations.organizationId, organizationId));
+
+      const response = await listInvitations({
+        cookie: admin.cookie,
+        query: `${LIST_QUERY}&count=exact`,
+      });
+
+      expect(response.status).toBe(200);
+
+      const { pagination } = ApiSchema.Invitations.GetInvitationsResponseSchema.parse(
+        await response.json(),
+      );
+
+      expect(pagination).toEqual({ total: pending.length });
     });
 
     test("lists no invitation to a member who is not an admin", async () => {
