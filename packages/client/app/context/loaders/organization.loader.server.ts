@@ -26,6 +26,6 @@ export const loadOrganizationData = async (args: LoaderFunctionArgs) => {
     accountingSettings: accountingSettingsResult?.data[0],
     billingSettings: billingSettingsResult?.data[0],
     clients: clientsResult?.data,
-    subscriptionSummary: subscriptionSummariesResult?.data[0],
+    subscription: subscriptionSummariesResult?.data[0],
   };
 };

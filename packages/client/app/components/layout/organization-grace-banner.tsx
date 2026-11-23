@@ -1,6 +1,6 @@
 import { TriangleAlert } from "lucide-react";
 import { OrganizationSubscriptionStatus } from "@usenullish/nullish-schema/db";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useFormatDate } from "~/kit/format/date.hooks";
@@ -8,9 +8,9 @@ import { useFormatDate } from "~/kit/format/date.hooks";
 export const OrganizationGraceBanner = () => {
   const { i18n } = useI18n();
   const formatDate = useFormatDate();
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
 
-  if (subscriptionSummary?.organization.status !== OrganizationSubscriptionStatus.GRACE) {
+  if (subscription?.organization.status !== OrganizationSubscriptionStatus.GRACE) {
     return null;
   }
 
@@ -22,7 +22,7 @@ export const OrganizationGraceBanner = () => {
       <TriangleAlert className="size-4 shrink-0" />
       <p>
         {replacePlaceholders(i18n.organizations.text.grace, {
-          "{date}": formatDate(subscriptionSummary.organization.expiresAt),
+          "{date}": formatDate(subscription.organization.expiresAt),
         })}
       </p>
     </div>

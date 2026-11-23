@@ -5,7 +5,7 @@ import { isNullish, nonNullish } from "@usenullish/nullish-common";
 import { SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
 import { useOrganization } from "~/context/contexts/organization.context";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { useSettings } from "~/context/contexts/settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
@@ -19,16 +19,16 @@ export const OrganizationTrialBanner = () => {
   const [now] = useState(() => new Date());
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
   const settings = useSettings();
 
   const choosePlan = admin && settings?.payments.enabled === true;
 
-  const periodEnd = subscriptionSummary?.subscription.periodEnd;
+  const periodEnd = subscription?.subscription.periodEnd;
 
   if (
     nonNullish(organization.deletedAt) ||
-    subscriptionSummary?.subscription.status !== SubscriptionStatus.TRIALING ||
+    subscription?.subscription.status !== SubscriptionStatus.TRIALING ||
     isNullish(periodEnd)
   ) {
     return null;

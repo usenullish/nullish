@@ -19,9 +19,9 @@ const POLL_MAX_ATTEMPTS = 30;
 const POLL_TIMEOUT_SECONDS = (POLL_INTERVAL_MS * POLL_MAX_ATTEMPTS) / 1000;
 
 export const SubscriptionSuccess = ({
-  subscriptionSummary,
+  subscription,
 }: {
-  subscriptionSummary: Option<SubscriptionSummary>;
+  subscription: Option<SubscriptionSummary>;
 }) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
@@ -31,7 +31,7 @@ export const SubscriptionSuccess = ({
   const timeout = useRef<Option<ReturnType<typeof setTimeout>>>(undefined);
   const attempts = useRef(0);
 
-  const activated = subscriptionSummary?.subscription.status === SubscriptionStatus.ACTIVE;
+  const activated = subscription?.subscription.status === SubscriptionStatus.ACTIVE;
 
   useEffect(() => {
     if (activated) {
@@ -49,7 +49,7 @@ export const SubscriptionSuccess = ({
     }, POLL_INTERVAL_MS);
 
     return () => clearTimeout(timeout.current);
-  }, [activated, subscriptionSummary, revalidate]);
+  }, [activated, subscription, revalidate]);
 
   const [secondsLeft, setSecondsLeft] = useState(POLL_TIMEOUT_SECONDS);
 

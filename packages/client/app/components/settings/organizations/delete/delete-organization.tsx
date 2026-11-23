@@ -2,7 +2,7 @@ import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-sc
 import type { Api } from "@usenullish/nullish-schema/server";
 import { DeleteRecord } from "~/components/core/delete-record";
 import { OrganizationsService } from "~/lib/services/organizations.services";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
@@ -16,11 +16,11 @@ export const DeleteOrganization = ({
   onOpenChange: (open: boolean) => void;
 }) => {
   const { i18n } = useI18n();
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
 
   const paidSubscription =
-    subscriptionSummary?.plan.provider === SubscriptionProvider.STRIPE &&
-    subscriptionSummary.subscription.status !== SubscriptionStatus.INACTIVE;
+    subscription?.plan.provider === SubscriptionProvider.STRIPE &&
+    subscription.subscription.status !== SubscriptionStatus.INACTIVE;
 
   return (
     <DeleteRecord

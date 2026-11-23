@@ -24,11 +24,11 @@ const SubscriptionSuccessPage = ({ params, loaderData }: Route.ComponentProps) =
     return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
-  const [subscriptionSummary] = loaderData?.data ?? [];
+  const [subscription] = loaderData?.data ?? [];
 
   return (
     <NonNullishOrganizationContext.Provider value={organization}>
-      <SubscriptionSuccess subscriptionSummary={subscriptionSummary} />
+      <SubscriptionSuccess subscription={subscription} />
     </NonNullishOrganizationContext.Provider>
   );
 };
