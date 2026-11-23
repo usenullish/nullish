@@ -105,7 +105,7 @@ export class OpenOrganizationService extends ServiceContext {
           organizationId,
           lang,
         },
-        delay: trialReminderDelay({ trialEnd, now: new Date() }),
+        delay: trialReminderDelay({ trialEnd }),
       });
     });
   }

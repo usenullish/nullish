@@ -1,4 +1,13 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:test";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  setSystemTime,
+  test,
+} from "bun:test";
 import { eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
@@ -91,8 +100,16 @@ describe("core/_helpers/subscriptions", () => {
     const DAY_MS = 24 * 60 * 60 * 1000;
     const now = new Date("2026-11-01T10:00:00Z");
 
+    beforeEach(() => {
+      setSystemTime(now);
+    });
+
+    afterEach(() => {
+      setSystemTime();
+    });
+
     const delayFor = ({ trialDays }: { trialDays: number }) =>
-      trialReminderDelay({ trialEnd: new Date(now.getTime() + trialDays * DAY_MS), now });
+      trialReminderDelay({ trialEnd: new Date(now.getTime() + trialDays * DAY_MS) });
 
     test("reminds three days before the end of a long trial", () => {
       expect(delayFor({ trialDays: 14 })).toBe(11 * DAY_MS);

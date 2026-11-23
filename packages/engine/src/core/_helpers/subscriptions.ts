@@ -44,11 +44,9 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 export const trialReminderDelay = ({
   trialEnd,
-  now,
 }: {
   trialEnd: NonNullable<Subscription["periodEnd"]>;
-  now: Date;
 }): number => {
-  const trialMs = trialEnd.getTime() - now.getTime();
+  const trialMs = trialEnd.getTime() - Date.now();
   return trialMs - Math.min(TRIAL_REMINDER_DAYS * DAY_MS, trialMs / 2);
 };
