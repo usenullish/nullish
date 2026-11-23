@@ -66,7 +66,10 @@ export class MailsWorker extends DbUserContext {
       return;
     }
 
-    const { member: {email}, ...rest } = trialData;
+    const {
+      member: { email },
+      ...rest
+    } = trialData;
 
     await this.#mail.send({
       type: MailType.SUBSCRIPTION_TRIAL_REMINDER,
