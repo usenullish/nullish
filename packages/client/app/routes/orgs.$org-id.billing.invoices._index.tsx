@@ -20,7 +20,7 @@ const OrganizationInvoicesPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const invoices = loaderData?.invoiceSummaries ?? [];
+  const invoices = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

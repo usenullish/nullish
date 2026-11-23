@@ -28,7 +28,7 @@ export const PostingResponseSchema = z.strictObject({
     .min(2),
 });
 export const GetJournalEntriesResponseSchema = z.strictObject({
-  journalEntries: z.array(PostingResponseSchema),
+  data: z.array(PostingResponseSchema),
 });
 export const GetJournalEntryResponseSchema = z.strictObject({
   journalEntry: PostingResponseSchema.nullish(),

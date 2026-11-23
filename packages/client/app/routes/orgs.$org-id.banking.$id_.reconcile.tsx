@@ -35,7 +35,7 @@ const ReconcileMovementsPage = ({ loaderData }: Route.ComponentProps) => {
   const organization = useOrganization();
 
   const bankRelation = loaderData.bankRelation?.bankRelation;
-  const bankMovementSummaries = loaderData.summaries?.bankMovementSummaries ?? [];
+  const bankMovementSummaries = loaderData.summaries?.data ?? [];
 
   if (isNullish(bankRelation)) {
     return <Navigate to={BankingPath.create({ organizationId: organization.id }).to()} replace />;
@@ -46,9 +46,9 @@ const ReconcileMovementsPage = ({ loaderData }: Route.ComponentProps) => {
       <ReconcileMovements
         bankRelation={bankRelation}
         bankMovementSummaries={bankMovementSummaries}
-        vatRates={loaderData.rates?.rates ?? []}
-        vatMethods={loaderData.methods?.methods ?? []}
-        periods={loaderData.periods?.periods ?? []}
+        vatRates={loaderData.rates?.data ?? []}
+        vatMethods={loaderData.methods?.data ?? []}
+        periods={loaderData.periods?.data ?? []}
       />
 
       <Pagination count={bankMovementSummaries.length} />

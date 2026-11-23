@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 export const BillingSettingsContext =
   createContext<
-    Option<Api["BillingSettings"]["Client"]["GetBillingSettingsResponse"]["settings"][number]>
+    Option<Api["BillingSettings"]["Client"]["GetBillingSettingsResponse"]["data"][number]>
   >(undefined);
 
 export const useBillingSettings = () => useContext(BillingSettingsContext);

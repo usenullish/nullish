@@ -67,7 +67,7 @@ describe("organization VAT method summaries", () => {
   const startYears = async (response: Response): Promise<number[]> =>
     ApiSchema.VatMethodSummaries.GetVatMethodSummariesResponseSchema.parse(
       await response.json(),
-    ).vatMethodSummaries.map(({ period }) => period.startOn.getUTCFullYear());
+    ).data.map(({ period }) => period.startOn.getUTCFullYear());
 
   beforeAll(async () => {
     const opened = await openDb();

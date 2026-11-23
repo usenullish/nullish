@@ -26,10 +26,10 @@ export const PdfInvoiceForm = ({
 }: {
   onAction: (payload: FormData) => void;
   pending: boolean;
-  templates: Api["DocumentTemplates"]["Client"]["GetDocumentTemplatesResponse"]["templates"];
-  contents: Api["TemplateContents"]["Client"]["GetTemplateContentsResponse"]["contents"];
+  templates: Api["DocumentTemplates"]["Client"]["GetDocumentTemplatesResponse"]["data"];
+  contents: Api["TemplateContents"]["Client"]["GetTemplateContentsResponse"]["data"];
   language: Api["TemplateContents"]["Client"]["TemplateContent"]["language"];
-  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["bankRelations"];
+  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["data"];
 }) => {
   const { i18n } = useI18n();
   const billingSettings = useBillingSettings();

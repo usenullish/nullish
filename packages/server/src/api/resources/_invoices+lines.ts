@@ -136,7 +136,7 @@ export class LinesHandlers extends CrudResource<{
       resourceKey: "invoice-lines",
       filtersSchema: ApiSchema.Lines.GetLinesFiltersQuerySchema,
       build: ({ result: { data: lines } }) => ({
-        lines: lines.map(this.#encodeLineResponse),
+        data: lines.map(this.#encodeLineResponse),
       }),
     }),
   };

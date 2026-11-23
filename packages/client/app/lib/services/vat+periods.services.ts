@@ -57,12 +57,12 @@ export class VatPeriodsService extends Service {
 
       const periods = await this._listAll({
         listFn: async (query) => {
-          const { periods } = await api.list({ orgId, query });
+          const { data: periods } = await api.list({ orgId, query });
           return periods;
         },
       });
 
-      return { periods };
+      return { data: periods };
     });
   };
 

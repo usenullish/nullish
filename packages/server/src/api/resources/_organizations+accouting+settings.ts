@@ -123,7 +123,7 @@ export class AccountingSettingsHandlers extends RouteResource<{
       store: (args) => DbCollectionAccountingSettings.create(args),
       resourceKey: "accounting+settings",
       build: ({ result: { data: settings } }) => ({
-        settings: settings.map(encodeAuditFieldsResponse),
+        data: settings.map(encodeAuditFieldsResponse),
       }),
     }),
   };

@@ -137,7 +137,7 @@ describe("chat conversations", () => {
         message: "Theirs",
       });
 
-      const { conversations } = await list({});
+      const { data: conversations } = await list({});
 
       const ids = conversations.map(({ id }) => id);
 
@@ -161,7 +161,7 @@ describe("chat conversations", () => {
       });
       const unscoped = await initConversation({ userId: TEST_USER_ID, message: "Unscoped" });
 
-      const { conversations } = await list({});
+      const { data: conversations } = await list({});
 
       const ids = conversations.map(({ id }) => id);
 
@@ -173,13 +173,13 @@ describe("chat conversations", () => {
       const first = await initConversation({ userId: TEST_USER_ID, message: "Page one" });
       const second = await initConversation({ userId: TEST_USER_ID, message: "Page two" });
 
-      const { conversations: page } = await list({
+      const { data: page } = await list({
         query: "limit=1&offset=0&sort=createdAt&direction=desc",
       });
 
       expect(page.map(({ id }) => id)).toEqual([second]);
 
-      const { conversations: nextPage } = await list({
+      const { data: nextPage } = await list({
         query: "limit=1&offset=1&sort=createdAt&direction=desc",
       });
 
@@ -232,7 +232,7 @@ describe("chat conversations", () => {
 
       expect(response.status).toBe(200);
 
-      const { conversations } = (await response.json()) as Conversations;
+      const { data: conversations } = (await response.json()) as Conversations;
 
       expect(conversations.map(({ id }) => id)).toEqual([inOrganization]);
     });

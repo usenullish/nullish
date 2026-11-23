@@ -4,8 +4,8 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { useContext } from "react";
 
 export const OrganizationsContext =
-  createContext<
-    Option<Api["Organizations"]["Client"]["GetOrganizationsResponse"]["organizations"]>
-  >(undefined);
+  createContext<Option<Api["Organizations"]["Client"]["GetOrganizationsResponse"]["data"]>>(
+    undefined,
+  );
 
 export const useOrganizations = () => useContext(OrganizationsContext);

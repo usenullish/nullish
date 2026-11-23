@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 export const AccountingSettingsContext =
   createContext<
-    Option<Api["AccountingSettings"]["Client"]["GetAccountingSettingsResponse"]["settings"][number]>
+    Option<Api["AccountingSettings"]["Client"]["GetAccountingSettingsResponse"]["data"][number]>
   >(undefined);
 
 export const useAccountingSettings = () => useContext(AccountingSettingsContext);

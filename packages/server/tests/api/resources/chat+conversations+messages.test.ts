@@ -127,7 +127,7 @@ describe("chat conversation messages", () => {
 
     expect(response.status).toBe(200);
 
-    const { messages } = (await response.json()) as Messages;
+    const { data: messages } = (await response.json()) as Messages;
 
     expect(messages.map(({ role, content }) => ({ role, content }))).toEqual([
       { role: MessageRole.USER, content: "Hello" },
@@ -150,7 +150,7 @@ describe("chat conversation messages", () => {
 
     expect(response.status).toBe(200);
 
-    const { messages } = (await response.json()) as Messages;
+    const { data: messages } = (await response.json()) as Messages;
 
     expect(messages.map(({ content }) => content)).toEqual(["Second"]);
   });
@@ -179,7 +179,7 @@ describe("chat conversation messages", () => {
 
     expect(response.status).toBe(200);
 
-    const { messages: page } = (await response.json()) as Messages;
+    const { data: page } = (await response.json()) as Messages;
 
     expect(page.map(({ content }) => content)).toEqual(["One"]);
   });
@@ -207,7 +207,7 @@ describe("chat conversation messages", () => {
 
     expect(response.status).toBe(200);
 
-    const { messages: page } = (await response.json()) as Messages;
+    const { data: page } = (await response.json()) as Messages;
 
     expect(page.map(({ content }) => content)).toEqual(["Question", "Answer"]);
   });
@@ -221,6 +221,6 @@ describe("chat conversation messages", () => {
     const response = await request({ conversationId });
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ messages: [] });
+    expect(await response.json()).toEqual({ data: [] });
   });
 });

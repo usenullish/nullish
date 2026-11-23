@@ -108,7 +108,7 @@ export class VatSettingsHandlers extends RouteResource<{
       store: (args) => DbCollectionVatSettings.create(args),
       resourceKey: "vat+settings",
       build: ({ result: { data: settings } }) => ({
-        settings: settings.map(encodeAuditFieldsResponse),
+        data: settings.map(encodeAuditFieldsResponse),
       }),
     }),
   };

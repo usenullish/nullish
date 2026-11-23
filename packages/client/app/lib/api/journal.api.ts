@@ -77,7 +77,7 @@ export class ApiJournal extends AppApi {
   delete = async ({
     journalEntryId,
   }: {
-    journalEntryId: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["entry"]["id"];
+    journalEntryId: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["entry"]["id"];
   }): Promise<void> => {
     const response = await fetch(`${this.apiUrl}/accounting/journal/${journalEntryId}`, {
       method: "DELETE",

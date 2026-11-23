@@ -8,7 +8,7 @@ export const ConversationSchema = withAuditFieldsCodecs(
 );
 
 export const GetConversationsResponseSchema = z.strictObject({
-  conversations: z.array(ConversationSchema),
+  data: z.array(ConversationSchema),
 });
 
 export const ChatSchema = z.strictObject({

@@ -20,7 +20,7 @@ export const BankMovementSchema = withAuditFieldsCodecs(
 });
 
 export const GetBankMovementsResponseSchema = z.strictObject({
-  bankMovements: z.array(BankMovementSchema),
+  data: z.array(BankMovementSchema),
 });
 export const GetBankMovementResponseSchema = z.strictObject({
   bankMovement: BankMovementSchema.nullish(),

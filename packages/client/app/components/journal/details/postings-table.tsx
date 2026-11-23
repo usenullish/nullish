@@ -19,7 +19,7 @@ export const PostingsTable = ({
   postings,
   vatPostings,
 }: {
-  postings: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["postings"];
+  postings: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["postings"];
   vatPostings: Api["JournalSummaries"]["Client"]["JournalSummary"]["vatPostings"];
 }) => {
   const { i18n } = useI18n();

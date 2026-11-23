@@ -65,7 +65,7 @@ export class MigrationDatasetSummariesHandlers extends Resource {
     resourceKey: "datasetSummaries",
     filtersSchema: ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesFiltersQuerySchema,
     build: ({ result: { data: datasetSummaries } }) => ({
-      datasetSummaries: datasetSummaries.map(encodeDatasetSummaryResponse),
+      data: datasetSummaries.map(encodeDatasetSummaryResponse),
     }),
   });
 }

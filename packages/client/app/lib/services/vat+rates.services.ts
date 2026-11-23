@@ -55,12 +55,12 @@ export class VatRatesService extends Service {
 
       const rates = await this._listAll({
         listFn: async (query) => {
-          const { rates } = await api.list({ orgId, query });
+          const { data: rates } = await api.list({ orgId, query });
           return rates;
         },
       });
 
-      return { rates };
+      return { data: rates };
     });
   };
 

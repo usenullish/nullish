@@ -120,7 +120,7 @@ export class BillingSettingsHandlers extends RouteResource<{
       store: (args) => DbCollectionBillingSettings.create(args),
       resourceKey: "billing+settings",
       build: ({ result: { data: settings } }) => ({
-        settings: settings.map(encodeAuditFieldsResponse),
+        data: settings.map(encodeAuditFieldsResponse),
       }),
     }),
   };

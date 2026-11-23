@@ -34,7 +34,7 @@ const BankMovementsPage = ({ loaderData }: Route.ComponentProps) => {
   const organization = useOrganization();
 
   const bankRelation = loaderData.bankRelation?.bankRelation;
-  const bankMovements = loaderData.movements?.bankMovements ?? [];
+  const bankMovements = loaderData.movements?.data ?? [];
 
   if (isNullish(bankRelation)) {
     return <Navigate to={BankingPath.create({ organizationId: organization.id }).to()} replace />;

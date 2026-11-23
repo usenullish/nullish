@@ -27,9 +27,9 @@ const JournalDuplicatePage = ({ loaderData }: Route.ComponentProps) => {
     <NewJournal
       organizationId={organizationId}
       template={journalEntry}
-      vatRates={loaderData.rates?.rates ?? []}
-      vatMethods={loaderData.methods?.methods ?? []}
-      periods={loaderData.periods?.periods ?? []}
+      vatRates={loaderData.rates?.data ?? []}
+      vatMethods={loaderData.methods?.data ?? []}
+      periods={loaderData.periods?.data ?? []}
     />
   );
 };

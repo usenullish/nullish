@@ -136,7 +136,7 @@ describe("organization migration dataset summaries", () => {
 
     expect(response.status).toBe(200);
 
-    const { datasetSummaries } =
+    const { data: datasetSummaries } =
       ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesResponseSchema.parse(
         await response.json(),
       );
@@ -152,7 +152,7 @@ describe("organization migration dataset summaries", () => {
     expect(
       ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesResponseSchema.parse(
         await response.json(),
-      ).datasetSummaries,
+      ).data,
     ).toEqual([]);
   });
 });

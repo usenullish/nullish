@@ -7,7 +7,7 @@ export const AccountsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetAccountsResponseSchema = z.strictObject({
-  accounts: z.array(AccountsResponseSchema),
+  data: z.array(AccountsResponseSchema),
 });
 export const GetAccountResponseSchema = z.strictObject({
   account: AccountsResponseSchema.nullish(),

@@ -122,7 +122,7 @@ export class InvoicesHandlers extends CrudResource<{
       resourceKey: "invoices",
       filtersSchema: ApiSchema.Invoices.GetInvoicesFiltersQuerySchema,
       build: ({ result: { data: invoices } }) => ({
-        invoices: invoices.map(encodeInvoiceResponse),
+        data: invoices.map(encodeInvoiceResponse),
       }),
     }),
   };

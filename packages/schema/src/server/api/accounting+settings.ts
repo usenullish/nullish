@@ -7,7 +7,7 @@ const AccountingSettingsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetAccountingSettingsResponseSchema = z.strictObject({
-  settings: z.array(AccountingSettingsResponseSchema),
+  data: z.array(AccountingSettingsResponseSchema),
 });
 export const GetAccountingSettingResponseSchema = z.strictObject({
   setting: AccountingSettingsResponseSchema.nullish(),

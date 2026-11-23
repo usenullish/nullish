@@ -4,8 +4,6 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { useContext } from "react";
 
 export const CurrenciesContext =
-  createContext<Option<Api["Currencies"]["Client"]["GetCurrenciesResponse"]["currencies"]>>(
-    undefined,
-  );
+  createContext<Option<Api["Currencies"]["Client"]["GetCurrenciesResponse"]["data"]>>(undefined);
 
 export const useCurrencies = () => useContext(CurrenciesContext);

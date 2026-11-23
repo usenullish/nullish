@@ -17,7 +17,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 const BankPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
-  const bankRelationSummaries = loaderData?.bankRelationSummaries ?? [];
+  const bankRelationSummaries = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

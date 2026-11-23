@@ -55,12 +55,12 @@ export class ClientsService extends Service {
 
       const clients = await this._listAll({
         listFn: async (query) => {
-          const { clients } = await api.list({ orgId, query });
+          const { data: clients } = await api.list({ orgId, query });
           return clients;
         },
       });
 
-      return { clients };
+      return { data: clients };
     });
   };
 

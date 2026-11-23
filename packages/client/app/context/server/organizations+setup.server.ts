@@ -25,12 +25,12 @@ export class OrganizationsSetupServer {
       VatMethodsServer.create().listAllVatMethods(args),
     ]);
 
-    const period = periods?.periods[0];
+    const period = periods?.data[0];
 
     return {
       period,
-      vatSetting: vatSettings?.settings[0],
-      vatMethod: vatMethods?.methods.find(({ periodId }) => periodId === period?.id),
+      vatSetting: vatSettings?.data[0],
+      vatMethod: vatMethods?.data.find(({ periodId }) => periodId === period?.id),
     };
   }
 }

@@ -66,7 +66,7 @@ export const ChatHistory = ({
         return;
       }
 
-      setConversations(result.result.conversations);
+      setConversations(result.result.data);
     };
 
     void reload();

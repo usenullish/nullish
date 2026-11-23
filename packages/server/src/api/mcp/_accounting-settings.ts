@@ -54,7 +54,7 @@ export class McpToolsAccountingSettings extends McpTools {
         const result = await store.list(query);
 
         return this.mapResult(result, ({ data: settings }) => ({
-          settings: settings.map(this.#encodeResponse),
+          data: settings.map(this.#encodeResponse),
         }));
       },
     });

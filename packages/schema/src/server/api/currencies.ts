@@ -7,7 +7,7 @@ export const CurrencySchema = withAuditFieldsCodecs(
 );
 
 export const GetCurrenciesResponseSchema = z.strictObject({
-  currencies: z.array(CurrencySchema),
+  data: z.array(CurrencySchema),
 });
 export const GetCurrencyResponseSchema = z.strictObject({
   currency: CurrencySchema.nullish(),

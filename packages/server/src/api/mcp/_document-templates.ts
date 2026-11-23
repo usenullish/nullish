@@ -70,7 +70,7 @@ export class McpToolsDocumentTemplates extends McpTools {
         const result = await store.list({ ...query, filters });
 
         return this.mapResult(result, ({ data: templates }) => ({
-          templates: templates.map(this.#encodeResponse),
+          data: templates.map(this.#encodeResponse),
         }));
       },
     });

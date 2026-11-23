@@ -88,7 +88,7 @@ export class InvitationsHandlers extends Resource {
     },
     resourceKey: "invitations",
     build: ({ result: { data: invitations } }) => ({
-      invitations: invitations.map(encodeInvitationResponse),
+      data: invitations.map(encodeInvitationResponse),
     }),
   });
 

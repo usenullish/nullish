@@ -120,7 +120,7 @@ export class BankRelationsHandlers extends CrudResource<{
       store: (args) => DbCollectionBankRelations.create(args),
       resourceKey: "bank-relations",
       build: ({ result: { data: bankRelations } }) => ({
-        bankRelations: bankRelations.map(this.#encodeResponse),
+        data: bankRelations.map(this.#encodeResponse),
       }),
     }),
   };

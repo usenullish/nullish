@@ -86,7 +86,7 @@ export class JournalsHandlers extends Resource {
     resourceKey: "journals",
     filtersSchema: ApiSchema.Journal.GetJournalEntriesFiltersQuerySchema,
     build: ({ result: { data: journalEntries } }) => ({
-      journalEntries: journalEntries.map(encodeJournalResponse),
+      data: journalEntries.map(encodeJournalResponse),
     }),
   });
 

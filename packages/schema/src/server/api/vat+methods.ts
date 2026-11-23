@@ -7,7 +7,7 @@ export const VatMethodsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetVatMethodsResponseSchema = z.strictObject({
-  methods: z.array(VatMethodsResponseSchema),
+  data: z.array(VatMethodsResponseSchema),
 });
 export const GetVatMethodResponseSchema = z.strictObject({
   method: VatMethodsResponseSchema.nullish(),

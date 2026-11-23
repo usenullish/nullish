@@ -55,12 +55,12 @@ export class VatMethodsService extends Service {
 
       const methods = await this._listAll({
         listFn: async (query) => {
-          const { methods } = await api.list({ orgId, query });
+          const { data: methods } = await api.list({ orgId, query });
           return methods;
         },
       });
 
-      return { methods };
+      return { data: methods };
     });
   };
 

@@ -3,7 +3,7 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { Amount } from "~/components/core/amount";
 
 type Posting =
-  Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["postings"][number];
+  Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["postings"][number];
 
 export const PostingAmount = ({
   posting,

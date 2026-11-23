@@ -24,7 +24,7 @@ export const InvoiceSummarySchema = z.strictObject({
 });
 
 export const GetInvoiceSummariesResponseSchema = z.strictObject({
-  invoiceSummaries: z.array(InvoiceSummarySchema),
+  data: z.array(InvoiceSummarySchema),
 });
 export const GetInvoiceSummaryResponseSchema = z.strictObject({
   invoiceSummary: InvoiceSummarySchema.nullish(),

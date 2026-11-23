@@ -27,9 +27,9 @@ const JournalEditPage = ({ loaderData }: Route.ComponentProps) => {
     <JournalEdit
       organizationId={organizationId}
       journalEntry={journalEntry}
-      vatRates={loaderData.rates?.rates ?? []}
-      vatMethods={loaderData.methods?.methods ?? []}
-      periods={loaderData.periods?.periods ?? []}
+      vatRates={loaderData.rates?.data ?? []}
+      vatMethods={loaderData.methods?.data ?? []}
+      periods={loaderData.periods?.data ?? []}
     />
   );
 };

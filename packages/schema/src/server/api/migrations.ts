@@ -7,7 +7,7 @@ export const MigrationSchema = withAuditFieldsCodecs(
 );
 
 export const GetMigrationsResponseSchema = z.strictObject({
-  migrations: z.array(MigrationSchema),
+  data: z.array(MigrationSchema),
 });
 export const GetMigrationResponseSchema = z.strictObject({
   migration: MigrationSchema.nullish(),

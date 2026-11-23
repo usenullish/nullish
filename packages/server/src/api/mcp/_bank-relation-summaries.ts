@@ -43,7 +43,7 @@ export class McpToolsBankRelationSummaries extends McpTools {
         }).list(query);
 
         return this.mapResult(result, ({ data: bankRelationSummaries }) => ({
-          bankRelationSummaries: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
+          data: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
         }));
       },
     });

@@ -126,7 +126,7 @@ export class ContactsHandlers extends CrudResource<{
       resourceKey: "contacts",
       filtersSchema: ApiSchema.Contacts.GetContactsFiltersQuerySchema,
       build: ({ result: { data: contacts } }) => ({
-        contacts: contacts.map(encodeAuditFieldsResponse),
+        data: contacts.map(encodeAuditFieldsResponse),
       }),
     }),
   };

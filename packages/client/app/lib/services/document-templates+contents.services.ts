@@ -48,14 +48,14 @@ export class TemplateContentsService extends Service {
         ids.map((id) =>
           this._listAll({
             listFn: async (query) => {
-              const { contents } = await api.list({ id, query });
+              const { data: contents } = await api.list({ id, query });
               return contents;
             },
           }),
         ),
       );
 
-      return { contents: contents.flat() };
+      return { data: contents.flat() };
     });
   };
 

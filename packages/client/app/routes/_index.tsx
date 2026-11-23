@@ -9,8 +9,8 @@ import { HomeLayout } from "~/components/layout/home-layout";
 import { AppLayout } from "~/components/layout/app-layout";
 
 export const loader = async ({ context }: Route.LoaderArgs) => {
-  const { organizations } = (await context.get(organizationsLoaderContext).listAll()) ?? {
-    organizations: [],
+  const { data: organizations } = (await context.get(organizationsLoaderContext).listAll()) ?? {
+    data: [],
   };
 
   // The user has exactly one and only organizations so we redirect it to it.

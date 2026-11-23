@@ -59,7 +59,7 @@ export class VatMethodSummariesHandlers extends Resource {
     },
     resourceKey: "vatMethodSummaries",
     build: ({ result: { data: vatMethodSummaries } }) => ({
-      vatMethodSummaries: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
+      data: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
     }),
   });
 }

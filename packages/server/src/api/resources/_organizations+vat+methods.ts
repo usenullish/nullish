@@ -108,7 +108,7 @@ export class VatMethodsHandlers extends RouteResource<{
       store: (args) => DbCollectionVatMethods.create(args),
       resourceKey: "vat+methods",
       build: ({ result: { data: methods } }) => ({
-        methods: methods.map(encodeAuditFieldsResponse),
+        data: methods.map(encodeAuditFieldsResponse),
       }),
     }),
   };

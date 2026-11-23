@@ -9,7 +9,7 @@ export const DatasetSummarySchema = z.strictObject({
 });
 
 export const GetDatasetSummariesResponseSchema = z.strictObject({
-  datasetSummaries: z.array(DatasetSummarySchema),
+  data: z.array(DatasetSummarySchema),
 });
 
 export const GetDatasetSummariesFiltersSchema =

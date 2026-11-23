@@ -41,7 +41,7 @@ export class McpToolsVatMethodSummaries extends McpTools {
         }).list(query);
 
         return this.mapResult(result, ({ data: vatMethodSummaries }) => ({
-          vatMethodSummaries: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
+          data: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
         }));
       },
     });

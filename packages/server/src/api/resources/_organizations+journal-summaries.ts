@@ -91,7 +91,7 @@ export class JournalSummariesHandlers extends Resource {
     resourceKey: "journalSummaries",
     filtersSchema: ApiSchema.JournalSummaries.GetJournalSummariesFiltersQuerySchema,
     build: ({ result: { data: journalSummaries } }) => ({
-      journalSummaries: journalSummaries.map(encodeJournalSummaryResponse),
+      data: journalSummaries.map(encodeJournalSummaryResponse),
     }),
   });
 

@@ -61,7 +61,7 @@ export class McpToolsBankRelations extends McpTools {
         const result = await store.list(query);
 
         return this.mapResult(result, ({ data: bankRelations }) => ({
-          bankRelations: bankRelations.map(this.#encodeResponse),
+          data: bankRelations.map(this.#encodeResponse),
         }));
       },
     });

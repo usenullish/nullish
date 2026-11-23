@@ -10,7 +10,7 @@ export const OrganizationSchema = withAuditFieldsCodecs(
 });
 
 export const GetOrganizationsResponseSchema = z.strictObject({
-  organizations: z.array(OrganizationSchema),
+  data: z.array(OrganizationSchema),
 });
 export const GetOrganizationResponseSchema = z.strictObject({
   organization: OrganizationSchema.nullish(),

@@ -182,7 +182,7 @@ describe("bank relation movement summaries", () => {
     const response = await list({ cookie });
 
     expect(response.status).toBe(200);
-    const { bankMovementSummaries } =
+    const { data: bankMovementSummaries } =
       ApiSchema.BankMovementSummaries.GetBankMovementSummariesResponseSchema.parse(
         await response.json(),
       );
@@ -198,7 +198,7 @@ describe("bank relation movement summaries", () => {
     const response = await list({ cookie });
 
     expect(response.status).toBe(200);
-    const { bankMovementSummaries } =
+    const { data: bankMovementSummaries } =
       ApiSchema.BankMovementSummaries.GetBankMovementSummariesResponseSchema.parse(
         await response.json(),
       );

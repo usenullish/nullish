@@ -6,7 +6,7 @@ import { useAccountingSettings } from "~/context/contexts/accounting-settings.co
 import { useBaseAmount } from "~/kit/data/base-amount.hooks";
 
 type Posting =
-  Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["postings"][number];
+  Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["postings"][number];
 
 export const PostingsTotals = ({ postings }: { postings: Posting[] }) => {
   const accountingSettings = useAccountingSettings();

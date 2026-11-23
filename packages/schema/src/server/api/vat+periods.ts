@@ -20,7 +20,7 @@ export const VatPeriodsResponseSchema = withStartEndCodecs(
 );
 
 export const GetVatPeriodsResponseSchema = z.strictObject({
-  periods: z.array(VatPeriodsResponseSchema),
+  data: z.array(VatPeriodsResponseSchema),
 });
 export const GetVatPeriodResponseSchema = z.strictObject({
   period: VatPeriodsResponseSchema.nullish(),

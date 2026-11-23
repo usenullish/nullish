@@ -126,7 +126,7 @@ export class ClientsHandlers extends CrudResource<{
       resourceKey: "clients",
       filtersSchema: ApiSchema.Clients.GetClientsFiltersQuerySchema,
       build: ({ result: { data: clients } }) => ({
-        clients: clients.map(encodeAuditFieldsResponse),
+        data: clients.map(encodeAuditFieldsResponse),
       }),
     }),
   };

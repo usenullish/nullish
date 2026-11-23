@@ -7,7 +7,7 @@ const BillingSettingsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetBillingSettingsResponseSchema = z.strictObject({
-  settings: z.array(BillingSettingsResponseSchema),
+  data: z.array(BillingSettingsResponseSchema),
 });
 export const GetBillingSettingResponseSchema = z.strictObject({
   setting: BillingSettingsResponseSchema.nullish(),

@@ -15,10 +15,10 @@ export const PdfInvoice = ({
   bankRelations,
 }: {
   invoiceId: Api["Invoices"]["Client"]["Invoice"]["id"];
-  templates: Api["DocumentTemplates"]["Client"]["GetDocumentTemplatesResponse"]["templates"];
-  contents: Api["TemplateContents"]["Client"]["GetTemplateContentsResponse"]["contents"];
+  templates: Api["DocumentTemplates"]["Client"]["GetDocumentTemplatesResponse"]["data"];
+  contents: Api["TemplateContents"]["Client"]["GetTemplateContentsResponse"]["data"];
   language: Api["TemplateContents"]["Client"]["TemplateContent"]["language"];
-  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["bankRelations"];
+  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["data"];
 }) => {
   const { i18n } = useI18n();
 

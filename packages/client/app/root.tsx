@@ -156,8 +156,8 @@ export default function App({ loaderData }: Route.ComponentProps) {
             <EnvironmentContext.Provider value={environment}>
               <SettingsContext.Provider value={settingsResult?.settings}>
                 <ActiveConversationProvider>
-                  <OrganizationsContext.Provider value={organizationsResult?.organizations}>
-                    <CurrenciesContext.Provider value={currenciesResult?.currencies}>
+                  <OrganizationsContext.Provider value={organizationsResult?.data}>
+                    <CurrenciesContext.Provider value={currenciesResult?.data}>
                       <LlmUsageContext.Provider value={llmUsageResult?.llmUsage}>
                         <AssistantContext.Provider value={assistantResult?.assistant}>
                           <Outlet />

@@ -25,7 +25,7 @@ export const assertPaymentsEnabled = async ({ params }: LoaderFunctionArgs): Pro
 export const assertCanCheckout = async (args: LoaderFunctionArgs): Promise<void> => {
   const result = await SubscriptionSummariesServer.create().listAll(args);
 
-  const [summary] = result?.subscriptionSummaries ?? [];
+  const [summary] = result?.data ?? [];
 
   if (isNullish(summary)) {
     return;

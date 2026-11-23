@@ -20,7 +20,7 @@ const OrganizationVatPeriodsPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const periods = loaderData?.periods ?? [];
+  const periods = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

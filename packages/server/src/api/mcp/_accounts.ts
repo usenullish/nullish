@@ -62,7 +62,7 @@ export class McpToolsAccounts extends McpTools {
         const result = await store.list({ ...query, filters });
 
         return this.mapResult(result, ({ data: accounts }) => ({
-          accounts: accounts.map(this.#encodeResponse),
+          data: accounts.map(this.#encodeResponse),
         }));
       },
     });

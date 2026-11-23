@@ -43,7 +43,7 @@ export class McpToolsOrganizationMembers extends McpTools {
         }).list(query);
 
         return this.mapResult(result, ({ data: members }) => ({
-          members: members.map(encodeAuditFieldsResponse),
+          data: members.map(encodeAuditFieldsResponse),
         }));
       },
     });

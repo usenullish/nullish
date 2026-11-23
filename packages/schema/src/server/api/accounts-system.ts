@@ -7,7 +7,7 @@ export const SystemAccountSchema = withAuditFieldsCodecs(
 );
 
 export const GetSystemAccountsResponseSchema = z.strictObject({
-  accounts: z.array(SystemAccountSchema),
+  data: z.array(SystemAccountSchema),
 });
 export const GetSystemAccountResponseSchema = z.strictObject({
   account: SystemAccountSchema.nullish(),

@@ -60,7 +60,7 @@ export class McpToolsJournal extends McpTools {
         const result = await store.list({ ...query, filters });
 
         return this.mapResult(result, ({ data: journalEntries }) => ({
-          journalEntries: journalEntries.map(encodeJournalResponse),
+          data: journalEntries.map(encodeJournalResponse),
         }));
       },
     });

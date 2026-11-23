@@ -21,12 +21,12 @@ export class CurrenciesService extends Service {
 
       const currencies = await this._listAll({
         listFn: async (query) => {
-          const { currencies } = await api.list({ query });
+          const { data: currencies } = await api.list({ query });
           return currencies;
         },
       });
 
-      return { currencies };
+      return { data: currencies };
     });
   };
 }

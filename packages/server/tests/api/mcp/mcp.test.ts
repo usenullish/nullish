@@ -405,14 +405,14 @@ describe("mcp", () => {
     test("lists the members of an organization to its admin", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ members: { userId: string; email: string; role: string }[] }>({
+      } = await callTool<{ data: { userId: string; email: string; role: string }[] }>({
         name: "list_organization_members",
         args: { organizationId: orgId, query: LIST_QUERY },
       });
 
       expect(isError).toBeFalsy();
       expect(
-        structuredContent?.result.members.map(({ userId, email, role }) => ({
+        structuredContent?.result.data.map(({ userId, email, role }) => ({
           userId,
           email,
           role,
@@ -425,13 +425,13 @@ describe("mcp", () => {
     test("lists no member of an organization the user does not own", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ members: unknown[] }>({
+      } = await callTool<{ data: unknown[] }>({
         name: "list_organization_members",
         args: { organizationId: otherOrgId, query: LIST_QUERY },
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.members).toEqual([]);
+      expect(structuredContent?.result.data).toEqual([]);
     });
 
     test("lists the invitations of an organization to its admin", async () => {
@@ -452,7 +452,7 @@ describe("mcp", () => {
       const {
         result: { isError, structuredContent },
       } = await callTool<{
-        invitations: {
+        data: {
           id: string;
           email: string;
           role: string;
@@ -465,7 +465,7 @@ describe("mcp", () => {
 
       expect(isError).toBeFalsy();
 
-      const [invitation] = structuredContent?.result.invitations ?? [];
+      const [invitation] = structuredContent?.result.data ?? [];
 
       expect(invitation?.id).toBe(created.result.invitation.id);
       expect(invitation?.email).toBe("mcp-invited@test.dev");
@@ -477,26 +477,26 @@ describe("mcp", () => {
     test("lists no invitation of an organization the user does not own", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ invitations: unknown[] }>({
+      } = await callTool<{ data: unknown[] }>({
         name: "list_invitations",
         args: { organizationId: otherOrgId, query: LIST_QUERY },
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.invitations).toEqual([]);
+      expect(structuredContent?.result.data).toEqual([]);
     });
 
     test("lists the clients of an organization with encoded audit fields", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ clients: { id: string; createdAt: { __timestamp__: string } }[] }>({
+      } = await callTool<{ data: { id: string; createdAt: { __timestamp__: string } }[] }>({
         name: "list_clients",
         args: { organizationId: orgId, query: LIST_QUERY },
       });
 
       expect(isError).toBeFalsy();
 
-      const clients = structuredContent?.result.clients ?? [];
+      const clients = structuredContent?.result.data ?? [];
 
       expect(clients.map(({ id }) => id)).toEqual([clientId]);
       expect(typeof clients[0]?.createdAt.__timestamp__).toBe("string");
@@ -505,19 +505,19 @@ describe("mcp", () => {
     test("does not list the clients of another user's organization", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ clients: unknown[] }>({
+      } = await callTool<{ data: unknown[] }>({
         name: "list_clients",
         args: { organizationId: otherOrgId, query: LIST_QUERY },
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.clients).toEqual([]);
+      expect(structuredContent?.result.data).toEqual([]);
     });
 
     test("lists the invoices matching encoded filters", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ invoices: { id: string }[] }>({
+      } = await callTool<{ data: { id: string }[] }>({
         name: "list_invoices",
         args: {
           organizationId: orgId,
@@ -532,19 +532,19 @@ describe("mcp", () => {
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.invoices.map(({ id }) => id)).toEqual([invoiceId]);
+      expect(structuredContent?.result.data.map(({ id }) => id)).toEqual([invoiceId]);
     });
 
     test("lists no invoice when none matches the filters", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ invoices: unknown[] }>({
+      } = await callTool<{ data: unknown[] }>({
         name: "list_invoices",
         args: { organizationId: orgId, query: LIST_QUERY, filters: { status: "open" } },
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.invoices).toEqual([]);
+      expect(structuredContent?.result.data).toEqual([]);
     });
 
     test("rejects filters that do not match their schema", async () => {
@@ -578,7 +578,7 @@ describe("mcp", () => {
     test("lists the invoice summaries matching encoded filters", async () => {
       const {
         result: { isError, structuredContent },
-      } = await callTool<{ invoiceSummaries: { invoice: { id: string } }[] }>({
+      } = await callTool<{ data: { invoice: { id: string } }[] }>({
         name: "list_invoice_summaries",
         args: {
           organizationId: orgId,
@@ -588,9 +588,7 @@ describe("mcp", () => {
       });
 
       expect(isError).toBeFalsy();
-      expect(structuredContent?.result.invoiceSummaries.map(({ invoice: { id } }) => id)).toEqual([
-        invoiceId,
-      ]);
+      expect(structuredContent?.result.data.map(({ invoice: { id } }) => id)).toEqual([invoiceId]);
     });
 
     test("gets an invoice summary with its encoded amounts", async () => {

@@ -27,12 +27,12 @@ export class SubscriptionSummariesService extends Service {
 
       const subscriptionSummaries = await this._listAll({
         listFn: async (query) => {
-          const { subscriptionSummaries } = await api.list({ orgId, query });
+          const { data: subscriptionSummaries } = await api.list({ orgId, query });
           return subscriptionSummaries;
         },
       });
 
-      return { subscriptionSummaries };
+      return { data: subscriptionSummaries };
     });
   };
 }

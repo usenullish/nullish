@@ -47,7 +47,7 @@ export class McpToolsInvoiceSummaries extends McpTools {
         }).list({ ...query, filters });
 
         return this.mapResult(result, ({ data: invoiceSummaries }) => ({
-          invoiceSummaries: invoiceSummaries.map(encodeInvoiceSummaryResponse),
+          data: invoiceSummaries.map(encodeInvoiceSummaryResponse),
         }));
       },
     });

@@ -56,7 +56,7 @@ const OrganizationInvoicePage = ({ loaderData }: Route.ComponentProps) => {
   const invoice = useInvoice();
   const amounts = useInvoiceAmounts();
 
-  const lines = loaderData?.lines ?? [];
+  const lines = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-8">

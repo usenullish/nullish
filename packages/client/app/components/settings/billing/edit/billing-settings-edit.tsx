@@ -28,7 +28,7 @@ export const BillingSettingsEdit = ({
   vatRates,
   bankRelations,
 }: {
-  billingSettings: Api["BillingSettings"]["Client"]["GetBillingSettingsResponse"]["settings"][number];
+  billingSettings: Api["BillingSettings"]["Client"]["GetBillingSettingsResponse"]["data"][number];
   vatRates: VatRate[];
   bankRelations: BankRelation[];
 }) => {

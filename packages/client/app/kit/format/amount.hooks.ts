@@ -3,7 +3,7 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { CurrencyType } from "@usenullish/nullish-schema/db";
 import { formatAmount, type Option } from "@usenullish/nullish-common";
 
-type Currency = Api["Currencies"]["Client"]["GetCurrenciesResponse"]["currencies"][0];
+type Currency = Api["Currencies"]["Client"]["GetCurrenciesResponse"]["data"][0];
 
 export const useFormatAmount = (): ((args: {
   currency: Currency;

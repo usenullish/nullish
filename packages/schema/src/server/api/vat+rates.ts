@@ -20,7 +20,7 @@ export const VatRatesResponseSchema = withStartEndCodecs(
 );
 
 export const GetVatRatesResponseSchema = z.strictObject({
-  rates: z.array(VatRatesResponseSchema),
+  data: z.array(VatRatesResponseSchema),
 });
 export const GetVatRateResponseSchema = z.strictObject({
   rate: VatRatesResponseSchema.nullish(),

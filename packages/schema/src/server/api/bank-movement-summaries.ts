@@ -12,7 +12,7 @@ export const BankMovementSummarySchema = z.strictObject({
 });
 
 export const GetBankMovementSummariesResponseSchema = z.strictObject({
-  bankMovementSummaries: z.array(BankMovementSummarySchema),
+  data: z.array(BankMovementSummarySchema),
 });
 
 export const GetBankMovementSummariesFiltersSchema = GetBankMovementsFiltersSchema;

@@ -131,7 +131,7 @@ export class DocumentTemplatesHandlers extends CrudResource<{
       resourceKey: "document-templates",
       filtersSchema: ApiSchema.DocumentTemplates.GetDocumentTemplatesFiltersQuerySchema,
       build: ({ result: { data: templates } }) => ({
-        templates: templates.map(this.#encodeResponse),
+        data: templates.map(this.#encodeResponse),
       }),
     }),
   };

@@ -8,5 +8,5 @@ export const VatMethodSummarySchema = z.strictObject({
 });
 
 export const GetVatMethodSummariesResponseSchema = z.strictObject({
-  vatMethodSummaries: z.array(VatMethodSummarySchema),
+  data: z.array(VatMethodSummarySchema),
 });

@@ -17,7 +17,7 @@ const TeamInvitationsPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const invitations = loaderData?.invitations ?? [];
+  const invitations = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

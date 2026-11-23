@@ -27,12 +27,12 @@ export class AccountingSettingsService extends Service {
 
       const settings = await this._listAll({
         listFn: async (query) => {
-          const { settings } = await api.list({ orgId, query });
+          const { data: settings } = await api.list({ orgId, query });
           return settings;
         },
       });
 
-      return { settings };
+      return { data: settings };
     });
   };
 }

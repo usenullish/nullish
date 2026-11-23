@@ -21,7 +21,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 const NewPeriodsPage = ({ loaderData }: Route.ComponentProps) => {
   const { id: organizationId } = useOrganization();
 
-  return <NewPeriod organizationId={organizationId} lastPeriod={loaderData?.periods[0]} />;
+  return <NewPeriod organizationId={organizationId} lastPeriod={loaderData?.data[0]} />;
 };
 
 // /orgs/:orgId/accounting/settings/periods/new
