@@ -11,7 +11,7 @@ export type ScheduledJobState<T = unknown> = z.infer<
 >;
 
 export interface TriggerJobs {
-  trigger<P>(args: { key: TriggeredJobKey; payload: P }): Promise<ScheduledJobs>;
+  trigger<P>(args: { key: TriggeredJobKey; payload: P; delay?: number }): Promise<ScheduledJobs>;
   getPayload<P>(args: { key: TriggeredJobKey; jobId: JobId }): Promise<P>;
   getState<S = ScheduledJobState>(args: { key: TriggeredJobKey; jobId: JobId }): Promise<S>;
 }

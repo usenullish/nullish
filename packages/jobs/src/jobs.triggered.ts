@@ -28,14 +28,16 @@ export class TriggeredJobs extends Jobs<TriggeredJobKey, TriggeredJob> implement
   async trigger<P>({
     key,
     payload,
+    delay,
   }: {
     key: TriggeredJobKey;
     payload: P;
+    delay?: number;
   }): Promise<JobsType["Common"]["ScheduledJobs"]> {
     const job = this._jobs[key];
 
     assertNonNullish(job, `Job ${key} has not been started`);
 
-    return await job.trigger({ payload });
+    return await job.trigger({ payload, delay });
   }
 }
