@@ -238,8 +238,8 @@ describe("journal summaries", () => {
         return;
       }
 
-      expect(result.result.map(({ entry: { id } }) => id)).toEqual([manualId, openId]);
-      expect(result.result.map(({ invoiceJournal }) => invoiceJournal)).toEqual([
+      expect(result.result.data.map(({ entry: { id } }) => id)).toEqual([manualId, openId]);
+      expect(result.result.data.map(({ invoiceJournal }) => invoiceJournal)).toEqual([
         null,
         { invoiceId, type: InvoiceJournalEntryType.OPEN },
       ]);
@@ -265,7 +265,7 @@ describe("journal summaries", () => {
         return;
       }
 
-      expect(result.result.map(({ entry: { id } }) => id)).toEqual([insuranceId]);
+      expect(result.result.data.map(({ entry: { id } }) => id)).toEqual([insuranceId]);
     });
 
     test("returns an empty list for an organization without entries", async () => {
@@ -277,7 +277,7 @@ describe("journal summaries", () => {
         foreignKeyId: orgId,
       }).list(LIST_QUERY);
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
   });
 });

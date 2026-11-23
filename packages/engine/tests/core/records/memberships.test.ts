@@ -102,7 +102,9 @@ describe("memberships", () => {
         return;
       }
 
-      expect(all.result.map(({ id }) => id).sort()).toEqual(page.result.data.map(({ id }) => id).sort());
+      expect(all.result.map(({ id }) => id).sort()).toEqual(
+        page.result.data.map(({ id }) => id).sort(),
+      );
     });
 
     test("returns an error Result when the transaction cannot be opened", async () => {

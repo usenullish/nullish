@@ -18,9 +18,7 @@ export function defineChildListHandler<R extends RouteConfig, Select, TFilters =
   store: (
     args: DbCollectionStoreInitArgs<string>,
   ) => DbCollectionStore<Select, unknown, string, TFilters>;
-  build: (
-    result: Extract<Result<DbListResult<Select>>, { status: "success" }>,
-  ) => Response200<R>;
+  build: (result: Extract<Result<DbListResult<Select>>, { status: "success" }>) => Response200<R>;
   resourceKey: string;
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {

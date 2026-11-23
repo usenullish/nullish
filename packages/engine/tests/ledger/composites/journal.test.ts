@@ -517,11 +517,15 @@ describe("DbJournal", () => {
       }
 
       expect(
-        result.result.some((journal) => journal.entry.id === insertedJournal.entry.id),
+        result.result.data.some((journal) => journal.entry.id === insertedJournal.entry.id),
       ).toBeTrue();
-      expect(result.result.every((journal) => journal.entry.organizationId === orgId)).toBeTrue();
-      expect(result.result.every((journal) => journal.entry.id !== siblingJournalId)).toBeTrue();
-      expect(result.result.every((journal) => journal.postings.length >= 2)).toBeTrue();
+      expect(
+        result.result.data.every((journal) => journal.entry.organizationId === orgId),
+      ).toBeTrue();
+      expect(
+        result.result.data.every((journal) => journal.entry.id !== siblingJournalId),
+      ).toBeTrue();
+      expect(result.result.data.every((journal) => journal.postings.length >= 2)).toBeTrue();
     });
 
     test("paginates the entries while still returning each entry's postings", async () => {
@@ -535,8 +539,8 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.postings.length).toBeGreaterThanOrEqual(2);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.postings.length).toBeGreaterThanOrEqual(2);
     });
 
     test("returns a ZodError Result for an unknown sort field", async () => {
@@ -702,7 +706,7 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([entryIds.payment, entryIds.expense]);
+      expect(idsOf(result.result.data)).toEqual([entryIds.payment, entryIds.expense]);
     });
 
     test("returns the entries until the inclusive end date", async () => {
@@ -713,7 +717,7 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([entryIds.invoice, entryIds.payment]);
+      expect(idsOf(result.result.data)).toEqual([entryIds.invoice, entryIds.payment]);
     });
 
     test("returns the entries whose reference contains the search, case-insensitively", async () => {
@@ -724,7 +728,7 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([entryIds.invoice]);
+      expect(idsOf(result.result.data)).toEqual([entryIds.invoice]);
     });
 
     test("returns the entries with a posting on the account, with all their postings", async () => {
@@ -735,8 +739,8 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([entryIds.expense]);
-      expect(result.result[0]?.postings).toHaveLength(2);
+      expect(idsOf(result.result.data)).toEqual([entryIds.expense]);
+      expect(result.result.data[0]?.postings).toHaveLength(2);
     });
 
     test("combines the filters", async () => {
@@ -751,7 +755,7 @@ describe("DbJournal", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([entryIds.payment]);
+      expect(idsOf(result.result.data)).toEqual([entryIds.payment]);
     });
   });
 

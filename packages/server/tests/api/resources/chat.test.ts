@@ -645,9 +645,9 @@ describe("chat", () => {
         throw usages.err;
       }
 
-      expect(usages.result.data.filter((usage) => usage.conversationId === conversationId)).toHaveLength(
-        1,
-      );
+      expect(
+        usages.result.data.filter((usage) => usage.conversationId === conversationId),
+      ).toHaveLength(1);
     });
   });
 

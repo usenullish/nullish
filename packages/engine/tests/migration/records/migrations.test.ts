@@ -118,11 +118,11 @@ describe("migrations", () => {
         return;
       }
 
-      const ids = result.result.map(({ id }) => id);
+      const ids = result.result.data.map(({ id }) => id);
 
       expect(ids).toContain(migrationId);
       expect(ids).not.toContain(otherMigrationId);
-      expect(result.result.every(({ organizationId }) => organizationId === orgId)).toBeTrue();
+      expect(result.result.data.every(({ organizationId }) => organizationId === orgId)).toBeTrue();
     });
   });
 

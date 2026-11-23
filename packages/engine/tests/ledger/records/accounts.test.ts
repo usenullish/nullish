@@ -221,8 +221,8 @@ describe("accounts", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(10);
-      expect(result.result.every((account) => account.organizationId === orgId)).toBeTrue();
+      expect(result.result.data.length).toBeGreaterThan(10);
+      expect(result.result.data.every((account) => account.organizationId === orgId)).toBeTrue();
     });
   });
 
@@ -305,8 +305,8 @@ describe("accounts", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(0);
-      expect(result.result.every(({ type }) => type === AccountType.EXPENSE)).toBeTrue();
+      expect(result.result.data.length).toBeGreaterThan(0);
+      expect(result.result.data.every(({ type }) => type === AccountType.EXPENSE)).toBeTrue();
     });
 
     test("returns only the children of the parent", async () => {
@@ -326,8 +326,8 @@ describe("accounts", () => {
         return;
       }
 
-      expect(result.result.map(({ id }) => id)).toContain(child.id);
-      expect(result.result.every(({ parentId }) => parentId === child.parentId)).toBeTrue();
+      expect(result.result.data.map(({ id }) => id)).toContain(child.id);
+      expect(result.result.data.every(({ parentId }) => parentId === child.parentId)).toBeTrue();
     });
 
     test.each([["unique name"], ["flt-1"]])(
@@ -340,7 +340,7 @@ describe("accounts", () => {
           return;
         }
 
-        expect(result.result.map(({ id }) => id)).toEqual([uniqueAccountId]);
+        expect(result.result.data.map(({ id }) => id)).toEqual([uniqueAccountId]);
       },
     );
   });

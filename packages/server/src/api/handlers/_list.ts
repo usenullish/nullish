@@ -21,9 +21,7 @@ export function _defineListHandler<R extends RouteConfig, Select, TFilters = nev
       filters: Option<TFilters>;
     } & QueryArgs<string>,
   ) => Promise<Result<DbListResult<Select>>>;
-  build: (
-    result: Extract<Result<DbListResult<Select>>, { status: "success" }>,
-  ) => Response200<R>;
+  build: (result: Extract<Result<DbListResult<Select>>, { status: "success" }>) => Response200<R>;
   resourceKey: string;
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {

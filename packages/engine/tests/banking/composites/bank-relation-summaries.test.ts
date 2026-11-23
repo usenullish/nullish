@@ -70,7 +70,10 @@ describe("DbCollectionBankRelationSummaries", () => {
     expect(result.status).toBe("success");
     if (result.status !== "success") return;
     const unreconciled = new Map(
-      result.result.data.map(({ bankRelation, movements }) => [bankRelation.id, movements.unreconciled]),
+      result.result.data.map(({ bankRelation, movements }) => [
+        bankRelation.id,
+        movements.unreconciled,
+      ]),
     );
 
     expect(unreconciled).toEqual(

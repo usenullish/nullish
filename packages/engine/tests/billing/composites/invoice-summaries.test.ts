@@ -139,7 +139,10 @@ describe("invoice summaries", () => {
       if (result.status !== "success") return;
 
       expect(result.result.data.map(({ invoice: { id } }) => id)).toEqual([draftId, openId]);
-      expect(result.result.data.map(({ amounts }) => amounts.balance.remaining)).toEqual([1000n, 2500n]);
+      expect(result.result.data.map(({ amounts }) => amounts.balance.remaining)).toEqual([
+        1000n,
+        2500n,
+      ]);
     });
 
     test("applies the invoice filters", async () => {
