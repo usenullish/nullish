@@ -11,6 +11,7 @@ const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const plans = DbSchema.Subscription.Plans.PlansSchema;
 const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 const customProducts = DbSchema.Subscription.CustomProducts.CustomProductsSchema;
+const planRules = DbSchema.Subscription.PlanRules.PlanRulesSchema;
 
 export const listSubscriptionSummaries = async ({
   tx,
@@ -24,7 +25,7 @@ export const listSubscriptionSummaries = async ({
   const rows = await tx
     .select({
       subscription: subscriptions,
-      plan: { provider: plans.provider },
+      plan: { provider: plans.provider, maxMembers: planRules.maxMembers },
       product: {
         name: sql<Nullable<string>>`coalesce(${externalProducts.name}, ${customProducts.name})`,
       },
@@ -42,15 +43,16 @@ export const listSubscriptionSummaries = async ({
     .innerJoin(plans, eq(plans.id, subscriptions.planId))
     .leftJoin(externalProducts, eq(externalProducts.planId, plans.id))
     .leftJoin(customProducts, eq(customProducts.planId, plans.id))
+    .leftJoin(planRules, eq(planRules.id, plans.planRulesId))
     .where(eq(subscriptions.organizationId, organizationId))
     .orderBy(...orderBy)
     .limit(limit)
     .offset(offset);
 
-  return rows.map(({ subscription, plan, product, status, expiresAt }) =>
+  return rows.map(({ subscription, plan: { provider, maxMembers }, product, status, expiresAt }) =>
     CompositesSchema.SubscriptionSummariesSchema.SelectSubscriptionSummariesSchema.parse({
       subscription,
-      plan,
+      plan: { provider, rules: isNullish(maxMembers) ? null : { maxMembers } },
       product: isNullish(product.name) ? null : product,
       organization:
         status === OrganizationSubscriptionStatus.LOCKED ? { status } : { status, expiresAt },
