@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 import { BigIntCodec, DateCodec, DateStringCodec } from "@usenullish/nullish-common";
 
@@ -21,6 +22,7 @@ export const BankMovementSchema = withAuditFieldsCodecs(
 
 export const GetBankMovementsResponseSchema = z.strictObject({
   data: z.array(BankMovementSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetBankMovementResponseSchema = z.strictObject({
   bankMovement: BankMovementSchema.nullish(),

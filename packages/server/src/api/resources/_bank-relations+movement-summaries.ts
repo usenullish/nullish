@@ -50,7 +50,7 @@ export class BankMovementSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectMovementSummaries, FilterMovementSummaries>({
-    query: async ({ db, userId, context, pagination, sort, filters }) => {
+    query: async ({ db, userId, context, pagination, sort, filters, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -61,12 +61,13 @@ export class BankMovementSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, filters });
+      }).list({ pagination, sort, filters, count });
     },
     resourceKey: "bankMovementSummaries",
     filtersSchema: ApiSchema.BankMovementSummaries.GetBankMovementSummariesFiltersQuerySchema,
-    build: ({ result: { data: bankMovementSummaries } }) => ({
+    build: ({ result: { data: bankMovementSummaries, pagination } }) => ({
       data: bankMovementSummaries.map(encodeBankMovementSummaryResponse),
+      pagination,
     }),
   });
 }

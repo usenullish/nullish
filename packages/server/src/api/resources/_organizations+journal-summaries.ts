@@ -75,7 +75,7 @@ export class JournalSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectJournalSummaries, FilterJournalSummaries>({
-    query: async ({ db, userId, context, pagination, sort, filters }) => {
+    query: async ({ db, userId, context, pagination, sort, filters, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -86,12 +86,13 @@ export class JournalSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, filters });
+      }).list({ pagination, sort, filters, count });
     },
     resourceKey: "journalSummaries",
     filtersSchema: ApiSchema.JournalSummaries.GetJournalSummariesFiltersQuerySchema,
-    build: ({ result: { data: journalSummaries } }) => ({
+    build: ({ result: { data: journalSummaries, pagination } }) => ({
       data: journalSummaries.map(encodeJournalSummaryResponse),
+      pagination,
     }),
   });
 

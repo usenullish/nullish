@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { TimestampCodec } from "@usenullish/nullish-common";
 import { withAuditFieldsCodecs } from "./_audit";
 
@@ -11,6 +12,7 @@ export const OrganizationSchema = withAuditFieldsCodecs(
 
 export const GetOrganizationsResponseSchema = z.strictObject({
   data: z.array(OrganizationSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetOrganizationResponseSchema = z.strictObject({
   organization: OrganizationSchema.nullish(),

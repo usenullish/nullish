@@ -113,8 +113,9 @@ export class VatRatesHandlers extends RouteResource<{
       store: (args) => DbCollectionVatRates.create(args),
       resourceKey: "vat+rates",
       filtersSchema: ApiSchema.VatRates.GetVatRatesFiltersQuerySchema,
-      build: ({ result: { data: rates } }) => ({
+      build: ({ result: { data: rates, pagination } }) => ({
         data: rates.map(this.#encodeResponse),
+        pagination,
       }),
     }),
   };

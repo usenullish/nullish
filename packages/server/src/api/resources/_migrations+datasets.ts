@@ -247,10 +247,10 @@ export class MigrationsDatasetsHandlers extends Resource {
   readonly #list = defineChildListHandler<ListRoute, Dataset>({
     store: (args) => DbCollectionDatasets.create(args),
     resourceKey: "datasets",
-    build: ({ result: { data: datasets } }) =>
+    build: ({ result: { data: datasets, pagination } }) =>
       encodeWithCodecs({
         schema: ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema,
-        value: { data: datasets },
+        value: { data: datasets, pagination },
       }),
   });
 

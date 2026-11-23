@@ -75,8 +75,9 @@ export class BankMovementsHandlers extends Resource {
     store: (args) => DbCollectionMovements.create(args),
     resourceKey: "bankMovements",
     filtersSchema: ApiSchema.BankMovements.GetBankMovementsFiltersQuerySchema,
-    build: ({ result: { data: bankMovements } }) => ({
+    build: ({ result: { data: bankMovements, pagination } }) => ({
       data: bankMovements.map(encodeBankMovementResponse),
+      pagination,
     }),
   });
 

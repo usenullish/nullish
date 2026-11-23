@@ -2,7 +2,7 @@ import type { DbListResult, DbStoreInitArgs } from "@usenullish/nullish-engine";
 import { isNullish, nonNullish, type Option, type Result } from "@usenullish/nullish-common";
 import type { RouteConfig } from "@hono/zod-openapi";
 import { CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
-import type { QueryArgs } from "@usenullish/nullish-schema/db";
+import type { QueryArgs, QueryCount } from "@usenullish/nullish-schema/db";
 import * as z from "zod";
 import type { DefineOpenAPIHandler, OpenAPIHandlerContext, Response200 } from "../types/openapi";
 import { errorResponse, toApiError } from "../_errors";
@@ -19,6 +19,7 @@ export function _defineListHandler<R extends RouteConfig, Select, TFilters = nev
     args: DbStoreInitArgs & {
       context: OpenAPIHandlerContext<R>;
       filters: Option<TFilters>;
+      count?: QueryCount;
     } & QueryArgs<string>,
   ) => Promise<Result<DbListResult<Select>>>;
   build: (result: Extract<Result<DbListResult<Select>>, { status: "success" }>) => Response200<R>;
@@ -34,13 +35,14 @@ export function _defineListHandler<R extends RouteConfig, Select, TFilters = nev
         req,
       } = context;
 
-      const { limit, offset, sort, direction, ...filtersParams } = req.query();
+      const { limit, offset, sort, direction, count, ...filtersParams } = req.query();
 
       const parsedQuery = CommonSchema.Query.ListQuerySchema.safeParse({
         limit,
         offset,
         sort,
         direction,
+        count,
       });
 
       if (!parsedQuery.success) {

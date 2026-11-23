@@ -48,7 +48,7 @@ export class OrganizationConversationsHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, Conversation>({
-    query: async ({ db, userId, context, pagination, sort }) => {
+    query: async ({ db, userId, context, pagination, sort, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -64,11 +64,12 @@ export class OrganizationConversationsHandlers extends Resource {
         foreignKeyId: parentId,
       });
 
-      return await store.list({ pagination, sort });
+      return await store.list({ pagination, sort, count });
     },
     resourceKey: "conversations",
-    build: ({ result: { data: conversations } }) => ({
+    build: ({ result: { data: conversations, pagination } }) => ({
       data: conversations.map(encodeAuditFieldsResponse),
+      pagination,
     }),
   });
 }

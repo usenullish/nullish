@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { RecordsSchema } from "../../records";
 import { withAuditFieldsCodecs } from "./_audit";
 
@@ -8,6 +9,7 @@ export const MigrationSchema = withAuditFieldsCodecs(
 
 export const GetMigrationsResponseSchema = z.strictObject({
   data: z.array(MigrationSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetMigrationResponseSchema = z.strictObject({
   migration: MigrationSchema.nullish(),

@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { BigIntCodec, DateCodec } from "@usenullish/nullish-common";
 import { CompositesSchema } from "../../composites";
 import { BankRelationsResponseSchema } from "./bank-relations";
@@ -19,4 +20,5 @@ export const BankRelationSummarySchema = z.strictObject({
 
 export const GetBankRelationSummariesResponseSchema = z.strictObject({
   data: z.array(BankRelationSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });

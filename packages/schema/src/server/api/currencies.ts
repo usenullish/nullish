@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 
 export const CurrencySchema = withAuditFieldsCodecs(
@@ -8,6 +9,7 @@ export const CurrencySchema = withAuditFieldsCodecs(
 
 export const GetCurrenciesResponseSchema = z.strictObject({
   data: z.array(CurrencySchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetCurrencyResponseSchema = z.strictObject({
   currency: CurrencySchema.nullish(),

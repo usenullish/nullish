@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { DateStringCodec } from "@usenullish/nullish-common";
 import { ServicesSchema } from "../../services";
 import { withAuditFieldsCodecs } from "./_audit";
@@ -26,6 +27,7 @@ export const UploadDatasetRequestSchema = z.discriminatedUnion("type", [
 
 export const GetDatasetsResponseSchema = z.strictObject({
   data: z.array(DatasetSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 
 export const UploadDatasetResponseSchema = z.strictObject({

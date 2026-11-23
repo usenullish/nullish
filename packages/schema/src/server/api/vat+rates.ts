@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 import { DateCodec, DateStringCodec } from "@usenullish/nullish-common";
 
@@ -21,6 +22,7 @@ export const VatRatesResponseSchema = withStartEndCodecs(
 
 export const GetVatRatesResponseSchema = z.strictObject({
   data: z.array(VatRatesResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetVatRateResponseSchema = z.strictObject({
   rate: VatRatesResponseSchema.nullish(),

@@ -90,7 +90,10 @@ export class CurrenciesHandlers extends Resource {
       }
 
       const build = (): Response200<ListRoute> => {
-        return { data: result.result.data.map(encodeAuditFieldsResponse) };
+        return {
+          data: result.result.data.map(encodeAuditFieldsResponse),
+          pagination: result.result.pagination,
+        };
       };
 
       return context.json(build(), 200);

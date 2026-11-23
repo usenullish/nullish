@@ -125,8 +125,9 @@ export class ContactsHandlers extends CrudResource<{
       store: (args) => DbCollectionContacts.create(args),
       resourceKey: "contacts",
       filtersSchema: ApiSchema.Contacts.GetContactsFiltersQuerySchema,
-      build: ({ result: { data: contacts } }) => ({
+      build: ({ result: { data: contacts, pagination } }) => ({
         data: contacts.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

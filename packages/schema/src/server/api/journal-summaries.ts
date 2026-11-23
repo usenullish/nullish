@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { CompositesSchema } from "../../composites";
 import {
   GetJournalEntriesFiltersQuerySchema,
@@ -16,6 +17,7 @@ export const JournalSummarySchema = z.strictObject({
 
 export const GetJournalSummariesResponseSchema = z.strictObject({
   data: z.array(JournalSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetJournalSummaryResponseSchema = z.strictObject({
   journalSummary: JournalSummarySchema.nullish(),

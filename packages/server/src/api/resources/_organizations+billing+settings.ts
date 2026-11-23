@@ -119,8 +119,9 @@ export class BillingSettingsHandlers extends RouteResource<{
     handler: defineChildListHandler<ListRoute, Records["Core"]["BillingSettings"]["Select"]>({
       store: (args) => DbCollectionBillingSettings.create(args),
       resourceKey: "billing+settings",
-      build: ({ result: { data: settings } }) => ({
+      build: ({ result: { data: settings, pagination } }) => ({
         data: settings.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

@@ -122,8 +122,9 @@ export class AccountingSettingsHandlers extends RouteResource<{
     handler: defineChildListHandler<ListRoute, Records["Core"]["AccountingSettings"]["Select"]>({
       store: (args) => DbCollectionAccountingSettings.create(args),
       resourceKey: "accounting+settings",
-      build: ({ result: { data: settings } }) => ({
+      build: ({ result: { data: settings, pagination } }) => ({
         data: settings.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };
