@@ -128,7 +128,7 @@ describe("messages", () => {
         return;
       }
 
-      expect(result.result.map(({ content }) => content)).toEqual(["One", "Two", "Three"]);
+      expect(result.result.data.map(({ content }) => content)).toEqual(["One", "Two", "Three"]);
     });
 
     test("returns nothing for a conversation of another user", async () => {
@@ -143,7 +143,7 @@ describe("messages", () => {
         sort: { field: "position", direction: "asc" },
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns at most limit messages", async () => {
@@ -163,7 +163,7 @@ describe("messages", () => {
         return;
       }
 
-      expect(result.result.map(({ content }) => content)).toEqual(["One"]);
+      expect(result.result.data.map(({ content }) => content)).toEqual(["One"]);
     });
   });
 
@@ -197,7 +197,7 @@ describe("messages", () => {
         return;
       }
 
-      expect(result.result.map(({ content }) => content)).toEqual(["Two", "One"]);
+      expect(result.result.data.map(({ content }) => content)).toEqual(["Two", "One"]);
     });
 
     test("returns no message before the first position", async () => {
@@ -212,7 +212,7 @@ describe("messages", () => {
         filters: { positionBefore: 0 },
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns only the messages with text", async () => {
@@ -249,7 +249,7 @@ describe("messages", () => {
         return;
       }
 
-      expect(result.result.map(({ content }) => content)).toEqual(["Question", "Answer"]);
+      expect(result.result.data.map(({ content }) => content)).toEqual(["Question", "Answer"]);
     });
 
     test("returns every message of the conversation when no filter is set", async () => {
@@ -269,7 +269,7 @@ describe("messages", () => {
         return;
       }
 
-      expect(result.result.map(({ content }) => content)).toEqual(["Zero", "One"]);
+      expect(result.result.data.map(({ content }) => content)).toEqual(["Zero", "One"]);
     });
   });
 });

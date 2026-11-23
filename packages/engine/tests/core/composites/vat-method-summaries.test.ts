@@ -80,9 +80,9 @@ describe("DbCollectionVatMethodSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result).toHaveLength(3);
+    expect(result.result.data).toHaveLength(3);
 
-    for (const { vatMethod, period } of result.result) {
+    for (const { vatMethod, period } of result.result.data) {
       expect(period.id).toBe(vatMethod.periodId);
     }
   });
@@ -94,7 +94,7 @@ describe("DbCollectionVatMethodSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([
+    expect(result.result.data.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([
       2025, 2024, 2023,
     ]);
   });
@@ -106,7 +106,7 @@ describe("DbCollectionVatMethodSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([
+    expect(result.result.data.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([
       2023, 2024, 2025,
     ]);
   });
@@ -118,7 +118,7 @@ describe("DbCollectionVatMethodSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([2024]);
+    expect(result.result.data.map(({ period }) => period.startOn.getUTCFullYear())).toEqual([2024]);
   });
 
   test("returns an error Result for a field that is not a column of the period", async () => {
@@ -134,6 +134,6 @@ describe("DbCollectionVatMethodSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result).toEqual([]);
+    expect(result.result.data).toEqual([]);
   });
 });

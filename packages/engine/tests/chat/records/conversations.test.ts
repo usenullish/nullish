@@ -142,8 +142,8 @@ describe("conversations", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(0);
-      expect(result.result.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
+      expect(result.result.data.length).toBeGreaterThan(0);
+      expect(result.result.data.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
     });
   });
 
@@ -173,11 +173,11 @@ describe("conversations", () => {
         return;
       }
 
-      const ids = result.result.map(({ id }) => id);
+      const ids = result.result.data.map(({ id }) => id);
 
       expect(ids).toContain(unscoped.result.id);
       expect(ids).not.toContain(inOrganization.result.id);
-      expect(result.result.every(({ organizationId }) => organizationId === null)).toBeTrue();
+      expect(result.result.data.every(({ organizationId }) => organizationId === null)).toBeTrue();
     });
   });
 
@@ -219,7 +219,7 @@ describe("conversations", () => {
         return;
       }
 
-      expect(result.result.map(({ id }) => id)).toEqual([inOrganization.result.id]);
+      expect(result.result.data.map(({ id }) => id)).toEqual([inOrganization.result.id]);
     });
   });
 
@@ -385,7 +385,7 @@ describe("conversations", () => {
         return;
       }
 
-      const ids = result.result.map(({ id }) => id);
+      const ids = result.result.data.map(({ id }) => id);
 
       expect(ids).not.toContain(conversationId);
       expect(ids).toContain(unscopedConversationId);
@@ -401,7 +401,7 @@ describe("conversations", () => {
         sort: { field: "position", direction: "asc" },
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
   });
 });
