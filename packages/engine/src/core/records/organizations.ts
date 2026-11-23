@@ -1,7 +1,13 @@
 import { notEmptyString, type Option, type Result } from "@usenullish/nullish-common";
 import { type Db, DbSchema } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import type { DbCollectionStore, DbStore, DbStoreInitArgs, DbListArgs } from "../../store";
+import type {
+  DbCollectionStore,
+  DbStore,
+  DbStoreInitArgs,
+  DbListArgs,
+  DbListResult,
+} from "../../store";
 import { DbRecordsById } from "../../_records/records-by-id";
 import type { DbRecordsSortField } from "../../_records/records";
 import { and, or } from "drizzle-orm";
@@ -48,7 +54,7 @@ export class DbOrganizations
     filters,
     ...args
   }: DbListArgs<OrganizationsSortField, FilterOrganizations>): Promise<
-    Result<SelectOrganizations[]>
+    Result<DbListResult<SelectOrganizations>>
   > {
     return this._query({
       schema: RecordsSchema.Core.OrganizationsSchema.SelectOrganizationsSchema,

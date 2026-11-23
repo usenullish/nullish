@@ -1,7 +1,7 @@
 import { type Option, type Result } from "@usenullish/nullish-common";
 import { type Db, DbSchema } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import type { DbCollectionStore, DbStore, DbStoreInitArgs } from "../../store";
+import type { DbCollectionStore, DbListResult, DbStore, DbStoreInitArgs } from "../../store";
 import { DbRecordsById } from "../../_records/records-by-id";
 import type { DbRecordsSortField } from "../../_records/records";
 import type { QueryArgs } from "@usenullish/nullish-schema/db";
@@ -36,7 +36,7 @@ export class DbMemberships
     });
   }
 
-  list(args: QueryArgs<MembershipsSortField>): Promise<Result<SelectMemberships[]>> {
+  list(args: QueryArgs<MembershipsSortField>): Promise<Result<DbListResult<SelectMemberships>>> {
     return this._query({
       schema: RecordsSchema.Core.MembershipsSchema.SelectMembershipsSchema,
       ...args,

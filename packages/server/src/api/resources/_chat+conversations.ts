@@ -68,7 +68,7 @@ export class ConversationsHandlers extends Resource {
   >({
     store: (args) => DbConversations.create(args),
     resourceKey: "conversations",
-    build: ({ result: conversations }) => ({
+    build: ({ result: { data: conversations } }) => ({
       conversations: conversations.map(encodeAuditFieldsResponse),
     }),
   });

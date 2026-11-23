@@ -58,7 +58,7 @@ export class VatMethodSummariesHandlers extends Resource {
       }).list({ pagination, sort });
     },
     resourceKey: "vatMethodSummaries",
-    build: ({ result: vatMethodSummaries }) => ({
+    build: ({ result: { data: vatMethodSummaries } }) => ({
       vatMethodSummaries: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
     }),
   });

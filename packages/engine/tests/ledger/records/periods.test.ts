@@ -201,8 +201,8 @@ describe("periods", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(periodId);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(periodId);
     });
   });
 
@@ -297,7 +297,7 @@ describe("periods", () => {
         return;
       }
 
-      expect(result.result.map(({ id }) => id)).toEqual(expected());
+      expect(result.result.data.map(({ id }) => id)).toEqual(expected());
     });
 
     test("returns a ZodError Result for an unknown status", async () => {

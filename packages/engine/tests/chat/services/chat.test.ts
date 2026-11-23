@@ -68,7 +68,7 @@ const listMessages = async ({
     throw listed.err;
   }
 
-  return listed.result;
+  return listed.result.data;
 };
 
 describe("ChatService", () => {

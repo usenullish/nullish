@@ -85,7 +85,7 @@ describe("organization-members", () => {
         return;
       }
 
-      expect(result.result.map(({ userId, role }) => ({ userId, role }))).toEqual([
+      expect(result.result.data.map(({ userId, role }) => ({ userId, role }))).toEqual([
         { userId: TEST_USER_ID, role: MembershipRole.ADMIN },
         { userId: TEST_OTHER_USER_ID, role: MembershipRole.ACCOUNTANT },
       ]);
@@ -99,7 +99,7 @@ describe("organization-members", () => {
         return;
       }
 
-      const member = result.result.find(({ userId }) => userId === TEST_OTHER_USER_ID);
+      const member = result.result.data.find(({ userId }) => userId === TEST_OTHER_USER_ID);
 
       expect(member?.name).toBe(TEST_OTHER_USER_ID);
       expect(member?.email).toBe(`${TEST_OTHER_USER_ID}@test.dev`);
@@ -109,19 +109,19 @@ describe("organization-members", () => {
     test("returns no member to a member who is not an admin", async () => {
       const result = await list({ userId: TEST_OTHER_USER_ID, organizationId });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns no member to an admin of another organization", async () => {
       const result = await list({ userId: TEST_OUTSIDER_ID, organizationId });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns no member of an organization the user does not own", async () => {
       const result = await list({ userId: TEST_USER_ID, organizationId: otherOrganizationId });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns at most limit members", async () => {
@@ -132,7 +132,7 @@ describe("organization-members", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
+      expect(result.result.data).toHaveLength(1);
     });
 
     test("sorts the members by a column of the view", async () => {
@@ -149,10 +149,10 @@ describe("organization-members", () => {
         return;
       }
 
-      const emails = asc.result.map(({ email }) => email);
+      const emails = asc.result.data.map(({ email }) => email);
 
       expect(emails).toEqual([...emails].sort());
-      expect(desc.result.map(({ email }) => email)).toEqual([...emails].reverse());
+      expect(desc.result.data.map(({ email }) => email)).toEqual([...emails].reverse());
     });
 
     test("returns an error Result for an unknown sort field", async () => {

@@ -70,8 +70,8 @@ describe("memberships", () => {
         return;
       }
 
-      expect(result.result.map(({ organizationId }) => organizationId)).toEqual([orgId]);
-      expect(result.result.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
+      expect(result.result.data.map(({ organizationId }) => organizationId)).toEqual([orgId]);
+      expect(result.result.data.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
     });
 
     test("returns at most limit memberships", async () => {
@@ -85,7 +85,7 @@ describe("memberships", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
+      expect(result.result.data).toHaveLength(1);
     });
   });
 
@@ -102,7 +102,9 @@ describe("memberships", () => {
         return;
       }
 
-      expect(all.result.map(({ id }) => id).sort()).toEqual(page.result.map(({ id }) => id).sort());
+      expect(all.result.map(({ id }) => id).sort()).toEqual(
+        page.result.data.map(({ id }) => id).sort(),
+      );
     });
 
     test("returns an error Result when the transaction cannot be opened", async () => {

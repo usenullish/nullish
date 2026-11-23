@@ -7,6 +7,7 @@ import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStore,
   DbStoreInitArgs,
 } from "../../store";
@@ -58,7 +59,9 @@ export class DbConversations
     });
   }
 
-  list(args: DbListArgs<ConversationsSortField>): Promise<Result<SelectConversations[]>> {
+  list(
+    args: DbListArgs<ConversationsSortField>,
+  ): Promise<Result<DbListResult<SelectConversations>>> {
     return this._query({
       schema: RecordsSchema.Chat.ConversationsSchema.SelectConversationsSchema,
       ...args,
@@ -114,7 +117,9 @@ export class DbCollectionConversations extends DbCollectionRecordsById<
     return new this(args);
   }
 
-  list(args: DbListArgs<ConversationsSortField>): Promise<Result<SelectConversations[]>> {
+  list(
+    args: DbListArgs<ConversationsSortField>,
+  ): Promise<Result<DbListResult<SelectConversations>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Chat.ConversationsSchema.SelectConversationsSchema,
       ...args,

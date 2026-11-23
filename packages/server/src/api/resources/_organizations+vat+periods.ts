@@ -113,7 +113,7 @@ export class VatPeriodsHandlers extends RouteResource<{
       store: (args) => DbCollectionVatPeriods.create(args),
       resourceKey: "vat+periods",
       filtersSchema: ApiSchema.VatPeriods.GetVatPeriodsFiltersQuerySchema,
-      build: ({ result: periods }) => ({
+      build: ({ result: { data: periods } }) => ({
         periods: periods.map(this.#encodeResponse),
       }),
     }),

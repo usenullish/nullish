@@ -102,7 +102,7 @@ describe("datasets", () => {
         return;
       }
 
-      expect(result.result.map(({ id }) => id)).toEqual([dataset.id]);
+      expect(result.result.data.map(({ id }) => id)).toEqual([dataset.id]);
     });
 
     test("lists no dataset to a user outside the organization", async () => {
@@ -111,7 +111,7 @@ describe("datasets", () => {
 
       const result = await collection({ migrationId, userId: TEST_OTHER_USER_ID }).list(LIST_ARGS);
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
   });
 

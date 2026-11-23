@@ -132,8 +132,8 @@ describe("lines", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(lineId);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(lineId);
     });
   });
 
@@ -217,7 +217,7 @@ describe("lines", () => {
         return;
       }
 
-      expect(result.result.map((line) => line.description)).toEqual(
+      expect(result.result.data.map((line) => line.description)).toEqual(
         expect.arrayContaining(["Parent line", "Reachable line"]),
       );
     });
@@ -267,7 +267,7 @@ describe("lines", () => {
         return;
       }
 
-      expect(result.result.map(({ id }) => id)).toEqual(expected());
+      expect(result.result.data.map(({ id }) => id)).toEqual(expected());
     });
   });
 

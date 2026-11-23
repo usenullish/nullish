@@ -42,7 +42,7 @@ export class McpToolsBankRelationSummaries extends McpTools {
           foreignKeyId: organizationId,
         }).list(query);
 
-        return this.mapResult(result, (bankRelationSummaries) => ({
+        return this.mapResult(result, ({ data: bankRelationSummaries }) => ({
           bankRelationSummaries: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
         }));
       },

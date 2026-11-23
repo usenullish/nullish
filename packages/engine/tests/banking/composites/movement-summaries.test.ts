@@ -106,7 +106,7 @@ describe("DbCollectionMovementSummaries", () => {
     if (result.status !== "success") return new Map();
 
     return new Map(
-      result.result.map(({ movement, suggestedInvoice }) => [
+      result.result.data.map(({ movement, suggestedInvoice }) => [
         movement.id,
         suggestedInvoice?.invoice.id ?? null,
       ]),
@@ -159,7 +159,7 @@ describe("DbCollectionMovementSummaries", () => {
 
     expect(result.status).toBe("success");
     if (result.status !== "success") return;
-    const summary = result.result.find(({ movement }) => movement.id === movementId);
+    const summary = result.result.data.find(({ movement }) => movement.id === movementId);
     expect(summary?.suggestedInvoice?.amounts.balance.remaining).toBe(1000n);
   });
 
@@ -234,9 +234,9 @@ describe("DbCollectionMovementSummaries", () => {
 
     expect(result.status).toBe("success");
     if (result.status !== "success") return;
-    expect(result.result.map(({ movement }) => movement.id)).toContain(ignoredId);
+    expect(result.result.data.map(({ movement }) => movement.id)).toContain(ignoredId);
     expect(
-      result.result.every(({ movement }) => movement.status === BankMovementStatus.IGNORED),
+      result.result.data.every(({ movement }) => movement.status === BankMovementStatus.IGNORED),
     ).toBeTrue();
   });
 });

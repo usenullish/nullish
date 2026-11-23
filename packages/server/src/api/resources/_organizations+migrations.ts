@@ -104,7 +104,7 @@ export class MigrationsHandlers extends Resource {
   readonly #list = defineChildListHandler<ListRoute, Migration>({
     store: (args) => DbCollectionMigrations.create(args),
     resourceKey: "migrations",
-    build: ({ result: migrations }) => ({
+    build: ({ result: { data: migrations } }) => ({
       migrations: migrations.map(encodeAuditFieldsResponse),
     }),
   });

@@ -42,7 +42,7 @@ export class McpToolsOrganizationMembers extends McpTools {
           foreignKeyId: organizationId,
         }).list(query);
 
-        return this.mapResult(result, (members) => ({
+        return this.mapResult(result, ({ data: members }) => ({
           members: members.map(encodeAuditFieldsResponse),
         }));
       },

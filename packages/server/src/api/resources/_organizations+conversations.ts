@@ -67,7 +67,7 @@ export class OrganizationConversationsHandlers extends Resource {
       return await store.list({ pagination, sort });
     },
     resourceKey: "conversations",
-    build: ({ result: conversations }) => ({
+    build: ({ result: { data: conversations } }) => ({
       conversations: conversations.map(encodeAuditFieldsResponse),
     }),
   });

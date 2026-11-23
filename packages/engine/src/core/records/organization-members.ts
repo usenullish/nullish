@@ -4,7 +4,7 @@ import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbView, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type Views, ViewsSchema } from "@usenullish/nullish-schema/views";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { parseQueryArgs } from "../../_query/helpers";
 
 type OrganizationMember = Views["Core"]["OrganizationMembers"]["Select"];
@@ -31,7 +31,10 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
     return new this(args);
   }
 
-  list({ pagination, sort }: DbListArgs<string>): Promise<Result<OrganizationMember[]>> {
+  list({
+    pagination,
+    sort,
+  }: DbListArgs<string>): Promise<Result<DbListResult<OrganizationMember>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -41,13 +44,15 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
       });
 
       return await this._withAuth(async (tx) => {
-        return await selectMany({
+        const data = await selectMany({
           tx,
           table: view,
           schema: ViewsSchema.Core.OrganizationMembersView.SelectOrganizationMembersView,
           where: eq(view.organizationId, this.#organizationId),
           ...queryArgs,
         });
+
+        return { data };
       });
     });
   }

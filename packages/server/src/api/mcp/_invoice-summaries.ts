@@ -46,7 +46,7 @@ export class McpToolsInvoiceSummaries extends McpTools {
           foreignKeyId: organizationId,
         }).list({ ...query, filters });
 
-        return this.mapResult(result, (invoiceSummaries) => ({
+        return this.mapResult(result, ({ data: invoiceSummaries }) => ({
           invoiceSummaries: invoiceSummaries.map(encodeInvoiceSummaryResponse),
         }));
       },

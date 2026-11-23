@@ -50,7 +50,7 @@ export class MessagesHandlers extends Resource {
     store: (args) => DbCollectionMessages.create(args),
     resourceKey: "messages",
     filtersSchema: ApiSchema.Messages.GetMessagesFiltersQuerySchema,
-    build: ({ result: messages }) =>
+    build: ({ result: { data: messages } }) =>
       encodeWithCodecs({
         schema: ApiSchema.Messages.GetMessagesResponseSchema,
         value: { messages },

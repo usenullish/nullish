@@ -62,7 +62,7 @@ export class McpToolsBankMovements extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, (bankMovements) => ({
+        return this.mapResult(result, ({ data: bankMovements }) => ({
           bankMovements: bankMovements.map(encodeBankMovementResponse),
         }));
       },
@@ -110,7 +110,7 @@ export class McpToolsBankMovements extends McpTools {
           foreignKeyId: bankRelationId,
         }).list({ ...query, filters });
 
-        return this.mapResult(result, (bankMovementSummaries) => ({
+        return this.mapResult(result, ({ data: bankMovementSummaries }) => ({
           bankMovementSummaries: bankMovementSummaries.map(encodeBankMovementSummaryResponse),
         }));
       },

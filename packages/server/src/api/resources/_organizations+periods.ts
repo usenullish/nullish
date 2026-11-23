@@ -113,7 +113,7 @@ export class PeriodsHandlers extends RouteResource<{
       store: (args) => DbCollectionPeriods.create(args),
       resourceKey: "periods",
       filtersSchema: ApiSchema.Periods.GetPeriodsFiltersQuerySchema,
-      build: ({ result: periods }) => ({
+      build: ({ result: { data: periods } }) => ({
         periods: periods.map(this.#encodeResponse),
       }),
     }),

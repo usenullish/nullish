@@ -125,7 +125,7 @@ export class AccountsHandlers extends CrudResource<{
       store: (args) => DbCollectionAccounts.create(args),
       resourceKey: "accounts",
       filtersSchema: ApiSchema.Accounts.GetAccountsFiltersQuerySchema,
-      build: ({ result: accounts }) => ({
+      build: ({ result: { data: accounts } }) => ({
         accounts: accounts.map(encodeAuditFieldsResponse),
       }),
     }),

@@ -150,7 +150,9 @@ export class ChatService {
       return historyResult;
     }
 
-    const { result: history } = historyResult;
+    const {
+      result: { data: history },
+    } = historyResult;
 
     return await this.#buildInitializedConversation({
       conversation,

@@ -7,6 +7,7 @@ import type {
   DbCollectionStore,
   DbStore,
   DbListArgs,
+  DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
 import { DbRecordsById } from "../../_records/records-by-id";
@@ -91,7 +92,7 @@ export class DbCollectionSystemAccounts
     filters,
     ...args
   }: DbListArgs<SystemAccountsSortField, FilterSystemAccounts>): Promise<
-    Result<SelectSystemAccounts[]>
+    Result<DbListResult<SelectSystemAccounts>>
   > {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Ledger.SystemAccountsSchema.SelectSystemAccountsSchema,

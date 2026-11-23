@@ -53,7 +53,7 @@ describe("organizations", () => {
         return;
       }
 
-      expect(result.result.some((organization) => organization.id === orgId)).toBeTrue();
+      expect(result.result.data.some((organization) => organization.id === orgId)).toBeTrue();
     });
 
     test("excludes an organization the caller is not a member of", async () => {
@@ -67,7 +67,7 @@ describe("organizations", () => {
         return;
       }
 
-      expect(result.result.every((organization) => organization.id !== otherOrgId)).toBeTrue();
+      expect(result.result.data.every((organization) => organization.id !== otherOrgId)).toBeTrue();
     });
   });
 
@@ -286,7 +286,7 @@ describe("organizations", () => {
         return;
       }
 
-      expect(result.result.map(({ name }) => name)).toEqual(["Acme Filters AG"]);
+      expect(result.result.data.map(({ name }) => name)).toEqual(["Acme Filters AG"]);
     });
 
     test.each([
@@ -304,7 +304,7 @@ describe("organizations", () => {
           return;
         }
 
-        expect(result.result.map(({ name }) => name)).toEqual(expected);
+        expect(result.result.data.map(({ name }) => name)).toEqual(expected);
       },
     );
 
@@ -316,8 +316,8 @@ describe("organizations", () => {
         return;
       }
 
-      expect(result.result.map(({ name }) => name)).toContain("Beta Filters GmbH");
-      expect(result.result.map(({ name }) => name)).not.toContain("Acme Filters Intruder");
+      expect(result.result.data.map(({ name }) => name)).toContain("Beta Filters GmbH");
+      expect(result.result.data.map(({ name }) => name)).not.toContain("Acme Filters Intruder");
     });
   });
 });

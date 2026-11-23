@@ -4,7 +4,7 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { parseQueryArgs } from "../../_query/helpers";
 import { listSubscriptionSummaries } from "../_helpers/subscription-summaries";
 
@@ -32,7 +32,10 @@ export class DbCollectionSubscriptionSummaries extends DbUserContext {
     return new this(args);
   }
 
-  list({ pagination, sort }: DbListArgs<string>): Promise<Result<SubscriptionSummary[]>> {
+  list({
+    pagination,
+    sort,
+  }: DbListArgs<string>): Promise<Result<DbListResult<SubscriptionSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -41,14 +44,15 @@ export class DbCollectionSubscriptionSummaries extends DbUserContext {
         pKey: subscriptions.id,
       });
 
-      return await this._withAuth<SubscriptionSummary[]>(
-        async (tx) =>
-          await listSubscriptionSummaries({
-            tx,
-            organizationId: this.#organizationId,
-            ...queryArgs,
-          }),
-      );
+      return await this._withAuth<DbListResult<SubscriptionSummary>>(async (tx) => {
+        const data = await listSubscriptionSummaries({
+          tx,
+          organizationId: this.#organizationId,
+          ...queryArgs,
+        });
+
+        return { data };
+      });
     });
   }
 }

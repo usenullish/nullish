@@ -42,7 +42,7 @@ const organizationStatusOf = async (organizationId: string) => {
     throw result.err;
   }
 
-  return result.result[0]?.organization.status;
+  return result.result.data[0]?.organization.status;
 };
 
 const updateSubscription = ({
@@ -74,8 +74,8 @@ describe("DbCollectionSubscriptionSummaries", () => {
       return;
     }
 
-    expect(result.result).toHaveLength(1);
-    expect(result.result[0]?.subscription.organizationId).toBe(organizationId);
+    expect(result.result.data).toHaveLength(1);
+    expect(result.result.data[0]?.subscription.organizationId).toBe(organizationId);
   });
 
   test("is open with an active subscription", async () => {
@@ -172,7 +172,7 @@ describe("DbCollectionSubscriptionSummaries", () => {
         throw result.err;
       }
 
-      return result.result[0]?.organization;
+      return result.result.data[0]?.organization;
     };
 
     test("is empty for an open organization without end", async () => {
@@ -234,6 +234,9 @@ describe("DbCollectionSubscriptionSummaries", () => {
   test("returns nothing for an organization the user is not a member of", async () => {
     const organizationId = await createOrganization(db, TEST_OTHER_USER_ID);
 
-    expect(await listSummaries(organizationId)).toEqual({ status: "success", result: [] });
+    expect(await listSummaries(organizationId)).toEqual({
+      status: "success",
+      result: { data: [] },
+    });
   });
 });

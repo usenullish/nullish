@@ -179,9 +179,9 @@ describe("vat-rates", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(rateId);
-      expect(result.result[0]?.organizationId).toBe(orgId);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(rateId);
+      expect(result.result.data[0]?.organizationId).toBe(orgId);
     });
   });
 
@@ -268,7 +268,7 @@ describe("vat-rates", () => {
         return;
       }
 
-      expect(codesOf(result.result)).toEqual(["NON-TAXABLE"]);
+      expect(codesOf(result.result.data)).toEqual(["NON-TAXABLE"]);
     });
 
     test.each([
@@ -285,7 +285,7 @@ describe("vat-rates", () => {
         return;
       }
 
-      expect(codesOf(result.result)).toEqual(expected);
+      expect(codesOf(result.result.data)).toEqual(expected);
     });
 
     test("combines the type and the validity", async () => {
@@ -296,7 +296,7 @@ describe("vat-rates", () => {
         return;
       }
 
-      expect(codesOf(result.result)).toEqual(["SECOND-HALF"]);
+      expect(codesOf(result.result.data)).toEqual(["SECOND-HALF"]);
     });
   });
 });

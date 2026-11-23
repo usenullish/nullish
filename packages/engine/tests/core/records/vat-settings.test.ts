@@ -187,9 +187,9 @@ describe("vat-settings", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(vatSettingsId);
-      expect(result.result[0]?.organizationId).toBe(orgId);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(vatSettingsId);
+      expect(result.result.data[0]?.organizationId).toBe(orgId);
     });
   });
 

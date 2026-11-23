@@ -160,9 +160,9 @@ describe("template-contents", () => {
         return;
       }
 
-      expect(result.result.some((row) => row.id === contentId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== siblingContentId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== otherContentId)).toBeTrue();
+      expect(result.result.data.some((row) => row.id === contentId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== siblingContentId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== otherContentId)).toBeTrue();
     });
   });
 
@@ -222,7 +222,7 @@ describe("template-contents", () => {
         return;
       }
 
-      expect(result.result.map(({ language }) => language)).toEqual(["it"]);
+      expect(result.result.data.map(({ language }) => language)).toEqual(["it"]);
     });
   });
 

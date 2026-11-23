@@ -170,10 +170,10 @@ describe("clients", () => {
         return;
       }
 
-      expect(result.result.some((row) => row.id === clientId)).toBeTrue();
-      expect(result.result.every((row) => row.organizationId === orgId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== siblingClientId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== otherClientId)).toBeTrue();
+      expect(result.result.data.some((row) => row.id === clientId)).toBeTrue();
+      expect(result.result.data.every((row) => row.organizationId === orgId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== siblingClientId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== otherClientId)).toBeTrue();
     });
   });
 
@@ -271,7 +271,7 @@ describe("clients", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["Jane Doe"]);
+      expect(namesOf(result.result.data)).toEqual(["Jane Doe"]);
     });
 
     test.each([
@@ -288,7 +288,7 @@ describe("clients", () => {
           return;
         }
 
-        expect(namesOf(result.result)).toEqual(expected);
+        expect(namesOf(result.result.data)).toEqual(expected);
       },
     );
 
@@ -300,7 +300,7 @@ describe("clients", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["Acme SA"]);
+      expect(namesOf(result.result.data)).toEqual(["Acme SA"]);
     });
   });
 

@@ -81,7 +81,7 @@ describe("invitations", () => {
         return;
       }
 
-      expect(result.result.map(({ id, email }) => ({ id, email }))).toEqual([
+      expect(result.result.data.map(({ id, email }) => ({ id, email }))).toEqual([
         { id: invitationId, email: "invited@test.dev" },
       ]);
     });
@@ -98,7 +98,7 @@ describe("invitations", () => {
         return;
       }
 
-      expect(result.result[0]).not.toHaveProperty("tokenHash");
+      expect(result.result.data[0]).not.toHaveProperty("tokenHash");
     });
 
     test("returns no invitation to a member who is not an admin", async () => {
@@ -116,7 +116,7 @@ describe("invitations", () => {
         foreignKeyId: memberOrgId,
       }).list(LIST_ARGS);
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns no invitation to a user outside the organization", async () => {
@@ -126,7 +126,7 @@ describe("invitations", () => {
         foreignKeyId: organizationId,
       }).list(LIST_ARGS);
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
   });
 

@@ -44,8 +44,8 @@ describe("llm-usages", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(0);
-      expect(result.result.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
+      expect(result.result.data.length).toBeGreaterThan(0);
+      expect(result.result.data.every(({ userId }) => userId === TEST_USER_ID)).toBeTrue();
     });
 
     test("returns at most limit usages", async () => {
@@ -59,7 +59,7 @@ describe("llm-usages", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
+      expect(result.result.data).toHaveLength(1);
     });
   });
 });

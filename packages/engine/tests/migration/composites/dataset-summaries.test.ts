@@ -79,8 +79,8 @@ describe("DbCollectionDatasetSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result.map(({ dataset }) => dataset.name)).toEqual(["journal-2021.csv"]);
-    expect(result.result[0]?.migration.status).toBe(MigrationStatus.SUCCEEDED);
+    expect(result.result.data.map(({ dataset }) => dataset.name)).toEqual(["journal-2021.csv"]);
+    expect(result.result.data[0]?.migration.status).toBe(MigrationStatus.SUCCEEDED);
   });
 
   test("returns an error Result for a field that is not a column of the dataset", async () => {
@@ -96,6 +96,6 @@ describe("DbCollectionDatasetSummaries", () => {
       throw result.err;
     }
 
-    expect(result.result).toEqual([]);
+    expect(result.result.data).toEqual([]);
   });
 });

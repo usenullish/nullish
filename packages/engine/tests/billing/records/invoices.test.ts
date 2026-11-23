@@ -234,10 +234,10 @@ describe("invoices", () => {
         return;
       }
 
-      expect(result.result.some((row) => row.id === invoiceId)).toBeTrue();
-      expect(result.result.every((row) => row.organizationId === orgId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== siblingInvoiceId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== otherInvoiceId)).toBeTrue();
+      expect(result.result.data.some((row) => row.id === invoiceId)).toBeTrue();
+      expect(result.result.data.every((row) => row.organizationId === orgId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== siblingInvoiceId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== otherInvoiceId)).toBeTrue();
     });
   });
 
@@ -324,7 +324,7 @@ describe("invoices", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([marchInvoiceId]);
+      expect(idsOf(result.result.data)).toEqual([marchInvoiceId]);
     });
 
     test("returns only the invoices of the client", async () => {
@@ -335,7 +335,7 @@ describe("invoices", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([januaryInvoiceId, juneInvoiceId]);
+      expect(idsOf(result.result.data)).toEqual([januaryInvoiceId, juneInvoiceId]);
     });
 
     test("returns the invoices issued within the inclusive date bounds", async () => {
@@ -349,7 +349,7 @@ describe("invoices", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([marchInvoiceId, juneInvoiceId]);
+      expect(idsOf(result.result.data)).toEqual([marchInvoiceId, juneInvoiceId]);
     });
 
     test("combines the filters", async () => {
@@ -364,7 +364,7 @@ describe("invoices", () => {
         return;
       }
 
-      expect(idsOf(result.result)).toEqual([juneInvoiceId]);
+      expect(idsOf(result.result.data)).toEqual([juneInvoiceId]);
     });
   });
 

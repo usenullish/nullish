@@ -6,6 +6,7 @@ import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStore,
   DbStoreInitArgs,
 } from "../../store";
@@ -97,7 +98,7 @@ export class DbCollectionAccounts
   list({
     filters,
     ...args
-  }: DbListArgs<AccountsSortField, FilterAccounts>): Promise<Result<SelectAccounts[]>> {
+  }: DbListArgs<AccountsSortField, FilterAccounts>): Promise<Result<DbListResult<SelectAccounts>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Ledger.AccountsSchema.SelectAccountsSchema,
       ...args,

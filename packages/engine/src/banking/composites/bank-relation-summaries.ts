@@ -4,7 +4,7 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { listBankRelations } from "../../core/_helpers/bank-relations";
 import { countUnreconciledMovements } from "../_helpers/movements";
 import { listLatestClosingBalances } from "../_helpers/statements";
@@ -32,7 +32,10 @@ export class DbCollectionBankRelationSummaries extends DbUserContext {
     return new this(args);
   }
 
-  list({ pagination, sort }: DbListArgs<string>): Promise<Result<BankRelationSummary[]>> {
+  list({
+    pagination,
+    sort,
+  }: DbListArgs<string>): Promise<Result<DbListResult<BankRelationSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -41,7 +44,7 @@ export class DbCollectionBankRelationSummaries extends DbUserContext {
         pKey: DbSchema.Core.Bank.BankRelationsSchema.id,
       });
 
-      return await this._withAuth<BankRelationSummary[]>(async (tx) => {
+      return await this._withAuth<DbListResult<BankRelationSummary>>(async (tx) => {
         const bankRelations = await listBankRelations({
           tx,
           organizationId: this.#organizationId,
@@ -51,19 +54,21 @@ export class DbCollectionBankRelationSummaries extends DbUserContext {
         const bankRelationIds = bankRelations.map(({ id }) => id);
 
         if (!isArrayAtLeastOne(bankRelationIds)) {
-          return [];
+          return { data: [] };
         }
 
         const unreconciled = await countUnreconciledMovements({ tx, bankRelationIds });
         const balances = await listLatestClosingBalances({ tx, bankRelationIds });
 
-        return bankRelations.map((bankRelation) =>
+        const data = bankRelations.map((bankRelation) =>
           CompositesSchema.BankRelationSummariesSchema.SelectBankRelationSummariesSchema.parse({
             bankRelation,
             movements: { unreconciled: unreconciled.get(bankRelation.id) ?? 0 },
             balance: balances.get(bankRelation.id) ?? null,
           }),
         );
+
+        return { data };
       });
     });
   }

@@ -3,7 +3,12 @@ import { assertNonNullish, type Result, tryCatch } from "@usenullish/nullish-com
 import { DbUserContext } from "@usenullish/nullish-db";
 import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import type { DbCollectionStore, DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type {
+  DbCollectionStore,
+  DbCollectionStoreInitArgs,
+  DbListArgs,
+  DbListResult,
+} from "../../store";
 import type { DbRecordsSortField } from "../../_records/records";
 import { parseFilters, parseQueryArgs } from "../../_query/helpers";
 import { buildMessagesWhere } from "../_helpers/messages";
@@ -42,7 +47,7 @@ export class DbCollectionMessages
     pagination,
     sort,
     filters,
-  }: DbListArgs<MessagesSortField, FilterMessages>): Promise<Result<SelectMessages[]>> {
+  }: DbListArgs<MessagesSortField, FilterMessages>): Promise<Result<DbListResult<SelectMessages>>> {
     return tryCatch(async () => {
       const {
         pagination: { limit, offset },
@@ -69,7 +74,11 @@ export class DbCollectionMessages
           .limit(limit)
           .offset(offset);
 
-        return rows.map((row) => RecordsSchema.Chat.MessagesSchema.SelectMessagesSchema.parse(row));
+        const data = rows.map((row) =>
+          RecordsSchema.Chat.MessagesSchema.SelectMessagesSchema.parse(row),
+        );
+
+        return { data };
       });
     });
   }

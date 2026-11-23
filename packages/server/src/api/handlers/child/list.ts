@@ -1,6 +1,10 @@
 import { isInvalidUuid, type Result } from "@usenullish/nullish-common";
 import { _defineListHandler } from "../_list";
-import type { DbCollectionStoreInitArgs, DbCollectionStore } from "@usenullish/nullish-engine";
+import type {
+  DbCollectionStoreInitArgs,
+  DbCollectionStore,
+  DbListResult,
+} from "@usenullish/nullish-engine";
 import type { RouteConfig } from "@hono/zod-openapi";
 import type * as z from "zod";
 import type { DefineOpenAPIHandler, Response200 } from "../../types/openapi";
@@ -14,7 +18,7 @@ export function defineChildListHandler<R extends RouteConfig, Select, TFilters =
   store: (
     args: DbCollectionStoreInitArgs<string>,
   ) => DbCollectionStore<Select, unknown, string, TFilters>;
-  build: (result: Extract<Result<Select[]>, { status: "success" }>) => Response200<R>;
+  build: (result: Extract<Result<DbListResult<Select>>, { status: "success" }>) => Response200<R>;
   resourceKey: string;
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {

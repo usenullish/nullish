@@ -3,7 +3,7 @@ import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbUserContext } from "@usenullish/nullish-db";
 import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records";
-import type { DbListArgs, DbStoreInitArgs } from "../../store";
+import type { DbListArgs, DbListResult, DbStoreInitArgs } from "../../store";
 import type { DbRecordsSortField } from "../../_records/records";
 import { parseQueryArgs } from "../../_query/helpers";
 
@@ -28,7 +28,10 @@ export class DbLlmUsages extends DbUserContext {
     return new this(args);
   }
 
-  list({ pagination, sort }: DbListArgs<LlmUsagesSortField>): Promise<Result<SelectLlmUsages[]>> {
+  list({
+    pagination,
+    sort,
+  }: DbListArgs<LlmUsagesSortField>): Promise<Result<DbListResult<SelectLlmUsages>>> {
     return tryCatch(async () => {
       const {
         pagination: { limit, offset },
@@ -48,9 +51,11 @@ export class DbLlmUsages extends DbUserContext {
           .limit(limit)
           .offset(offset);
 
-        return rows.map((row) =>
+        const data = rows.map((row) =>
           RecordsSchema.Metering.LlmUsagesSchema.SelectLlmUsagesSchema.parse(row),
         );
+
+        return { data };
       });
     });
   }

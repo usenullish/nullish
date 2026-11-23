@@ -61,7 +61,7 @@ export class McpToolsContacts extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, (contacts) => ({
+        return this.mapResult(result, ({ data: contacts }) => ({
           contacts: contacts.map(this.#encodeResponse),
         }));
       },

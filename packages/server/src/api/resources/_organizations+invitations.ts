@@ -87,7 +87,7 @@ export class InvitationsHandlers extends Resource {
       return await store.list({ pagination, sort });
     },
     resourceKey: "invitations",
-    build: ({ result: invitations }) => ({
+    build: ({ result: { data: invitations } }) => ({
       invitations: invitations.map(encodeInvitationResponse),
     }),
   });

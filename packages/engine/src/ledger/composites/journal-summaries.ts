@@ -10,7 +10,12 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs, DbStoreInitArgs } from "../../store";
+import type {
+  DbCollectionStoreInitArgs,
+  DbListArgs,
+  DbListResult,
+  DbStoreInitArgs,
+} from "../../store";
 import { loadJournalSummaries } from "../_helpers/journal-summaries";
 import { findJournalById, listJournals } from "../_helpers/journal";
 import { parseQueryArgs } from "../../_query/helpers";
@@ -69,7 +74,7 @@ export class DbCollectionJournalSummaries extends DbUserContext {
     filters,
     pagination,
     sort,
-  }: DbListArgs<string, FilterJournalSummaries>): Promise<Result<JournalSummary[]>> {
+  }: DbListArgs<string, FilterJournalSummaries>): Promise<Result<DbListResult<JournalSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -82,7 +87,7 @@ export class DbCollectionJournalSummaries extends DbUserContext {
         ? undefined
         : CompositesSchema.JournalSummariesSchema.FilterJournalSummariesSchema.parse(filters);
 
-      return await this._withAuth<JournalSummary[]>(async (tx) => {
+      return await this._withAuth<DbListResult<JournalSummary>>(async (tx) => {
         const journals = await listJournals({
           tx,
           organizationId: this.#organizationId,
@@ -91,10 +96,12 @@ export class DbCollectionJournalSummaries extends DbUserContext {
         });
 
         if (!isArrayAtLeastOne(journals)) {
-          return [];
+          return { data: [] };
         }
 
-        return await loadJournalSummaries({ tx, journals });
+        const data = await loadJournalSummaries({ tx, journals });
+
+        return { data };
       });
     });
   }

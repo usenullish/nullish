@@ -564,7 +564,7 @@ describe("chat", () => {
         throw result.err;
       }
 
-      return result.result.map(({ role, content }) => ({ role, content }));
+      return result.result.data.map(({ role, content }) => ({ role, content }));
     };
 
     test("records the message of the user and the answer", async () => {
@@ -645,9 +645,9 @@ describe("chat", () => {
         throw usages.err;
       }
 
-      expect(usages.result.filter((usage) => usage.conversationId === conversationId)).toHaveLength(
-        1,
-      );
+      expect(
+        usages.result.data.filter((usage) => usage.conversationId === conversationId),
+      ).toHaveLength(1);
     });
   });
 

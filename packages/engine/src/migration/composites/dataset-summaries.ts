@@ -4,7 +4,7 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { parseQueryArgs } from "../../_query/helpers";
 import { listDatasetSummaries } from "../_helpers/dataset-summaries";
 
@@ -35,7 +35,7 @@ export class DbCollectionDatasetSummaries extends DbUserContext {
     filters,
     pagination,
     sort,
-  }: DbListArgs<string, FilterDatasetSummaries>): Promise<Result<DatasetSummary[]>> {
+  }: DbListArgs<string, FilterDatasetSummaries>): Promise<Result<DbListResult<DatasetSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -48,15 +48,16 @@ export class DbCollectionDatasetSummaries extends DbUserContext {
         ? undefined
         : CompositesSchema.DatasetSummariesSchema.FilterDatasetSummariesSchema.parse(filters);
 
-      return await this._withAuth<DatasetSummary[]>(
-        async (tx) =>
-          await listDatasetSummaries({
-            tx,
-            organizationId: this.#organizationId,
-            filters: parsedFilters,
-            ...queryArgs,
-          }),
-      );
+      return await this._withAuth<DbListResult<DatasetSummary>>(async (tx) => {
+        const data = await listDatasetSummaries({
+          tx,
+          organizationId: this.#organizationId,
+          filters: parsedFilters,
+          ...queryArgs,
+        });
+
+        return { data };
+      });
     });
   }
 }

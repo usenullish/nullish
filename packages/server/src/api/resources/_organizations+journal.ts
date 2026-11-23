@@ -85,7 +85,7 @@ export class JournalsHandlers extends Resource {
     store: (args) => DbCollectionJournal.create(args),
     resourceKey: "journals",
     filtersSchema: ApiSchema.Journal.GetJournalEntriesFiltersQuerySchema,
-    build: ({ result: journalEntries }) => ({
+    build: ({ result: { data: journalEntries } }) => ({
       journalEntries: journalEntries.map(encodeJournalResponse),
     }),
   });

@@ -176,8 +176,8 @@ describe("accounts-system", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(0);
-      expect(result.result.every((account) => account.organizationId === orgId)).toBeTrue();
+      expect(result.result.data.length).toBeGreaterThan(0);
+      expect(result.result.data.every((account) => account.organizationId === orgId)).toBeTrue();
     });
   });
 
@@ -244,7 +244,7 @@ describe("accounts-system", () => {
         return;
       }
 
-      expect(result.result.map(({ purpose }) => purpose)).toEqual([
+      expect(result.result.data.map(({ purpose }) => purpose)).toEqual([
         SystemAccountPurpose.BANK_ACCOUNT,
       ]);
     });
@@ -257,7 +257,7 @@ describe("accounts-system", () => {
         return;
       }
 
-      const [bankAccount] = bank.result;
+      const [bankAccount] = bank.result.data;
 
       const result = await list({ accountId: bankAccount?.accountId });
 
@@ -266,9 +266,9 @@ describe("accounts-system", () => {
         return;
       }
 
-      expect(result.result.length).toBeGreaterThan(0);
+      expect(result.result.data.length).toBeGreaterThan(0);
       expect(
-        result.result.every(({ accountId }) => accountId === bankAccount?.accountId),
+        result.result.data.every(({ accountId }) => accountId === bankAccount?.accountId),
       ).toBeTrue();
     });
   });

@@ -6,6 +6,7 @@ import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStore,
   DbStoreInitArgs,
 } from "../../store";
@@ -110,7 +111,7 @@ export class DbCollectionTemplateContents
     filters,
     ...args
   }: DbListArgs<TemplateContentsSortField, FilterTemplateContents>): Promise<
-    Result<SelectTemplateContents[]>
+    Result<DbListResult<SelectTemplateContents>>
   > {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Core.DocumentsSchema.SelectTemplateContentsSchema,

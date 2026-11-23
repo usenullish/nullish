@@ -1,6 +1,6 @@
 import { type Result } from "@usenullish/nullish-common";
 import { _defineListHandler } from "../_list";
-import type { DbCollectionStore, DbStoreInitArgs } from "@usenullish/nullish-engine";
+import type { DbCollectionStore, DbListResult, DbStoreInitArgs } from "@usenullish/nullish-engine";
 import type { RouteConfig } from "@hono/zod-openapi";
 import type * as z from "zod";
 import type { DefineOpenAPIHandler, Response200 } from "../../types/openapi";
@@ -12,7 +12,7 @@ export function defineListHandler<R extends RouteConfig, Select, TFilters = neve
   filtersSchema,
 }: {
   store: (args: DbStoreInitArgs) => DbCollectionStore<Select, unknown, string, TFilters>;
-  build: (result: Extract<Result<Select[]>, { status: "success" }>) => Response200<R>;
+  build: (result: Extract<Result<DbListResult<Select>>, { status: "success" }>) => Response200<R>;
   resourceKey: string;
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {

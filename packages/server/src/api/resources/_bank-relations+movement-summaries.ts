@@ -65,7 +65,7 @@ export class BankMovementSummariesHandlers extends Resource {
     },
     resourceKey: "bankMovementSummaries",
     filtersSchema: ApiSchema.BankMovementSummaries.GetBankMovementSummariesFiltersQuerySchema,
-    build: ({ result: bankMovementSummaries }) => ({
+    build: ({ result: { data: bankMovementSummaries } }) => ({
       bankMovementSummaries: bankMovementSummaries.map(encodeBankMovementSummaryResponse),
     }),
   });

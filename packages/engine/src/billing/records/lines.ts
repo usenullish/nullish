@@ -6,6 +6,7 @@ import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStore,
   DbStoreInitArgs,
 } from "../../store";
@@ -82,7 +83,7 @@ export class DbCollectionLines
   list({
     filters,
     ...args
-  }: DbListArgs<LinesSortField, FilterLines>): Promise<Result<SelectLines[]>> {
+  }: DbListArgs<LinesSortField, FilterLines>): Promise<Result<DbListResult<SelectLines>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Billing.InvoicesSchema.SelectLinesSchema,
       ...args,
