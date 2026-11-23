@@ -31,3 +31,11 @@ export const SUBSCRIPTION_TAX_RATE_DESCRIPTION = "Manage the tax rates of the su
 export const SUBSCRIPTION_TAX_RATE_LIST_DESCRIPTION = "List the tax rates";
 export const SUBSCRIPTION_TAX_RATE_CREATE_DESCRIPTION = "Create a tax rate";
 export const SUBSCRIPTION_TAX_RATE_DISABLE_DESCRIPTION = "Disable a tax rate";
+
+export const INSTANCE_DESCRIPTION = "Manage the instance";
+export const INSTANCE_RULES_DESCRIPTION =
+  "Manage the maximum organizations and members of the instance";
+export const INSTANCE_RULES_SHOW_DESCRIPTION =
+  "Show the maximum organizations and members of the instance";
+export const INSTANCE_RULES_UPDATE_DESCRIPTION =
+  "Change the maximum organizations and members of the instance";
