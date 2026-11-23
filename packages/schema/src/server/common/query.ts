@@ -5,7 +5,7 @@ import {
   QueryPaginationSchema,
   QuerySortDirectionSchema,
 } from "../../db/_query";
-import { isNullish, NotEmptyStringSchema } from "@usenullish/nullish-common";
+import { isNullish, nonNullish, NotEmptyStringSchema } from "@usenullish/nullish-common";
 
 export const ListQueryParamsSchema = z.strictObject({
   limit: z.coerce.number(),
@@ -35,7 +35,7 @@ export const ListQuerySchema = z.codec(ListQueryParamsSchema, ListQueryArgsSchem
     offset: offset ?? 0,
     sort: field,
     direction,
-    count: count?.mode,
+    ...(nonNullish(count) && { count: count.mode }),
   }),
 });
 
