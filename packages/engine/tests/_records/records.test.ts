@@ -652,7 +652,7 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result.pagination).toBeNull();
+      expect(result.result.pagination).toBeUndefined();
     });
 
     test("returns the total of the matching rows beyond the page", async () => {

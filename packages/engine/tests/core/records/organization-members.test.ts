@@ -146,7 +146,7 @@ describe("organization-members", () => {
         return;
       }
 
-      expect(result.result.pagination).toBeNull();
+      expect(result.result.pagination).toBeUndefined();
     });
 
     test("returns the total of the members beyond the page", async () => {
