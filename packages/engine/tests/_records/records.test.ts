@@ -17,7 +17,7 @@ import {
   type DbRecordsSortField,
 } from "../../src/_records/records";
 import { ilikeContains } from "../../src/_query/helpers";
-import type { QueryArgs } from "@usenullish/nullish-schema/db";
+import type { QueryArgs, QueryCount } from "@usenullish/nullish-schema/db";
 import type { DbListResult, DbStoreInitArgs } from "../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
 
@@ -92,6 +92,7 @@ class TestRecords extends DbRecords<"id", typeof widgets> {
       schema: z.ZodType<T>;
       where?: SQL;
       filters?: DbRecordsFilters<TFilters>;
+      count?: QueryCount;
     } & QueryArgs<DbRecordsSortField<typeof widgets>>,
   ): Promise<Result<DbListResult<T>>> {
     return this._query(args);
@@ -629,6 +630,99 @@ describe("records", () => {
         schema: WidgetSchema,
         pagination: { limit: 10, offset: 0, page: 1 } as never,
         sort: SORT,
+      });
+
+      if (result.status === "success") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.err).toBeInstanceOf(z.ZodError);
+    });
+  });
+
+  describe("DbRecords._query count", () => {
+    test("returns no pagination without count", async () => {
+      await seed([{ name: "alpha" }, { name: "beta" }]);
+
+      const result = await records.query({ schema: WidgetSchema, pagination: PAGE, sort: SORT });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.pagination).toBeNull();
+    });
+
+    test("returns the total of the matching rows beyond the page", async () => {
+      await seed([{ name: "alpha" }, { name: "beta" }, { name: "gamma" }]);
+
+      const result = await records.query({
+        schema: WidgetSchema,
+        pagination: { limit: 2, offset: 0 },
+        sort: SORT,
+        count: { mode: "exact" },
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.data).toHaveLength(2);
+      expect(result.result.pagination).toEqual({ total: 3 });
+    });
+
+    test("counts only the rows matching the filters", async () => {
+      await seed([
+        { name: "alpha", owner: USER_ID },
+        { name: "beta", owner: null },
+      ]);
+
+      const result = await records.query({
+        schema: WidgetSchema,
+        pagination: PAGE,
+        sort: SORT,
+        count: { mode: "exact" },
+        filters: widgetFilters({ owner: USER_ID }),
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.pagination).toEqual({ total: 1 });
+    });
+
+    test("does not count the rows hidden by the auth scope", async () => {
+      await seed([
+        { name: "mine", owner: USER_ID },
+        { name: "theirs", owner: INTRUDER_ID },
+      ]);
+
+      const result = await records.query({
+        schema: WidgetSchema,
+        pagination: PAGE,
+        sort: SORT,
+        count: { mode: "exact" },
+      });
+
+      if (result.status === "error") {
+        expect(true).toBeFalse();
+        return;
+      }
+
+      expect(result.result.pagination).toEqual({ total: 1 });
+    });
+
+    test("returns a ZodError Result for an unknown count", async () => {
+      const result = await records.query({
+        schema: WidgetSchema,
+        pagination: PAGE,
+        sort: SORT,
+        count: { mode: "planned" as "exact" },
       });
 
       if (result.status === "success") {

@@ -16,6 +16,14 @@ export type QueryDefaultSortField = z.infer<typeof QueryDefaultSortFieldSchema>;
 
 export const QuerySortDirectionSchema = z.enum(["asc", "desc"]);
 
+const QueryCountModeSchema = z.enum(["exact"]);
+
+export const QueryCountSchema = z.strictObject({
+  mode: QueryCountModeSchema,
+});
+
+export type QueryCount = z.infer<typeof QueryCountSchema>;
+
 const querySortSchema = <TField extends [string, ...string[]]>(fields: TField) =>
   z.strictObject({
     field: z.enum(fields),

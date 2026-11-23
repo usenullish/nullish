@@ -6,6 +6,7 @@ import { pgTable, text, uuid, timestamp, integer } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/bun-sql";
 import {
   advisoryXactLock,
+  countMany,
   deleteMany,
   insertMany,
   selectMany,
@@ -121,6 +122,35 @@ describe("statements integration tests", () => {
           }),
         ),
       ).rejects.toThrow();
+    });
+  });
+
+  describe("countMany", () => {
+    test("counts every row of the table", async () => {
+      await db.insert(table).values([{ name: "alpha" }, { name: "beta" }, { name: "gamma" }]);
+
+      const total = await db.transaction(async (tx) => countMany({ tx, table }));
+
+      expect(total).toBe(3);
+    });
+
+    test("counts only the rows matching the where clause", async () => {
+      const [inserted] = await db.insert(table).values({ name: "alpha" }).returning();
+      await db.insert(table).values({ name: "beta" });
+
+      assertNonNullish(inserted);
+
+      const total = await db.transaction(async (tx) =>
+        countMany({ tx, table, where: eq(table.id, inserted.id) }),
+      );
+
+      expect(total).toBe(1);
+    });
+
+    test("returns zero when there are no rows", async () => {
+      const total = await db.transaction(async (tx) => countMany({ tx, table }));
+
+      expect(total).toBe(0);
     });
   });
 
