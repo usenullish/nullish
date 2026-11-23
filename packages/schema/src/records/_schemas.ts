@@ -28,6 +28,7 @@ import * as LlmReservationsSchema from "./schemas/metering/llm-reservations";
 import * as ConversationsSchema from "./schemas/chat/conversations";
 import * as MessagesSchema from "./schemas/chat/messages";
 import * as MigrationsSchema from "./schemas/migration/migrations";
+import * as PlanRulesSchema from "./schemas/subscription/plan-rules";
 import * as PlansSchema from "./schemas/subscription/plans";
 import * as ExternalProductsSchema from "./schemas/subscription/external-products";
 import * as CustomProductsSchema from "./schemas/subscription/custom-products";
@@ -87,6 +88,7 @@ const RecordsSchema = {
     DatasetsSchema,
   },
   Subscription: {
+    PlanRulesSchema,
     PlansSchema,
     ExternalProductsSchema,
     CustomProductsSchema,

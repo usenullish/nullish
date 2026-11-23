@@ -221,6 +221,10 @@ interface Records {
     };
   };
   Subscription: {
+    PlanRules: {
+      Select: z.infer<typeof RecordsSchema.Subscription.PlanRulesSchema.SelectPlanRulesSchema>;
+      Insert: z.infer<typeof RecordsSchema.Subscription.PlanRulesSchema.InsertPlanRulesSchema>;
+    };
     Plans: {
       Select: z.infer<typeof RecordsSchema.Subscription.PlansSchema.SelectPlansSchema>;
       Insert: z.infer<typeof RecordsSchema.Subscription.PlansSchema.InsertPlansSchema>;

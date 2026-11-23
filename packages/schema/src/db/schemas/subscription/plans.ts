@@ -5,6 +5,7 @@ import * as pg from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { readonlyPolicies } from "../_policies";
 import { subscriptionProvider } from "./provider";
+import { planRulesIdReference } from "./plan-rules";
 
 export const PlansSchema = SubscriptionSchema.table(
   "plans",
@@ -13,6 +14,7 @@ export const PlansSchema = SubscriptionSchema.table(
     trialDays: pg.integer(),
     expiresAt: timestamp(),
     provider: subscriptionProvider().notNull(),
+    planRulesId: planRulesIdReference(),
   },
   (table) => [
     pg.check("plans_trial_days_positive", sql`${table.trialDays} >= 1`),
