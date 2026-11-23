@@ -1,5 +1,5 @@
 import { isCancel, select, text } from "@clack/prompts";
-import { PlansService } from "@usenullish/nullish-admin/subscription";
+import { PlansService, type PlanWithRules } from "@usenullish/nullish-admin/subscription";
 import { DateStringCodec, isEmptyString, type Option } from "@usenullish/nullish-common";
 import type { DbAdminContext } from "@usenullish/nullish-db";
 import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
@@ -8,7 +8,11 @@ import { cancel, exit } from "../../../utils/exit";
 
 type Plan = Records["Subscription"]["Plans"]["Select"];
 
-export const listPlans = async ({ dbContext }: { dbContext: DbAdminContext }): Promise<Plan[]> => {
+export const listPlans = async ({
+  dbContext,
+}: {
+  dbContext: DbAdminContext;
+}): Promise<PlanWithRules[]> => {
   const result = await PlansService.create({ db: dbContext.connection }).list();
 
   if (result.status === "error") {
@@ -21,8 +25,14 @@ export const listPlans = async ({ dbContext }: { dbContext: DbAdminContext }): P
   return result.result;
 };
 
-export const planLabel = ({ id, trialDays, expiresAt, provider }: Plan): string =>
-  `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"}, provider: ${provider})`;
+export const planLabel = ({
+  id,
+  trialDays,
+  expiresAt,
+  provider,
+  maxMembers,
+}: Plan & Partial<Pick<PlanWithRules, "maxMembers">>): string =>
+  `${id} (trial: ${trialDays ?? "none"}, ends: ${expiresAt?.toISOString().slice(0, 10) ?? "never"}, provider: ${provider}${maxMembers === undefined ? "" : `, members: ${maxMembers ?? "unlimited"}`})`;
 
 export const promptPlanProvider = async (): Promise<Plan["provider"]> => {
   const provider = await select<Plan["provider"]>({

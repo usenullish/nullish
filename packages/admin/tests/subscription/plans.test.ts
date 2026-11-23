@@ -1,10 +1,12 @@
 import { afterAll, describe, expect, test } from "bun:test";
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
+import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { PlansService } from "../../src/subscription/services/plans";
 import { openTestDb } from "../_test-utils";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
+const planRules = DbSchema.Subscription.PlanRules.PlanRulesSchema;
 
 const instance = await openTestDb();
 const db = instance.connection;
@@ -15,10 +17,59 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 describe("PlansService", () => {
   const insertedIds: string[] = [];
+  const insertedPlanRulesIds: string[] = [];
 
   afterAll(async () => {
     await db.delete(plans).where(inArray(plans.id, insertedIds));
+    await db.delete(planRules).where(inArray(planRules.id, insertedPlanRulesIds));
     await instance.close();
+  });
+
+  test("inserts a plan with its rules", async () => {
+    const result = await service.insert({
+      plan: { provider: SubscriptionProvider.STRIPE },
+      rules: { maxMembers: 3 },
+    });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    insertedIds.push(result.result.id);
+
+    const { planRulesId } = result.result;
+    assertNonNullish(planRulesId);
+    insertedPlanRulesIds.push(planRulesId);
+
+    const [rules] = await db.select().from(planRules).where(eq(planRules.id, planRulesId));
+
+    expect(rules?.maxMembers).toBe(3);
+  });
+
+  test("inserts a plan without rules", async () => {
+    const result = await service.insert({ plan: { provider: SubscriptionProvider.CUSTOM } });
+
+    if (result.status === "error") {
+      expect(true).toBeFalse();
+      return;
+    }
+
+    insertedIds.push(result.result.id);
+
+    expect(result.result.planRulesId).toBeNull();
+  });
+
+  test("inserts neither the rules nor the plan when the rules are invalid", async () => {
+    const before = await db.select().from(planRules);
+
+    const result = await service.insert({
+      plan: { provider: SubscriptionProvider.STRIPE },
+      rules: { maxMembers: 0 },
+    });
+
+    expect(result.status).toBe("error");
+    expect(await db.select().from(planRules)).toHaveLength(before.length);
   });
 
   test("inserts a plan with its trial days and end date", async () => {
