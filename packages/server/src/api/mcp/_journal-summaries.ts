@@ -46,8 +46,9 @@ export class McpToolsJournalSummaries extends McpTools {
           foreignKeyId: organizationId,
         }).list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: journalSummaries }) => ({
+        return this.mapResult(result, ({ data: journalSummaries, pagination }) => ({
           data: journalSummaries.map(encodeJournalSummaryResponse),
+          pagination,
         }));
       },
     });

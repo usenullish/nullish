@@ -42,8 +42,9 @@ export class McpToolsOrganizationMembers extends McpTools {
           foreignKeyId: organizationId,
         }).list(query);
 
-        return this.mapResult(result, ({ data: members }) => ({
+        return this.mapResult(result, ({ data: members, pagination }) => ({
           data: members.map(encodeAuditFieldsResponse),
+          pagination,
         }));
       },
     });

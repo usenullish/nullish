@@ -53,8 +53,9 @@ export class McpToolsVatRates extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: rates }) => ({
+        return this.mapResult(result, ({ data: rates, pagination }) => ({
           data: rates.map(this.#encodeResponse),
+          pagination,
         }));
       },
     });

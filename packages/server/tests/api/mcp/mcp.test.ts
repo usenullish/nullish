@@ -434,6 +434,31 @@ describe("mcp", () => {
       expect(structuredContent?.result.data).toEqual([]);
     });
 
+    test("returns the total count of the members when asked for an exact count", async () => {
+      const {
+        result: { isError, structuredContent },
+      } = await callTool<{ data: unknown[]; pagination?: { total: number } }>({
+        name: "list_organization_members",
+        args: { organizationId: orgId, query: { ...LIST_QUERY, count: "exact" } },
+      });
+
+      expect(isError).toBeFalsy();
+      expect(structuredContent?.result.data).toHaveLength(1);
+      expect(structuredContent?.result.pagination).toEqual({ total: 1 });
+    });
+
+    test("returns no pagination of the members without a count", async () => {
+      const {
+        result: { isError, structuredContent },
+      } = await callTool<{ data: unknown[]; pagination?: { total: number } }>({
+        name: "list_organization_members",
+        args: { organizationId: orgId, query: LIST_QUERY },
+      });
+
+      expect(isError).toBeFalsy();
+      expect(structuredContent?.result).not.toHaveProperty("pagination");
+    });
+
     test("lists the invitations of an organization to its admin", async () => {
       const created = await CreateInvitationService.create({
         db,

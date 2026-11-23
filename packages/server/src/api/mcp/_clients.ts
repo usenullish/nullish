@@ -61,8 +61,9 @@ export class McpToolsClients extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: clients }) => ({
+        return this.mapResult(result, ({ data: clients, pagination }) => ({
           data: clients.map(this.#encodeResponse),
+          pagination,
         }));
       },
     });

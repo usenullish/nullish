@@ -49,8 +49,9 @@ export class McpToolsOrganizations extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: organizations }) => ({
+        return this.mapResult(result, ({ data: organizations, pagination }) => ({
           data: organizations.map(encodeOrganizationResponse),
+          pagination,
         }));
       },
     });

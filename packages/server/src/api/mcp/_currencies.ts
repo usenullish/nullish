@@ -43,8 +43,9 @@ export class McpToolsCurrencies extends McpTools {
 
         const result = await store.list(query);
 
-        return this.mapResult(result, ({ data: currencies }) => ({
+        return this.mapResult(result, ({ data: currencies, pagination }) => ({
           data: currencies.map(encodeAuditFieldsResponse),
+          pagination,
         }));
       },
     });
