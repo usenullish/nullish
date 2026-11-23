@@ -284,6 +284,12 @@ interface Records {
       >;
     };
   };
+  Instance: {
+    InstanceRules: {
+      Select: z.infer<typeof RecordsSchema.Instance.InstanceRulesSchema.SelectInstanceRulesSchema>;
+      Insert: z.infer<typeof RecordsSchema.Instance.InstanceRulesSchema.InsertInstanceRulesSchema>;
+    };
+  };
 }
 
 export type { Records };
