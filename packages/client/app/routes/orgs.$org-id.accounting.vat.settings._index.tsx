@@ -9,7 +9,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 };
 
 const OrganizationVatSettingsPage = ({ loaderData }: Route.ComponentProps) => {
-  const [setting] = loaderData?.settings ?? [];
+  const [setting] = loaderData?.data ?? [];
 
   return isNullish(setting) ? <VatSettingsEmpty /> : <VatSettingEdit setting={setting} />;
 };

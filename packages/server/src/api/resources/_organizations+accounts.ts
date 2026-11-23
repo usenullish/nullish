@@ -126,7 +126,7 @@ export class AccountsHandlers extends CrudResource<{
       resourceKey: "accounts",
       filtersSchema: ApiSchema.Accounts.GetAccountsFiltersQuerySchema,
       build: ({ result: { data: accounts } }) => ({
-        accounts: accounts.map(encodeAuditFieldsResponse),
+        data: accounts.map(encodeAuditFieldsResponse),
       }),
     }),
   };

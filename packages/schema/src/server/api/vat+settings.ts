@@ -7,7 +7,7 @@ export const VatSettingsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetVatSettingsResponseSchema = z.strictObject({
-  settings: z.array(VatSettingsResponseSchema),
+  data: z.array(VatSettingsResponseSchema),
 });
 export const GetVatSettingResponseSchema = z.strictObject({
   setting: VatSettingsResponseSchema.nullish(),

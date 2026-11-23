@@ -11,7 +11,7 @@ export const DeleteJournalEntry = ({
   onOpenChange,
   onDeleted,
 }: {
-  entry: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["entry"];
+  entry: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["entry"];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDeleted?: () => Promise<void>;

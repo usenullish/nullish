@@ -95,7 +95,7 @@ export class OrganizationsHandlers extends RouteResource<{
       resourceKey: "organizations",
       filtersSchema: ApiSchema.Organizations.GetOrganizationsFiltersQuerySchema,
       build: ({ result: { data: organizations } }) => ({
-        organizations: organizations.map(encodeOrganizationResponse),
+        data: organizations.map(encodeOrganizationResponse),
       }),
     }),
   };

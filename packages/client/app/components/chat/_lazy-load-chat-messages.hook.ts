@@ -59,7 +59,7 @@ export const useLazyLoadChatMessages = ({
       }
 
       const {
-        result: { messages },
+        result: { data: messages },
       } = result;
 
       const older = messages.toReversed();

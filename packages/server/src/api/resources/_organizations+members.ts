@@ -59,7 +59,7 @@ export class OrganizationMembersHandlers extends Resource {
     },
     resourceKey: "members",
     build: ({ result: { data: members } }) => ({
-      members: members.map(encodeAuditFieldsResponse),
+      data: members.map(encodeAuditFieldsResponse),
     }),
   });
 }

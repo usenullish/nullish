@@ -20,7 +20,7 @@ const OrganizationVatMethodsPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const vatMethodSummaries = loaderData.vatMethodSummaries?.vatMethodSummaries ?? [];
+  const vatMethodSummaries = loaderData.vatMethodSummaries?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

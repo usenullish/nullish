@@ -15,7 +15,7 @@ export const JournalSummarySchema = z.strictObject({
 });
 
 export const GetJournalSummariesResponseSchema = z.strictObject({
-  journalSummaries: z.array(JournalSummarySchema),
+  data: z.array(JournalSummarySchema),
 });
 export const GetJournalSummaryResponseSchema = z.strictObject({
   journalSummary: JournalSummarySchema.nullish(),

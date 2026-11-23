@@ -8,7 +8,7 @@ import { PERIOD_ID_KEY, type PeriodKey } from "~/context/constants/periods.const
 type Period = Pick<Api["Periods"]["Client"]["Period"], "id" | "startOn" | "endOn">;
 
 export const loadReportPeriodsData = async (args: LoaderFunctionArgs) => {
-  const periods = (await PeriodsServer.create().listAllPeriods(args))?.periods ?? [];
+  const periods = (await PeriodsServer.create().listAllPeriods(args))?.data ?? [];
 
   const period = findReportPeriod({ periods, request: args.request });
 

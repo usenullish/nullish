@@ -63,7 +63,7 @@ export class McpToolsBankMovements extends McpTools {
         const result = await store.list({ ...query, filters });
 
         return this.mapResult(result, ({ data: bankMovements }) => ({
-          bankMovements: bankMovements.map(encodeBankMovementResponse),
+          data: bankMovements.map(encodeBankMovementResponse),
         }));
       },
     });
@@ -111,7 +111,7 @@ export class McpToolsBankMovements extends McpTools {
         }).list({ ...query, filters });
 
         return this.mapResult(result, ({ data: bankMovementSummaries }) => ({
-          bankMovementSummaries: bankMovementSummaries.map(encodeBankMovementSummaryResponse),
+          data: bankMovementSummaries.map(encodeBankMovementSummaryResponse),
         }));
       },
     });

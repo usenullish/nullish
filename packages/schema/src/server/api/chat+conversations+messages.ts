@@ -7,7 +7,7 @@ export const MessageSchema = RecordsSchema.Chat.MessagesSchema.SelectMessagesSch
 });
 
 export const GetMessagesResponseSchema = z.strictObject({
-  messages: z.array(MessageSchema),
+  data: z.array(MessageSchema),
 });
 
 export const GetMessagesFiltersSchema = RecordsSchema.Chat.MessagesSchema.FilterMessagesSchema;

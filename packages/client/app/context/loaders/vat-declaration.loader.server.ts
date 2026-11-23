@@ -6,7 +6,7 @@ import { findReportPeriod } from "~/context/loaders/_period.loader.server";
 import { VAT_PERIOD_ID_KEY } from "~/context/constants/periods.constants";
 
 export const loadVatDeclarationData = async (args: LoaderFunctionArgs) => {
-  const periods = (await VatPeriodsServer.create().listAllVatPeriods(args))?.periods ?? [];
+  const periods = (await VatPeriodsServer.create().listAllVatPeriods(args))?.data ?? [];
 
   const period = findReportPeriod({
     periods,

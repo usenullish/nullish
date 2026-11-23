@@ -30,7 +30,7 @@ const PayInvoicePage = ({ loaderData }: Route.ComponentProps) => {
       organizationId={organizationId}
       invoiceId={invoiceId}
       currency={currency}
-      bankRelations={loaderData.bankRelations?.bankRelations ?? []}
+      bankRelations={loaderData.bankRelations?.data ?? []}
     />
   );
 };

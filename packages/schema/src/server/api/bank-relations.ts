@@ -7,7 +7,7 @@ export const BankRelationsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetBankRelationsResponseSchema = z.strictObject({
-  bankRelations: z.array(BankRelationsResponseSchema),
+  data: z.array(BankRelationsResponseSchema),
 });
 export const GetBankRelationResponseSchema = z.strictObject({
   bankRelation: BankRelationsResponseSchema.nullish(),

@@ -47,7 +47,7 @@ export class McpToolsJournalSummaries extends McpTools {
         }).list({ ...query, filters });
 
         return this.mapResult(result, ({ data: journalSummaries }) => ({
-          journalSummaries: journalSummaries.map(encodeJournalSummaryResponse),
+          data: journalSummaries.map(encodeJournalSummaryResponse),
         }));
       },
     });

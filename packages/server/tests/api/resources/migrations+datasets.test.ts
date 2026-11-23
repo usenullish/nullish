@@ -204,7 +204,7 @@ describe("migrations datasets upload", () => {
 
     expect(response.status).toBe(200);
 
-    const { datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
+    const { data: datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
       await response.json(),
     );
 
@@ -217,7 +217,7 @@ describe("migrations datasets upload", () => {
 
     expect(response.status).toBe(200);
     expect(
-      ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(await response.json()).datasets,
+      ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(await response.json()).data,
     ).toEqual([]);
   });
 
@@ -266,7 +266,7 @@ describe("migrations datasets upload", () => {
   });
 
   test("replaces the file of a dataset of the draft migration", async () => {
-    const { datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
+    const { data: datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
       await (await list({ cookie })).json(),
     );
     const [dataset] = datasets;
@@ -287,7 +287,7 @@ describe("migrations datasets upload", () => {
   test("answers 422 when replacing a dataset by a file of another type", async () => {
     const consoleError = spyOn(console, "error").mockImplementation(() => {});
 
-    const { datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
+    const { data: datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
       await (await list({ cookie })).json(),
     );
     const [dataset] = datasets;
@@ -307,7 +307,7 @@ describe("migrations datasets upload", () => {
   });
 
   test("deletes a dataset of the draft migration", async () => {
-    const { datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
+    const { data: datasets } = ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema.parse(
       await (await list({ cookie })).json(),
     );
     const [dataset] = datasets;

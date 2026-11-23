@@ -66,7 +66,7 @@ describe("organization members", () => {
 
   const parseMembers = async (response: Response) =>
     ApiSchema.OrganizationMembers.GetOrganizationMembersResponseSchema.parse(await response.json())
-      .members;
+      .data;
 
   beforeAll(async () => {
     const opened = await openDb();

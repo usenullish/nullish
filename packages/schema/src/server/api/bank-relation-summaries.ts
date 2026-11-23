@@ -18,5 +18,5 @@ export const BankRelationSummarySchema = z.strictObject({
 });
 
 export const GetBankRelationSummariesResponseSchema = z.strictObject({
-  bankRelationSummaries: z.array(BankRelationSummarySchema),
+  data: z.array(BankRelationSummarySchema),
 });

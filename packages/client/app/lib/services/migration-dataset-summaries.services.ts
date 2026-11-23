@@ -29,12 +29,12 @@ export class MigrationDatasetSummariesService extends Service {
 
       const datasetSummaries = await this._listAll({
         listFn: async (query) => {
-          const { datasetSummaries } = await api.list({ orgId, query, filters });
+          const { data: datasetSummaries } = await api.list({ orgId, query, filters });
           return datasetSummaries;
         },
       });
 
-      return { datasetSummaries };
+      return { data: datasetSummaries };
     });
   };
 }

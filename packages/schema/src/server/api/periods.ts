@@ -20,7 +20,7 @@ export const PeriodsResponseSchema = withStartEndCodecs(
 );
 
 export const GetPeriodsResponseSchema = z.strictObject({
-  periods: z.array(PeriodsResponseSchema),
+  data: z.array(PeriodsResponseSchema),
 });
 export const GetPeriodResponseSchema = z.strictObject({
   period: PeriodsResponseSchema.nullish(),

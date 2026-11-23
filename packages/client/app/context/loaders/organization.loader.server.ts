@@ -22,10 +22,10 @@ export const loadOrganizationData = async (args: LoaderFunctionArgs) => {
 
   return {
     orgId: args.params["org-id"],
-    accounts: accountsResult?.accounts,
-    accountingSettings: accountingSettingsResult?.settings[0],
-    billingSettings: billingSettingsResult?.settings[0],
-    clients: clientsResult?.clients,
-    subscriptionSummary: subscriptionSummariesResult?.subscriptionSummaries[0],
+    accounts: accountsResult?.data,
+    accountingSettings: accountingSettingsResult?.data[0],
+    billingSettings: billingSettingsResult?.data[0],
+    clients: clientsResult?.data,
+    subscriptionSummary: subscriptionSummariesResult?.data[0],
   };
 };

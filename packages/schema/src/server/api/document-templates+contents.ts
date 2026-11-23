@@ -7,7 +7,7 @@ export const TemplateContentsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetTemplateContentsResponseSchema = z.strictObject({
-  contents: z.array(TemplateContentsResponseSchema),
+  data: z.array(TemplateContentsResponseSchema),
 });
 export const GetTemplateContentResponseSchema = z.strictObject({
   content: TemplateContentsResponseSchema.nullish(),

@@ -41,7 +41,7 @@ const DocumentTemplateDetailsPage = ({ loaderData }: Route.ComponentProps) => {
   const organization = useOrganization();
   const formatLanguage = useFormatLanguage();
 
-  const contents = loaderData?.contents ?? [];
+  const contents = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-8">

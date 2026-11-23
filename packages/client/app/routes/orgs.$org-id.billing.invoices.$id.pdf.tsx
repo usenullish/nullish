@@ -26,7 +26,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 
   const contents = await TemplateContentsServer.create().listAllContents({
     args,
-    templateIds: (templates?.templates ?? []).map(({ id }) => id),
+    templateIds: (templates?.data ?? []).map(({ id }) => id),
   });
 
   return { templates, contents, bankRelations };
@@ -45,10 +45,10 @@ const PdfInvoicePage = ({ loaderData }: Route.ComponentProps) => {
   return (
     <PdfInvoice
       invoiceId={invoice.id}
-      templates={templates?.templates ?? []}
-      contents={contents?.contents ?? []}
+      templates={templates?.data ?? []}
+      contents={contents?.data ?? []}
       language={client?.language ?? organization.language ?? i18n.lang}
-      bankRelations={bankRelations?.bankRelations ?? []}
+      bankRelations={bankRelations?.data ?? []}
     />
   );
 };

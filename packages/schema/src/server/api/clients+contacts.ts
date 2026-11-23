@@ -7,7 +7,7 @@ const ContactsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetContactsResponseSchema = z.strictObject({
-  contacts: z.array(ContactsResponseSchema),
+  data: z.array(ContactsResponseSchema),
 });
 export const GetContactResponseSchema = z.strictObject({
   contact: ContactsResponseSchema.nullish(),

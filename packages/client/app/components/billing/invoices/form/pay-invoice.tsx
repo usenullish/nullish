@@ -18,7 +18,7 @@ export const PayInvoice = ({
   invoiceId: Api["Invoices"]["Client"]["Invoice"]["id"];
   currency: Api["Invoices"]["Client"]["Invoice"]["currency"];
   organizationId: Api["Organizations"]["Client"]["Organization"]["id"];
-  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["bankRelations"];
+  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["data"];
 }) => {
   const { i18n } = useI18n();
   const { notifySuccess } = useNotify();

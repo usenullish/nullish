@@ -25,7 +25,7 @@ export const PayInvoiceForm = ({
   pending,
 }: {
   currency: Api["Invoices"]["Client"]["Invoice"]["currency"];
-  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["bankRelations"];
+  bankRelations: Api["BankRelations"]["Client"]["GetBankRelationsResponse"]["data"];
   onAction: (payload: FormData) => void;
   pending: boolean;
 }) => {

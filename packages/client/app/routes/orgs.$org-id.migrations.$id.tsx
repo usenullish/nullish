@@ -28,7 +28,7 @@ const MigrationDetailsPage = ({ loaderData }: Route.ComponentProps) => {
   const organization = useOrganization();
 
   const migration = loaderData.migration?.migration;
-  const datasets = loaderData.datasets?.datasets ?? [];
+  const datasets = loaderData.datasets?.data ?? [];
 
   if (isNullish(migration)) {
     return (

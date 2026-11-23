@@ -60,12 +60,12 @@ export class DocumentTemplatesService extends Service {
 
       const templates = await this._listAll({
         listFn: async (query) => {
-          const { templates } = await api.list({ orgId, query });
+          const { data: templates } = await api.list({ orgId, query });
           return templates;
         },
       });
 
-      return { templates };
+      return { data: templates };
     });
   };
 

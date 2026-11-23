@@ -58,7 +58,7 @@ export class SubscriptionSummariesHandlers extends Resource {
     },
     resourceKey: "subscriptionSummaries",
     build: ({ result: { data: subscriptionSummaries } }) => ({
-      subscriptionSummaries: subscriptionSummaries.map(encodeSubscriptionSummaryResponse),
+      data: subscriptionSummaries.map(encodeSubscriptionSummaryResponse),
     }),
   });
 }

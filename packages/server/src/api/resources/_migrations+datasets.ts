@@ -250,7 +250,7 @@ export class MigrationsDatasetsHandlers extends Resource {
     build: ({ result: { data: datasets } }) =>
       encodeWithCodecs({
         schema: ApiSchema.MigrationsDatasets.GetDatasetsResponseSchema,
-        value: { datasets },
+        value: { data: datasets },
       }),
   });
 

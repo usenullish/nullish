@@ -7,7 +7,7 @@ const ClientsResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetClientsResponseSchema = z.strictObject({
-  clients: z.array(ClientsResponseSchema),
+  data: z.array(ClientsResponseSchema),
 });
 export const GetClientResponseSchema = z.strictObject({
   client: ClientsResponseSchema.nullish(),

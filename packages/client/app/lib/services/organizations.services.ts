@@ -23,12 +23,12 @@ export class OrganizationsService extends Service {
 
       const organizations = await this._listAll({
         listFn: async (query) => {
-          const { organizations } = await api.list({ query });
+          const { data: organizations } = await api.list({ query });
           return organizations;
         },
       });
 
-      return { organizations };
+      return { data: organizations };
     });
   };
 

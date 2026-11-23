@@ -67,7 +67,7 @@ describe("organization subscription summaries", () => {
   const parseSummaries = async (response: Response) =>
     ApiSchema.SubscriptionSummaries.GetSubscriptionSummariesResponseSchema.parse(
       await response.json(),
-    ).subscriptionSummaries;
+    ).data;
 
   beforeAll(async () => {
     const opened = await openDb();

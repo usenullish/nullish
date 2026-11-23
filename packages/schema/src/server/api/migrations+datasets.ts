@@ -25,7 +25,7 @@ export const UploadDatasetRequestSchema = z.discriminatedUnion("type", [
 ]);
 
 export const GetDatasetsResponseSchema = z.strictObject({
-  datasets: z.array(DatasetSchema),
+  data: z.array(DatasetSchema),
 });
 
 export const UploadDatasetResponseSchema = z.strictObject({

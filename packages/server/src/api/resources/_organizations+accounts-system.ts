@@ -118,7 +118,7 @@ export class SystemAccountsHandlers extends RouteResource<{
       resourceKey: "accounts",
       filtersSchema: ApiSchema.SystemAccounts.GetSystemAccountsFiltersQuerySchema,
       build: ({ result: { data: accounts } }) => ({
-        accounts: accounts.map(encodeAuditFieldsResponse),
+        data: accounts.map(encodeAuditFieldsResponse),
       }),
     }),
   };

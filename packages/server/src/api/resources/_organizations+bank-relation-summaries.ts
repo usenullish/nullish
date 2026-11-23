@@ -58,7 +58,7 @@ export class BankRelationSummariesHandlers extends Resource {
     },
     resourceKey: "bankRelationSummaries",
     build: ({ result: { data: bankRelationSummaries } }) => ({
-      bankRelationSummaries: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
+      data: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
     }),
   });
 }

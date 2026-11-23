@@ -39,7 +39,7 @@ const OrganizationClientPage = ({ loaderData }: Route.ComponentProps) => {
   const client = useClient();
   const organization = useOrganization();
 
-  const contacts = loaderData?.contacts ?? [];
+  const contacts = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-8">

@@ -26,5 +26,5 @@ export const SubscriptionSummarySchema = z.strictObject({
 });
 
 export const GetSubscriptionSummariesResponseSchema = z.strictObject({
-  subscriptionSummaries: z.array(SubscriptionSummarySchema),
+  data: z.array(SubscriptionSummarySchema),
 });

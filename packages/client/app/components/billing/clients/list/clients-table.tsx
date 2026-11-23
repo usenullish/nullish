@@ -16,7 +16,7 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 export const ClientsTable = ({
   clients,
 }: {
-  clients: Api["Clients"]["Client"]["GetClientsResponse"]["clients"];
+  clients: Api["Clients"]["Client"]["GetClientsResponse"]["data"];
 }) => {
   const { i18n } = useI18n();
   const organization = useOrganization();

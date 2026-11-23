@@ -11,7 +11,7 @@ export const ClientActions = ({
   client,
   clientPath,
 }: {
-  client: Api["Clients"]["Client"]["GetClientsResponse"]["clients"][number];
+  client: Api["Clients"]["Client"]["GetClientsResponse"]["data"][number];
   clientPath: string;
 }) => {
   const { i18n } = useI18n();

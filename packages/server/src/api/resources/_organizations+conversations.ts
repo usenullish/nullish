@@ -68,7 +68,7 @@ export class OrganizationConversationsHandlers extends Resource {
     },
     resourceKey: "conversations",
     build: ({ result: { data: conversations } }) => ({
-      conversations: conversations.map(encodeAuditFieldsResponse),
+      data: conversations.map(encodeAuditFieldsResponse),
     }),
   });
 }

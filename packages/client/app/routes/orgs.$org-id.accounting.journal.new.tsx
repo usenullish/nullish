@@ -24,9 +24,9 @@ const NewJournalPage = ({ loaderData }: Route.ComponentProps) => {
   return (
     <NewJournal
       organizationId={organizationId}
-      vatRates={loaderData.rates?.rates ?? []}
-      vatMethods={loaderData.methods?.methods ?? []}
-      periods={loaderData.periods?.periods ?? []}
+      vatRates={loaderData.rates?.data ?? []}
+      vatMethods={loaderData.methods?.data ?? []}
+      periods={loaderData.periods?.data ?? []}
     />
   );
 };

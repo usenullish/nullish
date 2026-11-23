@@ -10,7 +10,7 @@ import {
 import { useClients } from "~/context/contexts/clients.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 
-type Client = Api["Clients"]["Client"]["GetClientsResponse"]["clients"][number];
+type Client = Api["Clients"]["Client"]["GetClientsResponse"]["data"][number];
 
 export const ClientCombobox = ({ id, name }: { id: string; name: string }) => {
   const { i18n } = useI18n();

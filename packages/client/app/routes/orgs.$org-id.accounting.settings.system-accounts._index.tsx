@@ -20,7 +20,7 @@ const OrganizationSystemAccountsPage = ({ loaderData }: Route.ComponentProps) =>
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const accounts = loaderData?.accounts ?? [];
+  const accounts = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

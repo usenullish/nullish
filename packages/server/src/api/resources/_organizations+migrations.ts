@@ -105,7 +105,7 @@ export class MigrationsHandlers extends Resource {
     store: (args) => DbCollectionMigrations.create(args),
     resourceKey: "migrations",
     build: ({ result: { data: migrations } }) => ({
-      migrations: migrations.map(encodeAuditFieldsResponse),
+      data: migrations.map(encodeAuditFieldsResponse),
     }),
   });
 

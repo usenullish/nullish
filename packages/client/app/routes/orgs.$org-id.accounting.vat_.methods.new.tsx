@@ -27,9 +27,9 @@ export const loader = async (args: Route.LoaderArgs) => {
 const NewVatMethodsPage = ({ loaderData }: Route.ComponentProps) => {
   const { id: organizationId } = useOrganization();
 
-  const methods = loaderData.methods?.methods ?? [];
+  const methods = loaderData.methods?.data ?? [];
 
-  const periods = (loaderData.periods?.periods ?? [])
+  const periods = (loaderData.periods?.data ?? [])
     .filter(({ id }) => !methods.some(({ periodId }) => periodId === id))
     .toSorted((a, b) => b.startOn.getTime() - a.startOn.getTime());
 

@@ -7,5 +7,5 @@ export const OrganizationMemberSchema = withAuditFieldsCodecs(
 );
 
 export const GetOrganizationMembersResponseSchema = z.strictObject({
-  members: z.array(OrganizationMemberSchema),
+  data: z.array(OrganizationMemberSchema),
 });

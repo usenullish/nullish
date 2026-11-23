@@ -17,8 +17,8 @@ const MigrationPage = ({ loaderData, params }: Route.ComponentProps) => {
   const organization = organizations?.find(({ id }) => id === params["org-id"]);
 
   const migration = loaderData?.migration?.migration;
-  const datasets = loaderData?.datasets?.datasets ?? [];
-  const alreadyImportedDatasets = loaderData?.alreadyImportedDatasets?.datasetSummaries ?? [];
+  const datasets = loaderData?.datasets?.data ?? [];
+  const alreadyImportedDatasets = loaderData?.alreadyImportedDatasets?.data ?? [];
 
   if (isNullish(organization)) {
     return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;

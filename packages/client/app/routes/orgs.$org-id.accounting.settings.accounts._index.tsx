@@ -7,7 +7,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 };
 
 const OrganizationAccountsPage = ({ loaderData }: Route.ComponentProps) => (
-  <AccountsTable accounts={loaderData?.accounts ?? []} />
+  <AccountsTable accounts={loaderData?.data ?? []} />
 );
 
 export default OrganizationAccountsPage;

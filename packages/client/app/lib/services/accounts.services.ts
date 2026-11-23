@@ -44,12 +44,12 @@ export class AccountsService extends Service {
 
       const accounts = await this._listAll({
         listFn: async (query) => {
-          const { accounts } = await api.list({ orgId, query });
+          const { data: accounts } = await api.list({ orgId, query });
           return accounts;
         },
       });
 
-      return { accounts };
+      return { data: accounts };
     });
   };
 

@@ -53,7 +53,7 @@ export class MessagesHandlers extends Resource {
     build: ({ result: { data: messages } }) =>
       encodeWithCodecs({
         schema: ApiSchema.Messages.GetMessagesResponseSchema,
-        value: { messages },
+        value: { data: messages },
       }),
   });
 }

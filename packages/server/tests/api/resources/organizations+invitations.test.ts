@@ -156,7 +156,7 @@ describe("organization invitations", () => {
 
       expect(response.status).toBe(200);
 
-      const { invitations: listed } = ApiSchema.Invitations.GetInvitationsResponseSchema.parse(
+      const { data: listed } = ApiSchema.Invitations.GetInvitationsResponseSchema.parse(
         await response.json(),
       );
 
@@ -168,7 +168,7 @@ describe("organization invitations", () => {
 
       expect(response.status).toBe(200);
       expect(
-        ApiSchema.Invitations.GetInvitationsResponseSchema.parse(await response.json()).invitations,
+        ApiSchema.Invitations.GetInvitationsResponseSchema.parse(await response.json()).data,
       ).toEqual([]);
     });
 
@@ -177,7 +177,7 @@ describe("organization invitations", () => {
 
       expect(response.status).toBe(200);
       expect(
-        ApiSchema.Invitations.GetInvitationsResponseSchema.parse(await response.json()).invitations,
+        ApiSchema.Invitations.GetInvitationsResponseSchema.parse(await response.json()).data,
       ).toEqual([]);
     });
   });

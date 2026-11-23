@@ -13,7 +13,7 @@ const LinesResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetLinesResponseSchema = z.strictObject({
-  lines: z.array(LinesResponseSchema),
+  data: z.array(LinesResponseSchema),
 });
 export const GetLineResponseSchema = z.strictObject({
   line: LinesResponseSchema.nullish(),

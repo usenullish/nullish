@@ -55,7 +55,7 @@ export class JournalService extends Service {
   delete = async ({
     journalEntryId,
   }: {
-    journalEntryId: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["journalEntries"][number]["entry"]["id"];
+    journalEntryId: Api["Journal"]["Client"]["GetJournalEntriesResponse"]["data"][number]["entry"]["id"];
   }): Promise<Result<void>> => {
     return await tryCatch(async () => {
       await ApiJournal.create().delete({ journalEntryId });

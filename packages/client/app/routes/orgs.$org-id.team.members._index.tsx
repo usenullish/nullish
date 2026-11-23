@@ -8,7 +8,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 };
 
 const TeamMembersPage = ({ loaderData }: Route.ComponentProps) => {
-  const members = loaderData?.members ?? [];
+  const members = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

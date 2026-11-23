@@ -58,12 +58,12 @@ export class BankRelationsService extends Service {
 
       const bankRelations = await this._listAll({
         listFn: async (query) => {
-          const { bankRelations } = await api.list({ orgId, query });
+          const { data: bankRelations } = await api.list({ orgId, query });
           return bankRelations;
         },
       });
 
-      return { bankRelations };
+      return { data: bankRelations };
     });
   };
 

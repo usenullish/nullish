@@ -24,8 +24,8 @@ const BillingSettingsPage = ({ loaderData }: Route.ComponentProps) => {
   return (
     <BillingSettingsEdit
       billingSettings={billingSettings}
-      vatRates={loaderData.vatRates?.rates ?? []}
-      bankRelations={loaderData.bankRelations?.bankRelations ?? []}
+      vatRates={loaderData.vatRates?.data ?? []}
+      bankRelations={loaderData.bankRelations?.data ?? []}
     />
   );
 };

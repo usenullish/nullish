@@ -24,7 +24,7 @@ const SubscriptionSuccessPage = ({ params, loaderData }: Route.ComponentProps) =
     return <Navigate to={UnscopedPath.create().toOrganizations()} replace />;
   }
 
-  const [subscriptionSummary] = loaderData?.subscriptionSummaries ?? [];
+  const [subscriptionSummary] = loaderData?.data ?? [];
 
   return (
     <NonNullishOrganizationContext.Provider value={organization}>

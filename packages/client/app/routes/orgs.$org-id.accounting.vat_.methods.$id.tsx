@@ -29,7 +29,7 @@ export const loader = async (args: Route.LoaderArgs) => {
 const VatMethodPage = ({ loaderData }: Route.ComponentProps) => {
   const { id: organizationId } = useOrganization();
   const method = loaderData.method?.method;
-  const periods = loaderData.periods?.periods ?? [];
+  const periods = loaderData.periods?.data ?? [];
 
   if (isNullish(method)) {
     return <Navigate to={`/orgs/${organizationId}`} replace />;

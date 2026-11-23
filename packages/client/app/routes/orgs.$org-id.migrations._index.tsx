@@ -18,7 +18,7 @@ const OrganizationMigrationsPage = ({ loaderData }: Route.ComponentProps) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
 
-  const migrations = loaderData?.migrations ?? [];
+  const migrations = loaderData?.data ?? [];
 
   return (
     <div className="flex flex-col gap-4">

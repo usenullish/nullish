@@ -91,7 +91,7 @@ export class InvoiceSummariesHandlers extends Resource {
     resourceKey: "invoiceSummaries",
     filtersSchema: ApiSchema.InvoiceSummaries.GetInvoiceSummariesFiltersQuerySchema,
     build: ({ result: { data: invoiceSummaries } }) => ({
-      invoiceSummaries: invoiceSummaries.map(encodeInvoiceSummaryResponse),
+      data: invoiceSummaries.map(encodeInvoiceSummaryResponse),
     }),
   });
 

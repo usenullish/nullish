@@ -76,7 +76,7 @@ export class BankMovementsHandlers extends Resource {
     resourceKey: "bankMovements",
     filtersSchema: ApiSchema.BankMovements.GetBankMovementsFiltersQuerySchema,
     build: ({ result: { data: bankMovements } }) => ({
-      bankMovements: bankMovements.map(encodeBankMovementResponse),
+      data: bankMovements.map(encodeBankMovementResponse),
     }),
   });
 

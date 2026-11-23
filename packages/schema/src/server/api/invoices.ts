@@ -20,7 +20,7 @@ export const InvoiceSchema = withIssuedCodecs(
 );
 
 export const GetInvoicesResponseSchema = z.strictObject({
-  invoices: z.array(InvoiceSchema),
+  data: z.array(InvoiceSchema),
 });
 export const GetInvoiceResponseSchema = z.strictObject({
   invoice: InvoiceSchema.nullish(),

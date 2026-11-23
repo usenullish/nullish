@@ -7,7 +7,7 @@ export const DocumentTemplatesResponseSchema = withAuditFieldsCodecs(
 );
 
 export const GetDocumentTemplatesResponseSchema = z.strictObject({
-  templates: z.array(DocumentTemplatesResponseSchema),
+  data: z.array(DocumentTemplatesResponseSchema),
 });
 export const GetDocumentTemplateResponseSchema = z.strictObject({
   template: DocumentTemplatesResponseSchema.nullish(),

@@ -10,7 +10,7 @@ export const InvitationSchema = withAuditFieldsCodecs(
 });
 
 export const GetInvitationsResponseSchema = z.strictObject({
-  invitations: z.array(InvitationSchema),
+  data: z.array(InvitationSchema),
 });
 
 export const InvitationTokenRequestSchema = z.strictObject({

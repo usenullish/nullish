@@ -164,7 +164,7 @@ describe("organization migrations", () => {
 
       expect(response.status).toBe(200);
 
-      const { migrations: listed } = ApiSchema.Migrations.GetMigrationsResponseSchema.parse(
+      const { data: listed } = ApiSchema.Migrations.GetMigrationsResponseSchema.parse(
         await response.json(),
       );
 
@@ -182,7 +182,7 @@ describe("organization migrations", () => {
 
       expect(response.status).toBe(200);
       expect(
-        ApiSchema.Migrations.GetMigrationsResponseSchema.parse(await response.json()).migrations,
+        ApiSchema.Migrations.GetMigrationsResponseSchema.parse(await response.json()).data,
       ).toEqual([]);
     });
   });
