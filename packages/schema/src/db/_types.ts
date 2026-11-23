@@ -55,6 +55,7 @@ interface Db {
     Datasets: typeof DbSchema.Migration.Datasets.DatasetsSchema;
   };
   Subscription: {
+    PlanRules: typeof DbSchema.Subscription.PlanRules.PlanRulesSchema;
     Plans: typeof DbSchema.Subscription.Plans.PlansSchema;
     ExternalProducts: typeof DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
     CustomProducts: typeof DbSchema.Subscription.CustomProducts.CustomProductsSchema;
