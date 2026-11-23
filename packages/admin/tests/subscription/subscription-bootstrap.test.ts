@@ -9,6 +9,7 @@ import {
 import { openTestDb } from "../_test-utils";
 
 const plans = DbSchema.Subscription.Plans.PlansSchema;
+const planRules = DbSchema.Subscription.PlanRules.PlanRulesSchema;
 const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
 const customProducts = DbSchema.Subscription.CustomProducts.CustomProductsSchema;
 const customPrices = DbSchema.Subscription.CustomPrices.CustomPricesSchema;
@@ -30,7 +31,7 @@ describe("SubscriptionBootstrapService", () => {
   const setupOf = ({
     externalProductId = `prod_${crypto.randomUUID()}`,
   }: { externalProductId?: string } = {}): SubscriptionBootstrap => [
-    { provider: SubscriptionProvider.SELF, trialDays: 30 },
+    { provider: SubscriptionProvider.SELF, trialDays: 30, rules: { maxMembers: 5 } },
     {
       provider: SubscriptionProvider.CUSTOM,
       name: "Instance",
@@ -44,6 +45,7 @@ describe("SubscriptionBootstrapService", () => {
       provider: SubscriptionProvider.STRIPE,
       externalProductId,
       name: "Cloud",
+      rules: { maxMembers: 10 },
       taxRates: [
         {
           externalTaxRateId: `txr_${crypto.randomUUID()}`,
@@ -109,7 +111,13 @@ describe("SubscriptionBootstrapService", () => {
       graceDays: settingsBefore.graceDays,
     });
 
-    await db.delete(plans).where(inArray(plans.id, insertedPlanIds.splice(0)));
+    const planIds = insertedPlanIds.splice(0);
+    const planRulesIds = (await db.select().from(plans).where(inArray(plans.id, planIds)))
+      .map(({ planRulesId }) => planRulesId)
+      .filter((id) => id !== null);
+
+    await db.delete(plans).where(inArray(plans.id, planIds));
+    await db.delete(planRules).where(inArray(planRules.id, planRulesIds));
     await db.delete(taxRates).where(inArray(taxRates.id, insertedTaxRateIds.splice(0)));
   });
 
@@ -168,6 +176,30 @@ describe("SubscriptionBootstrapService", () => {
     const self = await newPlanOf(SubscriptionProvider.SELF);
 
     expect(self.trialDays).toBe(30);
+  });
+
+  test("loads the rules of the self and external plans", async () => {
+    await bootstrap(setupOf());
+
+    const maxMembersOf = async (provider: SubscriptionProvider) => {
+      const { planRulesId } = await newPlanOf(provider);
+      assertNonNullish(planRulesId);
+
+      const [rules] = await db.select().from(planRules).where(eq(planRules.id, planRulesId));
+
+      return rules?.maxMembers;
+    };
+
+    expect(await maxMembersOf(SubscriptionProvider.SELF)).toBe(5);
+    expect(await maxMembersOf(SubscriptionProvider.STRIPE)).toBe(10);
+  });
+
+  test("leaves a plan without rules when none is given", async () => {
+    await bootstrap(setupOf());
+
+    const custom = await newPlanOf(SubscriptionProvider.CUSTOM);
+
+    expect(custom.planRulesId).toBeNull();
   });
 
   test("makes the self plan the initial plan", async () => {
