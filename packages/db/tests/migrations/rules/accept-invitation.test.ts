@@ -199,7 +199,7 @@ describe("accept_invitation", () => {
     const { id, token } = await insertInvitation({ organizationId });
     await db
       .update(organizations)
-      .set({ deletedAt: new Date() })
+      .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
       .where(eq(organizations.id, organizationId));
 
     const error = await acceptAs({ userId: TEST_OTHER_USER_ID, token }).catch((e: unknown) => e);

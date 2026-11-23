@@ -142,7 +142,7 @@ describe("core.organizations", () => {
 
     beforeEach(async () => {
       clientId = await createClient(db, organizationId);
-      await markDeleted({ organizationId });
+      await markDeleted({ organizationId, deletedAt: new Date(Date.now() - DAY_MS) });
     });
 
     test("is still readable by its members", async () => {

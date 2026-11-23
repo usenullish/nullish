@@ -256,7 +256,7 @@ describe("delete_organization_member", () => {
     });
     await db
       .update(organizations)
-      .set({ deletedAt: new Date() })
+      .set({ deletedAt: new Date(Date.now() - 24 * 60 * 60 * 1000) })
       .where(eq(organizations.id, organizationId));
 
     const rows = await deleteOrganizationMemberAs({ userId: TEST_USER_ID, membershipId: memberId });
