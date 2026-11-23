@@ -1,0 +1,13 @@
+DEINE TESTPHASE ENDET BALD
+
+Die Testphase von [[ nullish.organization.name ]] auf nullish endet am [[ nullish.trial.endsOn ]].
+
+Wähle einen Plan, um weiterzumachen.
+
+Plan wählen [[ nullish.plans.url ]]
+
+----------------------------------------
+
+Du erhältst diese E-Mail, weil du [[ nullish.organization.name ]] auf nullish erstellt hast.
+
+nullish https://nullish.ch · Schweizer Buchhaltung, fast ohne Aufwand

@@ -14,6 +14,7 @@ import {
   EmailTemplateSchema,
   type InvitationTemplateData,
   type ResetPasswordTemplateData,
+  type SubscriptionTrialReminderTemplateData,
   type VerifyEmailTemplateData,
   renderHtmlTemplate,
   renderTextTemplate,
@@ -80,7 +81,11 @@ export abstract class MailProvider implements SendMail {
 
   #templateData(
     args: MailTypes["Send"]["Args"],
-  ): VerifyEmailTemplateData | ResetPasswordTemplateData | InvitationTemplateData {
+  ):
+    | VerifyEmailTemplateData
+    | ResetPasswordTemplateData
+    | InvitationTemplateData
+    | SubscriptionTrialReminderTemplateData {
     switch (args.type) {
       case MailType.VERIFY_EMAIL:
         return { nullish: { emailVerification: { url: args.url } } };
@@ -97,6 +102,19 @@ export abstract class MailProvider implements SendMail {
               expiresOn: formatDate({ locale: lang, date: invitation.expiresAt }),
               invitedBy,
             },
+          },
+        };
+      }
+      case MailType.SUBSCRIPTION_TRIAL_REMINDER: {
+        const { lang, url, organization, subscription } = args;
+
+        return {
+          nullish: {
+            organization,
+            trial: {
+              endsOn: formatDate({ locale: lang, date: subscription.periodEnd }),
+            },
+            plans: { url },
           },
         };
       }

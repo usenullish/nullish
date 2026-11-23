@@ -44,7 +44,7 @@ describe("SendMailArgsSchema", () => {
 
   const invitation = {
     ...valid,
-    type: MailType.INVITATION,
+    type: MailType.INVITATION as const,
     organization: { name: "Acme Inc." },
     invitation: { expiresAt: new Date("2026-03-31T10:00:00Z") },
     invitedBy: { name: "Jane Doe", email: "jane@acme.test" },

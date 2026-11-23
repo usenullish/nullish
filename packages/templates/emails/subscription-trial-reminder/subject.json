@@ -1,0 +1,6 @@
+{
+  "en": "Your trial of [[ nullish.organization.name ]] ends on [[ nullish.trial.endsOn ]]",
+  "de": "Deine Testphase von [[ nullish.organization.name ]] endet am [[ nullish.trial.endsOn ]]",
+  "fr": "Ton essai de [[ nullish.organization.name ]] se termine le [[ nullish.trial.endsOn ]]",
+  "it": "La prova di [[ nullish.organization.name ]] termina il [[ nullish.trial.endsOn ]]"
+}

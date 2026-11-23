@@ -4,6 +4,7 @@ import { DefaultTemplateLanguage } from "../../db/constants/documents";
 import { SelectOrganizationsSchema } from "../../records/schemas/core/organizations";
 import { SelectInvitationsSchema } from "../../records/schemas/core/invitations";
 import { SelectUsersSchema } from "../../records/schemas/auth/users";
+import { SelectSubscriptionsSchema } from "../../records/schemas/subscription/subscriptions";
 
 const SendLinkArgsSchema = z.strictObject({
   to: z.email(),
@@ -29,10 +30,20 @@ export const SendInvitationArgsSchema = z.strictObject({
   invitedBy: SelectUsersSchema.pick({ name: true, email: true }),
 });
 
+export const SendSubscriptionTrialReminderArgsSchema = z.strictObject({
+  type: z.literal(MailType.SUBSCRIPTION_TRIAL_REMINDER),
+  ...SendLinkArgsSchema.shape,
+  organization: SelectOrganizationsSchema.pick({ name: true }),
+  subscription: z.strictObject({
+    periodEnd: SelectSubscriptionsSchema.shape.periodEnd.unwrap(),
+  }),
+});
+
 export const SendMailArgsSchema = z.discriminatedUnion("type", [
   SendVerifyEmailArgsSchema,
   SendResetPasswordArgsSchema,
   SendInvitationArgsSchema,
+  SendSubscriptionTrialReminderArgsSchema,
 ]);
 
 export const DeliverMailArgsSchema = z.strictObject({

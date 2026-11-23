@@ -1,0 +1,13 @@
+TON ESSAI SE TERMINE BIENTÔT
+
+L'essai de [[ nullish.organization.name ]] sur nullish se termine le [[ nullish.trial.endsOn ]].
+
+Choisis un forfait pour continuer.
+
+Choisir un forfait [[ nullish.plans.url ]]
+
+----------------------------------------
+
+Tu reçois cet e-mail parce que tu as créé [[ nullish.organization.name ]] sur nullish.
+
+nullish https://nullish.ch · Ta compta suisse, presque sans effort
