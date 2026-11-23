@@ -4,7 +4,9 @@ import {
   BigIntCodec,
   DateCodec,
   isArrayExactlyOne,
+  isNullish,
   nonNullish,
+  type Option,
   type Result,
 } from "@usenullish/nullish-common";
 import type { Tx } from "@usenullish/nullish-db";
@@ -14,11 +16,13 @@ import { AdminServiceContext, type AdminServiceContextArgs } from "../../_servic
 import { insertCustomPrice } from "../_helpers/custom-prices";
 import { insertCustomProduct } from "../_helpers/custom-products";
 import { insertExternalProduct } from "../_helpers/external-products";
+import { insertPlanRules } from "../_helpers/plan-rules";
 import { disablePlan, insertPlan, listPlans } from "../_helpers/plans";
 import { updateSubscriptionSettings } from "../_helpers/subscription-settings";
 import { insertSubscriptionTaxRate } from "../_helpers/subscription-tax-rates";
 
 const {
+  PlanRulesSchema: { InsertPlanRulesSchema },
   PlansSchema: { InsertPlansSchema },
   ExternalProductsSchema: { InsertExternalProductsSchema },
   CustomProductsSchema: { InsertCustomProductsSchema },
@@ -31,6 +35,7 @@ const ExternalProviderSchema = z.enum(SubscriptionProvider).exclude(["SELF", "CU
 const BootstrapSelfPlanSchema = z.strictObject({
   provider: z.literal(SubscriptionProvider.SELF),
   trialDays: InsertPlansSchema.shape.trialDays,
+  rules: InsertPlanRulesSchema.optional(),
 });
 
 const BootstrapCustomPlanSchema = z.strictObject({
@@ -50,6 +55,7 @@ const BootstrapExternalPlanSchema = z.strictObject({
   provider: ExternalProviderSchema,
   externalProductId: InsertExternalProductsSchema.shape.externalProductId,
   name: InsertExternalProductsSchema.shape.name,
+  rules: InsertPlanRulesSchema.optional(),
   taxRates: z
     .array(
       InsertSubscriptionTaxRatesSchema.pick({ externalTaxRateId: true }).extend({
@@ -76,9 +82,11 @@ export const SubscriptionBootstrapSchema = z
 export type SubscriptionBootstrap = z.input<typeof SubscriptionBootstrapSchema>;
 
 type BootstrapPlan = z.output<typeof BootstrapPlanSchema>;
+type BootstrapSelfPlan = z.output<typeof BootstrapSelfPlanSchema>;
 type BootstrapCustomPlan = z.output<typeof BootstrapCustomPlanSchema>;
 type BootstrapExternalPlan = z.output<typeof BootstrapExternalPlanSchema>;
 type Plan = Records["Subscription"]["Plans"]["Select"];
+type PlanRules = Records["Subscription"]["PlanRules"]["Select"];
 
 export class SubscriptionBootstrapService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
@@ -138,12 +146,40 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
   async #seedPlan({ tx, plan }: { tx: Tx; plan: BootstrapPlan }): Promise<Plan> {
     switch (plan.provider) {
       case SubscriptionProvider.SELF:
-        return await insertPlan({ tx, plan });
+        return await this.#seedSelfPlan({ tx, plan });
       case SubscriptionProvider.CUSTOM:
         return await this.#seedCustomPlan({ tx, plan });
       default:
         return await this.#seedExternalPlan({ tx, plan });
     }
+  }
+
+  async #seedSelfPlan({
+    tx,
+    plan: { provider, trialDays, rules },
+  }: {
+    tx: Tx;
+    plan: BootstrapSelfPlan;
+  }): Promise<Plan> {
+    const planRulesId = await this.#seedPlanRules({ tx, rules });
+
+    return await insertPlan({ tx, plan: { provider, trialDays, planRulesId } });
+  }
+
+  async #seedPlanRules({
+    tx,
+    rules,
+  }: {
+    tx: Tx;
+    rules: Option<Records["Subscription"]["PlanRules"]["Insert"]>;
+  }): Promise<Option<PlanRules["id"]>> {
+    if (isNullish(rules)) {
+      return undefined;
+    }
+
+    const { id } = await insertPlanRules({ tx, rules });
+
+    return id;
   }
 
   async #seedCustomPlan({
@@ -169,12 +205,14 @@ export class SubscriptionBootstrapService extends AdminServiceContext {
 
   async #seedExternalPlan({
     tx,
-    plan: { provider, externalProductId, name, taxRates },
+    plan: { provider, externalProductId, name, rules, taxRates },
   }: {
     tx: Tx;
     plan: BootstrapExternalPlan;
   }): Promise<Plan> {
-    const plan = await insertPlan({ tx, plan: { provider } });
+    const planRulesId = await this.#seedPlanRules({ tx, rules });
+
+    const plan = await insertPlan({ tx, plan: { provider, planRulesId } });
 
     await insertExternalProduct({
       tx,
