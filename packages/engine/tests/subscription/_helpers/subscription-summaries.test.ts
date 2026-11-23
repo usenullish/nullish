@@ -20,6 +20,7 @@ const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
 const subscriptionSettings = DbSchema.Subscription.SubscriptionSettings.SubscriptionSettingsSchema;
 const plans = DbSchema.Subscription.Plans.PlansSchema;
 const externalProducts = DbSchema.Subscription.ExternalProducts.ExternalProductsSchema;
+const planRules = DbSchema.Subscription.PlanRules.PlanRulesSchema;
 
 const HOUR_MS = 60 * 60 * 1000;
 const DAY_MS = 24 * HOUR_MS;
@@ -44,6 +45,7 @@ const updateSubscription = ({
 
 describe("subscription/_helpers/subscription-summaries", () => {
   const stripePlanIds: string[] = [];
+  const planRulesIds: string[] = [];
 
   beforeEach(async () => {
     await resetDb(db);
@@ -57,6 +59,7 @@ describe("subscription/_helpers/subscription-summaries", () => {
   afterAll(async () => {
     await resetDb(db);
     await db.delete(plans).where(inArray(plans.id, stripePlanIds));
+    await db.delete(planRules).where(inArray(planRules.id, planRulesIds));
     await client.close();
   });
 
@@ -76,7 +79,7 @@ describe("subscription/_helpers/subscription-summaries", () => {
 
     const [summary] = await list(organizationId);
 
-    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.SELF });
+    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.SELF, rules: null });
     expect(summary?.product).toBeNull();
   });
 
@@ -101,8 +104,37 @@ describe("subscription/_helpers/subscription-summaries", () => {
 
     const [summary] = await list(organizationId);
 
-    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.STRIPE });
+    expect(summary?.plan).toEqual({ provider: SubscriptionProvider.STRIPE, rules: null });
     expect(summary?.product).toEqual({ name: "Cloud" });
+  });
+
+  test("returns no rules for a plan without rules", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    const [summary] = await list(organizationId);
+
+    expect(summary?.plan.rules).toBeNull();
+  });
+
+  test("returns the rules of the plan", async () => {
+    const organizationId = await createOrganization(db, TEST_USER_ID);
+
+    const [rules] = await db.insert(planRules).values({ maxMembers: 3 }).returning();
+    assertNonNullish(rules);
+    planRulesIds.push(rules.id);
+
+    const [plan] = await db
+      .insert(plans)
+      .values({ provider: SubscriptionProvider.STRIPE, planRulesId: rules.id })
+      .returning();
+    assertNonNullish(plan);
+    stripePlanIds.push(plan.id);
+
+    await updateSubscription({ organizationId, values: { planId: plan.id } });
+
+    const [summary] = await list(organizationId);
+
+    expect(summary?.plan.rules).toEqual({ maxMembers: 3 });
   });
 
   test("returns an open organization without end", async () => {
