@@ -58,8 +58,9 @@ export class McpToolsSystemAccounts extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: accounts }) => ({
+        return this.mapResult(result, ({ data: accounts, pagination }) => ({
           data: accounts.map(this.#encodeResponse),
+          pagination,
         }));
       },
     });

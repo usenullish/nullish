@@ -53,8 +53,9 @@ export class McpToolsAccountingSettings extends McpTools {
 
         const result = await store.list(query);
 
-        return this.mapResult(result, ({ data: settings }) => ({
+        return this.mapResult(result, ({ data: settings, pagination }) => ({
           data: settings.map(this.#encodeResponse),
+          pagination,
         }));
       },
     });

@@ -57,8 +57,9 @@ export class McpToolsInvoices extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: invoices }) => ({
+        return this.mapResult(result, ({ data: invoices, pagination }) => ({
           data: invoices.map(encodeInvoiceResponse),
+          pagination,
         }));
       },
     });

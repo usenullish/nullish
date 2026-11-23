@@ -66,8 +66,9 @@ export class McpToolsTemplateContents extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, ({ data: contents }) => ({
+        return this.mapResult(result, ({ data: contents, pagination }) => ({
           data: contents.map(this.#encodeResponse),
+          pagination,
         }));
       },
     });

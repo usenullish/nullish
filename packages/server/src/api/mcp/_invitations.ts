@@ -49,8 +49,9 @@ export class McpToolsInvitations extends McpTools {
 
         const result = await store.list(query);
 
-        return this.mapResult(result, ({ data: invitations }) => ({
+        return this.mapResult(result, ({ data: invitations, pagination }) => ({
           data: invitations.map(encodeInvitationResponse),
+          pagination,
         }));
       },
     });
