@@ -8,7 +8,7 @@ import { OrganizationDeletedBanner } from "~/components/layout/organization-dele
 import { DeleteOrganization } from "~/components/settings/organizations/delete/delete-organization";
 import { SubscriptionProvider } from "@usenullish/nullish-schema/db";
 import { useOrganization } from "~/context/contexts/organization.context";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
@@ -19,13 +19,13 @@ export const OrganizationLocked = () => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const isAdmin = useIsOrganizationAdmin({ organizationId: organization.id });
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   const choosePlan =
     isAdmin &&
     isNullish(organization.deletedAt) &&
-    subscriptionSummary?.plan.provider === SubscriptionProvider.SELF;
+    subscription?.plan.provider === SubscriptionProvider.SELF;
 
   return (
     <>

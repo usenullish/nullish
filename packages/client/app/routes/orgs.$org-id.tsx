@@ -10,7 +10,7 @@ import { AccountsContext } from "~/context/contexts/accounts.context";
 import { AccountingSettingsContext } from "~/context/contexts/accounting-settings.context";
 import { BillingSettingsContext } from "~/context/contexts/billing-settings.context";
 import { ClientsContext } from "~/context/contexts/clients.context";
-import { SubscriptionSummaryContext } from "~/context/contexts/subscription-summary.context";
+import { SubscriptionContext } from "~/context/contexts/subscription.context";
 import { loadOrganizationData } from "~/context/loaders/organization.loader.server";
 import { UnscopedPath } from "~/navigation";
 
@@ -35,7 +35,7 @@ const Layout = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <NonNullishOrganizationContext.Provider value={organization}>
-      <SubscriptionSummaryContext.Provider value={loaderData.subscriptionSummary}>
+      <SubscriptionContext.Provider value={loaderData.subscription}>
         <SubscriptionGuard>
           <AccountsContext.Provider value={loaderData.accounts}>
             <AccountingSettingsContext.Provider value={loaderData.accountingSettings}>
@@ -51,7 +51,7 @@ const Layout = ({ loaderData }: Route.ComponentProps) => {
             </AccountingSettingsContext.Provider>
           </AccountsContext.Provider>
         </SubscriptionGuard>
-      </SubscriptionSummaryContext.Provider>
+      </SubscriptionContext.Provider>
     </NonNullishOrganizationContext.Provider>
   );
 };

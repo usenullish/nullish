@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { isNullish, nonNullish } from "@usenullish/nullish-common";
 import { SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { SUBSCRIPTION_PLANS_PATH } from "@usenullish/nullish-schema/server";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { OrganizationPath } from "~/navigation";
@@ -15,11 +15,11 @@ import { ManageSubscription } from "./manage-subscription";
 export const SubscriptionOverview = () => {
   const { i18n } = useI18n();
   const formatDate = useFormatDate();
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
 
-  if (isNullish(subscriptionSummary)) {
+  if (isNullish(subscription)) {
     return null;
   }
 
@@ -27,7 +27,7 @@ export const SubscriptionOverview = () => {
     subscription: { status, periodEnd, cancelAt },
     plan,
     product,
-  } = subscriptionSummary;
+  } = subscription;
 
   const rows = [
     {

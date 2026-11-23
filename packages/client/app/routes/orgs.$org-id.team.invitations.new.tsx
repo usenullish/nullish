@@ -1,7 +1,7 @@
 import type { Route } from "./+types/orgs.$org-id.team.invitations.new";
 import { nonNullish } from "@usenullish/nullish-common";
 import { useOrganization } from "~/context/contexts/organization.context";
-import { useSubscriptionSummary } from "~/context/contexts/subscription-summary.context";
+import { useSubscription } from "~/context/contexts/subscription.context";
 import { OrganizationMembersServer } from "~/context/server/organization-members.server";
 import { NewInvitation } from "~/components/settings/team/invitations/new/new-invitation";
 import type { RouteHandle } from "~/kit/router/route-handle";
@@ -22,9 +22,9 @@ export const loader = async (args: Route.LoaderArgs) => {
 
 const NewInvitationPage = ({ loaderData: membersCount }: Route.ComponentProps) => {
   const { id: organizationId } = useOrganization();
-  const subscriptionSummary = useSubscriptionSummary();
+  const subscription = useSubscription();
 
-  const maxMembers = subscriptionSummary?.plan.rules?.maxMembers;
+  const maxMembers = subscription?.plan.rules?.maxMembers;
   const membersLimit =
     nonNullish(maxMembers) && (membersCount ?? 0) >= maxMembers ? maxMembers : undefined;
 
