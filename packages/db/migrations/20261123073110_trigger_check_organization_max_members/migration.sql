@@ -34,5 +34,5 @@ SET
   search_path = '';
 
 CREATE TRIGGER enforce_memberships_max_members
-    BEFORE INSERT ON core.memberships FOR EACH ROW
-    EXECUTE FUNCTION core.check_organization_max_members ();
+BEFORE INSERT ON core.memberships FOR EACH ROW
+EXECUTE FUNCTION core.check_organization_max_members ();
