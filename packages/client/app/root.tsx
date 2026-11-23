@@ -29,6 +29,7 @@ import { NotificationsProvider } from "~/kit/notifications/notifications-provide
 import { PrivacyProvider } from "~/kit/privacy/privacy-provider";
 import { ActiveConversationProvider } from "~/kit/chat/active-conversation-provider";
 import { EnvironmentContext } from "~/kit/environment/environment.context";
+import { LegalContext } from "~/kit/legal/legal.context";
 import { useNonce } from "~/kit/csp/nonce.context";
 import { nonNullish, notEmptyString } from "@usenullish/nullish-common";
 import { CenteredLayout } from "~/components/layout/centered-layout";
@@ -146,7 +147,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
     DEFAULT_SETTINGS,
   ];
 
-  const { theme, i18n, privacy, environment } = kit;
+  const { theme, i18n, privacy, environment, legal } = kit;
 
   return (
     <ThemeProvider initialTheme={theme}>
@@ -154,19 +155,21 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <I18nProvider initialI18n={i18n}>
           <PrivacyProvider initialPrivacy={privacy}>
             <EnvironmentContext.Provider value={environment}>
-              <SettingsContext.Provider value={settingsResult?.settings}>
-                <ActiveConversationProvider>
-                  <OrganizationsContext.Provider value={organizationsResult?.data}>
-                    <CurrenciesContext.Provider value={currenciesResult?.data}>
-                      <LlmUsageContext.Provider value={llmUsageResult?.llmUsage}>
-                        <AssistantContext.Provider value={assistantResult?.assistant}>
-                          <Outlet />
-                        </AssistantContext.Provider>
-                      </LlmUsageContext.Provider>
-                    </CurrenciesContext.Provider>
-                  </OrganizationsContext.Provider>
-                </ActiveConversationProvider>
-              </SettingsContext.Provider>
+              <LegalContext.Provider value={legal}>
+                <SettingsContext.Provider value={settingsResult?.settings}>
+                  <ActiveConversationProvider>
+                    <OrganizationsContext.Provider value={organizationsResult?.data}>
+                      <CurrenciesContext.Provider value={currenciesResult?.data}>
+                        <LlmUsageContext.Provider value={llmUsageResult?.llmUsage}>
+                          <AssistantContext.Provider value={assistantResult?.assistant}>
+                            <Outlet />
+                          </AssistantContext.Provider>
+                        </LlmUsageContext.Provider>
+                      </CurrenciesContext.Provider>
+                    </OrganizationsContext.Provider>
+                  </ActiveConversationProvider>
+                </SettingsContext.Provider>
+              </LegalContext.Provider>
             </EnvironmentContext.Provider>
           </PrivacyProvider>
         </I18nProvider>

@@ -8,8 +8,10 @@ import { EnvironmentTag } from "~/components/core/environment-tag";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "~/ui/components/field";
 import { Input } from "~/ui/components/input";
 import { CenteredLayout } from "~/components/layout/centered-layout";
+import { SignUpLegal } from "~/components/auth/sign/sign-up-legal";
 import { EMAIL_PLACEHOLDER } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { useLegal } from "~/kit/legal/legal.context";
 import { useAuthErrorMessage } from "~/kit/auth/auth-error.hook";
 import { AUTH_NAVIGATION, InvitationPath } from "~/navigation";
 import { useInvitationToken } from "~/kit/auth/auth-redirect.hook";
@@ -18,6 +20,7 @@ import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SignUp = () => {
   const { i18n } = useI18n();
+  const legal = useLegal();
   const authErrorMessage = useAuthErrorMessage();
   const nameId = useId();
   const emailId = useId();
@@ -152,6 +155,8 @@ export const SignUp = () => {
           </form>
         </CardContent>
       </Card>
+
+      {nonNullish(legal) && <SignUpLegal legal={legal} />}
     </CenteredLayout>
   );
 };
