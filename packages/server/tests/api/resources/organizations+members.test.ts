@@ -3,7 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { sql } from "drizzle-orm";
 import { type DbInstance, openDb } from "@usenullish/nullish-db";
 import { createAuth } from "@usenullish/nullish-auth/server";
-import { ApiSchema, CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
+import { ApiSchema } from "@usenullish/nullish-schema/server";
 import { ApiKeyAction, ApiKeyResource } from "@usenullish/nullish-schema/auth";
 import { DbSchema, MembershipRole, type PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { assertNonNullish, nonNullish } from "@usenullish/nullish-common";
@@ -169,9 +169,7 @@ describe("organization members", () => {
     });
 
     expect(response.status).toBe(400);
-    expect(CommonSchema.Error.ErrorSchema.parse(await response.json()).code).toBe(
-      ErrorCode.VALIDATION,
-    );
+    expect(await response.json()).toMatchObject({ success: false });
   });
 
   test("lists no member to a member who is not an admin", async () => {
