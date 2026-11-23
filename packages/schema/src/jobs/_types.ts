@@ -18,6 +18,13 @@ interface Jobs {
     Payload: z.infer<typeof JobsSchema.PdfCleanupSchema.PdfCleanupPayloadSchema>;
     Result: z.infer<typeof JobsSchema.PdfCleanupSchema.PdfCleanupResultSchema>;
   };
+  Mails: {
+    Payload: z.infer<typeof JobsSchema.MailsSchema.MailPayloadSchema>;
+    SubscriptionTrialReminderPayload: z.infer<
+      typeof JobsSchema.MailsSchema.SubscriptionTrialReminderMailPayloadSchema
+    >;
+    Result: z.infer<typeof JobsSchema.MailsSchema.MailResultSchema>;
+  };
   Common: {
     ScheduledJobs: z.infer<typeof JobsSchema.CommonSchema.ScheduledJobSchema>;
     ScheduledJobState: ScheduledJobState;
