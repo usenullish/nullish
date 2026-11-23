@@ -1,3 +1,5 @@
+export const TRIAL_REMINDER_DAYS = 3;
+
 export enum SubscriptionStatus {
   TRIALING = "trialing",
   ACTIVE = "active",

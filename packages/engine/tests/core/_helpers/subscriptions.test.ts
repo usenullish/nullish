@@ -5,7 +5,10 @@ import { SQL as BunSQL } from "bun";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { DbSchema, SubscriptionProvider, SubscriptionStatus } from "@usenullish/nullish-schema/db";
 import { envDbUrl } from "@usenullish/nullish-env";
-import { getSelfSubscriptionTrialEnd } from "../../../src/core/_helpers/subscriptions";
+import {
+  getSelfSubscriptionTrialEnd,
+  trialReminderDelay,
+} from "../../../src/core/_helpers/subscriptions";
 import { createOrganization, resetDb, seedUsers, TEST_USER_ID } from "../../_test-utils";
 
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
@@ -81,6 +84,26 @@ describe("core/_helpers/subscriptions", () => {
       );
 
       expect(trialEnd).toBeUndefined();
+    });
+  });
+
+  describe("trialReminderDelay", () => {
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    const now = new Date("2026-11-01T10:00:00Z");
+
+    const delayFor = ({ trialDays }: { trialDays: number }) =>
+      trialReminderDelay({ trialEnd: new Date(now.getTime() + trialDays * DAY_MS), now });
+
+    test("reminds three days before the end of a long trial", () => {
+      expect(delayFor({ trialDays: 14 })).toBe(11 * DAY_MS);
+    });
+
+    test("reminds three days before the end of a six days trial", () => {
+      expect(delayFor({ trialDays: 6 })).toBe(3 * DAY_MS);
+    });
+
+    test("reminds halfway through a trial shorter than six days", () => {
+      expect(delayFor({ trialDays: 2 })).toBe(DAY_MS);
     });
   });
 });
