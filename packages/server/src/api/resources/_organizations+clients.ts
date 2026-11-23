@@ -125,8 +125,9 @@ export class ClientsHandlers extends CrudResource<{
       store: (args) => DbCollectionClients.create(args),
       resourceKey: "clients",
       filtersSchema: ApiSchema.Clients.GetClientsFiltersQuerySchema,
-      build: ({ result: { data: clients } }) => ({
+      build: ({ result: { data: clients, pagination } }) => ({
         data: clients.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

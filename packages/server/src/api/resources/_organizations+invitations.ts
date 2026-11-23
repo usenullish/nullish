@@ -68,7 +68,7 @@ export class InvitationsHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, Invitation>({
-    query: async ({ db, userId, context, pagination, sort }) => {
+    query: async ({ db, userId, context, pagination, sort, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -84,11 +84,12 @@ export class InvitationsHandlers extends Resource {
         foreignKeyId: parentId,
       });
 
-      return await store.list({ pagination, sort });
+      return await store.list({ pagination, sort, count });
     },
     resourceKey: "invitations",
-    build: ({ result: { data: invitations } }) => ({
+    build: ({ result: { data: invitations, pagination } }) => ({
       data: invitations.map(encodeInvitationResponse),
+      pagination,
     }),
   });
 

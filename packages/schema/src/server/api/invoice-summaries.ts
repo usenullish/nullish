@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { BigIntCodec } from "@usenullish/nullish-common";
 import { CompositesSchema } from "../../composites";
 import { GetInvoicesFiltersQuerySchema, GetInvoicesFiltersSchema, InvoiceSchema } from "./invoices";
@@ -25,6 +26,7 @@ export const InvoiceSummarySchema = z.strictObject({
 
 export const GetInvoiceSummariesResponseSchema = z.strictObject({
   data: z.array(InvoiceSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetInvoiceSummaryResponseSchema = z.strictObject({
   invoiceSummary: InvoiceSummarySchema.nullish(),

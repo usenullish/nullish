@@ -107,8 +107,9 @@ export class VatMethodsHandlers extends RouteResource<{
     handler: defineChildListHandler<ListRoute, Records["Core"]["VatMethods"]["Select"]>({
       store: (args) => DbCollectionVatMethods.create(args),
       resourceKey: "vat+methods",
-      build: ({ result: { data: methods } }) => ({
+      build: ({ result: { data: methods, pagination } }) => ({
         data: methods.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

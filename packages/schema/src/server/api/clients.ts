@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 
 const ClientsResponseSchema = withAuditFieldsCodecs(
@@ -8,6 +9,7 @@ const ClientsResponseSchema = withAuditFieldsCodecs(
 
 export const GetClientsResponseSchema = z.strictObject({
   data: z.array(ClientsResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetClientResponseSchema = z.strictObject({
   client: ClientsResponseSchema.nullish(),

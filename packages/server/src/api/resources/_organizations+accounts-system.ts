@@ -117,8 +117,9 @@ export class SystemAccountsHandlers extends RouteResource<{
       store: (args) => DbCollectionSystemAccounts.create(args),
       resourceKey: "accounts",
       filtersSchema: ApiSchema.SystemAccounts.GetSystemAccountsFiltersQuerySchema,
-      build: ({ result: { data: accounts } }) => ({
+      build: ({ result: { data: accounts, pagination } }) => ({
         data: accounts.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

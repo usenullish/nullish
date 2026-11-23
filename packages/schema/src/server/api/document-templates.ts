@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 
 export const DocumentTemplatesResponseSchema = withAuditFieldsCodecs(
@@ -8,6 +9,7 @@ export const DocumentTemplatesResponseSchema = withAuditFieldsCodecs(
 
 export const GetDocumentTemplatesResponseSchema = z.strictObject({
   data: z.array(DocumentTemplatesResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetDocumentTemplateResponseSchema = z.strictObject({
   template: DocumentTemplatesResponseSchema.nullish(),

@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 import { DateCodec } from "@usenullish/nullish-common";
 
@@ -21,6 +22,7 @@ export const PeriodsResponseSchema = withStartEndCodecs(
 
 export const GetPeriodsResponseSchema = z.strictObject({
   data: z.array(PeriodsResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetPeriodResponseSchema = z.strictObject({
   period: PeriodsResponseSchema.nullish(),

@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { TimestampCodec } from "@usenullish/nullish-common";
 import { RecordsSchema } from "../../records";
 
@@ -8,6 +9,7 @@ export const MessageSchema = RecordsSchema.Chat.MessagesSchema.SelectMessagesSch
 
 export const GetMessagesResponseSchema = z.strictObject({
   data: z.array(MessageSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 
 export const GetMessagesFiltersSchema = RecordsSchema.Chat.MessagesSchema.FilterMessagesSchema;

@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import {
   BankMovementSchema,
   GetBankMovementsFiltersQuerySchema,
@@ -13,6 +14,7 @@ export const BankMovementSummarySchema = z.strictObject({
 
 export const GetBankMovementSummariesResponseSchema = z.strictObject({
   data: z.array(BankMovementSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 
 export const GetBankMovementSummariesFiltersSchema = GetBankMovementsFiltersSchema;

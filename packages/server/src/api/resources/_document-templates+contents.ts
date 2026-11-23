@@ -127,8 +127,9 @@ export class TemplateContentsHandlers extends CrudResource<{
       store: (args) => DbCollectionTemplateContents.create(args),
       resourceKey: "contents",
       filtersSchema: ApiSchema.TemplateContents.GetTemplateContentsFiltersQuerySchema,
-      build: ({ result: { data: contents } }) => ({
+      build: ({ result: { data: contents, pagination } }) => ({
         data: contents.map(encodeAuditFieldsResponse),
+        pagination,
       }),
     }),
   };

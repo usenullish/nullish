@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 
 export const VatSettingsResponseSchema = withAuditFieldsCodecs(
@@ -8,6 +9,7 @@ export const VatSettingsResponseSchema = withAuditFieldsCodecs(
 
 export const GetVatSettingsResponseSchema = z.strictObject({
   data: z.array(VatSettingsResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetVatSettingResponseSchema = z.strictObject({
   setting: VatSettingsResponseSchema.nullish(),

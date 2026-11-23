@@ -43,7 +43,7 @@ export class BankRelationSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectBankRelationSummaries>({
-    query: async ({ db, userId, context, pagination, sort }) => {
+    query: async ({ db, userId, context, pagination, sort, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -54,11 +54,12 @@ export class BankRelationSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort });
+      }).list({ pagination, sort, count });
     },
     resourceKey: "bankRelationSummaries",
-    build: ({ result: { data: bankRelationSummaries } }) => ({
+    build: ({ result: { data: bankRelationSummaries, pagination } }) => ({
       data: bankRelationSummaries.map(encodeBankRelationSummaryResponse),
+      pagination,
     }),
   });
 }

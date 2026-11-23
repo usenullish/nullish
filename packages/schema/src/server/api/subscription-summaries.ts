@@ -1,5 +1,6 @@
 import { TimestampCodec } from "@usenullish/nullish-common";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { OrganizationSubscriptionStatus } from "../../db/constants/subscriptions";
 import { SubscriptionResponseSchema } from "./subscriptions";
 import { CompositesSchema } from "../../composites";
@@ -27,4 +28,5 @@ export const SubscriptionSummarySchema = z.strictObject({
 
 export const GetSubscriptionSummariesResponseSchema = z.strictObject({
   data: z.array(SubscriptionSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });

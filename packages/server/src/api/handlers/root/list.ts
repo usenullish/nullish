@@ -17,11 +17,11 @@ export function defineListHandler<R extends RouteConfig, Select, TFilters = neve
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {
   return _defineListHandler<R, Select, TFilters>({
-    query: async ({ db, userId, pagination, sort, filters }) => {
+    query: async ({ db, userId, pagination, sort, filters, count }) => {
       return await store({
         db,
         userId,
-      }).list({ pagination, sort, filters });
+      }).list({ pagination, sort, filters, count });
     },
     build,
     resourceKey,

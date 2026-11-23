@@ -1,6 +1,7 @@
 import { RecordsSchema } from "../../records";
 import { CompositesSchema } from "../../composites";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 import { BigIntCodec, DateCodec, DateStringCodec } from "@usenullish/nullish-common";
 
@@ -29,6 +30,7 @@ export const PostingResponseSchema = z.strictObject({
 });
 export const GetJournalEntriesResponseSchema = z.strictObject({
   data: z.array(PostingResponseSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetJournalEntryResponseSchema = z.strictObject({
   journalEntry: PostingResponseSchema.nullish(),

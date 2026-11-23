@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { VatMethodsResponseSchema } from "./vat+methods";
 import { PeriodsResponseSchema } from "./periods";
 
@@ -9,4 +10,5 @@ export const VatMethodSummarySchema = z.strictObject({
 
 export const GetVatMethodSummariesResponseSchema = z.strictObject({
   data: z.array(VatMethodSummarySchema),
+  pagination: PaginationResponseSchema.optional(),
 });

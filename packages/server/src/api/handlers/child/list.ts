@@ -23,7 +23,7 @@ export function defineChildListHandler<R extends RouteConfig, Select, TFilters =
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {
   return _defineListHandler<R, Select, TFilters>({
-    query: async ({ db, userId, context, pagination, sort, filters }) => {
+    query: async ({ db, userId, context, pagination, sort, filters, count }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -34,7 +34,7 @@ export function defineChildListHandler<R extends RouteConfig, Select, TFilters =
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, filters });
+      }).list({ pagination, sort, filters, count });
     },
     build,
     resourceKey,

@@ -130,8 +130,9 @@ export class DocumentTemplatesHandlers extends CrudResource<{
       store: (args) => DbCollectionDocumentTemplates.create(args),
       resourceKey: "document-templates",
       filtersSchema: ApiSchema.DocumentTemplates.GetDocumentTemplatesFiltersQuerySchema,
-      build: ({ result: { data: templates } }) => ({
+      build: ({ result: { data: templates, pagination } }) => ({
         data: templates.map(this.#encodeResponse),
+        pagination,
       }),
     }),
   };

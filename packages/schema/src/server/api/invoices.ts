@@ -1,5 +1,6 @@
 import { RecordsSchema } from "../../records";
 import * as z from "zod";
+import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 import { DateCodec, DateStringCodec } from "@usenullish/nullish-common";
 
@@ -21,6 +22,7 @@ export const InvoiceSchema = withIssuedCodecs(
 
 export const GetInvoicesResponseSchema = z.strictObject({
   data: z.array(InvoiceSchema),
+  pagination: PaginationResponseSchema.optional(),
 });
 export const GetInvoiceResponseSchema = z.strictObject({
   invoice: InvoiceSchema.nullish(),

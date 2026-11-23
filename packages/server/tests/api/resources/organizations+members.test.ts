@@ -44,9 +44,11 @@ describe("organization members", () => {
   const listMembers = async ({
     cookie,
     authorization,
+    query = LIST_QUERY,
   }: {
     cookie?: string;
     authorization?: string;
+    query?: string;
   }): Promise<Response> => {
     const app = new OpenAPIHono<ApiEnv>();
 
@@ -56,7 +58,7 @@ describe("organization members", () => {
 
     OrganizationMembersHandlers.create({ app }).register();
 
-    return await app.request(`/organizations/${organizationId}/members?${LIST_QUERY}`, {
+    return await app.request(`/organizations/${organizationId}/members?${query}`, {
       headers: {
         ...(nonNullish(cookie) && { Cookie: cookie }),
         ...(nonNullish(authorization) && { Authorization: authorization }),
@@ -131,6 +133,43 @@ describe("organization members", () => {
         role: MembershipRole.ACCOUNTANT,
       },
     ]);
+  });
+
+  test("returns the total of the members with count=exact", async () => {
+    const response = await listMembers({
+      cookie: admin.cookie,
+      query: `${LIST_QUERY}&count=exact`,
+    });
+
+    expect(response.status).toBe(200);
+
+    const { pagination } = ApiSchema.OrganizationMembers.GetOrganizationMembersResponseSchema.parse(
+      await response.json(),
+    );
+
+    expect(pagination).toEqual({ total: 2 });
+  });
+
+  test("returns no pagination without count", async () => {
+    const response = await listMembers({ cookie: admin.cookie });
+
+    expect(response.status).toBe(200);
+
+    const { pagination } = ApiSchema.OrganizationMembers.GetOrganizationMembersResponseSchema.parse(
+      await response.json(),
+    );
+
+    expect(pagination).toBeUndefined();
+  });
+
+  test("answers 400 to an unknown count", async () => {
+    const response = await listMembers({
+      cookie: admin.cookie,
+      query: `${LIST_QUERY}&count=planned`,
+    });
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ success: false });
   });
 
   test("lists no member to a member who is not an admin", async () => {
