@@ -10,6 +10,7 @@ const taxRates = DbSchema.Subscription.SubscriptionTaxRates.SubscriptionTaxRates
 
 type SubscriptionTaxRate = Records["Subscription"]["SubscriptionTaxRates"]["Select"];
 
+
 export class SubscriptionTaxRatesService extends AdminServiceContext {
   private constructor(args: AdminServiceContextArgs) {
     super(args);
