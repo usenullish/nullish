@@ -1298,7 +1298,8 @@
       "invited": "Du wurdest eingeladen, {organization} beizutreten.",
       "sign_in": "Melde dich an oder erstelle ein Konto mit der E-Mail-Adresse, an die die Einladung gesendet wurde.",
       "invalid_link": "Dieser Einladungslink ist ungültig.",
-      "load_error": "Die Einladung konnte nicht geladen werden."
+      "load_error": "Die Einladung konnte nicht geladen werden.",
+      "limit_reached": "Dein Plan erlaubt {max} Mitglieder. Entferne ein Mitglied, um jemand Neues einzuladen."
     },
     "toast": {
       "create_success": "Die Einladung wurde erstellt.",

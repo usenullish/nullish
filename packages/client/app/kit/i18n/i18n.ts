@@ -1159,6 +1159,7 @@ const I18nInvitationsSchema = z.strictObject({
     sign_in: z.string(),
     invalid_link: z.string(),
     load_error: z.string(),
+    limit_reached: z.string(),
   }),
   toast: z.strictObject({
     create_success: z.string(),

@@ -25,4 +25,22 @@ export class OrganizationMembersServer extends ServerLoader {
       loaderWithOrgIdFn: this.#service.list,
     });
   }
+
+  async countOrganizationMembers(args: LoaderFunctionArgs): Promise<Option<number>> {
+    const members = await this._loadNested({
+      args,
+      errorFallbackMsg: "Unexpected error while counting the team",
+      loaderWithOrgIdFn: async (params) =>
+        await this.#service.list({
+          ...params,
+          query: {
+            pagination: { limit: 1, offset: 0 },
+            sort: { field: "createdAt", direction: "asc" },
+            count: { mode: "exact" },
+          },
+        }),
+    });
+
+    return members?.pagination?.total;
+  }
 }

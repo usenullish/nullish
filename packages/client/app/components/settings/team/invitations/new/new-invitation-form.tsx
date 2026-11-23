@@ -1,4 +1,8 @@
 import { useId } from "react";
+import { TriangleAlert } from "lucide-react";
+import { nonNullish, type Option } from "@usenullish/nullish-common";
+import { Alert, AlertDescription } from "~/ui/components/alert";
+import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { ApiSchema } from "@usenullish/nullish-schema/server";
 import { MembershipRole } from "@usenullish/nullish-schema/db";
 import { Button } from "~/ui/components/button";
@@ -24,9 +28,11 @@ const ROLES = ApiSchema.InvitationsCreate.CreateInvitationRequestSchema.shape.ro
 export const NewInvitationForm = ({
   onAction,
   pending,
+  membersLimit,
 }: {
   onAction: (payload: FormData) => void;
   pending: boolean;
+  membersLimit: Option<number>;
 }) => {
   const { i18n } = useI18n();
   const settings = useSettings();
@@ -39,6 +45,17 @@ export const NewInvitationForm = ({
   const roles = ROLES.map((role) => ({ value: role, label: i18n.team.role[role] }));
   return (
     <form onSubmit={buildFormSubmit({ onAction })} className="mx-auto w-full max-w-2xl py-10">
+      {nonNullish(membersLimit) && (
+        <Alert variant="warning" className="mb-8">
+          <TriangleAlert />
+          <AlertDescription>
+            {replacePlaceholders(i18n.invitations.text.limit_reached, {
+              "{max}": String(membersLimit),
+            })}
+          </AlertDescription>
+        </Alert>
+      )}
+
       <FieldGroup>
         <h1 className="text-xs font-medium">{i18n.invitations.text.create_title}</h1>
 
@@ -90,7 +107,11 @@ export const NewInvitationForm = ({
         )}
 
         <Field>
-          <Button type="submit" disabled={pending} {...testId(testIds.invitations.submit)}>
+          <Button
+            type="submit"
+            disabled={pending || nonNullish(membersLimit)}
+            {...testId(testIds.invitations.submit)}
+          >
             {pending ? i18n.invitations.state.creating : i18n.invitations.action.create}
           </Button>
         </Field>
