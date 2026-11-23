@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "bun:test";
 import { SQL as BunSQL, CryptoHasher } from "bun";
-import { eq, inArray, sql } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish } from "@usenullish/nullish-common";
@@ -12,7 +12,6 @@ import {
   resetDb,
   seedUsers,
   TEST_OTHER_USER_ID,
-  TEST_USER_ID,
 } from "../_test-utils";
 
 const client = new BunSQL(envDbUrl());
@@ -22,8 +21,6 @@ const invitations = DbSchema.Core.Invitations.InvitationsSchema;
 const plans = DbSchema.Subscription.Plans.PlansSchema;
 const planRules = DbSchema.Subscription.PlanRules.PlanRulesSchema;
 const subscriptions = DbSchema.Subscription.Subscriptions.SubscriptionsSchema;
-
-const DAY_MS = 24 * 60 * 60 * 1000;
 
 const hashOf = (token: string): string => new CryptoHasher("sha256").update(token).digest("hex");
 
@@ -97,63 +94,12 @@ describe("check_organization_max_members", () => {
   });
 
   describe("inviting", () => {
-    test("allows an invitation below the limit", async () => {
-      await usePlan({ maxMembers: 2 });
+    test("allows an invitation once the members reach the limit", async () => {
+      await usePlan({ maxMembers: 1 });
 
       const rows = await insertInvitation();
 
       expect(rows).toHaveLength(1);
-    });
-
-    test("rejects an invitation once the members and pending invitations reach the limit", async () => {
-      await usePlan({ maxMembers: 2 });
-      await insertInvitation();
-
-      const error = await insertInvitation().catch((e: unknown) => e);
-
-      expect(causeMessage(error)).toContain("has reached its limit of 2 members");
-    });
-
-    test("does not count the expired invitations", async () => {
-      await usePlan({ maxMembers: 2 });
-      await insertInvitation({ expiresAt: new Date(Date.now() - DAY_MS) });
-
-      const rows = await insertInvitation();
-
-      expect(rows).toHaveLength(1);
-    });
-
-    test("allows any invitation with a plan without rules", async () => {
-      await usePlan({});
-      await insertInvitation();
-
-      const rows = await insertInvitation();
-
-      expect(rows).toHaveLength(1);
-    });
-
-    test("counts every member when the admin invites with their own rights", async () => {
-      await usePlan({ maxMembers: 2 });
-      await insertMember();
-
-      const error = await db
-        .transaction(async (tx) => {
-          await tx.execute(sql`SET LOCAL ROLE authenticated_user`);
-          await tx.execute(sql`SELECT auth.set_current_user_id(${TEST_USER_ID})`);
-
-          return await tx
-            .insert(invitations)
-            .values({
-              organizationId,
-              email: `${crypto.randomUUID()}@test.dev`,
-              role: MembershipRole.ACCOUNTANT,
-              tokenHash: hashOf(crypto.randomUUID()),
-            })
-            .returning();
-        })
-        .catch((e: unknown) => e);
-
-      expect(causeMessage(error)).toContain("has reached its limit of 2 members");
     });
   });
 
@@ -177,6 +123,14 @@ describe("check_organization_max_members", () => {
     test("does not count the pending invitations", async () => {
       await usePlan({ maxMembers: 2 });
       await insertInvitation();
+
+      const rows = await insertMember();
+
+      expect(rows).toHaveLength(1);
+    });
+
+    test("allows any member with a plan without rules", async () => {
+      await usePlan({});
 
       const rows = await insertMember();
 
