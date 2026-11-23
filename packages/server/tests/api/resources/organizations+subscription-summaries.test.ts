@@ -127,7 +127,7 @@ describe("organization subscription summaries", () => {
 
     const summaries = await parseSummaries(response);
 
-    expect(summaries[0]?.plan).toEqual({ provider: SubscriptionProvider.SELF });
+    expect(summaries[0]?.plan).toEqual({ provider: SubscriptionProvider.SELF, rules: null });
     expect(summaries[0]?.product).toBeNull();
   });
 
