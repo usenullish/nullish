@@ -66,4 +66,7 @@ export * from "./subscription/subscriptions";
 export * from "./subscription/subscription-references";
 export * from "./subscription/subscription-tax-rates";
 
+export * from "./instance/_schema";
+export * from "./instance/instance-rules";
+
 export { currencyValue } from "./_currency";

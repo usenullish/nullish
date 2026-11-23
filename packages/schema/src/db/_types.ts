@@ -65,6 +65,9 @@ interface Db {
     SubscriptionReferences: typeof DbSchema.Subscription.SubscriptionReferences.SubscriptionReferencesSchema;
     SubscriptionTaxRates: typeof DbSchema.Subscription.SubscriptionTaxRates.SubscriptionTaxRatesSchema;
   };
+  Instance: {
+    InstanceRules: typeof DbSchema.Instance.InstanceRules.InstanceRulesSchema;
+  };
 }
 
 export type { Db };
