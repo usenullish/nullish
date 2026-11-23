@@ -54,6 +54,23 @@ export const InvitationTemplateDataSchema = z.strictObject({
   }),
 });
 
+export const SubscriptionTrialReminderTemplateDataSchema = z.strictObject({
+  nullish: z.strictObject({
+    organization: z.strictObject({
+      name: SelectOrganizationsSchema.shape.name.describe("Name of the organization"),
+    }),
+    trial: z.strictObject({
+      endsOn: z.string().describe("Date the trial ends, formatted in the language of the email"),
+    }),
+    plans: z.strictObject({
+      url: z.url().describe("Link to choose a plan"),
+    }),
+  }),
+});
+
 export type VerifyEmailTemplateData = z.infer<typeof VerifyEmailTemplateDataSchema>;
 export type ResetPasswordTemplateData = z.infer<typeof ResetPasswordTemplateDataSchema>;
 export type InvitationTemplateData = z.infer<typeof InvitationTemplateDataSchema>;
+export type SubscriptionTrialReminderTemplateData = z.infer<
+  typeof SubscriptionTrialReminderTemplateDataSchema
+>;

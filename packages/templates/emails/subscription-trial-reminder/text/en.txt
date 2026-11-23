@@ -1,0 +1,13 @@
+YOUR TRIAL ENDS SOON
+
+The trial of [[ nullish.organization.name ]] on nullish ends on [[ nullish.trial.endsOn ]].
+
+Choose a plan to keep going.
+
+Choose a plan [[ nullish.plans.url ]]
+
+----------------------------------------
+
+You get this email because you created [[ nullish.organization.name ]] on nullish.
+
+nullish https://nullish.ch · Swiss accounting, almost effortless

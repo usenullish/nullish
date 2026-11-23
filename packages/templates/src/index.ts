@@ -7,8 +7,10 @@ export {
   VerifyEmailTemplateDataSchema,
   ResetPasswordTemplateDataSchema,
   InvitationTemplateDataSchema,
+  SubscriptionTrialReminderTemplateDataSchema,
   type VerifyEmailTemplateData,
   type ResetPasswordTemplateData,
   type InvitationTemplateData,
+  type SubscriptionTrialReminderTemplateData,
 } from "./emails/schemas";
 export { renderHtmlTemplate, renderTextTemplate } from "./render";

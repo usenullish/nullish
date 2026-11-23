@@ -24,9 +24,18 @@ import verifyEmailTextDe from "../../emails/verify-email/text/de.txt" with { typ
 import verifyEmailTextEn from "../../emails/verify-email/text/en.txt" with { type: "text" };
 import verifyEmailTextFr from "../../emails/verify-email/text/fr.txt" with { type: "text" };
 import verifyEmailTextIt from "../../emails/verify-email/text/it.txt" with { type: "text" };
+import subscriptionTrialReminderHtmlDe from "../../emails/subscription-trial-reminder/html/de.html" with { type: "text" };
+import subscriptionTrialReminderHtmlEn from "../../emails/subscription-trial-reminder/html/en.html" with { type: "text" };
+import subscriptionTrialReminderHtmlFr from "../../emails/subscription-trial-reminder/html/fr.html" with { type: "text" };
+import subscriptionTrialReminderHtmlIt from "../../emails/subscription-trial-reminder/html/it.html" with { type: "text" };
+import subscriptionTrialReminderTextDe from "../../emails/subscription-trial-reminder/text/de.txt" with { type: "text" };
+import subscriptionTrialReminderTextEn from "../../emails/subscription-trial-reminder/text/en.txt" with { type: "text" };
+import subscriptionTrialReminderTextFr from "../../emails/subscription-trial-reminder/text/fr.txt" with { type: "text" };
+import subscriptionTrialReminderTextIt from "../../emails/subscription-trial-reminder/text/it.txt" with { type: "text" };
 import invitationSubject from "../../emails/invitation/subject.json";
 import resetPasswordSubject from "../../emails/reset-password/subject.json";
 import verifyEmailSubject from "../../emails/verify-email/subject.json";
+import subscriptionTrialReminderSubject from "../../emails/subscription-trial-reminder/subject.json";
 
 interface EmailTemplate {
   subject: string;
@@ -52,5 +61,27 @@ export const EMAILS_TEMPLATES = {
     en: { subject: invitationSubject.en, html: invitationHtmlEn, text: invitationTextEn },
     fr: { subject: invitationSubject.fr, html: invitationHtmlFr, text: invitationTextFr },
     it: { subject: invitationSubject.it, html: invitationHtmlIt, text: invitationTextIt },
+  },
+  [MailType.SUBSCRIPTION_TRIAL_REMINDER]: {
+    de: {
+      subject: subscriptionTrialReminderSubject.de,
+      html: subscriptionTrialReminderHtmlDe,
+      text: subscriptionTrialReminderTextDe,
+    },
+    en: {
+      subject: subscriptionTrialReminderSubject.en,
+      html: subscriptionTrialReminderHtmlEn,
+      text: subscriptionTrialReminderTextEn,
+    },
+    fr: {
+      subject: subscriptionTrialReminderSubject.fr,
+      html: subscriptionTrialReminderHtmlFr,
+      text: subscriptionTrialReminderTextFr,
+    },
+    it: {
+      subject: subscriptionTrialReminderSubject.it,
+      html: subscriptionTrialReminderHtmlIt,
+      text: subscriptionTrialReminderTextIt,
+    },
   },
 } as unknown as Record<MailType, Record<DefaultTemplateLanguage, EmailTemplate>>;
