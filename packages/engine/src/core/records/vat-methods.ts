@@ -6,6 +6,7 @@ import type {
   DbStoreInitArgs,
   DbCollectionStore,
   DbStore,
+  DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
 import { DbRecordsById } from "../../_records/records-by-id";
@@ -74,7 +75,7 @@ export class DbCollectionVatMethods
     return new this(args);
   }
 
-  list(args: QueryArgs<VatMethodsSortField>): Promise<Result<SelectVatMethods[]>> {
+  list(args: QueryArgs<VatMethodsSortField>): Promise<Result<DbListResult<SelectVatMethods>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Core.VatSchema.SelectVatMethodsSchema,
       ...args,

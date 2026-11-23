@@ -1,5 +1,5 @@
 import type { AnyPgColumn, AnyPgTable } from "drizzle-orm/pg-core";
-import { type DbCollectionStoreInitArgs } from "../store";
+import { type DbCollectionStoreInitArgs, type DbListResult } from "../store";
 import * as z from "zod";
 import { assertNonNullish, type Result } from "@usenullish/nullish-common";
 import { eq, getColumns } from "drizzle-orm";
@@ -36,7 +36,7 @@ export abstract class DbCollectionRecordsById<
     args: { schema: z.ZodType<T>; filters?: DbRecordsFilters<TFilters> } & QueryArgs<
       DbRecordsSortField<TTable>
     >,
-  ): Promise<Result<T[]>> {
+  ): Promise<Result<DbListResult<T>>> {
     return this._query({
       ...args,
       where: eq(this.#foreignKeyColumn, this.#foreignKeyId),

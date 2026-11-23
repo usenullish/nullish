@@ -6,6 +6,7 @@ import type {
   DbStoreInitArgs,
   DbCollectionStore,
   DbStore,
+  DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
 import { DbRecordsById } from "../../_records/records-by-id";
@@ -79,7 +80,9 @@ export class DbCollectionBillingSettings
     return new this(args);
   }
 
-  list(args: QueryArgs<BillingSettingsSortField>): Promise<Result<SelectBillingSettings[]>> {
+  list(
+    args: QueryArgs<BillingSettingsSortField>,
+  ): Promise<Result<DbListResult<SelectBillingSettings>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Core.BillingSchema.SelectBillingSettingsSchema,
       ...args,

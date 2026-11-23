@@ -5,6 +5,7 @@ import type {
   DbCollectionStore,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStore,
   DbStoreInitArgs,
 } from "../../store";
@@ -41,7 +42,7 @@ export class DbCurrencies
     });
   }
 
-  list(args: DbListArgs<CurrenciesSortField>): Promise<Result<SelectCurrencies[]>> {
+  list(args: DbListArgs<CurrenciesSortField>): Promise<Result<DbListResult<SelectCurrencies>>> {
     return this._query({
       schema: RecordsSchema.Core.CurrenciesSchema.SelectCurrenciesSchema,
       ...args,

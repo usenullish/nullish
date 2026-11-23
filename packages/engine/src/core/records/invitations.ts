@@ -5,6 +5,7 @@ import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
   DbListArgs,
+  DbListResult,
   DbStoreInitArgs,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -69,7 +70,7 @@ export class DbCollectionInvitations extends DbCollectionRecordsById<
     return new this(args);
   }
 
-  list(args: DbListArgs<InvitationsSortField>): Promise<Result<SelectInvitations[]>> {
+  list(args: DbListArgs<InvitationsSortField>): Promise<Result<DbListResult<SelectInvitations>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Core.InvitationsSchema.SelectInvitationsSchema,
       ...args,

@@ -10,7 +10,12 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs, DbStoreInitArgs } from "../../store";
+import type {
+  DbCollectionStoreInitArgs,
+  DbListArgs,
+  DbListResult,
+  DbStoreInitArgs,
+} from "../../store";
 import { loadInvoiceSummaries } from "../_helpers/invoice-summaries";
 import { findInvoiceById, listInvoices } from "../_helpers/invoices";
 import { parseQueryArgs } from "../../_query/helpers";
@@ -73,7 +78,7 @@ export class DbCollectionInvoiceSummaries extends DbUserContext {
     filters,
     pagination,
     sort,
-  }: DbListArgs<string, FilterInvoiceSummaries>): Promise<Result<InvoiceSummary[]>> {
+  }: DbListArgs<string, FilterInvoiceSummaries>): Promise<Result<DbListResult<InvoiceSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -86,7 +91,7 @@ export class DbCollectionInvoiceSummaries extends DbUserContext {
         ? undefined
         : CompositesSchema.InvoiceSummariesSchema.FilterInvoiceSummariesSchema.parse(filters);
 
-      return await this._withAuth<InvoiceSummary[]>(async (tx) => {
+      return await this._withAuth<DbListResult<InvoiceSummary>>(async (tx) => {
         const invoices = await listInvoices({
           tx,
           organizationId: this.#organizationId,
@@ -95,10 +100,16 @@ export class DbCollectionInvoiceSummaries extends DbUserContext {
         });
 
         if (!isArrayAtLeastOne(invoices)) {
-          return [];
+          return { data: [] };
         }
 
-        return await loadInvoiceSummaries({ tx, organizationId: this.#organizationId, invoices });
+        const data = await loadInvoiceSummaries({
+          tx,
+          organizationId: this.#organizationId,
+          invoices,
+        });
+
+        return { data };
       });
     });
   }

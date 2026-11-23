@@ -16,7 +16,7 @@ import {
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites, CompositesSchema } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { getBankRelation } from "../../core/_helpers/bank-relations";
 import { loadInvoiceSummaries } from "../../billing/_helpers/invoice-summaries";
 import { listInvoicesByPaymentReferences } from "../../billing/_helpers/invoices";
@@ -56,7 +56,7 @@ export class DbCollectionMovementSummaries extends DbUserContext {
     filters,
     pagination,
     sort,
-  }: DbListArgs<string, FilterMovementSummaries>): Promise<Result<MovementSummary[]>> {
+  }: DbListArgs<string, FilterMovementSummaries>): Promise<Result<DbListResult<MovementSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -69,7 +69,7 @@ export class DbCollectionMovementSummaries extends DbUserContext {
         ? undefined
         : CompositesSchema.MovementSummariesSchema.FilterMovementSummariesSchema.parse(filters);
 
-      return await this._withAuth<MovementSummary[]>(async (tx) => {
+      return await this._withAuth<DbListResult<MovementSummary>>(async (tx) => {
         const movements = await listMovements({
           tx,
           bankRelationId: this.#bankRelationId,
@@ -87,7 +87,7 @@ export class DbCollectionMovementSummaries extends DbUserContext {
           paymentReferences: uniquePaymentReferences,
         });
 
-        return movements.map((movement) => {
+        const data = movements.map((movement) => {
           const paymentReference = paymentReferencesByMovement.get(movement.id);
 
           return CompositesSchema.MovementSummariesSchema.SelectMovementSummariesSchema.parse({
@@ -97,6 +97,8 @@ export class DbCollectionMovementSummaries extends DbUserContext {
               : (invoices.get(paymentReference) ?? null),
           });
         });
+
+        return { data };
       });
     });
   }

@@ -4,7 +4,7 @@ import { DbSchema, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import { type Records } from "@usenullish/nullish-schema/records";
 import { type Composites } from "@usenullish/nullish-schema/composites";
 import { getColumns } from "drizzle-orm";
-import type { DbCollectionStoreInitArgs, DbListArgs } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
 import { parseQueryArgs } from "../../_query/helpers";
 import { listVatMethodSummaries } from "../_helpers/vat-method-summaries";
 
@@ -30,7 +30,7 @@ export class DbCollectionVatMethodSummaries extends DbUserContext {
     return new this(args);
   }
 
-  list({ pagination, sort }: DbListArgs<string>): Promise<Result<VatMethodSummary[]>> {
+  list({ pagination, sort }: DbListArgs<string>): Promise<Result<DbListResult<VatMethodSummary>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -39,10 +39,15 @@ export class DbCollectionVatMethodSummaries extends DbUserContext {
         pKey: DbSchema.Core.Vat.VatMethodsSchema.id,
       });
 
-      return await this._withAuth<VatMethodSummary[]>(
-        async (tx) =>
-          await listVatMethodSummaries({ tx, organizationId: this.#organizationId, ...queryArgs }),
-      );
+      return await this._withAuth<DbListResult<VatMethodSummary>>(async (tx) => {
+        const data = await listVatMethodSummaries({
+          tx,
+          organizationId: this.#organizationId,
+          ...queryArgs,
+        });
+
+        return { data };
+      });
     });
   }
 }

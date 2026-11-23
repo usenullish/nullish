@@ -10,6 +10,7 @@ import type {
   DbStore,
   DbStoreInitArgs,
   DbListArgs,
+  DbListResult,
 } from "../../store";
 import { DbUserContext } from "@usenullish/nullish-db";
 import {
@@ -123,7 +124,7 @@ export class DbCollectionJournal
     filters,
     pagination,
     sort,
-  }: DbListArgs<JournalSortField, FilterJournal>): Promise<Result<SelectJournal[]>> {
+  }: DbListArgs<JournalSortField, FilterJournal>): Promise<Result<DbListResult<SelectJournal>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -136,13 +137,15 @@ export class DbCollectionJournal
         ? undefined
         : CompositesSchema.JournalSchema.FilterJournalSchema.parse(filters);
 
-      return await this._withAuth<SelectJournal[]>(async (tx) => {
-        return await listJournals({
+      return await this._withAuth<DbListResult<SelectJournal>>(async (tx) => {
+        const data = await listJournals({
           tx,
           organizationId: this.#foreignKeyId,
           filters: parsedFilters,
           ...queryArgs,
         });
+
+        return { data };
       });
     });
   }

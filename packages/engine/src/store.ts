@@ -11,6 +11,10 @@ export interface DbDeletableStore<TSelect, TSelectId> {
   delete(args: { pKey: TSelectId }): Promise<Result<Option<TSelect>>>;
 }
 
+export interface DbListResult<TSelect> {
+  data: TSelect[];
+}
+
 export type DbListArgs<
   TSortField extends string = QueryDefaultSortField,
   TFilters = never,
@@ -22,7 +26,7 @@ export interface DbCollectionStore<
   TSortField extends string = QueryDefaultSortField,
   TFilters = never,
 > {
-  list(args: DbListArgs<TSortField, TFilters>): Promise<Result<TSelect[]>>;
+  list(args: DbListArgs<TSortField, TFilters>): Promise<Result<DbListResult<TSelect>>>;
   insert(args: { values: TInsert }): Promise<Result<TSelect>>;
 }
 

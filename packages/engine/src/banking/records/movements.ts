@@ -5,6 +5,7 @@ import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
   DbListArgs,
+  DbListResult,
   DbStoreInitArgs,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -59,7 +60,9 @@ export class DbCollectionMovements
   list({
     filters,
     ...args
-  }: DbListArgs<MovementsSortField, FilterMovements>): Promise<Result<SelectMovements[]>> {
+  }: DbListArgs<MovementsSortField, FilterMovements>): Promise<
+    Result<DbListResult<SelectMovements>>
+  > {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Banking.MovementsSchema.SelectMovementsSchema,
       ...args,

@@ -9,7 +9,7 @@ import {
 } from "drizzle-orm";
 import { type AnyPgColumn, type AnyPgTable } from "drizzle-orm/pg-core";
 import * as z from "zod";
-import { type DbStoreInitArgs } from "../store";
+import { type DbListResult, type DbStoreInitArgs } from "../store";
 import { assertArrayAtMostOne, assertArrayExactlyOne } from "@usenullish/nullish-common";
 import { DbUserContext } from "@usenullish/nullish-db";
 import { deleteMany, insertMany, selectMany, updateMany } from "@usenullish/nullish-db";
@@ -98,7 +98,9 @@ export abstract class DbRecords<
       return result;
     }
 
-    const { result: data } = result;
+    const {
+      result: { data },
+    } = result;
 
     return await safeExec(async (): Promise<Result<Option<T>>> => {
       assertArrayAtMostOne(data);
@@ -116,7 +118,7 @@ export abstract class DbRecords<
     schema: z.ZodType<T>;
     where?: SQL;
     filters?: DbRecordsFilters<TFilters>;
-  } & QueryArgs<DbRecordsSortField<TTable>>): Promise<Result<T[]>> {
+  } & QueryArgs<DbRecordsSortField<TTable>>): Promise<Result<DbListResult<T>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },
@@ -128,13 +130,15 @@ export abstract class DbRecords<
       const { where: filtersWhere } = parseFilters(filters);
 
       return await this._withAuth(async (tx) => {
-        return await selectMany({
+        const data = await selectMany({
           tx,
           table: this.#table,
           ...queryArgs,
           ...rest,
           where: and(where, filtersWhere),
         });
+
+        return { data };
       });
     });
   }
@@ -167,7 +171,9 @@ export abstract class DbRecords<
       return result;
     }
 
-    const { result: page } = result;
+    const {
+      result: { data: page },
+    } = result;
 
     const all = [...rows, ...page];
 
