@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { eq } from "drizzle-orm";
@@ -9,6 +9,7 @@ import {
   SubscriptionStatus,
 } from "@usenullish/nullish-schema/db";
 import { MailJobType } from "@usenullish/nullish-schema/jobs";
+import type { SendMail } from "@usenullish/nullish-schema/mail";
 import { createOrganization, resetDb, seedUser, TEST_USER_ID } from "../../../_test-utils";
 import { MailsWorker } from "../../../../src/jobs/workers/mails/worker";
 
@@ -41,6 +42,7 @@ describe("MailsWorker", () => {
 
     const result = await MailsWorker.create({
       db,
+      mail: { send: mock<SendMail["send"]>(async () => undefined) },
       payload: {
         type: MailJobType.SubscriptionTrialReminder,
         userId: TEST_USER_ID,

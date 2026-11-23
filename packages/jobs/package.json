@@ -15,6 +15,7 @@
     "@usenullish/nullish-db": "workspace:*",
     "@usenullish/nullish-engine": "workspace:*",
     "@usenullish/nullish-env": "workspace:*",
+    "@usenullish/nullish-mail": "workspace:*",
     "@usenullish/nullish-migration": "workspace:*",
     "@usenullish/nullish-schema": "workspace:*",
     "@usenullish/nullish-storage": "workspace:*",

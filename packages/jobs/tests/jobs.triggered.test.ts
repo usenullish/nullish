@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from "bun:test";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
 import { sql } from "drizzle-orm";
@@ -6,8 +6,17 @@ import { join } from "node:path";
 import { readdir, rm } from "node:fs/promises";
 import { envDataDir, envDbUrl } from "@usenullish/nullish-env";
 import { assertNonNullish, NullishError } from "@usenullish/nullish-common";
-import { DbSchema, DocumentType, LegalForm } from "@usenullish/nullish-schema/db";
-import { type Jobs as JobTypes, TriggeredJobKey } from "@usenullish/nullish-schema/jobs";
+import {
+  DbSchema,
+  DefaultTemplateLanguage,
+  DocumentType,
+  LegalForm,
+} from "@usenullish/nullish-schema/db";
+import {
+  type Jobs as JobTypes,
+  MailJobType,
+  TriggeredJobKey,
+} from "@usenullish/nullish-schema/jobs";
 import { setupJobQueuesDb } from "../src/_setup";
 import { TriggeredJobs } from "../src/jobs.triggered";
 import { PdfGenerator } from "../src/jobs/workers/pdf-invoices/_helpers/pdf-generator";
@@ -234,5 +243,76 @@ describe("TriggeredJobs", () => {
     const stoppable = await TriggeredJobs.start({ dbUrl });
 
     await expect(stoppable.stop()).resolves.toBeUndefined();
+  });
+});
+
+describe("TriggeredJobs mail", () => {
+  const MAIL_KEYS = [
+    "NULLISH_MAIL_FROM",
+    "NULLISH_MAIL_SMTP_URL",
+    "NULLISH_MAIL_SES_REGION",
+    "NULLISH_MAIL_SES_ACCESS_KEY_ID",
+    "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
+  ] as const;
+
+  const saved = new Map<string, string | undefined>();
+
+  const triggerMail = (jobs: TriggeredJobs) =>
+    jobs.trigger({
+      key: TriggeredJobKey.Mail,
+      payload: {
+        type: MailJobType.SubscriptionTrialReminder,
+        userId: TEST_USER_ID,
+        organizationId: crypto.randomUUID(),
+        lang: DefaultTemplateLanguage.EN,
+      },
+      delay: 60 * 60 * 1000,
+    });
+
+  beforeAll(async () => {
+    await setupJobQueuesDb({ dbUrl });
+  });
+
+  beforeEach(() => {
+    for (const key of MAIL_KEYS) {
+      saved.set(key, process.env[key]);
+      delete process.env[key];
+    }
+  });
+
+  afterEach(() => {
+    for (const key of MAIL_KEYS) {
+      const value = saved.get(key);
+      if (value === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = value;
+      }
+    }
+  });
+
+  test("does not start the mail job without mail configured", async () => {
+    const jobs = await TriggeredJobs.start({ dbUrl });
+
+    try {
+      await expect(triggerMail(jobs)).rejects.toThrow("Job mail has not been started");
+    } finally {
+      await jobs.stop();
+    }
+  });
+
+  test("starts the mail job with mail configured", async () => {
+    process.env.NULLISH_MAIL_FROM = "noreply@test.dev";
+    process.env.NULLISH_MAIL_SMTP_URL = "smtp://localhost:1025";
+
+    const jobs = await TriggeredJobs.start({ dbUrl });
+
+    try {
+      const { jobId } = await triggerMail(jobs);
+
+      expect(jobId).toMatch(UUID_PATTERN);
+    } finally {
+      await jobs.stop();
+    }
   });
 });
