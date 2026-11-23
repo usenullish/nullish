@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, mock, spyOn, test } f
 import { and, eq, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sql";
 import { SQL as BunSQL } from "bun";
-import { assertNonNullish, type Nullable } from "@usenullish/nullish-common";
+import { assertNonNullish } from "@usenullish/nullish-common";
 import {
   DbSchema,
   DefaultTemplateLanguage,
@@ -50,12 +50,8 @@ describe("OpenOrganizationService", () => {
     OpenOrganizationService.create({
       db,
       userId: TEST_USER_ID,
-      jobs,
-      payments: withPayments ? payments : (null as Nullable<ProcessPayments>),
-    }).open({
-      organization: { name: "Opened Org", legalForm: LegalForm.LLC },
-      reminder: { lang: DefaultTemplateLanguage.FR },
-    });
+      trialReminder: withPayments ? { jobs, payments, lang: DefaultTemplateLanguage.FR } : null,
+    }).open({ organization: { name: "Opened Org", legalForm: LegalForm.LLC } });
 
   const useInitialPlan = async ({ trialDays }: { trialDays: number }) => {
     const [plan] = await db

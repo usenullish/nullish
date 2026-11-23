@@ -141,14 +141,8 @@ export class OrganizationsHandlers extends RouteResource<{
         return await OpenOrganizationService.create({
           db,
           userId,
-          jobs,
-          payments,
-        }).open({
-          organization,
-          reminder: {
-            lang,
-          },
-        });
+          trialReminder: isNullish(payments) ? null : { jobs, payments, lang },
+        }).open({ organization });
       },
       resourceKey: "organization",
       build: ({ result: organization }) => ({

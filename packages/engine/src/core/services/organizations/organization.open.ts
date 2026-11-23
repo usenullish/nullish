@@ -17,25 +17,29 @@ type Organization = Records["Core"]["Organizations"]["Select"];
 type InsertOrganization = Records["Core"]["Organizations"]["Insert"];
 type TrialReminderPayload = Jobs["Mails"]["SubscriptionTrialReminderPayload"];
 
-export type OpenOrganizationServiceArgs = DbUserContextArgs & {
+interface TrialReminder {
   jobs: TriggerJobs;
-  payments: Nullable<ProcessPayments>;
+  payments: ProcessPayments;
+  lang: DefaultTemplateLanguage;
+}
+
+export type OpenOrganizationServiceArgs = DbUserContextArgs & {
+  trialReminder: Nullable<TrialReminder>;
 };
 
 export class OpenOrganizationService extends ServiceContext {
   readonly #db: DbUserContextArgs["db"];
   readonly #userId: DbUserContextArgs["userId"];
 
-  readonly #jobs: TriggerJobs;
-  readonly #payments: Nullable<ProcessPayments>;
+  readonly #trialReminder: Nullable<TrialReminder>;
 
-  private constructor({ jobs, payments, ...rest }: OpenOrganizationServiceArgs) {
+  private constructor({ trialReminder, ...rest }: OpenOrganizationServiceArgs) {
     super(rest);
 
-    this.#userId = rest.userId;
-    this.#jobs = jobs;
-    this.#payments = payments;
     this.#db = rest.db;
+    this.#userId = rest.userId;
+
+    this.#trialReminder = trialReminder;
   }
 
   static create(args: OpenOrganizationServiceArgs): OpenOrganizationService {
@@ -44,10 +48,8 @@ export class OpenOrganizationService extends ServiceContext {
 
   async open({
     organization,
-    reminder: { lang },
   }: {
     organization: InsertOrganization;
-    reminder: { lang: DefaultTemplateLanguage };
   }): Promise<Result<Organization>> {
     // We do not use _withAuth here because creating an organization is a bit particular.
     // See comment in DbOrganizations.insert.
@@ -63,13 +65,13 @@ export class OpenOrganizationService extends ServiceContext {
     }
 
     // No payments enabled, we can return the organization without further work.
-    if (isNullish(this.#payments)) {
+    if (isNullish(this.#trialReminder)) {
       return result;
     }
 
     const scheduled = await this.#scheduleTrialReminder({
+      ...this.#trialReminder,
       organizationId: result.result.id,
-      lang,
     });
 
     if (scheduled.status === "error") {
@@ -81,8 +83,11 @@ export class OpenOrganizationService extends ServiceContext {
 
   #scheduleTrialReminder({
     organizationId,
+    jobs,
     lang,
-  }: Pick<TrialReminderPayload, "organizationId" | "lang">): Promise<Result<void>> {
+  }: Pick<TrialReminderPayload, "organizationId"> & Pick<TrialReminder, "jobs" | "lang">): Promise<
+    Result<void>
+  > {
     return tryCatch(async () => {
       const trialEnd = await this._withAuth(
         async (tx) => await getSelfSubscriptionTrialEnd({ tx, organizationId }),
@@ -92,7 +97,7 @@ export class OpenOrganizationService extends ServiceContext {
         return;
       }
 
-      await this.#jobs.trigger<TrialReminderPayload>({
+      await jobs.trigger<TrialReminderPayload>({
         key: TriggeredJobKey.Mail,
         payload: {
           type: MailJobType.SubscriptionTrialReminder,
