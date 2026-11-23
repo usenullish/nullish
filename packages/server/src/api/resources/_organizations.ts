@@ -1,7 +1,7 @@
-import { DbOrganizations } from "@usenullish/nullish-engine/core";
+import { DbOrganizations, OpenOrganizationService } from "@usenullish/nullish-engine/core";
 import { ApiSchema, encodeOrganizationResponse } from "@usenullish/nullish-schema/server";
 import { defineListHandler } from "../handlers/root/list";
-import { defineCreateHandler } from "../handlers/root/create";
+import { _defineCreateHandler } from "../handlers/_create";
 import { defineUpdateHandler } from "../handlers/root/update";
 import { defineGetByIdHandler } from "../handlers/root/get-by-id";
 import { nonNullish } from "@usenullish/nullish-common";
@@ -116,8 +116,9 @@ export class OrganizationsHandlers extends RouteResource<{
 
   protected override readonly defineCreate = {
     route: createRoute,
-    handler: defineCreateHandler<CreateRoute, Records["Core"]["Organizations"]["Select"]>({
-      store: (args) => DbOrganizations.create(args),
+    handler: _defineCreateHandler<CreateRoute, Records["Core"]["Organizations"]["Select"]>({
+      insert: async ({ db, userId, values }) =>
+        await OpenOrganizationService.create({ db, userId }).open({ values }),
       resourceKey: "organization",
       build: ({ result: organization }) => ({
         organization: encodeOrganizationResponse(organization),
