@@ -1298,7 +1298,8 @@
       "invited": "Tu es invité à rejoindre {organization}.",
       "sign_in": "Connecte-toi ou crée un compte avec l'adresse e-mail à laquelle l'invitation a été envoyée.",
       "invalid_link": "Ce lien d'invitation n'est pas valide.",
-      "load_error": "L'invitation n'a pas pu être chargée."
+      "load_error": "L'invitation n'a pas pu être chargée.",
+      "limit_reached": "Ton forfait permet {max} membres. Retire un membre pour inviter quelqu'un d'autre."
     },
     "toast": {
       "create_success": "L'invitation est créée.",

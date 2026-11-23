@@ -1298,7 +1298,8 @@
       "invited": "Sei stato invitato a unirti a {organization}.",
       "sign_in": "Accedi o crea un account con l'indirizzo e-mail a cui è stato inviato l'invito.",
       "invalid_link": "Questo link d'invito non è valido.",
-      "load_error": "Impossibile caricare l'invito."
+      "load_error": "Impossibile caricare l'invito.",
+      "limit_reached": "Il tuo piano consente {max} membri. Rimuovi un membro per invitare qualcun altro."
     },
     "toast": {
       "create_success": "L'invito è stato creato.",

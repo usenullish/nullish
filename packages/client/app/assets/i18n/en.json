@@ -1298,7 +1298,8 @@
       "invited": "You've been invited to join {organization}.",
       "sign_in": "Sign in or create an account with the email address the invitation was sent to.",
       "invalid_link": "This invitation link is invalid.",
-      "load_error": "The invitation could not be loaded."
+      "load_error": "The invitation could not be loaded.",
+      "limit_reached": "Your plan allows {max} members. Remove a member to invite someone new."
     },
     "toast": {
       "create_success": "The invitation is created.",

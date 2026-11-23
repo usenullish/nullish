@@ -1,5 +1,6 @@
 import { useActionState } from "react";
 import type { Api } from "@usenullish/nullish-schema/server";
+import type { Option } from "@usenullish/nullish-common";
 import { type FormState, INIT_FORM_STATE } from "~/context/form/form";
 import { buildUseNewInvitationAction } from "~/context/form/new-invitation.form";
 import { NewInvitationForm } from "~/components/settings/team/invitations/new/new-invitation-form";
@@ -12,8 +13,10 @@ type CreatedInvitation = Api["InvitationsCreate"]["Client"]["CreateInvitationRes
 
 export const NewInvitation = ({
   organizationId,
+  membersLimit,
 }: {
   organizationId: Api["Organizations"]["Client"]["Organization"]["id"];
+  membersLimit: Option<number>;
 }) => {
   const { i18n } = useI18n();
   const { notifySuccess } = useNotify();
@@ -42,5 +45,5 @@ export const NewInvitation = ({
     return <InvitationCreated created={state.result} />;
   }
 
-  return <NewInvitationForm onAction={onAction} pending={pending} />;
+  return <NewInvitationForm onAction={onAction} pending={pending} membersLimit={membersLimit} />;
 };
