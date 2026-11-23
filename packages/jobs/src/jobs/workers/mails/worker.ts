@@ -2,24 +2,33 @@ import { DbUserContext } from "@usenullish/nullish-db";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
 import type { PostgresDbInstance } from "@usenullish/nullish-schema/db";
 import { type Jobs, MailJobType } from "@usenullish/nullish-schema/jobs";
+import type { SendMail } from "@usenullish/nullish-schema/mail";
 import { getTrialingSubscription } from "./_helpers/subscription-trial-reminder";
 
 export class MailsWorker extends DbUserContext {
   readonly #payload: Jobs["Mails"]["Payload"];
+  readonly #mail: SendMail;
 
   private constructor({
     db,
     payload,
+    mail,
   }: {
     db: PostgresDbInstance;
     payload: Jobs["Mails"]["Payload"];
+    mail: SendMail;
   }) {
     super({ db, userId: payload.userId });
 
     this.#payload = payload;
+    this.#mail = mail;
   }
 
-  static create(args: { db: PostgresDbInstance; payload: Jobs["Mails"]["Payload"] }): MailsWorker {
+  static create(args: {
+    db: PostgresDbInstance;
+    payload: Jobs["Mails"]["Payload"];
+    mail: SendMail;
+  }): MailsWorker {
     return new this(args);
   }
 
