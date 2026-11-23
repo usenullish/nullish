@@ -40,7 +40,7 @@ export class McpToolsVatMethodSummaries extends McpTools {
           foreignKeyId: organizationId,
         }).list(query);
 
-        return this.mapResult(result, (vatMethodSummaries) => ({
+        return this.mapResult(result, ({ data: vatMethodSummaries }) => ({
           vatMethodSummaries: vatMethodSummaries.map(encodeVatMethodSummaryResponse),
         }));
       },

@@ -107,7 +107,7 @@ export class VatSettingsHandlers extends RouteResource<{
     handler: defineChildListHandler<ListRoute, Records["Core"]["VatSettings"]["Select"]>({
       store: (args) => DbCollectionVatSettings.create(args),
       resourceKey: "vat+settings",
-      build: ({ result: settings }) => ({
+      build: ({ result: { data: settings } }) => ({
         settings: settings.map(encodeAuditFieldsResponse),
       }),
     }),

@@ -57,7 +57,7 @@ export class SubscriptionSummariesHandlers extends Resource {
       }).list({ pagination, sort });
     },
     resourceKey: "subscriptionSummaries",
-    build: ({ result: subscriptionSummaries }) => ({
+    build: ({ result: { data: subscriptionSummaries } }) => ({
       subscriptionSummaries: subscriptionSummaries.map(encodeSubscriptionSummaryResponse),
     }),
   });

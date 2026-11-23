@@ -50,7 +50,7 @@ export class McpToolsBillingSettings extends McpTools {
 
         const result = await store.list(query);
 
-        return this.mapResult(result, (settings) => ({
+        return this.mapResult(result, ({ data: settings }) => ({
           settings: settings.map(this.#encodeResponse),
         }));
       },

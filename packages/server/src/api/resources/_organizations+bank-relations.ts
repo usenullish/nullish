@@ -119,7 +119,7 @@ export class BankRelationsHandlers extends CrudResource<{
     handler: defineChildListHandler<ListRoute, Records["Core"]["BankRelations"]["Select"]>({
       store: (args) => DbCollectionBankRelations.create(args),
       resourceKey: "bank-relations",
-      build: ({ result: bankRelations }) => ({
+      build: ({ result: { data: bankRelations } }) => ({
         bankRelations: bankRelations.map(this.#encodeResponse),
       }),
     }),

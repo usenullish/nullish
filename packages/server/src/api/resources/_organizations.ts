@@ -94,7 +94,7 @@ export class OrganizationsHandlers extends RouteResource<{
       store: (args) => DbOrganizations.create(args),
       resourceKey: "organizations",
       filtersSchema: ApiSchema.Organizations.GetOrganizationsFiltersQuerySchema,
-      build: ({ result: organizations }) => ({
+      build: ({ result: { data: organizations } }) => ({
         organizations: organizations.map(encodeOrganizationResponse),
       }),
     }),

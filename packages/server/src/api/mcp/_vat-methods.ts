@@ -52,7 +52,7 @@ export class McpToolsVatMethods extends McpTools {
 
         const result = await store.list(query);
 
-        return this.mapResult(result, (methods) => ({
+        return this.mapResult(result, ({ data: methods }) => ({
           methods: methods.map(this.#encodeResponse),
         }));
       },

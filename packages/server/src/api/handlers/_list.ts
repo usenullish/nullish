@@ -1,4 +1,4 @@
-import type { DbStoreInitArgs } from "@usenullish/nullish-engine";
+import type { DbListResult, DbStoreInitArgs } from "@usenullish/nullish-engine";
 import { isNullish, nonNullish, type Option, type Result } from "@usenullish/nullish-common";
 import type { RouteConfig } from "@hono/zod-openapi";
 import { CommonSchema, ErrorCode } from "@usenullish/nullish-schema/server";
@@ -20,8 +20,10 @@ export function _defineListHandler<R extends RouteConfig, Select, TFilters = nev
       context: OpenAPIHandlerContext<R>;
       filters: Option<TFilters>;
     } & QueryArgs<string>,
-  ) => Promise<Result<Select[]>>;
-  build: (result: Extract<Result<Select[]>, { status: "success" }>) => Response200<R>;
+  ) => Promise<Result<DbListResult<Select>>>;
+  build: (
+    result: Extract<Result<DbListResult<Select>>, { status: "success" }>,
+  ) => Response200<R>;
   resourceKey: string;
   filtersSchema?: z.ZodType<TFilters>;
 }): DefineOpenAPIHandler<R> {

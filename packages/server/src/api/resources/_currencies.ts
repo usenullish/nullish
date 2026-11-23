@@ -90,7 +90,7 @@ export class CurrenciesHandlers extends Resource {
       }
 
       const build = (): Response200<ListRoute> => {
-        return { currencies: result.result.map(encodeAuditFieldsResponse) };
+        return { currencies: result.result.data.map(encodeAuditFieldsResponse) };
       };
 
       return context.json(build(), 200);

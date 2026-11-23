@@ -53,7 +53,7 @@ export class McpToolsVatPeriods extends McpTools {
 
         const result = await store.list({ ...query, filters });
 
-        return this.mapResult(result, (periods) => ({
+        return this.mapResult(result, ({ data: periods }) => ({
           periods: periods.map(this.#encodeResponse),
         }));
       },

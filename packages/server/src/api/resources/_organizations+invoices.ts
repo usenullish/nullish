@@ -121,7 +121,7 @@ export class InvoicesHandlers extends CrudResource<{
       store: (args) => DbCollectionInvoices.create(args),
       resourceKey: "invoices",
       filtersSchema: ApiSchema.Invoices.GetInvoicesFiltersQuerySchema,
-      build: ({ result: invoices }) => ({
+      build: ({ result: { data: invoices } }) => ({
         invoices: invoices.map(encodeInvoiceResponse),
       }),
     }),

@@ -58,7 +58,7 @@ export class OrganizationMembersHandlers extends Resource {
       }).list({ pagination, sort });
     },
     resourceKey: "members",
-    build: ({ result: members }) => ({
+    build: ({ result: { data: members } }) => ({
       members: members.map(encodeAuditFieldsResponse),
     }),
   });
