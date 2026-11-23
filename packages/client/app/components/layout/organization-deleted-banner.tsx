@@ -5,7 +5,7 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
-import { useFormatDate } from "~/kit/format/date.hooks";
+import { useFormatRelativeDays } from "~/kit/format/date.hooks";
 
 type DeletedAt = NonNullable<Api["Organizations"]["Client"]["Organization"]["deletedAt"]>;
 
@@ -23,7 +23,7 @@ export const OrganizationDeletedBanner = () => {
 
 const DeletedBanner = ({ deletedAt }: { deletedAt: DeletedAt }) => {
   const { i18n } = useI18n();
-  const formatDate = useFormatDate();
+  const formatRelativeDays = useFormatRelativeDays();
   const [now] = useState(() => new Date());
 
   return (
@@ -38,7 +38,7 @@ const DeletedBanner = ({ deletedAt }: { deletedAt: DeletedAt }) => {
             ? i18n.organizations.text.deletion_scheduled
             : i18n.organizations.text.deleted,
           {
-            "{date}": formatDate(deletedAt),
+            "{when}": formatRelativeDays({ date: deletedAt, now }),
           },
         )}
       </p>

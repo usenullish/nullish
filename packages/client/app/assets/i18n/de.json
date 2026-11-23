@@ -300,12 +300,12 @@
       "delete_title": "{name} löschen?",
       "delete_description": "Die Organisation ist ab sofort nur noch lesbar und wird nach 30 Tagen mit allen Daten endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "delete_description_payments": "Ihr Abo wird gekündigt. Die Organisation ist am Ende des bereits bezahlten Zeitraums nur noch lesbar und wird 30 Tage später mit allen Daten endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "deleted": "Diese Organisation wurde am {date} als gelöscht markiert.",
-      "deletion_scheduled": "Diese Organisation wird am {date} gelöscht.",
+      "deleted": "Diese Organisation wurde {when} als gelöscht markiert.",
+      "deletion_scheduled": "Diese Organisation wird {when} gelöscht.",
       "locked_title": "{name} ist gesperrt",
       "locked_description": "Ihr Abo ist nicht mehr aktiv, deshalb sind ihre Daten im Moment nicht zugänglich.",
       "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt.",
-      "trial": "Die Testphase endet am {date}.",
+      "trial": "Die Testphase endet {when}.",
       "trial_keep_going": ", um weiterzumachen."
     },
     "toast": {

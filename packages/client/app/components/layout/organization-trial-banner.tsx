@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { Info } from "lucide-react";
 import { isNullish, nonNullish } from "@usenullish/nullish-common";
@@ -9,12 +10,13 @@ import { useIsOrganizationAdmin } from "~/context/hooks/memberships.hooks";
 import { useSettings } from "~/context/contexts/settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
-import { useFormatDate } from "~/kit/format/date.hooks";
+import { useFormatRelativeDays } from "~/kit/format/date.hooks";
 import { OrganizationPath } from "~/navigation";
 
 export const OrganizationTrialBanner = () => {
   const { i18n } = useI18n();
-  const formatDate = useFormatDate();
+  const formatRelativeDays = useFormatRelativeDays();
+  const [now] = useState(() => new Date());
   const organization = useOrganization();
   const admin = useIsOrganizationAdmin({ organizationId: organization.id });
   const subscriptionSummary = useSubscriptionSummary();
@@ -40,7 +42,7 @@ export const OrganizationTrialBanner = () => {
       <Info className="size-4 shrink-0" />
       <p>
         {replacePlaceholders(i18n.organizations.text.trial, {
-          "{date}": formatDate(periodEnd),
+          "{when}": formatRelativeDays({ date: periodEnd, now }),
         })}{" "}
         {choosePlan && (
           <Link

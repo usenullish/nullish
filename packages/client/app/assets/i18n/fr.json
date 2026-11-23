@@ -300,12 +300,12 @@
       "delete_title": "Supprimer {name} ?",
       "delete_description": "L'organisation passe immédiatement en lecture seule et est supprimée définitivement, avec toutes ses données, après 30 jours. Cette action est irréversible.",
       "delete_description_payments": "Son abonnement est résilié. L'organisation passe en lecture seule à la fin de la période déjà payée et est supprimée définitivement, avec toutes ses données, 30 jours plus tard. Cette action est irréversible.",
-      "deleted": "Cette organisation a été marquée comme supprimée le {date}.",
-      "deletion_scheduled": "Cette organisation sera supprimée le {date}.",
+      "deleted": "Cette organisation a été marquée comme supprimée {when}.",
+      "deletion_scheduled": "Cette organisation sera supprimée {when}.",
       "locked_title": "{name} est verrouillée",
       "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment.",
       "grace": "Le dernier paiement a échoué. Cette organisation sera verrouillée le {date}.",
-      "trial": "La période d'essai se termine le {date}.",
+      "trial": "La période d'essai se termine {when}.",
       "trial_keep_going": " pour continuer."
     },
     "toast": {
