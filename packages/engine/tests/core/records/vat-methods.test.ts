@@ -224,9 +224,9 @@ describe("vat-methods", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(vatMethodsId);
-      expect(result.result[0]?.organizationId).toBe(org.id);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(vatMethodsId);
+      expect(result.result.data[0]?.organizationId).toBe(org.id);
     });
   });
 

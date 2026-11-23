@@ -138,8 +138,8 @@ describe("invoice summaries", () => {
       expect(result.status).toBe("success");
       if (result.status !== "success") return;
 
-      expect(result.result.map(({ invoice: { id } }) => id)).toEqual([draftId, openId]);
-      expect(result.result.map(({ amounts }) => amounts.balance.remaining)).toEqual([1000n, 2500n]);
+      expect(result.result.data.map(({ invoice: { id } }) => id)).toEqual([draftId, openId]);
+      expect(result.result.data.map(({ amounts }) => amounts.balance.remaining)).toEqual([1000n, 2500n]);
     });
 
     test("applies the invoice filters", async () => {
@@ -161,8 +161,8 @@ describe("invoice summaries", () => {
       expect(result.status).toBe("success");
       if (result.status !== "success") return;
 
-      expect(result.result.map(({ invoice: { id } }) => id)).toEqual([openId]);
-      expect(result.result[0]?.amounts.totals.total).toBe(3000n);
+      expect(result.result.data.map(({ invoice: { id } }) => id)).toEqual([openId]);
+      expect(result.result.data[0]?.amounts.totals.total).toBe(3000n);
     });
 
     test("returns an empty list for an organization without invoices", async () => {
@@ -177,7 +177,7 @@ describe("invoice summaries", () => {
         sort: { field: "createdAt", direction: "asc" },
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
   });
 

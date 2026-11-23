@@ -18,7 +18,7 @@ import {
 } from "../../src/_records/records";
 import { ilikeContains } from "../../src/_query/helpers";
 import type { QueryArgs } from "@usenullish/nullish-schema/db";
-import type { DbStoreInitArgs } from "../../src/store";
+import type { DbListResult, DbStoreInitArgs } from "../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
 
 const widgets = pgTable("test_engine_records_widgets", {
@@ -93,7 +93,7 @@ class TestRecords extends DbRecords<"id", typeof widgets> {
       where?: SQL;
       filters?: DbRecordsFilters<TFilters>;
     } & QueryArgs<DbRecordsSortField<typeof widgets>>,
-  ): Promise<Result<T[]>> {
+  ): Promise<Result<DbListResult<T>>> {
     return this._query(args);
   }
 
@@ -245,8 +245,8 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(2);
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(result.result.data).toHaveLength(2);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("applies the schema transform to each row", async () => {
@@ -266,7 +266,7 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result.map((r) => r.version).sort()).toEqual([2, 6]);
+      expect(result.result.data.map((r) => r.version).sort()).toEqual([2, 6]);
     });
 
     test("threads the where clause into the query builder", async () => {
@@ -284,14 +284,14 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.name).toBe("alpha");
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.name).toBe("alpha");
     });
 
     test("returns a success Result with an empty array when there are no rows", async () => {
       const result = await records.query({ schema: WidgetSchema, pagination: PAGE, sort: SORT });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("returns an error Result (not a throw) when a row fails schema validation", async () => {
@@ -334,7 +334,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["mine", "shared"]);
+      expect(namesOf(result.result.data)).toEqual(["mine", "shared"]);
     });
 
     test("returns an error Result when the transaction cannot be opened", async () => {
@@ -383,7 +383,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha"]);
     });
 
     test("combines several filters", async () => {
@@ -400,7 +400,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha"]);
     });
 
     test("combines the filters with the caller's where", async () => {
@@ -417,8 +417,8 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(namesOf(result.result)).toEqual(["alpha"]);
+      expect(result.result.data).toHaveLength(1);
+      expect(namesOf(result.result.data)).toEqual(["alpha"]);
     });
 
     test("returns every row when the filters have no values", async () => {
@@ -431,7 +431,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("returns every row when no filter is set", async () => {
@@ -444,7 +444,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("ignores an empty search", async () => {
@@ -457,7 +457,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("returns a ZodError Result when the filters do not match their schema", async () => {
@@ -486,7 +486,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["mine"]);
+      expect(namesOf(result.result.data)).toEqual(["mine"]);
     });
 
     test("matches a search case-insensitively", async () => {
@@ -499,7 +499,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["Alpha"]);
+      expect(namesOf(result.result.data)).toEqual(["Alpha"]);
     });
 
     test.each([
@@ -518,7 +518,7 @@ describe("records", () => {
           return;
         }
 
-        expect(namesOf(result.result)).toEqual(expected);
+        expect(namesOf(result.result.data)).toEqual(expected);
       },
     );
   });
@@ -538,7 +538,7 @@ describe("records", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(2);
+      expect(result.result.data).toHaveLength(2);
     });
 
     test("skips offset rows", async () => {
@@ -559,7 +559,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesInOrder(result.result)).toEqual(["alpha"]);
+      expect(namesInOrder(result.result.data)).toEqual(["alpha"]);
     });
 
     test("returns an empty page when offset is past the last row", async () => {
@@ -571,7 +571,7 @@ describe("records", () => {
         sort: SORT,
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("walks every row exactly once across pages", async () => {
@@ -589,7 +589,7 @@ describe("records", () => {
         ),
       );
 
-      const rows = pages.flatMap((page) => (page.status === "success" ? page.result : []));
+      const rows = pages.flatMap((page) => (page.status === "success" ? page.result.data : []));
 
       expect(namesOf(rows)).toEqual(["alpha", "beta", "delta", "epsilon", "gamma"]);
     });
@@ -601,7 +601,7 @@ describe("records", () => {
         sort: SORT,
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test.each([
@@ -670,7 +670,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesInOrder(result.result)).toEqual(["alpha", "beta", "gamma"]);
+      expect(namesInOrder(result.result.data)).toEqual(["alpha", "beta", "gamma"]);
     });
 
     test("orders by the given field descending", async () => {
@@ -691,7 +691,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesInOrder(result.result)).toEqual(["third", "second", "first"]);
+      expect(namesInOrder(result.result.data)).toEqual(["third", "second", "first"]);
     });
 
     test("breaks ties on the sort field by primary key descending", async () => {
@@ -712,7 +712,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesInOrder(result.result)).toEqual(["three", "two", "one"]);
+      expect(namesInOrder(result.result.data)).toEqual(["three", "two", "one"]);
     });
 
     test("applies the sort before the page is cut", async () => {
@@ -729,7 +729,7 @@ describe("records", () => {
         return;
       }
 
-      expect(namesInOrder(result.result)).toEqual(["beta"]);
+      expect(namesInOrder(result.result.data)).toEqual(["beta"]);
     });
 
     test("returns a ZodError Result for an unknown sort field", async () => {

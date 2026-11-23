@@ -31,7 +31,7 @@ describe("currencies", () => {
         return;
       }
 
-      const codes = result.result.map((currency) => currency.code);
+      const codes = result.result.data.map((currency) => currency.code);
       expect(codes).toEqual(expect.arrayContaining(["CHF", "EUR", "USD"]));
     });
   });

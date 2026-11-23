@@ -70,7 +70,7 @@ describe("DbCollectionBankRelationSummaries", () => {
     expect(result.status).toBe("success");
     if (result.status !== "success") return;
     const unreconciled = new Map(
-      result.result.map(({ bankRelation, movements }) => [bankRelation.id, movements.unreconciled]),
+      result.result.data.map(({ bankRelation, movements }) => [bankRelation.id, movements.unreconciled]),
     );
 
     expect(unreconciled).toEqual(
@@ -84,7 +84,7 @@ describe("DbCollectionBankRelationSummaries", () => {
   test("lists nothing for a user who is not a member of the organization", async () => {
     const result = await list(TEST_OTHER_USER_ID);
 
-    expect(result).toEqual({ status: "success", result: [] });
+    expect(result).toEqual({ status: "success", result: { data: [] } });
   });
 });
 
@@ -145,7 +145,7 @@ describe("DbCollectionBankRelationSummaries balance", () => {
     expect(result.status).toBe("success");
     return new Map(
       result.status === "success"
-        ? result.result.map(({ bankRelation, balance }) => [bankRelation.id, balance])
+        ? result.result.data.map(({ bankRelation, balance }) => [bankRelation.id, balance])
         : [],
     );
   };

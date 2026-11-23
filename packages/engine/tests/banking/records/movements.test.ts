@@ -127,7 +127,7 @@ describe("movements", () => {
     });
 
   const ids = (result: Awaited<ReturnType<typeof list>>): string[] =>
-    result.status === "success" ? result.result.map(({ id }) => id) : [];
+    result.status === "success" ? result.result.data.map(({ id }) => id) : [];
 
   test("lists the movements of the bank relation only", async () => {
     expect(ids(await list({}))).toEqual([earlyId, ignoredId, lateId]);

@@ -9,7 +9,7 @@ import type { Result } from "@usenullish/nullish-common";
 import { DbCollectionRecordsById } from "../../src/_records/collection-records-by-id";
 import type { DbRecordsFilters, DbRecordsSortField } from "../../src/_records/records";
 import type { QueryArgs } from "@usenullish/nullish-schema/db";
-import type { DbCollectionStoreInitArgs } from "../../src/store";
+import type { DbCollectionStoreInitArgs, DbListResult } from "../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
 
 const widgets = pgTable("test_engine_parent_records_by_id_widgets", {
@@ -72,7 +72,7 @@ class TestParentRecordsById extends DbCollectionRecordsById<typeof widgets, stri
     args: { schema: z.ZodType<T>; filters?: DbRecordsFilters<TFilters> } & QueryArgs<
       DbRecordsSortField<typeof widgets>
     >,
-  ): Promise<Result<T[]>> {
+  ): Promise<Result<DbListResult<T>>> {
     return this._queryWithForeignKeyId(args);
   }
 
@@ -187,7 +187,7 @@ describe("collection-records-by-id", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("returns a success Result with an empty array when the parent has no rows", async () => {
@@ -199,7 +199,7 @@ describe("collection-records-by-id", () => {
         sort: SORT,
       });
 
-      expect(result).toEqual({ status: "success", result: [] });
+      expect(result).toEqual({ status: "success", result: { data: [] } });
     });
 
     test("still excludes rows hidden by the auth scope", async () => {
@@ -220,7 +220,7 @@ describe("collection-records-by-id", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["mine", "shared"]);
+      expect(namesOf(result.result.data)).toEqual(["mine", "shared"]);
     });
 
     test("paginates and sorts within the parent scope only", async () => {
@@ -242,7 +242,7 @@ describe("collection-records-by-id", () => {
         return;
       }
 
-      expect(result.result.map(({ name }) => name)).toEqual(["beta", "gamma"]);
+      expect(result.result.data.map(({ name }) => name)).toEqual(["beta", "gamma"]);
     });
 
     test("combines the filters with the parent scope", async () => {
@@ -264,7 +264,7 @@ describe("collection-records-by-id", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha"]);
     });
 
     test("returns every row of the parent when no filter is set", async () => {
@@ -286,7 +286,7 @@ describe("collection-records-by-id", () => {
         return;
       }
 
-      expect(namesOf(result.result)).toEqual(["alpha", "beta"]);
+      expect(namesOf(result.result.data)).toEqual(["alpha", "beta"]);
     });
 
     test("returns an error Result when the transaction cannot be opened", async () => {

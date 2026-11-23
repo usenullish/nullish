@@ -196,9 +196,9 @@ describe("bank-relations", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(bankRelationId);
-      expect(result.result[0]?.organizationId).toBe(orgId);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(bankRelationId);
+      expect(result.result.data[0]?.organizationId).toBe(orgId);
     });
   });
 

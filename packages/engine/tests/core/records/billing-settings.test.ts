@@ -220,9 +220,9 @@ describe("billing-settings", () => {
         return;
       }
 
-      expect(result.result).toHaveLength(1);
-      expect(result.result[0]?.id).toBe(settingsId);
-      expect(result.result[0]?.paymentTermDays).toBe(10);
+      expect(result.result.data).toHaveLength(1);
+      expect(result.result.data[0]?.id).toBe(settingsId);
+      expect(result.result.data[0]?.paymentTermDays).toBe(10);
     });
   });
 

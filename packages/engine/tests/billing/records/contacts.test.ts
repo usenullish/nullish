@@ -172,9 +172,9 @@ describe("contacts", () => {
         return;
       }
 
-      expect(result.result.some((row) => row.id === contactId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== siblingContactId)).toBeTrue();
-      expect(result.result.every((row) => row.id !== otherContactId)).toBeTrue();
+      expect(result.result.data.some((row) => row.id === contactId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== siblingContactId)).toBeTrue();
+      expect(result.result.data.every((row) => row.id !== otherContactId)).toBeTrue();
     });
   });
 
@@ -241,7 +241,7 @@ describe("contacts", () => {
           return;
         }
 
-        expect(result.result.map(({ lastName }) => lastName)).toEqual(expected);
+        expect(result.result.data.map(({ lastName }) => lastName)).toEqual(expected);
       },
     );
   });
