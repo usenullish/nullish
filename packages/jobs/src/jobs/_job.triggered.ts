@@ -21,14 +21,17 @@ export abstract class TriggeredJob<
 
   async trigger({
     payload,
+    delay,
   }: {
     payload: z.infer<PayloadSchema>;
+    delay?: number;
   }): Promise<Jobs["Common"]["ScheduledJobs"]> {
     const jobId = crypto.randomUUID();
 
     // We use the same name for the queue as the worker - i.e. one worker === one queue
     await this._queue.add(this._key, this._payloadSchema.parse(payload), {
       jobId,
+      delay,
     });
 
     return { jobId };

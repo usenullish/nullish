@@ -107,6 +107,18 @@ describe("Job", () => {
     await waitFor(() => job.processed.some((payload) => payload.value === "processed-by-worker"));
   }, 10000);
 
+  test("trigger with a delay keeps the job delayed instead of running it", async () => {
+    const { jobId } = await job.trigger({
+      payload: { value: "delayed-by-trigger" },
+      delay: 60_000,
+    });
+
+    const state = await job.getState({ jobId });
+
+    expect(state.status).toBe("delayed");
+    expect(job.processed.some((payload) => payload.value === "delayed-by-trigger")).toBeFalse();
+  });
+
   test("trigger rejects a payload that fails schema validation", async () => {
     await expect(
       job.trigger({ payload: { value: 42 } as unknown as TestJobPayload }),
