@@ -59,8 +59,17 @@ export const testIds = {
     signUp: "btn-invitation-sign-up",
     accept: "btn-invitation-accept",
   },
+  home: {
+    organization: "link-home-organization",
+  },
   navigation: {
     organization: "link-navigation-organization",
+  },
+  organizations: {
+    locked: "card-organization-locked",
+    seePlans: "link-organization-see-plans",
+    backToOrganizations: "link-organization-back-to-organizations",
+    grace: "text-organization-grace",
   },
   subscription: {
     choosePlan: "link-subscription-choose-plan",
