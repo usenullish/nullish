@@ -11,6 +11,8 @@ import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { OrganizationPath } from "~/navigation";
 import { Button } from "~/ui/components/button";
 import { TextShimmerLoader } from "~/ui/components/loader";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type SubscriptionSummary = Api["SubscriptionSummaries"]["Client"]["SubscriptionSummary"];
 
@@ -89,22 +91,28 @@ export const SubscriptionSuccess = ({
       {timedOut ? (
         <ViewTransition>
           <div className="flex flex-col items-start gap-4">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground" {...testId(testIds.subscription.timeout)}>
               {i18n.subscription.text.success_timeout}
             </p>
 
-            <Button nativeButton={false} render={<Link to={organizationPath} />}>
+            <Button
+              nativeButton={false}
+              render={<Link to={organizationPath} />}
+              {...testId(testIds.subscription.backToOrganization)}
+            >
               {i18n.subscription.action.back_to_organization}
             </Button>
           </div>
         </ViewTransition>
       ) : (
-        <TextShimmerLoader
-          text={replacePlaceholders(i18n.subscription.state.activating, {
-            "{seconds}": String(secondsLeft),
-          })}
-          size="sm"
-        />
+        <div {...testId(testIds.subscription.activating)}>
+          <TextShimmerLoader
+            text={replacePlaceholders(i18n.subscription.state.activating, {
+              "{seconds}": String(secondsLeft),
+            })}
+            size="sm"
+          />
+        </div>
       )}
     </SubscriptionStep>
   );

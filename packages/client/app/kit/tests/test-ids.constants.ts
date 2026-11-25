@@ -59,4 +59,22 @@ export const testIds = {
     signUp: "btn-invitation-sign-up",
     accept: "btn-invitation-accept",
   },
+  navigation: {
+    organization: "link-navigation-organization",
+  },
+  subscription: {
+    choosePlan: "link-subscription-choose-plan",
+    billing: "btn-subscription-billing",
+    plan: "card-subscription-plan",
+    instance: "card-subscription-instance",
+    onPrem: "card-subscription-on-prem",
+    requestInstance: "link-subscription-request-instance",
+    getInTouch: "link-subscription-get-in-touch",
+    subscribe: "btn-subscription-subscribe",
+    status: "text-subscription-status",
+    periodEnd: "text-subscription-period-end",
+    activating: "text-subscription-activating",
+    timeout: "text-subscription-timeout",
+    backToOrganization: "link-subscription-back-to-organization",
+  },
 } as const satisfies TestIds;

@@ -44,6 +44,8 @@ import { UserMenu } from "./user-menu";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { useActiveConversation } from "~/kit/chat/active-conversation.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type OrganizationId = Api["Organizations"]["Client"]["Organization"]["id"];
 
@@ -169,6 +171,7 @@ const OrganizationItem = ({
             tooltip={i18n.navigation[label]}
             isActive={activePath === path}
             render={<Link to={OrganizationPath.create({ organizationId }).to({ path })} />}
+            {...testId(`${testIds.navigation.organization}-${label}`)}
           >
             {Icon !== undefined && <Icon />}
             <span>{i18n.navigation[label]}</span>
