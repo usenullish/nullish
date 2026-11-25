@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/actions/prepare-e2e
 
       - name: Bootstrap subscription
-        run: NODE_ENV=development bun run --env-file=.env.e2e packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription.stripe-mock.json
+        run: NODE_ENV=development bun run --env-file=.env.e2e packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription/subscription.stripe-mock.json
 
       - name: Run tests
         run: bun run e2e:payments:ci
