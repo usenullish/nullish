@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
+shopt -s nullglob
 
 PRE_DIR="./packages/db/bootstrap/pre"
 POST_DIR="./packages/db/bootstrap/post"
 OUT_DIR="./packages/db/migrations"
 
-LAST_KEPT_MIGRATION="20261105163418_trigger_assert_and_apply_audit_fields"
+LAST_KEPT_MIGRATION="20261125124040_trigger_check_instance_max_members"
 
 SCHEMA_NAME="${1:-schema_init}"
 
