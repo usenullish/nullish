@@ -29,12 +29,6 @@ jobs:
           --health-cmd "pg_isready -U username -d nullish"
           --health-interval 5s
 
-      mailpit:
-        image: axllent/mailpit:v1.30.5@sha256:b868afa176bfd6cce2323ea316cd99ccad77915e51e595748f6d786700ecf109
-        ports:
-          - 1025:1025
-          - 8025:8025
-
       stripe-mock:
         image: stripe/stripe-mock:v0.206.0@sha256:aeb96b83e87a893d2ac005e363ac01ffa6e59a5ad85b49c155dfc9129de02e78
         ports:
@@ -50,7 +44,10 @@ jobs:
         uses: ./.github/actions/prepare-e2e
 
       - name: Bootstrap subscription
-        run: NODE_ENV=development bun run --env-file=.env.e2e packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription/subscription.stripe-mock.json
+        run: NODE_ENV=development bun run --env-file=.env.e2e.payments packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription/subscription.stripe-mock.json
+
+      - name: Seed
+        run: NODE_ENV=development bun run --env-file=.env.e2e.payments e2e/seed/payments.seed.ts
 
       - name: Run tests
         run: bun run e2e:payments:ci
