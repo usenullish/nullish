@@ -8,7 +8,8 @@ Everything else belongs in the engine, which runs as the user and only sees thei
 
 - there is no user yet: `SignUpService` checks whether anyone may sign up;
 - the action spans every organization or belongs to the operator of the instance: `DeleteOrganizationService` deletes the organizations marked as deleted;
-- the CLI tooling, e.g. the Bexio migration.
+- the CLI tooling, e.g. the Bexio migration;
+- the setup of the operator: the subscription plans, their products at the payment provider (`ExternalProductsService`) or as custom offers (`CustomProductsService`), the tax rates and the subscription settings (`subscription/`), bootstrapped once from a file (`SubscriptionBootstrapService`), and the limits of the instance (`InstanceRulesService`, `instance/`).
 
 Row-level security is bypassed, but every trigger and constraint still applies. A rule the database enforces does not need to be checked again here, and it cannot be skipped either.
 

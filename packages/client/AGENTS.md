@@ -46,3 +46,13 @@ Services and API wrappers declare their methods as arrow properties (`list = asy
 - `en.json` is the source of the schemas. After adding, renaming or removing keys, run `bun run i18n` in `packages/client` to regenerate `i18n.ts` (Zod schemas and the inferred `I18n` type). The loaders parse every language with it, so a dictionary with a missing or extra key fails to load.
 - Components read the texts with `const { i18n } = useI18n();`, e.g. `i18n.core.action.submit`. Values inside a text are placeholders replaced in the component with `replacePlaceholders` (`kit/i18n/i18n.utils.ts`), e.g. `replacePlaceholders(i18n.core.label.page, { "{page}": … })`.
 - Translations use Swiss terminology: MWST / TVA / IVA, and "Strasse" without "ß".
+
+## Subscription
+
+- The server's settings (`SettingsCache`, read once per client process and held in `SettingsContext`) tell whether the payments are enabled. Without them (`settings.payments.enabled` false), nothing about the subscription is shown: no menu, no plans, no link in the banners. A client started before the server's Stripe keys were set keeps the old settings until it restarts.
+- The organization route (`orgs.$org-id.tsx`) loads the subscription summary into `SubscriptionContext` (`useSubscription()`). `SubscriptionGuard` shows `OrganizationLocked` instead of the organization once it is locked. The organization layout shows the trial, grace and deleted banners.
+- The plans (`/subscription/plans`) and the success page (`/subscription/success`) sit outside the organization layout, so that the admins of a locked organization can still pick a plan. The success page polls the subscription until the webhook has activated it.
+
+## Legal
+
+- The sign-up page shows a sentence accepting the terms and the privacy policy only when both `NULLISH_TERMS_URL` and `NULLISH_PRIVACY_URL` are set (`kit/legal`, read at runtime like `NULLISH_ENVIRONMENT`). A `{lang}` in the URLs is replaced by the language of the interface. A self-hosted instance without them shows no sentence.
