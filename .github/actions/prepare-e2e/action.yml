@@ -1,0 +1,17 @@
+name: Prepare E2E
+
+description: Install dependencies and Playwright, and build the client for the end-to-end tests
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare
+      uses: ./.github/actions/prepare
+
+    - name: Prepare Playwright
+      shell: bash
+      run: bun run e2e:playwright:install
+
+    - name: Build client
+      shell: bash
+      run: VITE_E2E=true bun run --filter @usenullish/nullish-client build
