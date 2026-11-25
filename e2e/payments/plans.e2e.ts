@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { initTestSuite } from "../_test-suite";
-import { SubscriptionPage } from "../page-objects/subscription.page";
+import { PaymentsSubscriptionPage } from "../page-objects/payments-subscription.page";
 import {
   BillingPeriod,
   SubscriptionStatus,
@@ -10,7 +10,7 @@ import {
   VatRemunerationMethod,
 } from "../../packages/schema/src/db/constants/vat";
 
-const getSubscriptionPage = initTestSuite(SubscriptionPage);
+const getSubscriptionPage = initTestSuite(PaymentsSubscriptionPage);
 
 test("signs up and creates an organization in trial", async () => {
   const subscriptionPage = getSubscriptionPage();

@@ -1,0 +1,60 @@
+name: E2E Stripe Tests
+
+on:
+  pull_request:
+    paths:
+      - "packages/payments/**"
+      - "e2e/stripe/**"
+  workflow_dispatch:
+
+jobs:
+  e2e-stripe:
+    runs-on: ubuntu-latest
+
+    env:
+      NULLISH_STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+      STRIPE_CLI_IMAGE: stripe/stripe-cli:v1.55.13@sha256:92b1493f3dce8cd95db0c7fd572749c5e18aea1cc33a6f73ff870100aa32f0ee
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: nullish
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U username -d nullish"
+          --health-interval 5s
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-e2e
+
+      - name: Get the Stripe webhook secret
+        run: |
+          SECRET=$(docker run --rm "${STRIPE_CLI_IMAGE}" listen --api-key "${NULLISH_STRIPE_SECRET_KEY}" --print-secret)
+          echo "::add-mask::${SECRET}"
+          echo "NULLISH_STRIPE_WEBHOOK_SECRET=${SECRET}" >> "${GITHUB_ENV}"
+
+      - name: Start the Stripe CLI
+        run: >-
+          docker run --detach --network host "${STRIPE_CLI_IMAGE}"
+          listen --api-key "${NULLISH_STRIPE_SECRET_KEY}" --all-snapshot
+          --forward-to localhost:3000/payments/stripe/webhook
+
+      - name: Bootstrap subscription
+        run: NODE_ENV=development bun run --env-file=.env.e2e.stripe packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription/subscription.nullish.json
+
+      - name: Run tests
+        run: bun run e2e:stripe:ci
+
+      - name: Upload results on failure
+        uses: ./.github/actions/upload-e2e-results
+        if: ${{ failure() }}

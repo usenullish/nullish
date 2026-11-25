@@ -35,6 +35,12 @@ export class OnboardingPage extends SignUpPage {
     await this.click(testIds.setup.vat);
   }
 
+  async skipVat(): Promise<void> {
+    await expect(this.page).toHaveURL(/\/orgs\/[^/]+\/setup\/vat$/);
+
+    await this.click(testIds.setup.skip);
+  }
+
   async assertReady(): Promise<void> {
     await expect(this.page).toHaveURL(/\/orgs\/[^/]+\/setup\/ready$/);
     await expect(this.page.getByTestId(testIds.newOrganization.ready)).toBeVisible();

@@ -2,6 +2,13 @@ import { expect } from "@playwright/test";
 import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import { OnboardingPage } from "./onboarding.page";
 import { SignUpWithoutVerificationPage } from "./sign-up-without-verification.page";
+import {
+  assertStripePortal,
+  cancelOnStripe,
+  leaveStripePortal,
+  payOnStripe,
+  renewOnStripe,
+} from "../stripe-objects/stripe";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import type {
   BillingPeriod,
@@ -11,8 +18,6 @@ import {
   SUBSCRIPTION_BILLING_PARAM,
   SUBSCRIPTION_SUCCESS_PATH,
 } from "../../packages/schema/src/server/constants/paths";
-
-const STRIPE_CHECKOUT_URL = "https://checkout.stripe.com/**";
 
 export class SubscriptionPage extends OnboardingPage {
   override async signUp(user: { name: string; email: string; password: string }): Promise<void> {
@@ -30,6 +35,50 @@ export class SubscriptionPage extends OnboardingPage {
   async assertStatus({ status }: { status: SubscriptionStatus }): Promise<void> {
     await expect(this.page.getByTestId(`${testIds.subscription.status}-${status}`)).toBeVisible();
     await expect(this.page.getByTestId(testIds.subscription.periodEnd)).toBeVisible();
+  }
+
+  async manage(): Promise<void> {
+    await this.click(testIds.subscription.manage);
+
+    await assertStripePortal({ page: this.page });
+  }
+
+  async cancelOnStripe(): Promise<void> {
+    await cancelOnStripe({ page: this.page });
+
+    await leaveStripePortal({ page: this.page });
+  }
+
+  async renewOnStripe(): Promise<void> {
+    await renewOnStripe({ page: this.page });
+
+    await leaveStripePortal({ page: this.page });
+  }
+
+  async assertCancelled(): Promise<void> {
+    await expect(this.page).toHaveURL(/\/orgs\/[^/]+\/subscription\/details$/);
+
+    await expect(async () => {
+      await this.page.reload();
+
+      await expect(this.page.getByTestId(testIds.subscription.endsOn)).toBeVisible({
+        timeout: 2_000,
+      });
+    }).toPass({ timeout: 60_000 });
+  }
+
+  async assertRenewed(): Promise<void> {
+    await expect(this.page).toHaveURL(/\/orgs\/[^/]+\/subscription\/details$/);
+
+    await expect(async () => {
+      await this.page.reload();
+
+      await expect(this.page.getByTestId(testIds.subscription.periodEnd)).toBeVisible({
+        timeout: 2_000,
+      });
+    }).toPass({ timeout: 60_000 });
+
+    await expect(this.page.getByTestId(testIds.subscription.endsOn)).toHaveCount(0);
   }
 
   async choosePlan(): Promise<void> {
@@ -79,11 +128,11 @@ export class SubscriptionPage extends OnboardingPage {
   }
 
   async subscribe(): Promise<void> {
-    await this.page.route(STRIPE_CHECKOUT_URL, (route) =>
-      route.fulfill({ status: 200, contentType: "text/html", body: "<p>Checkout</p>" }),
-    );
-
     await this.click(testIds.subscription.subscribe);
+  }
+
+  async payOnStripe({ card }: Pick<Parameters<typeof payOnStripe>[0], "card">): Promise<void> {
+    await payOnStripe({ page: this.page, card });
   }
 
   async assertCheckoutOpened(): Promise<void> {
@@ -120,6 +169,18 @@ export class SubscriptionPage extends OnboardingPage {
         timeout: 100,
       });
     }).toPass({ intervals: [100], timeout: 25_000 });
+  }
+
+  async assertActivated(): Promise<void> {
+    await expect(this.page.getByTestId(testIds.subscription.activated)).toBeVisible({
+      timeout: 60_000,
+    });
+  }
+
+  async continue(): Promise<void> {
+    await this.click(testIds.subscription.continue);
+
+    await expect(this.page).toHaveURL(/\/orgs\/[^/]+$/);
   }
 
   async backToOrganization(): Promise<void> {
