@@ -74,7 +74,7 @@ export const PdfInvoiceJobState = ({
                 <a
                   href={`${API_URL}/billing/invoices/${invoiceId}/pdf/documents/${state.result.documentId}/download`}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 />
               }
             >
