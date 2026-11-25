@@ -45,7 +45,10 @@ export const SubscriptionOverview = () => {
       ),
     },
     nonNullish(cancelAt)
-      ? { label: i18n.subscription.label.ends_on, value: formatDate(cancelAt) }
+      ? {
+          label: i18n.subscription.label.ends_on,
+          value: <span {...testId(testIds.subscription.endsOn)}>{formatDate(cancelAt)}</span>,
+        }
       : isNullish(periodEnd)
         ? { label: i18n.subscription.label.valid, value: i18n.subscription.text.unlimited }
         : {

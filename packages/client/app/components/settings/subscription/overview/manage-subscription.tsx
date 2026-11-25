@@ -5,6 +5,8 @@ import { PaymentsManageService } from "~/lib/services/payments+manage.services";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { useNotify } from "~/kit/notifications/notify.hook";
 import { Button } from "~/ui/components/button";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const ManageSubscription = () => {
   const { i18n } = useI18n();
@@ -30,7 +32,13 @@ export const ManageSubscription = () => {
   };
 
   return (
-    <Button type="button" className="self-start" disabled={pending} onClick={() => void manage()}>
+    <Button
+      type="button"
+      className="self-start"
+      disabled={pending}
+      onClick={() => void manage()}
+      {...testId(testIds.subscription.manage)}
+    >
       {i18n.subscription.action.manage}
     </Button>
   );
