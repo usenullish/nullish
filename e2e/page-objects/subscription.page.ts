@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import { OnboardingPage } from "./onboarding.page";
+import { SignUpWithoutVerificationPage } from "./sign-up-without-verification.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import type {
   BillingPeriod,
@@ -14,6 +15,12 @@ import {
 const STRIPE_CHECKOUT_URL = "https://checkout.stripe.com/**";
 
 export class SubscriptionPage extends OnboardingPage {
+  override async signUp(user: { name: string; email: string; password: string }): Promise<void> {
+    const { page, context } = this;
+
+    await new SignUpWithoutVerificationPage({ page, context }).signUp(user);
+  }
+
   async openSubscription(): Promise<void> {
     await this.click(`${testIds.navigation.organization}-subscription`);
 
