@@ -1,11 +1,20 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const DEV = (process.env.NODE_ENV ?? "production") === "development";
+const PAYMENTS = process.env.E2E_SUITE === "payments";
+
+const serverScript = (): string => {
+  if (PAYMENTS) {
+    return "e2e:payments";
+  }
+
+  return process.env.CI ? "e2e" : "dev";
+};
 
 export default defineConfig({
   webServer: [
     {
-      command: `bun run --filter @usenullish/nullish-server ${process.env.CI ? "e2e" : "dev"}`,
+      command: `bun run --filter @usenullish/nullish-server ${serverScript()}`,
       url: "http://localhost:3000/health",
       reuseExistingServer: true,
     },
@@ -34,7 +43,8 @@ export default defineConfig({
   ],
   testDir: "./e2e",
   snapshotDir: `./${DEV ? "tmp" : "e2e"}/snapshots`,
-  testMatch: ["**/*.e2e.ts", "**/*.spec.ts"],
+  testMatch: PAYMENTS ? ["payments/**/*.e2e.ts"] : ["**/*.e2e.ts", "**/*.spec.ts"],
+  testIgnore: PAYMENTS ? [] : ["payments/**"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   workers: 1,
