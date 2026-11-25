@@ -26,7 +26,7 @@ While a feature is unreleased, its migrations keep changing. Stacking fixes on t
 Only for a large feature that is certain not to ship before it is complete. Anything else follows the README, one migration at a time.
 
 - The custom SQL of the feature lives in `bootstrap/`, numbered in execution order: `pre/` runs before the Drizzle migration, `post/` after it. `pre/` only holds what the generated migration depends on, everything else goes in `post/`.
-- `bun run db:bootstrap` deletes the migrations after `LAST_KEPT_MIGRATION` in `db.bootstrap.sh` and regenerates them. Set it to the last released migration when the feature starts.
+- `bun run db:bootstrap` deletes the migrations after `LAST_KEPT_MIGRATION` in `db.bootstrap.sh` and regenerates them. Set it to the last released migration when the feature starts. The migration generated from the Drizzle schemas is named `schema_init` unless a name is given, e.g. `bun run db:bootstrap schema_subscription_tables`.
 - Change the code or the files in `bootstrap/`, never the generated migrations: the next run overwrites them.
 - Every run changes the timestamps, so reset the local and test databases and update the rows of the README.
 - A schema created in `pre/` is not exported from `schemas/index.ts`, otherwise Drizzle creates it a second time.

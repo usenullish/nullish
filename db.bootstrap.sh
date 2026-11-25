@@ -7,6 +7,8 @@ OUT_DIR="./packages/db/migrations"
 
 LAST_KEPT_MIGRATION="20261105163418_trigger_assert_and_apply_audit_fields"
 
+SCHEMA_NAME="${1:-schema_init}"
+
 function generate_custom_sql() {
     local dir="$1"
 
@@ -50,7 +52,7 @@ generate_custom_sql "$PRE_DIR"
 sleep 1
 
 # Generate SQL from code
-bun --bun drizzle-kit generate --name schema_init
+bun --bun drizzle-kit generate --name "$SCHEMA_NAME"
 
 sleep 1
 
