@@ -1,0 +1,6 @@
+services:
+  stripe-mock:
+    image: stripe/stripe-mock:v0.206.0@sha256:aeb96b83e87a893d2ac005e363ac01ffa6e59a5ad85b49c155dfc9129de02e78
+    restart: unless-stopped
+    ports:
+      - "12111:12111"

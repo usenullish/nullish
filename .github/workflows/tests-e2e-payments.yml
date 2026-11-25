@@ -1,0 +1,78 @@
+name: E2E Payments Tests
+
+on:
+  pull_request:
+    paths:
+      - "e2e/payments/**"
+      - "packages/payments/**"
+      - "packages/admin/src/subscription/**"
+      - "packages/engine/src/subscription/**"
+      - "packages/server/src/api/resources/_organizations+payments+*.ts"
+      - "packages/server/src/api/resources/_subscription+*.ts"
+      - "packages/client/app/components/settings/subscription/**"
+      - "packages/client/app/routes/*subscription*"
+
+jobs:
+  e2e-payments:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: nullish
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U username -d nullish"
+          --health-interval 5s
+
+      mailpit:
+        image: axllent/mailpit:v1.30.5@sha256:b868afa176bfd6cce2323ea316cd99ccad77915e51e595748f6d786700ecf109
+        ports:
+          - 1025:1025
+          - 8025:8025
+
+      stripe-mock:
+        image: stripe/stripe-mock:v0.206.0@sha256:aeb96b83e87a893d2ac005e363ac01ffa6e59a5ad85b49c155dfc9129de02e78
+        ports:
+          - 12111:12111
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Prepare
+        uses: ./.github/actions/prepare
+
+      - name: Prepare Playwright
+        run: bun run e2e:playwright:install
+
+      - name: Build client
+        run: VITE_E2E=true bun run --filter @usenullish/nullish-client build
+
+      - name: Bootstrap subscription
+        run: NODE_ENV=development bun run --env-file=.env.e2e packages/cli/src/index.ts subscription bootstrap e2e/fixtures/subscription.stripe-mock.json
+
+      - name: Run tests
+        run: bun run e2e:payments:ci
+
+      - name: Upload Playwright report on failure
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ failure() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 3
+
+      - name: Upload Playwright results on failure
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ failure() }}
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 3

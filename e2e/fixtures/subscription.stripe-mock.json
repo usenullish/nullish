@@ -1,0 +1,29 @@
+[
+  { "provider": "self", "trialDays": 14, "rules": { "maxMembers": 3 } },
+  {
+    "provider": "custom",
+    "name": "Instance",
+    "contactUrl": "https://nullish.ch/{lang}/contact/instance",
+    "prices": [
+      { "amount": { "__bigint__": "20000" }, "currency": "CHF", "billingPeriod": "month" },
+      { "amount": { "__bigint__": "198000" }, "currency": "CHF", "billingPeriod": "year" }
+    ]
+  },
+  {
+    "provider": "custom",
+    "name": "On-Prem",
+    "contactUrl": "https://nullish.ch/{lang}/contact/on-prem"
+  },
+  {
+    "provider": "stripe",
+    "externalProductId": "prod_QXg1hqf4jFNsqG",
+    "name": "Cloud",
+    "rules": { "maxMembers": 3 },
+    "taxRates": [
+      {
+        "externalTaxRateId": "txr_e2e",
+        "startOn": { "__date__": "2024-01-01" }
+      }
+    ]
+  }
+]
