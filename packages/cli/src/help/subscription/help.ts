@@ -2,6 +2,7 @@ import { cyan, lime, magenta, yellow } from "../../utils/colors";
 import {
   OPTION_HELP,
   SUBSCRIPTION_BOOTSTRAP_DESCRIPTION,
+  SUBSCRIPTION_CUSTOM_PRODUCT_DESCRIPTION,
   SUBSCRIPTION_DESCRIPTION,
   SUBSCRIPTION_EXTERNAL_PRODUCT_DESCRIPTION,
   SUBSCRIPTION_PLAN_DESCRIPTION,
@@ -15,6 +16,7 @@ const usage = `Usage: ${lime("nullish")} ${cyan("subscription")} ${magenta("<sub
 
 Commands:
   ${cyan("bootstrap")}           ${SUBSCRIPTION_BOOTSTRAP_DESCRIPTION}
+  ${cyan("custom-product")}      ${SUBSCRIPTION_CUSTOM_PRODUCT_DESCRIPTION}
   ${cyan("external-product")}    ${SUBSCRIPTION_EXTERNAL_PRODUCT_DESCRIPTION}
   ${cyan("plan")}                ${SUBSCRIPTION_PLAN_DESCRIPTION}
   ${cyan("settings")}            ${SUBSCRIPTION_SETTINGS_DESCRIPTION}

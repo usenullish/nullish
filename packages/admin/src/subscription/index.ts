@@ -1,3 +1,4 @@
+export * from "./services/custom-products";
 export * from "./services/external-products";
 export * from "./services/plans";
 export * from "./services/subscription-bootstrap";
