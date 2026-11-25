@@ -58,6 +58,7 @@ export const testIds = {
     submit: "btn-invitation-create",
     signUp: "btn-invitation-sign-up",
     accept: "btn-invitation-accept",
+    limitReached: "text-invitation-limit-reached",
   },
   home: {
     organization: "link-home-organization",
