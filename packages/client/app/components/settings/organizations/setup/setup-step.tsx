@@ -12,6 +12,8 @@ import type { OrganizationSetup } from "~/context/server/organizations+setup.ser
 import { useOrganizations } from "~/context/contexts/organizations.context";
 import { Button } from "~/ui/components/button";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SetupStep = ({
   organizationId,
@@ -55,7 +57,12 @@ export const SetupStep = ({
       {children}
 
       <div className="mx-auto flex w-full max-w-2xl justify-end">
-        <Button variant="ghost" nativeButton={false} render={<Link to={skipTo} />}>
+        <Button
+          variant="ghost"
+          nativeButton={false}
+          render={<Link to={skipTo} />}
+          {...testId(testIds.setup.skip)}
+        >
           {i18n.core.action.skip}
         </Button>
       </div>
