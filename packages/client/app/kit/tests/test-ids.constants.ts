@@ -27,6 +27,7 @@ export const testIds = {
   },
   setup: {
     vat: "btn-setup-vat",
+    skip: "link-setup-skip",
   },
   vat: {
     number: "input-vat-number",
@@ -83,7 +84,11 @@ export const testIds = {
     subscribe: "btn-subscription-subscribe",
     status: "text-subscription-status",
     periodEnd: "text-subscription-period-end",
+    endsOn: "text-subscription-ends-on",
+    manage: "btn-subscription-manage",
     activating: "text-subscription-activating",
+    activated: "text-subscription-activated",
+    continue: "link-subscription-continue",
     timeout: "text-subscription-timeout",
     backToOrganization: "link-subscription-back-to-organization",
   },

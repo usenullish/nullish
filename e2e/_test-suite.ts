@@ -1,8 +1,9 @@
-import { type Browser, test } from "@playwright/test";
+import { type Browser, type BrowserContextOptions, test } from "@playwright/test";
 import type { AppPage, AppPageConstructor } from "./page-objects/app.page";
 
 export const initTestSuite = <T extends AppPage>(
   AppPageClass: AppPageConstructor<T>,
+  contextOptions?: BrowserContextOptions,
 ): (() => T) => {
   test.describe.configure({ mode: "serial" });
 
@@ -12,7 +13,7 @@ export const initTestSuite = <T extends AppPage>(
   test.beforeAll(async ({ playwright }) => {
     browser = await playwright.chromium.launch();
 
-    const context = await browser.newContext();
+    const context = await browser.newContext(contextOptions);
     const page = await context.newPage();
 
     appPage = new AppPageClass({

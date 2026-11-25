@@ -73,12 +73,19 @@ export const SubscriptionSuccess = ({
     return (
       <SubscriptionStep closeTo={organizationPath} current="done">
         <div className="flex flex-1 flex-col items-center justify-center gap-6 pb-24 text-center">
-          <h2 className="flex items-center gap-2 text-sm font-semibold">
+          <h2
+            className="flex items-center gap-2 text-sm font-semibold"
+            {...testId(testIds.subscription.activated)}
+          >
             {i18n.subscription.text.success_ready}
             <Check className="size-4" />
           </h2>
 
-          <Button nativeButton={false} render={<Link to={organizationPath} />}>
+          <Button
+            nativeButton={false}
+            render={<Link to={organizationPath} />}
+            {...testId(testIds.subscription.continue)}
+          >
             {i18n.subscription.action.continue}
           </Button>
         </div>
