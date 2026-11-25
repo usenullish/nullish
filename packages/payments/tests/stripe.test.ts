@@ -470,6 +470,14 @@ describe("StripePaymentProvider", () => {
       expect(params.get("line_items[0][quantity]")).toBe("1");
     });
 
+    test("lets the customer enter a promotion code", async () => {
+      mockCheckout({ url: CHECKOUT_URL });
+
+      await StripePaymentProvider.create().checkout(args);
+
+      expect(sentParams().get("allow_promotion_codes")).toBe("true");
+    });
+
     test("returns to the success page of the organization", async () => {
       mockCheckout({ url: CHECKOUT_URL });
 
