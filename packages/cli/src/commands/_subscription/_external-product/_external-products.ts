@@ -5,7 +5,7 @@ import { exit } from "../../../utils/exit";
 
 type ExternalProduct = Records["Subscription"]["ExternalProducts"]["Select"];
 
-export const listProducts = async ({
+export const listExternalProducts = async ({
   dbContext,
 }: {
   dbContext: DbAdminContext;
@@ -22,7 +22,7 @@ export const listProducts = async ({
   return result.result;
 };
 
-export const productLabel = ({
+export const externalProductLabel = ({
   id,
   planId,
   provider,

@@ -7,7 +7,7 @@ import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
 import { listPlans, planLabel } from "../_plan/_plans";
 
-export const subscriptionProductCreate = async (_args?: string[]) => {
+export const subscriptionExternalProductCreate = async (_args?: string[]) => {
   console.log();
   intro(lime("nullish"));
 

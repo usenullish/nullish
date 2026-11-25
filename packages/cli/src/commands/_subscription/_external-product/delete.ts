@@ -4,14 +4,14 @@ import { isArrayAtLeastOne, isNullish } from "@usenullish/nullish-common";
 import { withDbContext } from "../../../db";
 import { lime } from "../../../utils/colors";
 import { cancel, exit } from "../../../utils/exit";
-import { listProducts, productLabel } from "./_products";
+import { externalProductLabel, listExternalProducts } from "./_external-products";
 
-export const subscriptionProductDelete = async (_args?: string[]) => {
+export const subscriptionExternalProductDelete = async (_args?: string[]) => {
   console.log();
   intro(lime("nullish"));
 
   await withDbContext(async (dbContext) => {
-    const products = await listProducts({ dbContext });
+    const products = await listExternalProducts({ dbContext });
 
     if (!isArrayAtLeastOne(products)) {
       log.info("There is no product.");
@@ -20,7 +20,10 @@ export const subscriptionProductDelete = async (_args?: string[]) => {
 
     const productId = await select({
       message: "Which product should be deleted?",
-      options: products.map((product) => ({ label: productLabel(product), value: product.id })),
+      options: products.map((product) => ({
+        label: externalProductLabel(product),
+        value: product.id,
+      })),
     });
 
     if (isCancel(productId)) {
@@ -42,6 +45,6 @@ export const subscriptionProductDelete = async (_args?: string[]) => {
       exit({ msg: `The product ${productId} was not found.` });
     }
 
-    note(productLabel(result.result), "Product deleted.");
+    note(externalProductLabel(result.result), "Product deleted.");
   });
 };
