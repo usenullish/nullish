@@ -40,7 +40,7 @@ export const payOnStripe = async ({
 }): Promise<void> => {
   await expect(page).toHaveURL(STRIPE_CHECKOUT_URL, { timeout: 15_000 });
 
-  const form = page.frameLocator('iframe[name^="__privateStripeFrame"][title]');
+  const form = page.frameLocator('iframe[src*="/elements-inner-habanero-"]');
 
   await form.getByRole("textbox", { name: "E-mail" }).fill(email);
 
