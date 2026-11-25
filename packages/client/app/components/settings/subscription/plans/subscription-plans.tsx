@@ -366,7 +366,7 @@ const ContactFooter = ({
       nativeButton={false}
       render={
         // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
-        <a href={contactUrl} target="_blank" rel="noreferrer" />
+        <a href={contactUrl} target="_blank" rel="noopener noreferrer" />
       }
     >
       {children}

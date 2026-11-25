@@ -14,7 +14,7 @@ export const SignUpLegal = ({ legal: { termsUrl, privacyUrl } }: { legal: Legal 
                 key={part}
                 href={termsUrl.replace("{lang}", i18n.lang)}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 {i18n.auth.text.legal_terms}
               </a>
@@ -25,7 +25,7 @@ export const SignUpLegal = ({ legal: { termsUrl, privacyUrl } }: { legal: Legal 
                 key={part}
                 href={privacyUrl.replace("{lang}", i18n.lang)}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 {i18n.auth.text.legal_privacy}
               </a>
