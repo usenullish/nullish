@@ -3,7 +3,7 @@
   {
     "provider": "custom",
     "name": "Instance",
-    "contactUrl": "https://example.com/contact",
+    "contactUrl": "https://nullish.ch/{lang}/contact/instance",
     "prices": [
       { "amount": { "__bigint__": "20000" }, "currency": "CHF", "billingPeriod": "month" },
       { "amount": { "__bigint__": "198000" }, "currency": "CHF", "billingPeriod": "year" }
@@ -12,7 +12,7 @@
   {
     "provider": "custom",
     "name": "On-Prem",
-    "contactUrl": "https://example.com/contact"
+    "contactUrl": "https://nullish.ch/{lang}/contact/on-prem"
   },
   {
     "provider": "stripe",

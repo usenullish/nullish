@@ -163,13 +163,9 @@ export const SubscriptionPlans = ({
           />
         ))}
 
-        {customPlans.map((plan) =>
-          plan.prices.length > 0 ? (
-            <InstanceCard key={plan.plan.id} plan={plan} billing={billing} />
-          ) : (
-            <OnPremCard key={plan.plan.id} plan={plan} />
-          ),
-        )}
+        {customPlans.map((plan) => (
+          <CustomCard plan={plan} billing={billing} />
+        ))}
       </div>
 
       {plans.length > 0 && (
@@ -260,6 +256,36 @@ const PriceLabel = ({
           : i18n.subscription.billing_period[billingPeriod]}
       </span>
     </p>
+  );
+};
+
+const CustomCard = ({
+  plan: {
+    product: { contactUrl, ...productRest },
+    prices,
+    ...planRest
+  },
+  billing,
+}: {
+  plan: CustomPlan;
+  billing: Option<BillingPeriod>;
+}) => {
+  const { i18n } = useI18n();
+
+  const plan = {
+    ...planRest,
+    product: {
+      ...productRest,
+      contactUrl: contactUrl.replace("{lang}", i18n.lang),
+    },
+    prices,
+  };
+
+  // For simplicity we assume that without prices it's other and by extension it's on-demand for on-prem
+  return plan.prices.length > 0 ? (
+    <InstanceCard key={plan.plan.id} plan={plan} billing={billing} />
+  ) : (
+    <OnPremCard key={plan.plan.id} plan={plan} />
   );
 };
 
