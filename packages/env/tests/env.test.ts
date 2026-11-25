@@ -23,6 +23,7 @@ import {
   envMailSmtpUrl,
   envMailTemplatesDir,
   envSignUp,
+  envStripeApiUrl,
   LlmTokenLimitPeriod,
 } from "../src";
 
@@ -49,6 +50,7 @@ describe("env", () => {
     "NULLISH_MAIL_SES_REGION",
     "NULLISH_MAIL_SES_ACCESS_KEY_ID",
     "NULLISH_MAIL_SES_SECRET_ACCESS_KEY",
+    "NULLISH_STRIPE_API_URL",
   ] as const;
 
   const saved = new Map<string, string | undefined>();
@@ -271,6 +273,52 @@ describe("env", () => {
 
       expect(() => envLlmChatTokenLimit()).toThrow();
     });
+  });
+
+  describe("envStripeApiUrl", () => {
+    test("returns nothing when NULLISH_STRIPE_API_URL is unset", () => {
+      expect(envStripeApiUrl()).toBeUndefined();
+    });
+
+    test("returns nothing when NULLISH_STRIPE_API_URL is empty", () => {
+      process.env.NULLISH_STRIPE_API_URL = "";
+
+      expect(envStripeApiUrl()).toBeUndefined();
+    });
+
+    test("reads an http URL", () => {
+      process.env.NULLISH_STRIPE_API_URL = "http://localhost:12111";
+
+      expect(envStripeApiUrl()?.href).toBe("http://localhost:12111/");
+    });
+
+    test("reads an https URL", () => {
+      process.env.NULLISH_STRIPE_API_URL = "https://localhost:12112";
+
+      expect(envStripeApiUrl()?.href).toBe("https://localhost:12112/");
+    });
+
+    test("throws in production", () => {
+      process.env.NODE_ENV = "production";
+      process.env.NULLISH_STRIPE_API_URL = "http://localhost:12111";
+
+      expect(() => envStripeApiUrl()).toThrow();
+    });
+
+    test("returns nothing in production when NULLISH_STRIPE_API_URL is unset", () => {
+      process.env.NODE_ENV = "production";
+
+      expect(envStripeApiUrl()).toBeUndefined();
+    });
+
+    test.each(["localhost:12111", "ftp://localhost:12111", "not a url"])(
+      "throws for %p",
+      (apiUrl) => {
+        process.env.NULLISH_STRIPE_API_URL = apiUrl;
+
+        expect(() => envStripeApiUrl()).toThrow();
+      },
+    );
   });
 
   describe("envSignUp", () => {
