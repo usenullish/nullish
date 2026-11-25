@@ -8,6 +8,7 @@
     "dev:stripe": "NODE_ENV=development bun run --env-file=../../.env.development --env-file=../../.env.stripe ./src/index.ts",
     "e2e": "NODE_ENV=development bun run --env-file=../../.env.e2e ./src/index.ts",
     "e2e:payments": "NODE_ENV=development bun run --env-file=../../.env.e2e.payments ./src/index.ts",
+    "e2e:stripe": "NODE_ENV=development bun run --env-file=../../.env.e2e.stripe ./src/index.ts",
     "build": "NODE_ENV=production bun run ./build.ts",
     "test": "bun test",
     "check": "tsc"

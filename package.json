@@ -47,6 +47,8 @@
     "e2e:ci": "playwright test --reporter=html",
     "e2e:payments": "NODE_ENV=development E2E_SUITE=payments playwright test",
     "e2e:payments:ci": "E2E_SUITE=payments playwright test --reporter=html",
+    "e2e:stripe": "NODE_ENV=development E2E_SUITE=stripe playwright test",
+    "e2e:stripe:ci": "E2E_SUITE=stripe playwright test --reporter=html",
     "e2e:snapshots": "playwright test --update-snapshots --reporter=list",
     "e2e:snapshots:local": "NODE_ENV=development playwright test --update-snapshots --reporter=list",
     "e2e:report": "playwright show-report",

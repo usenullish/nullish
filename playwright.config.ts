@@ -1,15 +1,21 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const DEV = (process.env.NODE_ENV ?? "production") === "development";
-const PAYMENTS = process.env.E2E_SUITE === "payments";
 
-const serverScript = (): string => {
-  if (PAYMENTS) {
-    return "e2e:payments";
-  }
-
-  return process.env.CI ? "e2e" : "dev";
+const SUITES: Record<string, { serverScript?: string; match: string[] }> = {
+  payments: {
+    serverScript: "e2e:payments",
+    match: ["payments/**/*.e2e.ts"],
+  },
+  stripe: {
+    serverScript: "e2e:stripe",
+    match: ["stripe/**/*.e2e.ts"],
+  },
 };
+
+const SUITE = process.env.E2E_SUITE !== undefined ? SUITES[process.env.E2E_SUITE] : undefined;
+
+const serverScript = (): string => SUITE?.serverScript ?? (process.env.CI ? "e2e" : "dev");
 
 export default defineConfig({
   webServer: [
@@ -43,8 +49,8 @@ export default defineConfig({
   ],
   testDir: "./e2e",
   snapshotDir: `./${DEV ? "tmp" : "e2e"}/snapshots`,
-  testMatch: PAYMENTS ? ["payments/**/*.e2e.ts"] : ["**/*.e2e.ts", "**/*.spec.ts"],
-  testIgnore: PAYMENTS ? [] : ["payments/**"],
+  testMatch: SUITE?.match ?? ["**/*.e2e.ts", "**/*.spec.ts"],
+  testIgnore: SUITE !== undefined ? [] : Object.values(SUITES).flatMap(({ match }) => match),
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   workers: 1,
