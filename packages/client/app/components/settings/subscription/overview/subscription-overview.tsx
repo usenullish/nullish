@@ -11,6 +11,8 @@ import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { Badge } from "~/ui/components/badge";
 import { ManageSubscription } from "./manage-subscription";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const SubscriptionOverview = () => {
   const { i18n } = useI18n();
@@ -36,7 +38,11 @@ export const SubscriptionOverview = () => {
     },
     {
       label: i18n.subscription.label.status,
-      value: <Badge variant="outline">{i18n.subscription.status[status]}</Badge>,
+      value: (
+        <Badge variant="outline" {...testId(`${testIds.subscription.status}-${status}`)}>
+          {i18n.subscription.status[status]}
+        </Badge>
+      ),
     },
     nonNullish(cancelAt)
       ? { label: i18n.subscription.label.ends_on, value: formatDate(cancelAt) }
@@ -47,7 +53,7 @@ export const SubscriptionOverview = () => {
               status === SubscriptionStatus.TRIALING
                 ? i18n.subscription.label.trial_ends
                 : i18n.subscription.label.period_ends,
-            value: formatDate(periodEnd),
+            value: <span {...testId(testIds.subscription.periodEnd)}>{formatDate(periodEnd)}</span>,
           },
   ];
 

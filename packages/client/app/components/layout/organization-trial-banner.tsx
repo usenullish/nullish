@@ -12,6 +12,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useFormatRelativeDays } from "~/kit/format/date.hooks";
 import { OrganizationPath } from "~/navigation";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const OrganizationTrialBanner = () => {
   const { i18n } = useI18n();
@@ -50,6 +52,7 @@ export const OrganizationTrialBanner = () => {
               path: SUBSCRIPTION_PLANS_PATH,
             })}
             className="font-medium underline underline-offset-2"
+            {...testId(testIds.subscription.choosePlan)}
           >
             {i18n.organizations.action.choose_plan}
           </Link>

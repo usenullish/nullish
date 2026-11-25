@@ -28,6 +28,9 @@ import {
   CardTitle,
 } from "~/ui/components/card";
 import { ToggleGroup, ToggleGroupItem } from "~/ui/components/toggle-group";
+import { testId } from "~/kit/tests/test.utils";
+import type { TestId } from "~/kit/tests/test-id";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type Plan = Api["ExternalPlans"]["Client"]["ExternalPlan"];
 type PlanPrice = Api["ExternalPlans"]["Client"]["ExternalPlanPrice"];
@@ -128,7 +131,11 @@ export const SubscriptionPlans = ({
           className="self-end"
         >
           {billingPeriods.map((value) => (
-            <ToggleGroupItem key={value} value={value}>
+            <ToggleGroupItem
+              key={value}
+              value={value}
+              {...testId(`${testIds.subscription.billing}-${value}`)}
+            >
               {i18n.subscription.billing[value]}
             </ToggleGroupItem>
           ))}
@@ -191,7 +198,7 @@ const PlanCard = ({
   const { i18n } = useI18n();
 
   return (
-    <Card>
+    <Card {...testId(testIds.subscription.plan)}>
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">{productName}</CardTitle>
         <CardDescription>{i18n.subscription.text.cloud_description}</CardDescription>
@@ -211,6 +218,7 @@ const PlanCard = ({
             onClick={() =>
               void onSubscribe({ priceId: price.priceId, billingPeriod: price.billingPeriod })
             }
+            {...testId(testIds.subscription.subscribe)}
           >
             {i18n.subscription.action.subscribe}
           </Button>
@@ -304,7 +312,7 @@ const InstanceCard = ({
   const price = prices.find(({ billingPeriod }) => billingPeriod === billing);
 
   return (
-    <Card>
+    <Card {...testId(testIds.subscription.instance)}>
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
         <CardDescription>{i18n.subscription.text.instance_description}</CardDescription>
@@ -315,7 +323,11 @@ const InstanceCard = ({
         <FeatureList features={i18n.subscription.instance_features} />
       </CardContent>
 
-      <ContactFooter contactUrl={contactUrl} variant="default">
+      <ContactFooter
+        contactUrl={contactUrl}
+        variant="default"
+        testId={testIds.subscription.requestInstance}
+      >
         {i18n.subscription.action.request_instance}
       </ContactFooter>
     </Card>
@@ -332,7 +344,7 @@ const OnPremCard = ({
   const { i18n } = useI18n();
 
   return (
-    <Card className="mt-4 sm:col-span-2">
+    <Card className="mt-4 sm:col-span-2" {...testId(testIds.subscription.onPrem)}>
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">{name}</CardTitle>
         <CardDescription>{i18n.subscription.text.on_prem_description}</CardDescription>
@@ -343,7 +355,11 @@ const OnPremCard = ({
         <FeatureList features={i18n.subscription.on_prem_features} />
       </CardContent>
 
-      <ContactFooter contactUrl={contactUrl} variant="outline">
+      <ContactFooter
+        contactUrl={contactUrl}
+        variant="outline"
+        testId={testIds.subscription.getInTouch}
+      >
         {i18n.subscription.action.get_in_touch}
       </ContactFooter>
     </Card>
@@ -353,8 +369,9 @@ const OnPremCard = ({
 const ContactFooter = ({
   contactUrl,
   variant,
+  testId: contactTestId,
   children,
-}: { contactUrl: string; children: ReactNode } & Pick<
+}: { contactUrl: string; testId: TestId; children: ReactNode } & Pick<
   ComponentProps<typeof Button>,
   "variant"
 >) => (
@@ -364,6 +381,7 @@ const ContactFooter = ({
       className="w-full"
       disabled={isEmptyString(contactUrl)}
       nativeButton={false}
+      {...testId(contactTestId)}
       render={
         // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- labelled by the Button's children
         <a href={contactUrl} target="_blank" rel="noopener noreferrer" />
