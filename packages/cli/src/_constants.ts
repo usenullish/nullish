@@ -19,10 +19,11 @@ export const SUBSCRIPTION_PLAN_DESCRIPTION = "Manage the plans of the subscripti
 export const SUBSCRIPTION_PLAN_LIST_DESCRIPTION = "List the plans";
 export const SUBSCRIPTION_PLAN_CREATE_DESCRIPTION = "Create a plan";
 export const SUBSCRIPTION_PLAN_DISABLE_DESCRIPTION = "Disable a plan";
-export const SUBSCRIPTION_PRODUCT_DESCRIPTION = "Manage the products of the plans at a provider";
-export const SUBSCRIPTION_PRODUCT_LIST_DESCRIPTION = "List the products";
-export const SUBSCRIPTION_PRODUCT_CREATE_DESCRIPTION = "Create the product of a plan";
-export const SUBSCRIPTION_PRODUCT_DELETE_DESCRIPTION = "Delete a product";
+export const SUBSCRIPTION_EXTERNAL_PRODUCT_DESCRIPTION =
+  "Manage the products of the plans at a provider";
+export const SUBSCRIPTION_EXTERNAL_PRODUCT_LIST_DESCRIPTION = "List the products";
+export const SUBSCRIPTION_EXTERNAL_PRODUCT_CREATE_DESCRIPTION = "Create the product of a plan";
+export const SUBSCRIPTION_EXTERNAL_PRODUCT_DELETE_DESCRIPTION = "Delete a product";
 export const SUBSCRIPTION_SETTINGS_DESCRIPTION = "Manage the initial plan and the grace days";
 export const SUBSCRIPTION_SETTINGS_SHOW_DESCRIPTION = "Show the initial plan and the grace days";
 export const SUBSCRIPTION_SETTINGS_UPDATE_DESCRIPTION =
