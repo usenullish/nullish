@@ -164,7 +164,7 @@ export const SubscriptionPlans = ({
         ))}
 
         {customPlans.map((plan) => (
-          <CustomCard plan={plan} billing={billing} />
+          <CustomCard key={plan.plan.id} plan={plan} billing={billing} />
         ))}
       </div>
 
