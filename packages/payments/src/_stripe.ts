@@ -1,6 +1,16 @@
 import Stripe from "stripe";
-import { assertNonNullish, isNullish, nonNullish, type Option } from "@usenullish/nullish-common";
-import { envStripeSecretKey, envStripeWebhookSecret } from "@usenullish/nullish-env";
+import {
+  assertNonNullish,
+  isNullish,
+  nonNullish,
+  notEmptyString,
+  type Option,
+} from "@usenullish/nullish-common";
+import {
+  envStripeApiUrl,
+  envStripeSecretKey,
+  envStripeWebhookSecret,
+} from "@usenullish/nullish-env";
 import {
   BillingPeriod,
   SubscriptionProvider,
@@ -40,7 +50,23 @@ export class StripePaymentProvider extends PaymentProvider<
   protected constructor() {
     super();
 
-    this.#stripe = new Stripe(envStripeSecretKey());
+    this.#stripe = new Stripe(envStripeSecretKey(), this.#config());
+  }
+
+  #config(): Option<Stripe.StripeConfig> {
+    const apiUrl = envStripeApiUrl();
+
+    if (isNullish(apiUrl)) {
+      return undefined;
+    }
+
+    const { protocol, hostname: host, port } = apiUrl;
+
+    return {
+      protocol: protocol === "https:" ? "https" : "http",
+      host,
+      ...(notEmptyString(port) && { port }),
+    };
   }
 
   static create(): StripePaymentProvider {
