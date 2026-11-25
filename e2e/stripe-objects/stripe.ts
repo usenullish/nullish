@@ -44,12 +44,27 @@ export const payOnStripe = async ({
 
   await form.getByRole("textbox", { name: "E-mail" }).fill(email);
 
-  await form.getByRole("button", { name: "Carte bancaire" }).click();
+  const cardButton = form.getByRole("button", { name: "Carte bancaire" });
+  const cardNumber = form.getByRole("textbox", { name: "Numéro de carte" });
 
-  await form.getByRole("textbox", { name: "Numéro de carte" }).fill(number);
+  await expect(cardButton.or(cardNumber).first()).toBeVisible();
+
+  // Ifs are there because CI runs with Stripe using US instead of CH
+  // to customize their UI
+  if (await cardButton.isVisible()) {
+    await cardButton.click();
+  }
+
+  await cardNumber.fill(number);
   await form.getByRole("textbox", { name: "Date d'expiration (MM/AA)" }).fill(expiry);
   await form.getByRole("textbox", { name: "Code de sécurité" }).fill(cvc);
   await form.getByRole("textbox", { name: "Nom du titulaire de la carte" }).fill(name);
+
+  const country = form.locator('select[name="country"]');
+
+  if (await country.isVisible()) {
+    await country.selectOption("CH");
+  }
 
   await form.locator('[data-testid="payment-form-submit-button"]').click();
 };
