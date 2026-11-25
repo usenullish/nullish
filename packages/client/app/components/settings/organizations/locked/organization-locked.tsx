@@ -14,6 +14,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { Button } from "~/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/card";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const OrganizationLocked = () => {
   const { i18n } = useI18n();
@@ -34,7 +36,7 @@ export const OrganizationLocked = () => {
       </div>
 
       <CenteredLayout>
-        <Card className="w-full max-w-sm">
+        <Card className="w-full max-w-sm" {...testId(testIds.organizations.locked)}>
           <CardHeader>
             <CardTitle className="text-lg">
               {replacePlaceholders(i18n.organizations.text.locked_title, {
@@ -56,6 +58,7 @@ export const OrganizationLocked = () => {
                     })}
                   />
                 }
+                {...testId(testIds.organizations.seePlans)}
               >
                 {i18n.organizations.action.see_plans}
               </Button>
@@ -85,6 +88,7 @@ export const OrganizationLocked = () => {
               variant={choosePlan ? "outline" : "default"}
               nativeButton={false}
               render={<Link to={UnscopedPath.create().toOrganizations()} />}
+              {...testId(testIds.organizations.backToOrganizations)}
             >
               {i18n.organizations.action.back_to_organizations}
             </Button>

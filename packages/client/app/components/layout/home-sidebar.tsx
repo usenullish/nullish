@@ -17,6 +17,8 @@ import { OrganizationPath, UnscopedPath } from "~/navigation";
 import { Logo, LogoText } from "~/components/core/logo";
 import { UserMenu } from "./user-menu";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const HomeSidebar = () => {
   const { i18n } = useI18n();
@@ -58,6 +60,7 @@ export const HomeSidebar = () => {
                       }).to()}
                     />
                   }
+                  {...testId(testIds.home.organization)}
                 >
                   <Building />
                   <span>{name}</span>
