@@ -46,7 +46,7 @@ export const NewInvitationForm = ({
   return (
     <form onSubmit={buildFormSubmit({ onAction })} className="mx-auto w-full max-w-2xl py-10">
       {nonNullish(membersLimit) && (
-        <Alert variant="warning" className="mb-8">
+        <Alert variant="warning" className="mb-8" {...testId(testIds.invitations.limitReached)}>
           <TriangleAlert />
           <AlertDescription>
             {replacePlaceholders(i18n.invitations.text.limit_reached, {
