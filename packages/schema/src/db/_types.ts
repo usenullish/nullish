@@ -26,6 +26,7 @@ interface Db {
     Accounts: typeof DbSchema.Ledger.Accounts.AccountsSchema;
     SystemAccounts: typeof DbSchema.Ledger.SystemAccounts.SystemAccountsSchema;
     PeriodJournal: typeof DbSchema.Ledger.PeriodJournal.PeriodJournalEntriesSchema;
+    PostingManualVatPostings: typeof DbSchema.Ledger.PostingManualVatPostings.PostingManualVatPostingsSchema;
     AccountBalances: typeof DbView.Ledger.AccountBalances.AccountBalancesView;
     BalanceSheet: typeof DbView.Ledger.BalanceSheet.BalanceSheetView;
     IncomeStatement: typeof DbView.Ledger.IncomeStatement.IncomeStatementView;
