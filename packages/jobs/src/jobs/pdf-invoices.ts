@@ -4,7 +4,7 @@ import type { JobArgs } from "../_types";
 import {
   type Jobs,
   JobsSchema,
-  PdfStoragePath,
+  StoragePath,
   TriggeredJobKey,
 } from "@usenullish/nullish-schema/jobs";
 import { PdfGenerator } from "./workers/pdf-invoices/_helpers/pdf-generator";
@@ -51,7 +51,7 @@ export class PdfInvoiceJob extends TriggeredJob<
     await generator.render({
       html: invoiceHtml,
       output: {
-        path: join(PdfStoragePath.Invoices, invoiceId),
+        path: join(StoragePath.Invoices, invoiceId),
         filename: `${documentId}.pdf`,
       },
     });

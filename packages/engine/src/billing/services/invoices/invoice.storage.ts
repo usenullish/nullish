@@ -3,7 +3,7 @@ import { type Result, tryCatch } from "@usenullish/nullish-common";
 import type { Services } from "@usenullish/nullish-schema/services";
 import { join } from "node:path";
 import type { Storage } from "@usenullish/nullish-storage";
-import { PdfStoragePath } from "@usenullish/nullish-schema/jobs";
+import { StoragePath } from "@usenullish/nullish-schema/jobs";
 
 interface StorageContextArgs {
   storage: Storage;
@@ -38,7 +38,7 @@ export class StorageInvoiceService extends InvoiceService {
 
         // TODO: create a utils for the key
         return await this.#storage.get({
-          key: join(PdfStoragePath.Invoices, invoice.id, `${documentId}.pdf`),
+          key: join(StoragePath.Invoices, invoice.id, `${documentId}.pdf`),
         });
       });
     });

@@ -8,6 +8,6 @@ export enum MailJobType {
   SubscriptionTrialReminder = "subscription-trial-reminder",
 }
 
-export enum PdfStoragePath {
+export enum StoragePath {
   Invoices = "invoices",
 }
