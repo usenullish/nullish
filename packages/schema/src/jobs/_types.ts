@@ -25,6 +25,11 @@ interface Jobs {
     >;
     Result: z.infer<typeof JobsSchema.MailsSchema.MailResultSchema>;
   };
+  Exports: {
+    Payload: z.infer<typeof JobsSchema.ExportsSchema.ExportPayloadSchema>;
+    Result: z.infer<typeof JobsSchema.ExportsSchema.ExportResultSchema>;
+    State: z.infer<typeof JobsSchema.ExportsSchema.ExportJobStateSchema>;
+  };
   Common: {
     ScheduledJobs: z.infer<typeof JobsSchema.CommonSchema.ScheduledJobSchema>;
     ScheduledJobState: ScheduledJobState;

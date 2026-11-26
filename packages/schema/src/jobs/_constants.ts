@@ -2,6 +2,7 @@ export enum TriggeredJobKey {
   PdfInvoice = "pdf-invoice",
   Migration = "migration",
   Mail = "mail",
+  Export = "export",
 }
 
 export enum MailJobType {
@@ -10,4 +11,5 @@ export enum MailJobType {
 
 export enum StoragePath {
   Invoices = "invoices",
+  Organizations = "organizations",
 }

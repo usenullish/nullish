@@ -8,6 +8,7 @@ import type { JobArgs } from "./_types";
 import { PdfInvoiceJob } from "./jobs/pdf-invoices";
 import { MigrationJob } from "./jobs/migrations";
 import { MailJob } from "./jobs/mails";
+import { ExportJob } from "./jobs/exports";
 import type { TriggeredJob } from "./jobs/_job.triggered";
 import { assertNonNullish } from "@usenullish/nullish-common";
 import { envMailEnabled } from "@usenullish/nullish-env";
@@ -19,9 +20,11 @@ export class TriggeredJobs extends Jobs<TriggeredJobKey, TriggeredJob> implement
 
   static async start(args: JobArgs): Promise<TriggeredJobs> {
     const jobs = await Promise.all(
-      [PdfInvoiceJob, MigrationJob, ...(envMailEnabled() ? [MailJob] : [])].map(async (Job) => {
-        return await Job.start(args);
-      }),
+      [PdfInvoiceJob, MigrationJob, ExportJob, ...(envMailEnabled() ? [MailJob] : [])].map(
+        async (Job) => {
+          return await Job.start(args);
+        },
+      ),
     );
 
     return new this({ jobs });

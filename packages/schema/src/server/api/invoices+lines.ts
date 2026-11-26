@@ -9,7 +9,7 @@ const withUnitPriceCodecs = <T extends z.ZodRawShape>(schema: z.ZodObject<T>) =>
     unitPrice: BigIntCodec,
   });
 
-const LinesResponseSchema = withAuditFieldsCodecs(
+export const LinesResponseSchema = withAuditFieldsCodecs(
   withUnitPriceCodecs(RecordsSchema.Billing.InvoicesSchema.SelectLinesSchema),
 );
 
