@@ -77,8 +77,6 @@ describe("statements", () => {
 
   describe("insert", () => {
     test("is not supported", async () => {
-      const bankRelationId = await createBankRelation(db, orgId);
-
       const result = await DbCollectionStatements.create({
         db,
         userId: TEST_USER_ID,
@@ -86,7 +84,7 @@ describe("statements", () => {
       }).insert({
         values: {
           organizationId: orgId,
-          bankRelationId,
+          bankRelationId: crypto.randomUUID(),
           bankMessageId: crypto.randomUUID(),
           bankStatementId: crypto.randomUUID(),
           startOn: new Date("2026-01-01"),
