@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { mkdir, rm, utimes, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { envDataDir } from "@usenullish/nullish-env";
-import { PdfStoragePath } from "@usenullish/nullish-schema/jobs";
+import { StoragePath } from "@usenullish/nullish-schema/jobs";
 import { PdfCleanupWorker } from "../../../../src/jobs/workers/pdf-cleanup/worker";
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -45,7 +45,7 @@ describe("PdfCleanupWorker", () => {
   });
 
   test("deletes the invoice PDFs older than two hours", async () => {
-    const dir = await createDir({ path: PdfStoragePath.Invoices });
+    const dir = await createDir({ path: StoragePath.Invoices });
     const old = await writePdf({ dir, name: "old.pdf", mtime: new Date(Date.now() - 3 * HOUR_MS) });
 
     await PdfCleanupWorker.create().run();
@@ -54,7 +54,7 @@ describe("PdfCleanupWorker", () => {
   });
 
   test("keeps the invoice PDFs from the last two hours", async () => {
-    const dir = await createDir({ path: PdfStoragePath.Invoices });
+    const dir = await createDir({ path: StoragePath.Invoices });
     const recent = await writePdf({
       dir,
       name: "recent.pdf",
@@ -67,7 +67,7 @@ describe("PdfCleanupWorker", () => {
   });
 
   test("deletes only the old PDFs when old and recent PDFs share a folder", async () => {
-    const dir = await createDir({ path: PdfStoragePath.Invoices });
+    const dir = await createDir({ path: StoragePath.Invoices });
     const old = await writePdf({ dir, name: "old.pdf", mtime: new Date(Date.now() - 3 * HOUR_MS) });
     const recent = await writePdf({ dir, name: "recent.pdf", mtime: new Date() });
 

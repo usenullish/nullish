@@ -2,7 +2,7 @@ import { InvoiceService, type InvoiceServiceArgs } from "./_invoice";
 import { type Result, tryCatch } from "@usenullish/nullish-common";
 import {
   type Jobs as JobsType,
-  PdfStoragePath,
+  StoragePath,
   type TriggerJobs,
   TriggeredJobKey,
 } from "@usenullish/nullish-schema/jobs";
@@ -98,7 +98,7 @@ export class JobsInvoiceService extends InvoiceService {
 
         // TODO: create a utils for the key
         return await storage.get({
-          key: join(PdfStoragePath.Invoices, invoice.id, `${documentId}.pdf`),
+          key: join(StoragePath.Invoices, invoice.id, `${documentId}.pdf`),
         });
       });
     });
