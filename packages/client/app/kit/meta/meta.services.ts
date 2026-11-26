@@ -10,7 +10,7 @@ const MetadataSchema = z.strictObject({
 
 export type Metadata = z.infer<typeof MetadataSchema>;
 
-const IMAGE_PATH = "/social-image.png";
+const IMAGE_PATH = "/social-image-dark.png";
 
 export const DEFAULT_METADATA: Metadata = {
   title: "nullish",
