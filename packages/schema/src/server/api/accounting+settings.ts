@@ -3,7 +3,7 @@ import * as z from "zod";
 import { PaginationResponseSchema } from "../common/query";
 import { withAuditFieldsCodecs } from "./_audit";
 
-const AccountingSettingsResponseSchema = withAuditFieldsCodecs(
+export const AccountingSettingsResponseSchema = withAuditFieldsCodecs(
   RecordsSchema.Core.AccountingSchema.SelectAccountingSettingsSchema,
 );
 
