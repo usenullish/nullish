@@ -7,10 +7,10 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/usenullish/nullish/actions/workflows/checks.yml"><img alt="Checks" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/checks.yml?style=flat-square&label=checks"></a>
-  <a href="https://github.com/usenullish/nullish/actions/workflows/tests.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests.yml?style=flat-square&label=tests"></a>
-  <a href="https://github.com/usenullish/nullish/actions/workflows/tests-e2e.yml"><img alt="E2E Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests-e2e.yml?style=flat-square&label=e2e"></a>
-  <a href="https://github.com/usenullish/nullish"><img src="https://img.shields.io/github/last-commit/usenullish/nullish/main?commit&style=flat-square" alt="Last Commit" /></a>
+  <a href="https://github.com/usenullish/nullish/actions/workflows/checks.yml"><img alt="Checks" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/checks.yml?style=flat-square&label=checks&color=8554FD"></a>
+  <a href="https://github.com/usenullish/nullish/actions/workflows/tests.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests.yml?style=flat-square&label=tests&color=8554FD"></a>
+  <a href="https://github.com/usenullish/nullish/actions/workflows/tests-e2e.yml"><img alt="E2E Tests" src="https://img.shields.io/github/actions/workflow/status/usenullish/nullish/tests-e2e.yml?style=flat-square&label=e2e&color=8554FD"></a>
+  <a href="https://github.com/usenullish/nullish"><img src="https://img.shields.io/github/last-commit/usenullish/nullish/main?commit&style=flat-square&color=8554FD" alt="Last Commit" /></a>
 </p>
 
 ## ⭐️ Description
