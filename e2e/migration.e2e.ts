@@ -64,3 +64,9 @@ test("runs the migration", async () => {
 
   await migrationPage.runMigration();
 });
+
+test("exports the migrated data", async () => {
+  const migrationPage = getMigrationPage();
+
+  await migrationPage.exportData({ clientName: "Alpenblick Design GmbH" });
+});
