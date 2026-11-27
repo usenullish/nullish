@@ -234,7 +234,8 @@
       "placeholder_unscoped": "p. ex. Où ai-je des factures ouvertes ?",
       "history": "Historique",
       "title": "Titre",
-      "placeholder_disabled": "L'assistant n'est pas configuré sur cette instance."
+      "placeholder_disabled": "L'assistant n'est pas configuré sur cette instance.",
+      "conversation": "Chat"
     },
     "text": {
       "switch_to_read_write": "Clique pour que l'assistant puisse modifier.",
@@ -253,6 +254,20 @@
       "delete_success": "La conversation est supprimée.",
       "delete_error": "La conversation n'a pas pu être supprimée."
     }
+  },
+  "getting_started": {
+    "title": "C'est parti",
+    "description": "Quelques étapes et {organization} est sur les bons rails.",
+    "client_title": "Crée un premier client",
+    "client_description": "Qui tu factures, avec son adresse et ses contacts.",
+    "invoice_title": "Crée une première facture",
+    "invoice_description": "Prépare-la, puis envoie-la en PDF.",
+    "bank_relation_title": "Ajoute ton compte bancaire",
+    "bank_relation_description": "Là où ton argent arrive.",
+    "statement_title": "Importe un relevé",
+    "statement_description": "Fais entrer tes mouvements bancaires et rapproche-les du journal.",
+    "assistant_title": "Demande à l'assistant",
+    "assistant_description": "Pose-lui n'importe quelle question sur ton organisation, ou laisse-le saisir à ta place."
   },
   "organizations": {
     "setup": {

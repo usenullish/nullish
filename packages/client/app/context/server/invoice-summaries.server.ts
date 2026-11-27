@@ -28,6 +28,23 @@ export class InvoiceSummariesServer extends ServerLoader {
     });
   }
 
+  async listOne(
+    args: LoaderFunctionArgs,
+  ): Promise<Option<Api["InvoiceSummaries"]["Client"]["GetInvoiceSummariesResponse"]>> {
+    return await this._loadNested({
+      args,
+      errorFallbackMsg: "Unexpected error while loading the invoices",
+      loaderWithOrgIdFn: async (params) =>
+        await this.#service.list({
+          ...params,
+          query: {
+            pagination: { limit: 1, offset: 0 },
+            sort: { field: "issueOn", direction: "desc" },
+          },
+        }),
+    });
+  }
+
   async listInvoiceSummaries(
     args: LoaderFunctionArgs,
   ): Promise<Option<Api["InvoiceSummaries"]["Client"]["GetInvoiceSummariesResponse"]>> {

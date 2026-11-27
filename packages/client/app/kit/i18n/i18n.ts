@@ -222,6 +222,7 @@ const I18nChatSchema = z.strictObject({
     history: z.string(),
     title: z.string(),
     placeholder_disabled: z.string(),
+    conversation: z.string(),
   }),
   text: z.strictObject({
     switch_to_read_write: z.string(),
@@ -240,6 +241,21 @@ const I18nChatSchema = z.strictObject({
     delete_success: z.string(),
     delete_error: z.string(),
   }),
+});
+
+const I18nGetting_startedSchema = z.strictObject({
+  title: z.string(),
+  description: z.string(),
+  client_title: z.string(),
+  client_description: z.string(),
+  invoice_title: z.string(),
+  invoice_description: z.string(),
+  bank_relation_title: z.string(),
+  bank_relation_description: z.string(),
+  statement_title: z.string(),
+  statement_description: z.string(),
+  assistant_title: z.string(),
+  assistant_description: z.string(),
 });
 
 const I18nOrganizationsSchema = z.strictObject({
@@ -1387,6 +1403,7 @@ export const I18nSchema = z.strictObject({
   navigation: I18nNavigationSchema,
   greeting: I18nGreetingSchema,
   chat: I18nChatSchema,
+  getting_started: I18nGetting_startedSchema,
   organizations: I18nOrganizationsSchema,
   clients: I18nClientsSchema,
   contacts: I18nContactsSchema,

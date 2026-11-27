@@ -234,7 +234,8 @@
       "placeholder_unscoped": "e.g. Where do I have open invoices?",
       "history": "History",
       "title": "Title",
-      "placeholder_disabled": "The assistant isn't set up on this instance."
+      "placeholder_disabled": "The assistant isn't set up on this instance.",
+      "conversation": "Chat"
     },
     "text": {
       "switch_to_read_write": "Click to let the assistant edit.",
@@ -253,6 +254,20 @@
       "delete_success": "The conversation is deleted.",
       "delete_error": "The conversation could not be deleted."
     }
+  },
+  "getting_started": {
+    "title": "Let's get going",
+    "description": "A few small steps and {organization} is good to go.",
+    "client_title": "Create a first client",
+    "client_description": "Who you bill, with their address and contacts.",
+    "invoice_title": "Create a first invoice",
+    "invoice_description": "Draft it, then send it as a PDF.",
+    "bank_relation_title": "Add your bank account",
+    "bank_relation_description": "Where your money lands.",
+    "statement_title": "Import a statement",
+    "statement_description": "Bring in your bank movements and match them with the journal.",
+    "assistant_title": "Ask the assistant",
+    "assistant_description": "Ask anything about your organization, or let it do the typing for you."
   },
   "organizations": {
     "setup": {
