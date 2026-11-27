@@ -61,7 +61,9 @@ describe("organizations exports", () => {
       }),
     );
 
-    OrganizationsExportsGenerateHandlers.create({ app }).register();
+    const generateResource = OrganizationsExportsGenerateHandlers.create({ app });
+    generateResource.useCustomMiddleware();
+    generateResource.register();
     OrganizationsExportsJobsHandlers.create({ app }).register();
     OrganizationsExportsDownloadHandlers.create({ app }).register();
 
