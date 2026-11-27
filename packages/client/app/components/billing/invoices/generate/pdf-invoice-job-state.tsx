@@ -1,5 +1,5 @@
-import { isNullish, type Option } from "@usenullish/nullish-common";
-import { startTransition, useEffect, useRef, useState, ViewTransition } from "react";
+import { isNullish } from "@usenullish/nullish-common";
+import { ViewTransition } from "react";
 import { Check } from "lucide-react";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { InvoicesService } from "~/lib/services/invoices.services";
@@ -7,9 +7,7 @@ import { API_URL } from "~/env";
 import { Button } from "~/ui/components/button";
 import { TextShimmerLoader } from "~/ui/components/loader";
 import { useI18n } from "~/kit/i18n/i18n.context";
-
-const POLL_INTERVAL_MS = 1000;
-const POLL_MAX_ATTEMPTS = 30;
+import { usePollJobState } from "~/kit/data/job-state.hooks";
 
 export const PdfInvoiceJobState = ({
   invoiceId,
@@ -19,44 +17,10 @@ export const PdfInvoiceJobState = ({
   jobId: Api["Invoices"]["Client"]["PdfInvoiceResponse"]["jobId"];
 }) => {
   const { i18n } = useI18n();
-  const [state, setState] = useState<Api["Invoices"]["Client"]["PdfInvoiceJobStateResponse"]>();
-  const [timedOut, setTimedOut] = useState(false);
-  const timeout = useRef<Option<ReturnType<typeof setTimeout>>>(undefined);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const poll = async (attempt: number) => {
-      const result = await InvoicesService.create().getPdfJobState({ invoiceId, jobId });
-
-      if (controller.signal.aborted) {
-        return;
-      }
-
-      if (
-        result.status === "success" &&
-        (result.result.status === "completed" || result.result.status === "failed")
-      ) {
-        const { result: jobState } = result;
-        startTransition(() => setState(jobState));
-        return;
-      }
-
-      if (attempt >= POLL_MAX_ATTEMPTS) {
-        startTransition(() => setTimedOut(true));
-        return;
-      }
-
-      timeout.current = setTimeout(() => void poll(attempt + 1), POLL_INTERVAL_MS);
-    };
-
-    void poll(1);
-
-    return () => {
-      controller.abort();
-      clearTimeout(timeout.current);
-    };
-  }, [invoiceId, jobId]);
+  const { state, timedOut } = usePollJobState({
+    jobId,
+    getJobState: () => InvoicesService.create().getPdfJobState({ invoiceId, jobId }),
+  });
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col items-start gap-4 py-10">
