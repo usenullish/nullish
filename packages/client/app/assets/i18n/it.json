@@ -194,7 +194,8 @@
     "invitations": "Inviti",
     "migrations": "Migrazioni",
     "subscription": "Abbonamento",
-    "plans": "Piani"
+    "plans": "Piani",
+    "export": "Esportazione"
   },
   "greeting": {
     "morning": "Buongiorno, {name}",
@@ -271,10 +272,13 @@
       "delete": "Elimina organizzazione",
       "back_to_organizations": "Torna alle mie organizzazioni",
       "see_plans": "Vedi i piani",
-      "choose_plan": "Scegli un piano"
+      "choose_plan": "Scegli un piano",
+      "export": "Esporta i miei dati",
+      "download": "Scarica"
     },
     "state": {
-      "creating": "Creazione…"
+      "creating": "Creazione…",
+      "exporting": "Esportazione in corso…"
     },
     "label": {
       "legal_form": "Forma giuridica",
@@ -309,14 +313,19 @@
       "locked_description": "Il suo abbonamento non è più attivo, quindi i suoi dati non sono accessibili per ora.",
       "grace": "L'ultimo pagamento non è andato a buon fine. Questa organizzazione sarà bloccata il {date}.",
       "trial": "Il periodo di prova termina {when}.",
-      "trial_keep_going": " per continuare."
+      "trial_keep_going": " per continuare.",
+      "export_description": "Scarica una copia dei dati di {name}: conti, giornale, clienti, fatture e movimenti bancari.",
+      "export_ready": "La tua esportazione è pronta",
+      "export_failed": "L'esportazione non è riuscita",
+      "export_timeout": "L'esportazione richiede più tempo del previsto. Riprova più tardi."
     },
     "toast": {
       "create_error": "Non è stato possibile creare l'organizzazione.",
       "update_success": "L'organizzazione è stata aggiornata.",
       "update_error": "Non è stato possibile aggiornare l'organizzazione.",
       "delete_success": "L'organizzazione è stata contrassegnata come eliminata.",
-      "delete_error": "Non è stato possibile eliminare l'organizzazione."
+      "delete_error": "Non è stato possibile eliminare l'organizzazione.",
+      "export_error": "Non è stato possibile avviare l'esportazione."
     }
   },
   "clients": {

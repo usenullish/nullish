@@ -183,6 +183,7 @@ const I18nNavigationSchema = z.strictObject({
   migrations: z.string(),
   subscription: z.string(),
   plans: z.string(),
+  export: z.string(),
 });
 
 const I18nGreetingSchema = z.strictObject({
@@ -252,8 +253,10 @@ const I18nOrganizationsSchema = z.strictObject({
     back_to_organizations: z.string(),
     see_plans: z.string(),
     choose_plan: z.string(),
+    export: z.string(),
+    download: z.string(),
   }),
-  state: z.strictObject({ creating: z.string() }),
+  state: z.strictObject({ creating: z.string(), exporting: z.string() }),
   label: z.strictObject({
     legal_form: z.string(),
     legal_form_llc: z.string(),
@@ -288,6 +291,10 @@ const I18nOrganizationsSchema = z.strictObject({
     grace: z.string(),
     trial: z.string(),
     trial_keep_going: z.string(),
+    export_description: z.string(),
+    export_ready: z.string(),
+    export_failed: z.string(),
+    export_timeout: z.string(),
   }),
   toast: z.strictObject({
     create_error: z.string(),
@@ -295,6 +302,7 @@ const I18nOrganizationsSchema = z.strictObject({
     update_error: z.string(),
     delete_success: z.string(),
     delete_error: z.string(),
+    export_error: z.string(),
   }),
 });
 

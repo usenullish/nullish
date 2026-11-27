@@ -194,7 +194,8 @@
     "invitations": "Invitations",
     "migrations": "Migrations",
     "subscription": "Subscription",
-    "plans": "Plans"
+    "plans": "Plans",
+    "export": "Export"
   },
   "greeting": {
     "morning": "Good morning, {name}",
@@ -271,10 +272,13 @@
       "delete": "Delete organization",
       "back_to_organizations": "Back to my organizations",
       "see_plans": "See the plans",
-      "choose_plan": "Pick a plan"
+      "choose_plan": "Pick a plan",
+      "export": "Export my data",
+      "download": "Download"
     },
     "state": {
-      "creating": "Creating…"
+      "creating": "Creating…",
+      "exporting": "Exporting…"
     },
     "label": {
       "legal_form": "Legal form",
@@ -309,14 +313,19 @@
       "locked_description": "Its subscription is no longer active, so its data can't be accessed for now.",
       "grace": "The last payment failed. This organization will be locked on {date}.",
       "trial": "The trial ends {when}.",
-      "trial_keep_going": " to keep going."
+      "trial_keep_going": " to keep going.",
+      "export_description": "Download a copy of the data of {name}: accounts, journal, clients, invoices and bank movements.",
+      "export_ready": "Your export is ready",
+      "export_failed": "The export failed",
+      "export_timeout": "The export is taking longer than expected. Try again later."
     },
     "toast": {
       "create_error": "The organization could not be created.",
       "update_success": "The organization has been updated.",
       "update_error": "The organization could not be updated.",
       "delete_success": "The organization has been marked as deleted.",
-      "delete_error": "The organization could not be deleted."
+      "delete_error": "The organization could not be deleted.",
+      "export_error": "The export could not be started."
     }
   },
   "clients": {

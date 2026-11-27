@@ -194,7 +194,8 @@
     "invitations": "Einladungen",
     "migrations": "Migrationen",
     "subscription": "Abo",
-    "plans": "Pläne"
+    "plans": "Pläne",
+    "export": "Export"
   },
   "greeting": {
     "morning": "Guten Morgen, {name}",
@@ -271,10 +272,13 @@
       "delete": "Organisation löschen",
       "back_to_organizations": "Zurück zu meinen Organisationen",
       "see_plans": "Pläne ansehen",
-      "choose_plan": "Wähle einen Plan"
+      "choose_plan": "Wähle einen Plan",
+      "export": "Meine Daten exportieren",
+      "download": "Herunterladen"
     },
     "state": {
-      "creating": "Wird erstellt…"
+      "creating": "Wird erstellt…",
+      "exporting": "Wird exportiert…"
     },
     "label": {
       "legal_form": "Rechtsform",
@@ -309,14 +313,19 @@
       "locked_description": "Ihr Abo ist nicht mehr aktiv, deshalb sind ihre Daten im Moment nicht zugänglich.",
       "grace": "Die letzte Zahlung ist fehlgeschlagen. Diese Organisation wird am {date} gesperrt.",
       "trial": "Die Testphase endet {when}.",
-      "trial_keep_going": ", um weiterzumachen."
+      "trial_keep_going": ", um weiterzumachen.",
+      "export_description": "Lade eine Kopie der Daten von {name} herunter: Konten, Journal, Kunden, Rechnungen und Bankbewegungen.",
+      "export_ready": "Dein Export ist bereit",
+      "export_failed": "Der Export ist fehlgeschlagen",
+      "export_timeout": "Der Export dauert länger als erwartet. Versuch es später nochmal."
     },
     "toast": {
       "create_error": "Die Organisation konnte nicht erstellt werden.",
       "update_success": "Die Organisation wurde aktualisiert.",
       "update_error": "Die Organisation konnte nicht aktualisiert werden.",
       "delete_success": "Die Organisation wurde als gelöscht markiert.",
-      "delete_error": "Die Organisation konnte nicht gelöscht werden."
+      "delete_error": "Die Organisation konnte nicht gelöscht werden.",
+      "export_error": "Der Export konnte nicht gestartet werden."
     }
   },
   "clients": {

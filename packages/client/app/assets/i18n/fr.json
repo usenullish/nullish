@@ -194,7 +194,8 @@
     "invitations": "Invitations",
     "migrations": "Migrations",
     "subscription": "Abonnement",
-    "plans": "Forfaits"
+    "plans": "Forfaits",
+    "export": "Export"
   },
   "greeting": {
     "morning": "Bonjour, {name}",
@@ -271,10 +272,13 @@
       "delete": "Supprimer l'organisation",
       "back_to_organizations": "Retour à mes organisations",
       "see_plans": "Voir les forfaits",
-      "choose_plan": "Choisis un forfait"
+      "choose_plan": "Choisis un forfait",
+      "export": "Exporter mes données",
+      "download": "Télécharger"
     },
     "state": {
-      "creating": "Création…"
+      "creating": "Création…",
+      "exporting": "Export en cours…"
     },
     "label": {
       "legal_form": "Forme juridique",
@@ -309,14 +313,19 @@
       "locked_description": "Son abonnement n'est plus actif, ses données ne sont donc pas accessibles pour le moment.",
       "grace": "Le dernier paiement a échoué. Cette organisation sera verrouillée le {date}.",
       "trial": "La période d'essai se termine {when}.",
-      "trial_keep_going": " pour continuer."
+      "trial_keep_going": " pour continuer.",
+      "export_description": "Télécharge une copie des données de {name} : comptes, journal, clients, factures et mouvements bancaires.",
+      "export_ready": "Ton export est prêt",
+      "export_failed": "L'export a échoué",
+      "export_timeout": "L'export prend plus de temps que prévu. Réessaie plus tard."
     },
     "toast": {
       "create_error": "L'organisation n'a pas pu être créée.",
       "update_success": "L'organisation a été mise à jour.",
       "update_error": "L'organisation n'a pas pu être mise à jour.",
       "delete_success": "L'organisation a été marquée comme supprimée.",
-      "delete_error": "L'organisation n'a pas pu être supprimée."
+      "delete_error": "L'organisation n'a pas pu être supprimée.",
+      "export_error": "L'export n'a pas pu être lancé."
     }
   },
   "clients": {
