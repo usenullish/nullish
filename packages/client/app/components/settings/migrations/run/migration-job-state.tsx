@@ -1,10 +1,10 @@
-import { type Option } from "@usenullish/nullish-common";
-import { startTransition, useEffect, useRef, useState, ViewTransition } from "react";
+import { ViewTransition } from "react";
 import { useRevalidator } from "react-router";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { MigrationsService } from "~/lib/services/migrations.services";
 import { TextShimmerLoader } from "~/ui/components/loader";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { usePollJobState } from "~/kit/data/job-state.hooks";
 
 type JobState = Api["MigrationsRun"]["Client"]["RunMigrationJobStateResponse"];
 
@@ -23,43 +23,16 @@ export const MigrationJobState = ({
   const { i18n } = useI18n();
   const { revalidate } = useRevalidator();
 
-  const [timedOut, setTimedOut] = useState(false);
-  const timeout = useRef<Option<ReturnType<typeof setTimeout>>>(undefined);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const poll = async (attempt: number) => {
-      const result = await MigrationsService.create().getRunJobState({ migrationId, jobId });
-
-      if (controller.signal.aborted) {
-        return;
-      }
-
-      if (
-        result.status === "success" &&
-        (result.result.status === "completed" || result.result.status === "failed")
-      ) {
-        await revalidate();
-        onDone(result.result);
-        return;
-      }
-
-      if (attempt >= POLL_MAX_ATTEMPTS) {
-        startTransition(() => setTimedOut(true));
-        return;
-      }
-
-      timeout.current = setTimeout(() => void poll(attempt + 1), POLL_INTERVAL_MS);
-    };
-
-    void poll(1);
-
-    return () => {
-      controller.abort();
-      clearTimeout(timeout.current);
-    };
-  }, [migrationId, jobId, revalidate, onDone]);
+  const { timedOut } = usePollJobState({
+    jobId,
+    getJobState: () => MigrationsService.create().getRunJobState({ migrationId, jobId }),
+    onDone: async (state) => {
+      await revalidate();
+      onDone(state);
+    },
+    intervalMs: POLL_INTERVAL_MS,
+    maxAttempts: POLL_MAX_ATTEMPTS,
+  });
 
   if (timedOut) {
     return (
