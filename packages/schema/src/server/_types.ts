@@ -111,6 +111,11 @@ interface Api {
       >;
     };
   };
+  Onboarding: {
+    Client: {
+      GetOnboardingResponse: z.infer<typeof ApiSchema.Onboarding.GetOnboardingResponseSchema>;
+    };
+  };
   IncomeStatement: {
     Client: {
       GetIncomeStatementResponse: z.infer<
