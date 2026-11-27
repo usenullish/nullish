@@ -45,6 +45,16 @@ interface Services {
       Result: z.infer<typeof ServicesSchema.MigrationSchema.UploadDatasetResultSchema>;
     };
   };
+  Exports: {
+    JobState: {
+      Args: z.infer<typeof ServicesSchema.ExportsSchema.ExportJobStateArgsSchema>;
+      Result: z.infer<typeof ServicesSchema.ExportsSchema.ExportJobStateResultSchema>;
+    };
+    Stream: {
+      Args: z.infer<typeof ServicesSchema.ExportsSchema.ExportStreamArgsSchema>;
+      Result: z.infer<typeof ServicesSchema.ExportsSchema.ExportStreamResultSchema>;
+    };
+  };
 }
 
 export type { Services };

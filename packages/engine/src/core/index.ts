@@ -16,6 +16,8 @@ export * from "./reports/vat-declaration";
 export * from "./services/organization-members/organization-member.delete";
 export * from "./services/organizations/organization.open";
 export * from "./services/organizations/organization.delete";
+export * from "./services/exports/export.jobs";
+export * from "./services/exports/export.storage";
 export * from "./records/invitations";
 export * from "./services/invitations/invitation.create";
 export * from "./services/invitations/invitation.accept";
