@@ -107,18 +107,17 @@ describe("AccountLedgerReport", () => {
     });
 
     test("accepts the list query of the API without a count", async () => {
-      const result = await report().list({ periodId, accountId, ...QUERY, count: undefined });
+      const query = { ...QUERY, count: undefined };
+
+      const result = await report().list({ periodId, accountId, ...query });
 
       expect(result.status).toBe("success");
     });
 
     test("accepts the list query of the API with a count", async () => {
-      const result = await report().list({
-        periodId,
-        accountId,
-        ...QUERY,
-        count: { mode: "exact" },
-      });
+      const query = { ...QUERY, count: { mode: "exact" as const } };
+
+      const result = await report().list({ periodId, accountId, ...query });
 
       expect(result.status).toBe("success");
     });

@@ -44,7 +44,7 @@ export class VatMethodSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectVatMethodSummaries>({
-    query: async ({ db, userId, context, pagination, sort, count }) => {
+    query: async ({ db, userId, context, pagination, sort }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -55,7 +55,7 @@ export class VatMethodSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, count });
+      }).list({ pagination, sort });
     },
     resourceKey: "vatMethodSummaries",
     build: ({ result: { data: vatMethodSummaries, pagination } }) => ({
