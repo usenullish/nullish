@@ -56,7 +56,7 @@ interface JournalLine {
   vatSide: JournalPostingSide;
 }
 
-const LINE_COLUMNS = "md:grid-cols-[2fr_2fr_2fr_1fr_6rem_6rem_12rem_2rem]";
+const LINE_COLUMNS = "md:grid-cols-[2fr_2fr_2fr_1.5fr_6rem_6rem_12rem_2rem]";
 
 const toInputAmount = ({ amount, decimals }: { amount: bigint; decimals: number }): string => {
   if (amount === 0n) {
@@ -344,6 +344,7 @@ export const JournalFields = ({
                 type="number"
                 step={step}
                 min="0"
+                className={NO_SPIN_BUTTON_CLASS}
                 value={line.amount}
                 onChange={($event) =>
                   updateLine({
