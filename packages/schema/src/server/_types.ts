@@ -954,6 +954,16 @@ interface Api {
       >;
     };
   };
+  Exports: {
+    Server: {
+      GenerateExportResponse: z.input<typeof ApiSchema.Exports.GenerateExportResponseSchema>;
+      ExportJobStateResponse: z.input<typeof ApiSchema.Exports.ExportJobStateResponseSchema>;
+    };
+    Client: {
+      GenerateExportResponse: z.infer<typeof ApiSchema.Exports.GenerateExportResponseSchema>;
+      ExportJobStateResponse: z.infer<typeof ApiSchema.Exports.ExportJobStateResponseSchema>;
+    };
+  };
   SubscriptionSummaries: {
     Server: {
       GetSubscriptionSummariesResponse: z.input<

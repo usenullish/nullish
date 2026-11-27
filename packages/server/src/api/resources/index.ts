@@ -67,6 +67,9 @@ import { MigrationDatasetSummariesHandlers } from "./_organizations+migration-da
 import { MigrationsDatasetsHandlers } from "./_migrations+datasets";
 import { MigrationsRunHandlers } from "./_migrations+run";
 import { MigrationsRunJobsHandlers } from "./_migrations+run+jobs";
+import { OrganizationsExportsGenerateHandlers } from "./_organizations+exports+generate";
+import { OrganizationsExportsJobsHandlers } from "./_organizations+exports+jobs";
+import { OrganizationsExportsDownloadHandlers } from "./_organizations+exports+download";
 
 const initResource = ({
   resourceClass,
@@ -144,6 +147,9 @@ const RESOURCES = [
   MigrationsDatasetsHandlers,
   MigrationsRunHandlers,
   MigrationsRunJobsHandlers,
+  OrganizationsExportsGenerateHandlers,
+  OrganizationsExportsJobsHandlers,
+  OrganizationsExportsDownloadHandlers,
 ];
 
 export const initResources = ({ app }: { app: App }) =>

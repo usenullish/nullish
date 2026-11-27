@@ -147,6 +147,8 @@ const EXPECTED_TOOLS = [
   "write_off_invoice",
   "generate_invoice_pdf",
   "get_invoice_pdf_job",
+  "generate_organization_export",
+  "get_organization_export_job",
   "list_journal_entries",
   "get_journal_entry",
   "create_journal_entry",

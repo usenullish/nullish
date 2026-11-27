@@ -11,6 +11,7 @@ export const RATE_LIMITS = {
   statementsImport: 5,
   datasetsUpload: 10,
   migrationsRun: 5,
+  exportsGenerate: 1,
 } as const;
 
 const WINDOW_MS = 60 * 1000; // Remember a request for a minute
