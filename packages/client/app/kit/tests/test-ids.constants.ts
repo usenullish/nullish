@@ -54,6 +54,9 @@ export const testIds = {
   chat: {
     prompt: "input-chat-prompt",
   },
+  onboarding: {
+    task: "link-onboarding-task",
+  },
   invitations: {
     email: "input-invitation-email",
     submit: "btn-invitation-create",

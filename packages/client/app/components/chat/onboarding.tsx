@@ -7,6 +7,8 @@ import { BankingPath, BillingPath, OrganizationRootPath } from "~/navigation";
 import { useActiveConversation } from "~/kit/chat/active-conversation.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 interface OnboardingTask {
   key: string;
@@ -142,7 +144,7 @@ export const Onboarding = ({
 };
 
 const OnboardingCard = ({
-  task: { title, description, to, done, locked },
+  task: { key, title, description, to, done, locked },
 }: {
   task: OnboardingTask;
 }) => {
@@ -170,6 +172,7 @@ const OnboardingCard = ({
     <Link
       to={to}
       className={cn(className, "transition-colors hover:bg-primary/5 hover:ring-primary")}
+      {...testId(`${testIds.onboarding.task}-${key}`)}
     >
       {content}
     </Link>
