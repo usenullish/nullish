@@ -36,13 +36,17 @@ export class AccountLedgerReport extends DbUserContext {
     filters,
     pagination,
     sort,
-    ...args
+    periodId,
+    accountId,
   }: Reports["Ledger"]["AccountLedger"]["Args"] &
     DbListArgs<string, Reports["Ledger"]["AccountLedger"]["Filter"]>): Promise<
     Result<Reports["Ledger"]["AccountLedger"]["Report"]>
   > {
     return tryCatch(async () => {
-      const ledgerArgs = ReportsSchema.LedgerSchema.AccountLedgerArgsSchema.parse(args);
+      const ledgerArgs = ReportsSchema.LedgerSchema.AccountLedgerArgsSchema.parse({
+        periodId,
+        accountId,
+      });
 
       const queryArgs = this.#queryArgsSchema.parse({ pagination, sort });
 

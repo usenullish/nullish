@@ -109,4 +109,10 @@ export class MigrationPage extends OnboardingPage {
     expect(archive).toContain("ledger/journal_entries.json");
     expect(archive).toContain(clientName);
   }
+
+  async openAccountLedger(): Promise<void> {
+    await this.page.goto(`${this.#organizationPath}/accounting/reports/account-ledger`);
+
+    await expect(this.page.getByTestId(testIds.accountLedger.posting).first()).toBeVisible();
+  }
 }

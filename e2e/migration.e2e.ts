@@ -65,6 +65,12 @@ test("runs the migration", async () => {
   await migrationPage.runMigration();
 });
 
+test("shows the postings of an account in the account ledger", async () => {
+  const migrationPage = getMigrationPage();
+
+  await migrationPage.openAccountLedger();
+});
+
 test("exports the migrated data", async () => {
   const migrationPage = getMigrationPage();
 

@@ -67,6 +67,9 @@ export const testIds = {
   navigation: {
     organization: "link-navigation-organization",
   },
+  accountLedger: {
+    posting: "link-account-ledger-posting",
+  },
   organizations: {
     locked: "card-organization-locked",
     seePlans: "link-organization-see-plans",
