@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Circle, CircleCheck, FileText, Landmark, type LucideIcon, Sparkles } from "lucide-react";
 import { cn } from "cn";
-import type { GettingStarted as GettingStartedState } from "~/context/loaders/getting-started.loader.server";
+import type { Api } from "@usenullish/nullish-schema/server";
 import { useOrganization } from "~/context/contexts/organization.context";
 import { BankingPath, BillingPath, OrganizationRootPath } from "~/navigation";
 import { useActiveConversation } from "~/kit/chat/active-conversation.context";
@@ -24,7 +24,11 @@ interface GettingStartedGroup {
   tasks: GettingStartedTask[];
 }
 
-export const GettingStarted = ({ state }: { state: GettingStartedState }) => {
+export const GettingStarted = ({
+  state,
+}: {
+  state: Api["Onboarding"]["Client"]["GetOnboardingResponse"];
+}) => {
   const { i18n } = useI18n();
   const organization = useOrganization();
   const { activeConversation } = useActiveConversation();

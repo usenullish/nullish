@@ -40,20 +40,6 @@ export class ClientsServer extends ServerLoader {
     });
   }
 
-  async listOne(
-    args: LoaderFunctionArgs,
-  ): Promise<Option<Api["Clients"]["Client"]["GetClientsResponse"]>> {
-    return await this._loadNested({
-      args,
-      errorFallbackMsg: "Unexpected error while loading the clients",
-      loaderWithOrgIdFn: async (params) =>
-        await this.#service.list({
-          ...params,
-          query: { pagination: { limit: 1, offset: 0 }, sort: { field: "name", direction: "asc" } },
-        }),
-    });
-  }
-
   async listAll(
     args: LoaderFunctionArgs,
   ): Promise<Option<Api["Clients"]["Client"]["GetClientsResponse"]>> {
