@@ -7,6 +7,8 @@ import { useOrganization } from "~/context/contexts/organization.context";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { AccountingPath } from "~/navigation";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 import {
   Table,
   TableBody,
@@ -87,6 +89,7 @@ export const AccountLedgerTable = ({
                   to={AccountingPath.create({ organizationId: organization.id }).to({
                     path: `/journal/${posting.journalEntryId}`,
                   })}
+                  {...testId(testIds.accountLedger.posting)}
                 >
                   {posting.number}
                 </Link>
