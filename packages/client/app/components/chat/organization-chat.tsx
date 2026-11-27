@@ -27,7 +27,7 @@ export const OrganizationChat = ({
   return (
     <Chat
       key={location.key}
-      className="mx-auto h-[calc(100svh-5rem)] w-full max-w-3xl"
+      className="mx-auto min-h-0 w-full max-w-3xl flex-1"
       domain={{ type: "organization", organizationId: organization.id, readOnly: true }}
       canWrite={canWrite}
       chat={chat}
