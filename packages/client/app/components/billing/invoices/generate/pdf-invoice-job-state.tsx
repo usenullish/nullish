@@ -58,6 +58,7 @@ export const PdfInvoiceJobState = ({
     };
   }, [invoiceId, jobId]);
 
+
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col items-start gap-4 py-10">
       {state?.status === "completed" && (
