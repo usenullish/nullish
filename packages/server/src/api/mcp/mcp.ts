@@ -37,6 +37,7 @@ import { McpToolsJournalSummaries } from "./_journal-summaries";
 import { McpToolsInvoicesLines } from "./_invoices-lines";
 import { McpToolsInvoicesLifecycle } from "./_invoices-lifecycle";
 import { McpToolsInvoicesPdf } from "./_invoices-pdf";
+import { McpToolsExports } from "./_exports";
 import { McpToolsJournal } from "./_journal";
 import { McpToolsReports } from "./_reports";
 import { McpToolsDocs } from "./_docs";
@@ -87,6 +88,7 @@ export class McpHandler {
       McpToolsInvoicesLines.create({ server, args, readOnly }),
       McpToolsInvoicesLifecycle.create({ server, args, readOnly }),
       McpToolsInvoicesPdf.create({ server, args: { ...args, jobs }, readOnly }),
+      McpToolsExports.create({ server, args: { ...args, jobs }, readOnly }),
       McpToolsJournal.create({ server, args, readOnly }),
       McpToolsReports.create({ server, args, readOnly }),
       McpToolsDocs.create({ server, args, readOnly }),
