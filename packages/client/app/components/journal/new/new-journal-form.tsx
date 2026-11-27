@@ -1,4 +1,5 @@
 import { ViewTransition } from "react";
+import { cn } from "cn";
 import { nonNullish } from "@usenullish/nullish-common";
 import type { Api } from "@usenullish/nullish-schema/server";
 import { Button } from "~/ui/components/button";
@@ -6,6 +7,7 @@ import { Field, FieldError, FieldGroup } from "~/ui/components/field";
 import { JournalFields } from "~/components/journal/form/journal-fields";
 import { useJournalDescribed } from "~/components/journal/form/_journal-described.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { useSidebar } from "~/ui/components/sidebar";
 import { NetRateTaxMissing } from "~/components/settings/vat/rates/onboarding/net-rate-tax-missing";
 
 export const NewJournalForm = ({
@@ -24,10 +26,17 @@ export const NewJournalForm = ({
   periods: Api["Periods"]["Client"]["Period"][];
 }) => {
   const { i18n } = useI18n();
+  const { state } = useSidebar();
   const { error, onSubmit } = useJournalDescribed({ onAction });
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto w-full max-w-5xl py-10">
+    <form
+      onSubmit={onSubmit}
+      className={cn(
+        "mx-auto w-full py-10 transition-[max-width] duration-200 ease-linear",
+        state === "collapsed" ? "max-w-6xl" : "max-w-5xl",
+      )}
+    >
       <NetRateTaxMissing vatRates={vatRates} vatMethods={vatMethods} />
 
       <FieldGroup>
