@@ -37,6 +37,9 @@ interface Reports {
       Result: z.infer<typeof ReportsSchema.MeteringSchema.LlmUsageResultSchema>;
     };
   };
+  Onboarding: {
+    Result: z.infer<typeof ReportsSchema.OnboardingSchema.OnboardingResultSchema>;
+  };
 }
 
 export type { Reports };
