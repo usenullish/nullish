@@ -156,6 +156,7 @@ export const NAVIGATION: NavigationGroup[] = [
 
 export const ORGANIZATION_TABS: NavigationItem[] = [
   { title: "details", path: "/settings/organization/details" },
+  { title: "export", path: "/settings/organization/export" },
 ];
 
 export const SUBSCRIPTION_TABS: NavigationItem[] = [
