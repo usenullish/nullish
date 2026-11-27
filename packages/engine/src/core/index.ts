@@ -13,6 +13,7 @@ export * from "./composites/vat-method-summaries";
 export * from "./records/document-templates";
 export * from "./records/template-contents";
 export * from "./reports/vat-declaration";
+export * from "./reports/onboarding";
 export * from "./services/organization-members/organization-member.delete";
 export * from "./services/organizations/organization.open";
 export * from "./services/organizations/organization.delete";
