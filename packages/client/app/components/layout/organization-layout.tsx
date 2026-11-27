@@ -45,7 +45,7 @@ export const OrganizationLayout = ({ children }: { children: React.ReactNode }) 
     <SidebarProvider>
       <AppSidebar />
 
-      <SidebarInset className="min-w-0">
+      <SidebarInset className="h-svh min-w-0">
         <OrganizationDeletedBanner />
         <OrganizationGraceBanner />
         <OrganizationTrialBanner />
@@ -104,7 +104,7 @@ export const OrganizationLayout = ({ children }: { children: React.ReactNode }) 
           <HeaderActions />
         </header>
 
-        <main className="flex flex-1 flex-col gap-4 p-4">{children}</main>
+        <main className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
