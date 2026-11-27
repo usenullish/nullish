@@ -255,7 +255,7 @@
       "delete_error": "Die Unterhaltung konnte nicht gelöscht werden."
     }
   },
-  "getting_started": {
+  "onboarding": {
     "title": "Los geht's",
     "description": "Ein paar kleine Schritte, und {organization} ist parat.",
     "client_title": "Erstelle einen ersten Kunden",

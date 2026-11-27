@@ -1,24 +1,18 @@
 import { isNullish } from "@usenullish/nullish-common";
 import type { Route } from "./+types/orgs.$org-id._index";
 import { OrganizationChat } from "~/components/chat/organization-chat";
-import { GettingStarted } from "~/components/chat/getting-started";
+import { Onboarding } from "~/components/chat/onboarding";
+import { usePendingOnboarding } from "~/components/chat/onboarding.hooks";
 import { OrganizationsServer } from "~/context/server/organizations.server";
-import { useOrganization } from "~/context/contexts/organization.context";
-import { useCanWrite } from "~/context/hooks/memberships.hooks";
 
 export const loader = async (args: Route.LoaderArgs) => {
   return await OrganizationsServer.create().getReportsOnboarding(args);
 };
 
 const OrganizationPage = ({ loaderData }: Route.ComponentProps) => {
-  const organization = useOrganization();
-  const canWrite = useCanWrite({ organizationId: organization.id });
+  const onboarding = usePendingOnboarding({ onboarding: loaderData });
 
-  if (!canWrite || isNullish(loaderData) || Object.values(loaderData).every(Boolean)) {
-    return <OrganizationChat />;
-  }
-
-  return <GettingStarted state={loaderData} />;
+  return isNullish(onboarding) ? <OrganizationChat /> : <Onboarding state={onboarding} />;
 };
 
 export default OrganizationPage;

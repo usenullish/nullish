@@ -255,7 +255,7 @@
       "delete_error": "Non è stato possibile eliminare la conversazione."
     }
   },
-  "getting_started": {
+  "onboarding": {
     "title": "Si parte",
     "description": "Qualche piccolo passo e {organization} è pronta a partire.",
     "client_title": "Crea un primo cliente",

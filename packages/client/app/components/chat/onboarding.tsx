@@ -8,7 +8,7 @@ import { useActiveConversation } from "~/kit/chat/active-conversation.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 
-interface GettingStartedTask {
+interface OnboardingTask {
   key: string;
   title: string;
   description: string;
@@ -17,14 +17,14 @@ interface GettingStartedTask {
   locked: boolean;
 }
 
-interface GettingStartedGroup {
+interface OnboardingGroup {
   key: string;
   title: string;
   icon: LucideIcon;
-  tasks: GettingStartedTask[];
+  tasks: OnboardingTask[];
 }
 
-export const GettingStarted = ({
+export const Onboarding = ({
   state,
 }: {
   state: Api["Onboarding"]["Client"]["GetOnboardingResponse"];
@@ -46,7 +46,7 @@ export const GettingStarted = ({
   const newClient = billing.to({ path: "/clients/new" });
   const newBankRelation = banking.to({ path: "/new" });
 
-  const groups: GettingStartedGroup[] = [
+  const groups: OnboardingGroup[] = [
     {
       key: "billing",
       title: i18n.navigation.billing,
@@ -54,16 +54,16 @@ export const GettingStarted = ({
       tasks: [
         {
           key: "client",
-          title: i18n.getting_started.client_title,
-          description: i18n.getting_started.client_description,
+          title: i18n.onboarding.client_title,
+          description: i18n.onboarding.client_description,
           to: newClient,
           done: state.hasClients,
           locked: false,
         },
         {
           key: "invoice",
-          title: i18n.getting_started.invoice_title,
-          description: i18n.getting_started.invoice_description,
+          title: i18n.onboarding.invoice_title,
+          description: i18n.onboarding.invoice_description,
           to: billing.to({ path: "/invoices/new" }),
           done: state.hasInvoices,
           locked: !state.hasClients,
@@ -77,16 +77,16 @@ export const GettingStarted = ({
       tasks: [
         {
           key: "bankRelation",
-          title: i18n.getting_started.bank_relation_title,
-          description: i18n.getting_started.bank_relation_description,
+          title: i18n.onboarding.bank_relation_title,
+          description: i18n.onboarding.bank_relation_description,
           to: newBankRelation,
           done: state.hasBankRelations,
           locked: false,
         },
         {
           key: "statement",
-          title: i18n.getting_started.statement_title,
-          description: i18n.getting_started.statement_description,
+          title: i18n.onboarding.statement_title,
+          description: i18n.onboarding.statement_description,
           to: banking.to(),
           done: state.hasStatements,
           locked: !state.hasBankRelations,
@@ -100,8 +100,8 @@ export const GettingStarted = ({
       tasks: [
         {
           key: "assistant",
-          title: i18n.getting_started.assistant_title,
-          description: i18n.getting_started.assistant_description,
+          title: i18n.onboarding.assistant_title,
+          description: i18n.onboarding.assistant_description,
           to: assistant,
           done: false,
           locked: false,
@@ -113,9 +113,9 @@ export const GettingStarted = ({
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 py-10">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold">{i18n.getting_started.title}</h2>
+        <h2 className="text-2xl font-semibold">{i18n.onboarding.title}</h2>
         <p className="text-sm text-muted-foreground">
-          {replacePlaceholders(i18n.getting_started.description, {
+          {replacePlaceholders(i18n.onboarding.description, {
             "{organization}": organization.name,
           })}
         </p>
@@ -131,7 +131,7 @@ export const GettingStarted = ({
           <ul className="ml-2 grid grid-cols-1 gap-3 border-l pl-5 sm:grid-cols-2">
             {tasks.map((task) => (
               <li key={task.key} className="flex">
-                <GettingStartedCard task={task} />
+                <OnboardingCard task={task} />
               </li>
             ))}
           </ul>
@@ -141,10 +141,10 @@ export const GettingStarted = ({
   );
 };
 
-const GettingStartedCard = ({
+const OnboardingCard = ({
   task: { title, description, to, done, locked },
 }: {
-  task: GettingStartedTask;
+  task: OnboardingTask;
 }) => {
   const content = (
     <>

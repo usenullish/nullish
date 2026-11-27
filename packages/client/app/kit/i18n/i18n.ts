@@ -243,7 +243,7 @@ const I18nChatSchema = z.strictObject({
   }),
 });
 
-const I18nGetting_startedSchema = z.strictObject({
+const I18nOnboardingSchema = z.strictObject({
   title: z.string(),
   description: z.string(),
   client_title: z.string(),
@@ -1403,7 +1403,7 @@ export const I18nSchema = z.strictObject({
   navigation: I18nNavigationSchema,
   greeting: I18nGreetingSchema,
   chat: I18nChatSchema,
-  getting_started: I18nGetting_startedSchema,
+  onboarding: I18nOnboardingSchema,
   organizations: I18nOrganizationsSchema,
   clients: I18nClientsSchema,
   contacts: I18nContactsSchema,

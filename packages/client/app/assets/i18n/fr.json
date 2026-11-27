@@ -255,7 +255,7 @@
       "delete_error": "La conversation n'a pas pu être supprimée."
     }
   },
-  "getting_started": {
+  "onboarding": {
     "title": "C'est parti",
     "description": "Quelques étapes et {organization} est sur les bons rails.",
     "client_title": "Crée un premier client",

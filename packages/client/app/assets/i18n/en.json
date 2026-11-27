@@ -255,7 +255,7 @@
       "delete_error": "The conversation could not be deleted."
     }
   },
-  "getting_started": {
+  "onboarding": {
     "title": "Let's get going",
     "description": "A few small steps and {organization} is good to go.",
     "client_title": "Create a first client",
