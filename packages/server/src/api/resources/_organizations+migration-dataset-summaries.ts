@@ -49,7 +49,7 @@ export class MigrationDatasetSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectDatasetSummaries, FilterDatasetSummaries>({
-    query: async ({ db, userId, context, pagination, sort, filters, count }) => {
+    query: async ({ db, userId, context, pagination, sort, filters }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -60,7 +60,7 @@ export class MigrationDatasetSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, filters, count });
+      }).list({ pagination, sort, filters });
     },
     resourceKey: "datasetSummaries",
     filtersSchema: ApiSchema.MigrationDatasetSummaries.GetDatasetSummariesFiltersQuerySchema,

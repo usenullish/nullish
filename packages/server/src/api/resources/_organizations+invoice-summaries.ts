@@ -75,7 +75,7 @@ export class InvoiceSummariesHandlers extends Resource {
   }
 
   readonly #list = _defineListHandler<ListRoute, SelectInvoiceSummaries, FilterInvoiceSummaries>({
-    query: async ({ db, userId, context, pagination, sort, filters, count }) => {
+    query: async ({ db, userId, context, pagination, sort, filters }) => {
       const parentId = context.req.param("parentId");
 
       if (isInvalidUuid(parentId)) {
@@ -86,7 +86,7 @@ export class InvoiceSummariesHandlers extends Resource {
         db,
         userId,
         foreignKeyId: parentId,
-      }).list({ pagination, sort, filters, count });
+      }).list({ pagination, sort, filters });
     },
     resourceKey: "invoiceSummaries",
     filtersSchema: ApiSchema.InvoiceSummaries.GetInvoiceSummariesFiltersQuerySchema,
