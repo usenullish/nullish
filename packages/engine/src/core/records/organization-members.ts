@@ -4,7 +4,7 @@ import { type Result, tryCatch } from "@usenullish/nullish-common";
 import { DbView, queryArgsSchema } from "@usenullish/nullish-schema/db";
 import type { Records } from "@usenullish/nullish-schema/records";
 import { type Views, ViewsSchema } from "@usenullish/nullish-schema/views";
-import type { DbCollectionStoreInitArgs, DbListArgs, DbListResult } from "../../store";
+import type { DbCollectionStoreInitArgs, DbListWithCountArgs, DbListResult } from "../../store";
 import { parseCount, parseQueryArgs } from "../../_query/helpers";
 
 type OrganizationMember = Views["Core"]["OrganizationMembers"]["Select"];
@@ -35,7 +35,7 @@ export class DbCollectionOrganizationMembers extends DbUserContext {
     pagination,
     sort,
     count,
-  }: DbListArgs<string>): Promise<Result<DbListResult<OrganizationMember>>> {
+  }: DbListWithCountArgs<string>): Promise<Result<DbListResult<OrganizationMember>>> {
     return tryCatch(async () => {
       const queryArgs = parseQueryArgs({
         args: { pagination, sort },

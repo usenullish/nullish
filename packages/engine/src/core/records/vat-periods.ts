@@ -6,7 +6,7 @@ import type {
   DbStoreInitArgs,
   DbCollectionStore,
   DbStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -82,7 +82,7 @@ export class DbCollectionVatPeriods
   list({
     filters,
     ...args
-  }: DbListArgs<VatPeriodsSortField, FilterVatPeriods>): Promise<
+  }: DbListWithCountArgs<VatPeriodsSortField, FilterVatPeriods>): Promise<
     Result<DbListResult<SelectVatPeriods>>
   > {
     return this._queryWithForeignKeyId({

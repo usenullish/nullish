@@ -4,7 +4,7 @@ import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records"
 import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -35,7 +35,9 @@ export class DbCollectionStatements
     return new this(args);
   }
 
-  list(args: DbListArgs<StatementsSortField>): Promise<Result<DbListResult<SelectStatements>>> {
+  list(
+    args: DbListWithCountArgs<StatementsSortField>,
+  ): Promise<Result<DbListResult<SelectStatements>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Banking.StatementsSchema.SelectStatementsSchema,
       ...args,
