@@ -49,6 +49,7 @@ import * as AccountBalancesView from "./api/organizations+reports+account-balanc
 import * as BalanceSheetView from "./api/organizations+reports+balance-sheet";
 import * as AccountLedgerSchema from "./api/organizations+reports+account-ledger";
 import * as ActiveAccountsSchema from "./api/organizations+reports+active-accounts";
+import * as OnboardingSchema from "./api/organizations+reports+onboarding";
 import * as IncomeStatementView from "./api/organizations+reports+income-statement";
 import * as VatReportsSchema from "./api/organizations+reports+vat";
 import * as ChatSchema from "./api/chat";
@@ -117,6 +118,7 @@ const ApiSchema = {
   BalanceSheet: BalanceSheetView,
   AccountLedger: AccountLedgerSchema,
   ActiveAccounts: ActiveAccountsSchema,
+  Onboarding: OnboardingSchema,
   IncomeStatement: IncomeStatementView,
   VatReports: VatReportsSchema,
   Chat: ChatSchema,

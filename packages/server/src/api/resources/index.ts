@@ -52,6 +52,7 @@ import { OrganizationsReports } from "./_organizations+reports";
 import { OrganizationsReportsVat } from "./_organizations+reports+vat";
 import { OrganizationsReportsAccountLedger } from "./_organizations+reports+account-ledger";
 import { OrganizationsReportsActiveAccounts } from "./_organizations+reports+active-accounts";
+import { OrganizationsReportsOnboarding } from "./_organizations+reports+onboarding";
 import { InvoicesPdfGenerateHandlers } from "./_invoices+pdf+generate";
 import { InvoicesPdfJobsHandlers } from "./_invoices+pdf+jobs";
 import { InvoicesPdfDocumentsDownloadHandlers } from "./_invoices+pdf+documents+download";
@@ -135,6 +136,7 @@ const RESOURCES = [
   OrganizationsReportsVat,
   OrganizationsReportsAccountLedger,
   OrganizationsReportsActiveAccounts,
+  OrganizationsReportsOnboarding,
   ChatHandlers,
   ConversationsHandlers,
   OrganizationConversationsHandlers,
