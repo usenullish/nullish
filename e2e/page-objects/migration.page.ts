@@ -1,5 +1,7 @@
 import { expect } from "@playwright/test";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { gunzipSync } from "node:zlib";
 import { OnboardingPage } from "./onboarding.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import type { MigrationDatasetType } from "../../packages/schema/src/db/constants/migrations";
@@ -7,6 +9,7 @@ import type { MigrationDatasetType } from "../../packages/schema/src/db/constant
 const FIXTURES = join(process.cwd(), "e2e", "fixtures", "bexio");
 
 const TIMEOUT_MIGRATION = { timeout: 60_000 };
+const TIMEOUT_EXPORT = { timeout: 60_000 };
 
 export class MigrationPage extends OnboardingPage {
   get #organizationPath(): string {
@@ -82,5 +85,28 @@ export class MigrationPage extends OnboardingPage {
     await this.click(testIds.migration.run);
 
     await expect(this.page.getByTestId(testIds.migration.continue)).toBeVisible(TIMEOUT_MIGRATION);
+  }
+
+  async exportData({ clientName }: { clientName: string }): Promise<void> {
+    await this.page.goto(`${this.#organizationPath}/settings/organization/export`);
+
+    await this.click(testIds.organizations.export);
+
+    const downloadLink = this.page.getByTestId(testIds.organizations.exportDownload);
+
+    await expect(downloadLink).toBeVisible(TIMEOUT_EXPORT);
+
+    const [download] = await Promise.all([
+      this.page.waitForEvent("download"),
+      downloadLink.click(),
+    ]);
+
+    expect(download.suggestedFilename()).toMatch(/^export-[^/]+\.tar\.gz$/);
+
+    const archive = gunzipSync(await readFile(await download.path())).toString("utf-8");
+
+    expect(archive).toContain("billing/clients.json");
+    expect(archive).toContain("ledger/journal_entries.json");
+    expect(archive).toContain(clientName);
   }
 }

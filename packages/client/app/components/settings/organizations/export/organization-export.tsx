@@ -9,6 +9,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useActionWithNotifyError } from "~/kit/data/form.hooks";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const OrganizationExport = ({
   organization,
@@ -43,7 +45,7 @@ export const OrganizationExport = ({
         </FieldDescription>
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.organizations.export)}>
             {pending ? i18n.organizations.state.exporting : i18n.organizations.action.export}
           </Button>
         </Field>

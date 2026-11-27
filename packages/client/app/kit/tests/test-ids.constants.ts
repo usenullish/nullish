@@ -72,6 +72,8 @@ export const testIds = {
     seePlans: "link-organization-see-plans",
     backToOrganizations: "link-organization-back-to-organizations",
     grace: "text-organization-grace",
+    export: "btn-organization-export",
+    exportDownload: "link-organization-export-download",
   },
   subscription: {
     choosePlan: "link-subscription-choose-plan",

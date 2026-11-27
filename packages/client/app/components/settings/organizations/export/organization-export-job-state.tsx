@@ -8,6 +8,8 @@ import { Button } from "~/ui/components/button";
 import { TextShimmerLoader } from "~/ui/components/loader";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { usePollJobState } from "~/kit/data/job-state.hooks";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 const POLL_MAX_ATTEMPTS = 120;
 
@@ -42,6 +44,7 @@ export const OrganizationExportJobState = ({
                   href={`${API_URL}/organizations/${organizationId}/exports/${state.result.exportId}/download`}
                 />
               }
+              {...testId(testIds.organizations.exportDownload)}
             >
               {i18n.organizations.action.download}
             </Button>
