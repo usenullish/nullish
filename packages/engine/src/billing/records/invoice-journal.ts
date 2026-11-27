@@ -4,7 +4,7 @@ import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records"
 import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -36,7 +36,7 @@ export class DbCollectionInvoiceJournal
   }
 
   list(
-    args: DbListArgs<InvoiceJournalSortField>,
+    args: DbListWithCountArgs<InvoiceJournalSortField>,
   ): Promise<Result<DbListResult<SelectInvoiceJournal>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Billing.InvoiceJournalSchema.SelectInvoiceJournalEntriesSchema,

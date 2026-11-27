@@ -5,7 +5,7 @@ import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
   DbDeletableStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStore,
   DbStoreInitArgs,
@@ -85,7 +85,9 @@ export class DbCollectionDatasets
     return new this(args);
   }
 
-  list(args: DbListArgs<DatasetsSortField>): Promise<Result<DbListResult<SelectDatasets>>> {
+  list(
+    args: DbListWithCountArgs<DatasetsSortField>,
+  ): Promise<Result<DbListResult<SelectDatasets>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Migration.DatasetsSchema.SelectDatasetsSchema,
       ...args,

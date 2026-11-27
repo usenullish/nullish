@@ -6,7 +6,7 @@ import type {
   DbStoreInitArgs,
   DbCollectionStore,
   DbStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
 } from "../../store";
 import { DbCollectionRecordsById } from "../../_records/collection-records-by-id";
@@ -91,7 +91,7 @@ export class DbCollectionSystemAccounts
   list({
     filters,
     ...args
-  }: DbListArgs<SystemAccountsSortField, FilterSystemAccounts>): Promise<
+  }: DbListWithCountArgs<SystemAccountsSortField, FilterSystemAccounts>): Promise<
     Result<DbListResult<SelectSystemAccounts>>
   > {
     return this._queryWithForeignKeyId({

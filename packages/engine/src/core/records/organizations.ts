@@ -5,7 +5,7 @@ import type {
   DbCollectionStore,
   DbStore,
   DbStoreInitArgs,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
 } from "../../store";
 import { DbRecordsById } from "../../_records/records-by-id";
@@ -53,7 +53,7 @@ export class DbOrganizations
   list({
     filters,
     ...args
-  }: DbListArgs<OrganizationsSortField, FilterOrganizations>): Promise<
+  }: DbListWithCountArgs<OrganizationsSortField, FilterOrganizations>): Promise<
     Result<DbListResult<SelectOrganizations>>
   > {
     return this._query({

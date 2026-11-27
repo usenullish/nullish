@@ -19,7 +19,12 @@ export interface DbListResult<TSelect> {
 export type DbListArgs<
   TSortField extends string = QueryDefaultSortField,
   TFilters = never,
-> = QueryArgs<TSortField> & { filters?: TFilters; count?: QueryCount };
+> = QueryArgs<TSortField> & { filters?: TFilters };
+
+export type DbListWithCountArgs<
+  TSortField extends string = QueryDefaultSortField,
+  TFilters = never,
+> = DbListArgs<TSortField, TFilters> & { count?: QueryCount };
 
 export interface DbCollectionStore<
   TSelect,
@@ -27,7 +32,7 @@ export interface DbCollectionStore<
   TSortField extends string = QueryDefaultSortField,
   TFilters = never,
 > {
-  list(args: DbListArgs<TSortField, TFilters>): Promise<Result<DbListResult<TSelect>>>;
+  list(args: DbListWithCountArgs<TSortField, TFilters>): Promise<Result<DbListResult<TSelect>>>;
   insert(args: { values: TInsert }): Promise<Result<TSelect>>;
 }
 

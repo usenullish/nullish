@@ -5,7 +5,7 @@ import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
   DbDeletableStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStore,
   DbStoreInitArgs,
@@ -110,7 +110,7 @@ export class DbCollectionTemplateContents
   list({
     filters,
     ...args
-  }: DbListArgs<TemplateContentsSortField, FilterTemplateContents>): Promise<
+  }: DbListWithCountArgs<TemplateContentsSortField, FilterTemplateContents>): Promise<
     Result<DbListResult<SelectTemplateContents>>
   > {
     return this._queryWithForeignKeyId({

@@ -4,7 +4,7 @@ import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records"
 import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStoreInitArgs,
 } from "../../store";
@@ -60,7 +60,7 @@ export class DbCollectionMovements
   list({
     filters,
     ...args
-  }: DbListArgs<MovementsSortField, FilterMovements>): Promise<
+  }: DbListWithCountArgs<MovementsSortField, FilterMovements>): Promise<
     Result<DbListResult<SelectMovements>>
   > {
     return this._queryWithForeignKeyId({

@@ -4,7 +4,7 @@ import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records"
 import type {
   DbCollectionStoreInitArgs,
   DbDeletableStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStoreInitArgs,
 } from "../../store";
@@ -70,7 +70,9 @@ export class DbCollectionInvitations extends DbCollectionRecordsById<
     return new this(args);
   }
 
-  list(args: DbListArgs<InvitationsSortField>): Promise<Result<DbListResult<SelectInvitations>>> {
+  list(
+    args: DbListWithCountArgs<InvitationsSortField>,
+  ): Promise<Result<DbListResult<SelectInvitations>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Core.InvitationsSchema.SelectInvitationsSchema,
       ...args,

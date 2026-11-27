@@ -4,7 +4,7 @@ import { type Records, RecordsSchema } from "@usenullish/nullish-schema/records"
 import type {
   DbCollectionStore,
   DbDeletableStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStore,
   DbStoreInitArgs,
@@ -42,7 +42,9 @@ export class DbCurrencies
     });
   }
 
-  list(args: DbListArgs<CurrenciesSortField>): Promise<Result<DbListResult<SelectCurrencies>>> {
+  list(
+    args: DbListWithCountArgs<CurrenciesSortField>,
+  ): Promise<Result<DbListResult<SelectCurrencies>>> {
     return this._query({
       schema: RecordsSchema.Core.CurrenciesSchema.SelectCurrenciesSchema,
       ...args,

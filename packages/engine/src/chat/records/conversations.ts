@@ -6,7 +6,7 @@ import type {
   DbCollectionStore,
   DbCollectionStoreInitArgs,
   DbDeletableStore,
-  DbListArgs,
+  DbListWithCountArgs,
   DbListResult,
   DbStore,
   DbStoreInitArgs,
@@ -60,7 +60,7 @@ export class DbConversations
   }
 
   list(
-    args: DbListArgs<ConversationsSortField>,
+    args: DbListWithCountArgs<ConversationsSortField>,
   ): Promise<Result<DbListResult<SelectConversations>>> {
     return this._query({
       schema: RecordsSchema.Chat.ConversationsSchema.SelectConversationsSchema,
@@ -118,7 +118,7 @@ export class DbCollectionConversations extends DbCollectionRecordsById<
   }
 
   list(
-    args: DbListArgs<ConversationsSortField>,
+    args: DbListWithCountArgs<ConversationsSortField>,
   ): Promise<Result<DbListResult<SelectConversations>>> {
     return this._queryWithForeignKeyId({
       schema: RecordsSchema.Chat.ConversationsSchema.SelectConversationsSchema,
