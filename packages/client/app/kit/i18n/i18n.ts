@@ -243,6 +243,19 @@ const I18nChatSchema = z.strictObject({
   }),
 });
 
+const I18nOnboardingSchema = z.strictObject({
+  title: z.string(),
+  description: z.string(),
+  client_title: z.string(),
+  client_description: z.string(),
+  invoice_title: z.string(),
+  invoice_description: z.string(),
+  bank_relation_title: z.string(),
+  bank_relation_description: z.string(),
+  assistant_title: z.string(),
+  assistant_description: z.string(),
+});
+
 const I18nOrganizationsSchema = z.strictObject({
   setup: z.strictObject({ organization: z.string(), vat: z.string() }),
   setup_done: z.strictObject({ organization: z.string(), vat: z.string() }),
@@ -1388,6 +1401,7 @@ export const I18nSchema = z.strictObject({
   navigation: I18nNavigationSchema,
   greeting: I18nGreetingSchema,
   chat: I18nChatSchema,
+  onboarding: I18nOnboardingSchema,
   organizations: I18nOrganizationsSchema,
   clients: I18nClientsSchema,
   contacts: I18nContactsSchema,
