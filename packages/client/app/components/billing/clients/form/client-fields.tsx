@@ -14,6 +14,8 @@ import {
 import { AddressFields } from "~/components/core/address-fields";
 import { CommunicationFields } from "~/components/core/communication-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const ClientFields = ({
   client,
@@ -57,7 +59,13 @@ export const ClientFields = ({
         <FieldLabel htmlFor={nameId}>
           {i18n.core.label.name} <span aria-hidden="true">*</span>
         </FieldLabel>
-        <Input id={nameId} name="name" defaultValue={client?.name} required />
+        <Input
+          id={nameId}
+          name="name"
+          defaultValue={client?.name}
+          required
+          {...testId(testIds.clients.name)}
+        />
       </Field>
 
       <Field>

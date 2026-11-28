@@ -37,10 +37,18 @@ test("sets up the VAT with the net rate method", async () => {
   await onboardingPage.assertReady();
 });
 
-test("opens the chat of the organization", async () => {
+test("shows the onboarding of the organization", async () => {
   const onboardingPage = getOnboardingPage();
 
   await onboardingPage.letsGo();
+
+  await onboardingPage.assertOnboardingVisible();
+});
+
+test("opens the chat of the organization", async () => {
+  const onboardingPage = getOnboardingPage();
+
+  await onboardingPage.openAssistant();
 
   await onboardingPage.assertChatVisible();
 });

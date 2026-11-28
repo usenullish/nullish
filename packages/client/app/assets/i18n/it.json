@@ -234,7 +234,8 @@
       "placeholder_unscoped": "ad es. Dove ho fatture aperte?",
       "history": "Cronologia",
       "title": "Titolo",
-      "placeholder_disabled": "L'assistente non è configurato su questa istanza."
+      "placeholder_disabled": "L'assistente non è configurato su questa istanza.",
+      "conversation": "Chat"
     },
     "text": {
       "switch_to_read_write": "Clicca perché l'assistente possa modificare.",
@@ -253,6 +254,18 @@
       "delete_success": "La conversazione è stata eliminata.",
       "delete_error": "Non è stato possibile eliminare la conversazione."
     }
+  },
+  "onboarding": {
+    "title": "Si parte",
+    "description": "Qualche piccolo passo e {organization} è pronta a partire.",
+    "client_title": "Crea un primo cliente",
+    "client_description": "A chi fatturi, con indirizzo e contatti.",
+    "invoice_title": "Crea una prima fattura",
+    "invoice_description": "Preparala, poi inviala in PDF.",
+    "bank_relation_title": "Aggiungi il tuo conto bancario",
+    "bank_relation_description": "Dove arrivano i tuoi soldi.",
+    "assistant_title": "Chiedi all'assistente",
+    "assistant_description": "Chiedigli qualsiasi cosa sulla tua organizzazione, o lascia che registri al posto tuo."
   },
   "organizations": {
     "setup": {

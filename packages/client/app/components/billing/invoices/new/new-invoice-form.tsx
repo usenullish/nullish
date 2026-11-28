@@ -18,6 +18,8 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { isInvoiceVatRateUsableOn } from "~/kit/utils/vat-rates.utils";
 import { NetRateTaxMissing } from "~/components/settings/vat/rates/onboarding/net-rate-tax-missing";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type VatRate = Api["VatRates"]["Client"]["VatRate"];
 
@@ -79,7 +81,7 @@ export const NewInvoiceForm = ({
       <FieldGroup>
         <h1 className="text-xs font-medium">{i18n.invoices.action.create}</h1>
 
-        <Field>
+        <Field {...testId(testIds.invoices.client)}>
           <FieldLabel htmlFor={clientId}>
             {i18n.invoices.label.client} <span aria-hidden="true">*</span>
           </FieldLabel>
@@ -153,7 +155,7 @@ export const NewInvoiceForm = ({
         <CurrencyFields />
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.invoices.create)}>
             {pending ? i18n.invoices.state.creating : i18n.invoices.action.create}
           </Button>
         </Field>

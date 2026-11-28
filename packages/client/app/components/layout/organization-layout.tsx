@@ -75,7 +75,7 @@ export const OrganizationLayout = ({ children }: { children: React.ReactNode }) 
                 </BreadcrumbLink>
               </BreadcrumbItem>
 
-              {active !== undefined && active.path !== "" && (
+              {active !== undefined && (
                 <>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>

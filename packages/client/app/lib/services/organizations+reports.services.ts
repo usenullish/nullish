@@ -112,4 +112,19 @@ export class OrganizationsReportsService extends Service {
       }).generateVatDeclaration({ orgId, body });
     });
   };
+
+  getOnboarding = async ({
+    cookie,
+    orgId,
+  }: {
+    cookie: Cookie;
+  } & ApiOrganizationsGetByIdArgs): Promise<
+    Result<Api["Onboarding"]["Client"]["GetOnboardingResponse"]>
+  > => {
+    return await tryCatch(async () => {
+      return await ApiOrganizationsReportsSsr.create({
+        cookie,
+      }).getOnboarding({ orgId });
+    });
+  };
 }

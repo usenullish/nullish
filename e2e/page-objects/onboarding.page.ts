@@ -50,8 +50,17 @@ export class OnboardingPage extends SignUpPage {
     await this.click(testIds.newOrganization.ready);
   }
 
-  async assertChatVisible(): Promise<void> {
+  async assertOnboardingVisible(): Promise<void> {
     await expect(this.page).toHaveURL(/\/orgs\/[^/]+$/);
+    await expect(this.page.getByTestId(`${testIds.onboarding.task}-client`)).toBeVisible();
+  }
+
+  async openAssistant(): Promise<void> {
+    await this.click(`${testIds.onboarding.task}-assistant`);
+  }
+
+  async assertChatVisible(): Promise<void> {
+    await expect(this.page).toHaveURL(/\/orgs\/[^/]+\/conversations$/);
     await expect(this.page.getByTestId(testIds.chat.prompt)).toBeVisible();
   }
 }
