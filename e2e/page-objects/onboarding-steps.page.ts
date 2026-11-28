@@ -54,7 +54,7 @@ export class OnboardingStepsPage extends OnboardingPage {
 
     await expect(this.page).toHaveURL(/\/billing\/invoices\/new$/);
 
-    await this.page.getByTestId(testIds.invoices.client).locator("input").fill(clientName);
+    await this.page.getByTestId(testIds.invoices.client).getByRole("combobox").fill(clientName);
     await this.page.getByRole("option", { name: clientName }).click();
 
     await this.click(testIds.invoices.create);
@@ -78,7 +78,10 @@ export class OnboardingStepsPage extends OnboardingPage {
     await this.page.getByTestId(testIds.bankRelations.name).fill(name);
     await this.page.getByTestId(testIds.bankRelations.iban).fill(iban);
 
-    await this.page.getByTestId(testIds.bankRelations.account).locator("input").fill(accountCode);
+    await this.page
+      .getByTestId(testIds.bankRelations.account)
+      .getByRole("combobox")
+      .fill(accountCode);
     await this.page.getByRole("option").first().click();
 
     await this.click(testIds.bankRelations.create);
