@@ -25,7 +25,7 @@ test("onboards a new user with an organization subject to VAT", async () => {
 
   await migrationPage.letsGo();
 
-  await migrationPage.assertChatVisible();
+  await migrationPage.assertOnboardingVisible();
 });
 
 test("creates the net rate tax booked by the journal", async () => {
