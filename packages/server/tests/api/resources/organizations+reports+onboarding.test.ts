@@ -117,9 +117,9 @@ describe("organization onboarding report", () => {
 
     expect(response.status).toBe(200);
     expect(await parse(response)).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 
@@ -133,9 +133,9 @@ describe("organization onboarding report", () => {
 
     expect(response.status).toBe(200);
     expect(await parse(response)).toEqual({
-      hasClients: true,
-      hasInvoices: true,
-      hasBankRelations: true,
+      bankRelations: { exists: true },
+      clients: { exists: true },
+      invoices: { exists: true },
     });
   });
 
@@ -147,9 +147,9 @@ describe("organization onboarding report", () => {
 
     expect(response.status).toBe(200);
     expect(await parse(response)).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 });

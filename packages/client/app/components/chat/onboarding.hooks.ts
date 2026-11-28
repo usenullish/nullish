@@ -17,9 +17,9 @@ export const usePendingOnboarding = ({
     return undefined;
   }
 
-  const { hasClients, hasInvoices, hasBankRelations } = onboarding;
+  const { bankRelations, clients, invoices } = onboarding;
 
-  if (!canWrite || (hasClients && hasInvoices && hasBankRelations)) {
+  if (!canWrite || (bankRelations.exists && clients.exists && invoices.exists)) {
     return undefined;
   }
 

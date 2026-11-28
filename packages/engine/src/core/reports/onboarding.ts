@@ -44,27 +44,33 @@ export class OnboardingReport extends DbUserContext {
 
         const [result] = await tx
           .select({
-            hasClients: anyOf({
-              table: DbSchema.Billing.Clients.ClientsSchema,
-              organizationId: DbSchema.Billing.Clients.ClientsSchema.organizationId,
-            }).mapWith(Boolean),
-            hasInvoices: anyOf({
-              table: DbSchema.Billing.Invoices.InvoicesSchema,
-              organizationId: DbSchema.Billing.Invoices.InvoicesSchema.organizationId,
-            }).mapWith(Boolean),
-            hasBankRelations: anyOf({
-              table: DbSchema.Core.Bank.BankRelationsSchema,
-              organizationId: DbSchema.Core.Bank.BankRelationsSchema.organizationId,
-            }).mapWith(Boolean),
+            bankRelations: {
+              exists: anyOf({
+                table: DbSchema.Core.Bank.BankRelationsSchema,
+                organizationId: DbSchema.Core.Bank.BankRelationsSchema.organizationId,
+              }).mapWith(Boolean),
+            },
+            clients: {
+              exists: anyOf({
+                table: DbSchema.Billing.Clients.ClientsSchema,
+                organizationId: DbSchema.Billing.Clients.ClientsSchema.organizationId,
+              }).mapWith(Boolean),
+            },
+            invoices: {
+              exists: anyOf({
+                table: DbSchema.Billing.Invoices.InvoicesSchema,
+                organizationId: DbSchema.Billing.Invoices.InvoicesSchema.organizationId,
+              }).mapWith(Boolean),
+            },
           })
           .from(DbSchema.Core.Organizations.OrganizationsSchema)
           .where(eq(DbSchema.Core.Organizations.OrganizationsSchema.id, this.#organizationId));
 
         return ReportsSchema.OnboardingSchema.OnboardingResultSchema.parse(
           result ?? {
-            hasClients: false,
-            hasInvoices: false,
-            hasBankRelations: false,
+            bankRelations: { exists: false },
+            clients: { exists: false },
+            invoices: { exists: false },
           },
         );
       });
