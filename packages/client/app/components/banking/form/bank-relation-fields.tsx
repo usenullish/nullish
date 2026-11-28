@@ -9,8 +9,6 @@ import { AccountCombobox } from "~/components/settings/accounts/combobox/account
 import { useAccounts } from "~/context/contexts/accounts.context";
 import { useAccountingSettings } from "~/context/contexts/accounting-settings.context";
 import { useI18n } from "~/kit/i18n/i18n.context";
-import { testId } from "~/kit/tests/test.utils";
-import { testIds } from "~/kit/tests/test-ids.constants";
 
 const IBAN_PLACEHOLDER = "CH93 0076 2011 6238 5295 7";
 
@@ -53,7 +51,6 @@ export const BankRelationFields = ({
           value={name}
           onChange={($event) => setName($event.target.value)}
           required
-          {...testId(testIds.bankRelations.name)}
         />
       </Field>
 
@@ -66,7 +63,6 @@ export const BankRelationFields = ({
           onChange={($event) => setIban($event.target.value)}
           placeholder={IBAN_PLACEHOLDER}
           required
-          {...testId(testIds.bankRelations.iban)}
         />
       </Field>
 
@@ -91,7 +87,7 @@ export const BankRelationFields = ({
         />
       </Field>
 
-      <Field {...testId(testIds.bankRelations.account)}>
+      <Field>
         <FieldLabel htmlFor={accountId}>{i18n.bank_relations.label.account}</FieldLabel>
         <AccountCombobox
           id={accountId}

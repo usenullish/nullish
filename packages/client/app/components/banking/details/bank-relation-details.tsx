@@ -12,8 +12,6 @@ import { useAccounts } from "~/context/contexts/accounts.context";
 import { BankingPath } from "~/navigation";
 import { useAccountName } from "~/kit/data/accounts.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
-import { testId } from "~/kit/tests/test.utils";
-import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const BankRelationDetails = ({
   bankRelation,
@@ -52,7 +50,7 @@ export const BankRelationDetails = ({
 
         <WriteGuard>
           <div className="flex flex-wrap gap-2">
-            <Button onClick={() => setUploadOpen(true)} {...testId(testIds.bankRelations.upload)}>
+            <Button onClick={() => setUploadOpen(true)}>
               <Upload />
               {i18n.bank_relations.action.upload_file}
             </Button>

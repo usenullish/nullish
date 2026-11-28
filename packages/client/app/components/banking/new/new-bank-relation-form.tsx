@@ -3,8 +3,6 @@ import { Field, FieldGroup } from "~/ui/components/field";
 import { BankRelationFields } from "~/components/banking/form/bank-relation-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
-import { testId } from "~/kit/tests/test.utils";
-import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const NewBankRelationForm = ({
   onAction,
@@ -23,7 +21,7 @@ export const NewBankRelationForm = ({
         <BankRelationFields />
 
         <Field>
-          <Button type="submit" disabled={pending} {...testId(testIds.bankRelations.create)}>
+          <Button type="submit" disabled={pending}>
             {pending ? i18n.bank_relations.state.creating : i18n.bank_relations.action.create}
           </Button>
         </Field>
