@@ -46,7 +46,7 @@ export class OnboardingStepsPage extends BankingPage {
     await this.page.getByTestId(testIds.clients.name).fill(name);
     await this.click(testIds.clients.create);
 
-    await expect(this.page).toHaveURL(/\/billing\/clients\/[^/]+$/);
+    await expect(this.page).toHaveURL(/\/billing\/clients\/[0-9a-f-]{36}$/);
   }
 
   async createInvoice({ clientName }: { clientName: string }): Promise<void> {
@@ -59,7 +59,7 @@ export class OnboardingStepsPage extends BankingPage {
 
     await this.click(testIds.invoices.create);
 
-    await expect(this.page).toHaveURL(/\/billing\/invoices\/[^/]+$/);
+    await expect(this.page).toHaveURL(/\/billing\/invoices\/[0-9a-f-]{36}$/);
   }
 
   async assertChatOnHome(): Promise<void> {

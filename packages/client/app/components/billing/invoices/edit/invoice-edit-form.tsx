@@ -4,6 +4,8 @@ import { Field, FieldGroup } from "~/ui/components/field";
 import { InvoiceFields } from "~/components/billing/invoices/form/invoice-fields";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const InvoiceEditForm = ({
   onAction,
@@ -37,7 +39,7 @@ export const InvoiceEditForm = ({
         />
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.invoices.save)}>
             {pending ? i18n.core.state.saving : i18n.core.action.save}
           </Button>
         </Field>

@@ -17,6 +17,9 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 import { useNotify } from "~/kit/notifications/notify.hook";
 import { useActionWithNotifyError } from "~/kit/data/form.hooks";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { isNullish } from "@usenullish/nullish-common";
+import { testId } from "~/kit/tests/test.utils";
+import type { TestId } from "~/kit/tests/test-id";
 
 export const InvoiceLifecycleAction = ({
   label,
@@ -25,6 +28,7 @@ export const InvoiceLifecycleAction = ({
   action,
   successMsg,
   errorMsg,
+  testId: tid,
 }: {
   label: string;
   title: string;
@@ -32,6 +36,7 @@ export const InvoiceLifecycleAction = ({
   action: UseActionStateFn;
   successMsg: string;
   errorMsg: string;
+  testId?: TestId;
 }) => {
   const { i18n } = useI18n();
   const { notifySuccess } = useNotify();
@@ -60,7 +65,9 @@ export const InvoiceLifecycleAction = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger render={<Button variant="outline" />}>{label}</AlertDialogTrigger>
+      <AlertDialogTrigger render={<Button variant="outline" />} {...testId(tid)}>
+        {label}
+      </AlertDialogTrigger>
 
       <AlertDialogContent>
         <form onSubmit={buildFormSubmit({ onAction })} className="grid gap-4">
@@ -71,7 +78,11 @@ export const InvoiceLifecycleAction = ({
 
           <AlertDialogFooter>
             <AlertDialogCancel disabled={pending}>{i18n.core.action.cancel}</AlertDialogCancel>
-            <AlertDialogAction type="submit" disabled={pending}>
+            <AlertDialogAction
+              type="submit"
+              disabled={pending}
+              {...testId(isNullish(tid) ? undefined : `${tid}-confirm`)}
+            >
               {label}
             </AlertDialogAction>
           </AlertDialogFooter>
