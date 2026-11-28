@@ -16,6 +16,8 @@ import { BillingPath } from "~/navigation";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { WriteGuard } from "~/components/auth/guards/write-guard";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const InvoiceDetails = ({ invoice }: { invoice: Api["Invoices"]["Client"]["Invoice"] }) => {
   const { i18n } = useI18n();
@@ -59,7 +61,11 @@ export const InvoiceDetails = ({ invoice }: { invoice: Api["Invoices"]["Client"]
           <WriteGuard>
             {invoice.status === InvoiceStatus.DRAFT && (
               <>
-                <Button nativeButton={false} render={<Link to={invoicePath("/new")} />}>
+                <Button
+                  nativeButton={false}
+                  render={<Link to={invoicePath("/new")} />}
+                  {...testId(testIds.invoices.addLine)}
+                >
                   <Plus />
                   {i18n.invoices.action.add_line}
                 </Button>
@@ -71,12 +77,14 @@ export const InvoiceDetails = ({ invoice }: { invoice: Api["Invoices"]["Client"]
                   action={buildUseOpenInvoiceAction({ invoiceId: invoice.id })}
                   successMsg={i18n.invoices.toast.open_success}
                   errorMsg={i18n.invoices.toast.open_error}
+                  testId={testIds.invoices.open}
                 />
 
                 <Button
                   variant="outline"
                   nativeButton={false}
                   render={<Link to={invoicePath("/edit")} />}
+                  {...testId(testIds.invoices.edit)}
                 >
                   {i18n.core.action.edit}
                 </Button>

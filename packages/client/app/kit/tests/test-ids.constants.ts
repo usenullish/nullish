@@ -63,7 +63,18 @@ export const testIds = {
   },
   invoices: {
     client: "input-invoice-client",
+    dueOn: "input-invoice-due-on",
     create: "btn-invoice-create",
+    edit: "link-invoice-edit",
+    save: "btn-invoice-save",
+    addLine: "link-invoice-add-line",
+    open: "btn-invoice-open",
+  },
+  lines: {
+    description: "input-line-description",
+    quantity: "input-line-quantity",
+    unitPrice: "input-line-unit-price",
+    create: "btn-line-create",
   },
   bankRelations: {
     name: "input-bank-relation-name",

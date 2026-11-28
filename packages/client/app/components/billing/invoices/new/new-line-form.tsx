@@ -16,6 +16,8 @@ import { useCurrencyDecimals } from "~/kit/data/currencies.hooks";
 import { amountStep } from "~/kit/utils/amount.utils";
 import { useI18n } from "~/kit/i18n/i18n.context";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const NewLineForm = ({
   currency,
@@ -65,13 +67,26 @@ export const NewLineForm = ({
 
         <Field>
           <FieldLabel htmlFor={descriptionId}>{i18n.core.label.description}</FieldLabel>
-          <Input id={descriptionId} name="description" required />
+          <Input
+            id={descriptionId}
+            name="description"
+            required
+            {...testId(testIds.lines.description)}
+          />
         </Field>
 
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel htmlFor={quantityId}>{i18n.lines.label.quantity}</FieldLabel>
-            <Input id={quantityId} name="quantity" type="number" step="0.001" min="0" required />
+            <Input
+              id={quantityId}
+              name="quantity"
+              type="number"
+              step="0.001"
+              min="0"
+              required
+              {...testId(testIds.lines.quantity)}
+            />
           </Field>
 
           <Field>
@@ -85,12 +100,13 @@ export const NewLineForm = ({
               step={amountStep(decimals)}
               min="0"
               required
+              {...testId(testIds.lines.unitPrice)}
             />
           </Field>
         </div>
 
         <Field>
-          <Button type="submit" disabled={pending}>
+          <Button type="submit" disabled={pending} {...testId(testIds.lines.create)}>
             {pending ? i18n.lines.state.creating : i18n.lines.action.create}
           </Button>
         </Field>

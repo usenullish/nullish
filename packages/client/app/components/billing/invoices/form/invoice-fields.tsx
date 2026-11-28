@@ -135,6 +135,7 @@ export const InvoiceFields = ({
               setDueOn($event.target.value);
               setDueOnEdited(true);
             }}
+            {...testId(testIds.invoices.dueOn)}
           />
         </Field>
       </div>
