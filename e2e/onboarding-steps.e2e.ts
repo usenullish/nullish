@@ -26,11 +26,25 @@ test("signs up and creates an organization without VAT", async () => {
   onboardingStepsPage.rememberOrganization();
 });
 
-test("locks the invoice and the statement until their prerequisite exists", async () => {
+test("locks the invoice until a client exists", async () => {
   const onboardingStepsPage = getOnboardingStepsPage();
 
-  await onboardingStepsPage.assertTasksOpen({ tasks: ["client", "bankRelation"] });
-  await onboardingStepsPage.assertTasksClosed({ tasks: ["invoice", "statement"] });
+  await onboardingStepsPage.assertTasksOpen({ tasks: ["bankRelation", "client"] });
+  await onboardingStepsPage.assertTasksClosed({ tasks: ["invoice"] });
+});
+
+test("adds a bank account", async () => {
+  const onboardingStepsPage = getOnboardingStepsPage();
+
+  await onboardingStepsPage.createBankRelation({
+    name: "E2E Bank",
+    iban: "CH3908704016075473007",
+    accountCode: "1020",
+  });
+
+  await onboardingStepsPage.openHome();
+
+  await onboardingStepsPage.assertTasksClosed({ tasks: ["bankRelation"] });
 });
 
 test("creates a first client", async () => {
@@ -48,31 +62,6 @@ test("creates a first invoice", async () => {
   const onboardingStepsPage = getOnboardingStepsPage();
 
   await onboardingStepsPage.createInvoice({ clientName: client.name });
-
-  await onboardingStepsPage.openHome();
-
-  await onboardingStepsPage.assertTasksClosed({ tasks: ["invoice"] });
-});
-
-test("adds a bank account", async () => {
-  const onboardingStepsPage = getOnboardingStepsPage();
-
-  await onboardingStepsPage.createBankRelation({
-    name: "E2E Bank",
-    iban: "CH3908704016075473007",
-    accountCode: "1020",
-  });
-
-  await onboardingStepsPage.openHome();
-
-  await onboardingStepsPage.assertTasksClosed({ tasks: ["bankRelation"] });
-  await onboardingStepsPage.assertTasksOpen({ tasks: ["statement"] });
-});
-
-test("imports a statement", async () => {
-  const onboardingStepsPage = getOnboardingStepsPage();
-
-  await onboardingStepsPage.importStatement({ file: "statement.camt053.xml" });
 });
 
 test("shows the chat once every step is done", async () => {

@@ -264,8 +264,6 @@
     "invoice_description": "Draft it, then send it as a PDF.",
     "bank_relation_title": "Add your bank account",
     "bank_relation_description": "Where your money lands.",
-    "statement_title": "Import a statement",
-    "statement_description": "Bring in your bank movements and match them with the journal.",
     "assistant_title": "Ask the assistant",
     "assistant_description": "Ask anything about your organization, or let it do the typing for you."
   },

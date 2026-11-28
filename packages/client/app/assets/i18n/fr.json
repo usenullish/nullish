@@ -264,8 +264,6 @@
     "invoice_description": "Prépare-la, puis envoie-la en PDF.",
     "bank_relation_title": "Ajoute ton compte bancaire",
     "bank_relation_description": "Là où ton argent arrive.",
-    "statement_title": "Importe un relevé",
-    "statement_description": "Fais entrer tes mouvements bancaires et rapproche-les du journal.",
     "assistant_title": "Demande à l'assistant",
     "assistant_description": "Pose-lui n'importe quelle question sur ton organisation, ou laisse-le saisir à ta place."
   },

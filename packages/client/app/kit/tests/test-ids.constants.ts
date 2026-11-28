@@ -74,6 +74,9 @@ export const testIds = {
     file: "input-bank-relation-file",
     uploadFile: "btn-bank-relation-upload-file",
   },
+  bankMovements: {
+    details: "card-bank-movement-details",
+  },
   invitations: {
     email: "input-invitation-email",
     submit: "btn-invitation-create",

@@ -50,6 +50,21 @@ export const Onboarding = ({
 
   const groups: OnboardingGroup[] = [
     {
+      key: "banking",
+      title: i18n.navigation.banking,
+      icon: Landmark,
+      tasks: [
+        {
+          key: "bankRelation",
+          title: i18n.onboarding.bank_relation_title,
+          description: i18n.onboarding.bank_relation_description,
+          to: newBankRelation,
+          done: state.hasBankRelations,
+          locked: false,
+        },
+      ],
+    },
+    {
       key: "billing",
       title: i18n.navigation.billing,
       icon: FileText,
@@ -69,29 +84,6 @@ export const Onboarding = ({
           to: billing.to({ path: "/invoices/new" }),
           done: state.hasInvoices,
           locked: !state.hasClients,
-        },
-      ],
-    },
-    {
-      key: "banking",
-      title: i18n.navigation.banking,
-      icon: Landmark,
-      tasks: [
-        {
-          key: "bankRelation",
-          title: i18n.onboarding.bank_relation_title,
-          description: i18n.onboarding.bank_relation_description,
-          to: newBankRelation,
-          done: state.hasBankRelations,
-          locked: false,
-        },
-        {
-          key: "statement",
-          title: i18n.onboarding.statement_title,
-          description: i18n.onboarding.statement_description,
-          to: banking.to(),
-          done: state.hasStatements,
-          locked: !state.hasBankRelations,
         },
       ],
     },

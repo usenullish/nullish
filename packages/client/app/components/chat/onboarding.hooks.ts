@@ -13,7 +13,13 @@ export const usePendingOnboarding = ({
   const organization = useOrganization();
   const canWrite = useCanWrite({ organizationId: organization.id });
 
-  if (!canWrite || isNullish(onboarding) || Object.values(onboarding).every(Boolean)) {
+  if (isNullish(onboarding)) {
+    return undefined;
+  }
+
+  const { hasClients, hasInvoices, hasBankRelations } = onboarding;
+
+  if (!canWrite || (hasClients && hasInvoices && hasBankRelations)) {
     return undefined;
   }
 

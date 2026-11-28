@@ -264,8 +264,6 @@
     "invoice_description": "Preparala, poi inviala in PDF.",
     "bank_relation_title": "Aggiungi il tuo conto bancario",
     "bank_relation_description": "Dove arrivano i tuoi soldi.",
-    "statement_title": "Importa un estratto conto",
-    "statement_description": "Porta dentro i tuoi movimenti bancari e abbinali al giornale.",
     "assistant_title": "Chiedi all'assistente",
     "assistant_description": "Chiedigli qualsiasi cosa sulla tua organizzazione, o lascia che registri al posto tuo."
   },

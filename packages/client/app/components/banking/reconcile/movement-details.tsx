@@ -3,6 +3,8 @@ import type { Api } from "@usenullish/nullish-schema/server";
 import { Amount } from "~/components/core/amount";
 import { useFormatDate } from "~/kit/format/date.hooks";
 import { useI18n } from "~/kit/i18n/i18n.context";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 export const MovementDetails = ({
   movement,
@@ -76,7 +78,7 @@ export const MovementDetails = ({
   ].filter(({ value }) => nonNullish(value));
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2" {...testId(testIds.bankMovements.details)}>
       {nonNullish(heading) && <span className="text-xs font-medium">{heading}</span>}
 
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">

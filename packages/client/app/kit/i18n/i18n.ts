@@ -252,8 +252,6 @@ const I18nOnboardingSchema = z.strictObject({
   invoice_description: z.string(),
   bank_relation_title: z.string(),
   bank_relation_description: z.string(),
-  statement_title: z.string(),
-  statement_description: z.string(),
   assistant_title: z.string(),
   assistant_description: z.string(),
 });

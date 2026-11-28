@@ -264,8 +264,6 @@
     "invoice_description": "Bereite sie vor und schick sie dann als PDF.",
     "bank_relation_title": "Füge dein Bankkonto hinzu",
     "bank_relation_description": "Wo dein Geld ankommt.",
-    "statement_title": "Importiere einen Kontoauszug",
-    "statement_description": "Hol deine Bankbewegungen rein und gleiche sie mit dem Journal ab.",
     "assistant_title": "Frag den Assistenten",
     "assistant_description": "Frag ihn alles über deine Organisation, oder lass ihn für dich erfassen."
   },
