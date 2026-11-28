@@ -70,6 +70,12 @@ export const testIds = {
     iban: "input-bank-relation-iban",
     account: "input-bank-relation-account",
     create: "btn-bank-relation-create",
+    upload: "btn-bank-relation-upload",
+    file: "input-bank-relation-file",
+    uploadFile: "btn-bank-relation-upload-file",
+  },
+  bankMovements: {
+    details: "card-bank-movement-details",
   },
   invitations: {
     email: "input-invitation-email",

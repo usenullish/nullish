@@ -3,11 +3,11 @@ import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import type { Option } from "../../packages/common/src/option";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import { TIMEOUT_AVERAGE } from "../_e2e.constants";
-import { OnboardingPage } from "./onboarding.page";
+import { BankingPage } from "./banking.page";
 
 type OnboardingTask = "client" | "invoice" | "bankRelation";
 
-export class OnboardingStepsPage extends OnboardingPage {
+export class OnboardingStepsPage extends BankingPage {
   #organizationUrl: Option<string>;
 
   rememberOrganization(): void {
@@ -60,33 +60,6 @@ export class OnboardingStepsPage extends OnboardingPage {
     await this.click(testIds.invoices.create);
 
     await expect(this.page).toHaveURL(/\/billing\/invoices\/[^/]+$/);
-  }
-
-  async createBankRelation({
-    name,
-    iban,
-    accountCode,
-  }: {
-    name: string;
-    iban: string;
-    accountCode: string;
-  }): Promise<void> {
-    await this.click(`${testIds.onboarding.task}-bankRelation`);
-
-    await expect(this.page).toHaveURL(/\/banking\/new$/);
-
-    await this.page.getByTestId(testIds.bankRelations.name).fill(name);
-    await this.page.getByTestId(testIds.bankRelations.iban).fill(iban);
-
-    await this.page
-      .getByTestId(testIds.bankRelations.account)
-      .getByRole("combobox")
-      .fill(accountCode);
-    await this.page.getByRole("option").first().click();
-
-    await this.click(testIds.bankRelations.create);
-
-    await expect(this.page).toHaveURL(/\/banking\/[^/]+$/);
   }
 
   async assertChatOnHome(): Promise<void> {
