@@ -62,6 +62,30 @@ export class OnboardingStepsPage extends OnboardingPage {
     await expect(this.page).toHaveURL(/\/billing\/invoices\/[^/]+$/);
   }
 
+  async createBankRelation({
+    name,
+    iban,
+    accountCode,
+  }: {
+    name: string;
+    iban: string;
+    accountCode: string;
+  }): Promise<void> {
+    await this.click(`${testIds.onboarding.task}-bankRelation`);
+
+    await expect(this.page).toHaveURL(/\/banking\/new$/);
+
+    await this.page.getByTestId(testIds.bankRelations.name).fill(name);
+    await this.page.getByTestId(testIds.bankRelations.iban).fill(iban);
+
+    await this.page.getByTestId(testIds.bankRelations.account).locator("input").fill(accountCode);
+    await this.page.getByRole("option").first().click();
+
+    await this.click(testIds.bankRelations.create);
+
+    await expect(this.page).toHaveURL(/\/banking\/[^/]+$/);
+  }
+
   async assertChatOnHome(): Promise<void> {
     await expect(this.page.getByTestId(testIds.chat.prompt)).toBeVisible(TIMEOUT_AVERAGE);
     await this.assertTasksClosed({
