@@ -1,6 +1,5 @@
 import { expect } from "@playwright/test";
 import { join } from "node:path";
-import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import { OnboardingPage } from "./onboarding.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import { TIMEOUT_AVERAGE } from "../_e2e.constants";
@@ -17,11 +16,7 @@ export class BankingPage extends OnboardingPage {
     iban: string;
     accountCode: string;
   }): Promise<void> {
-    const [organizationUrl] = /^.*\/orgs\/[^/?]+/.exec(this.page.url()) ?? [];
-
-    assertNonNullish(organizationUrl);
-
-    await this.page.goto(`${organizationUrl}/banking/new`);
+    await this.click(`${testIds.onboarding.task}-bankRelation`);
 
     await expect(this.page).toHaveURL(/\/banking\/new$/);
 
