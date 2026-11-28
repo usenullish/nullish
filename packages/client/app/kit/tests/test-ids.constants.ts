@@ -57,6 +57,23 @@ export const testIds = {
   onboarding: {
     task: "link-onboarding-task",
   },
+  clients: {
+    name: "input-client-name",
+    create: "btn-client-create",
+  },
+  invoices: {
+    client: "input-invoice-client",
+    create: "btn-invoice-create",
+  },
+  bankRelations: {
+    name: "input-bank-relation-name",
+    iban: "input-bank-relation-iban",
+    account: "input-bank-relation-account",
+    create: "btn-bank-relation-create",
+    upload: "btn-bank-relation-upload",
+    file: "input-bank-relation-file",
+    uploadFile: "btn-bank-relation-upload-file",
+  },
   invitations: {
     email: "input-invitation-email",
     submit: "btn-invitation-create",
