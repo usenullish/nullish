@@ -111,4 +111,14 @@ export class OrganizationsServer extends ServerLoader {
         this.#reportsService.generateVatDeclaration({ ...params, body }),
     });
   }
+
+  async getReportsOnboarding(
+    args: LoaderFunctionArgs,
+  ): Promise<Option<Api["Onboarding"]["Client"]["GetOnboardingResponse"]>> {
+    return await this._loadNested({
+      args,
+      errorFallbackMsg: "Unexpected error while loading the onboarding of the organization",
+      loaderWithOrgIdFn: this.#reportsService.getOnboarding,
+    });
+  }
 }

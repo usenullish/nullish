@@ -222,6 +222,7 @@ const I18nChatSchema = z.strictObject({
     history: z.string(),
     title: z.string(),
     placeholder_disabled: z.string(),
+    conversation: z.string(),
   }),
   text: z.strictObject({
     switch_to_read_write: z.string(),

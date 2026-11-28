@@ -194,4 +194,25 @@ export class ApiOrganizationsReportsSsr extends ApiSsr {
 
     return ApiSchema.VatReports.GenerateVatDeclarationResponseSchema.parse(await response.json());
   };
+
+  getOnboarding = async ({
+    orgId,
+  }: ApiOrganizationsGetByIdArgs): Promise<
+    Api["Onboarding"]["Client"]["GetOnboardingResponse"]
+  > => {
+    const response = await fetch(`${this.apiUrl}/organizations/${orgId}/reports/onboarding`, {
+      headers: {
+        ...this.cookieHeader(),
+      },
+    });
+
+    if (!response.ok) {
+      return await this.throwError({
+        response,
+        message: `Cannot get /organizations/${orgId}/reports/onboarding`,
+      });
+    }
+
+    return ApiSchema.Onboarding.GetOnboardingResponseSchema.parse(await response.json());
+  };
 }
