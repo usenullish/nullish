@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { join } from "node:path";
+import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import { OnboardingPage } from "./onboarding.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import { TIMEOUT_AVERAGE } from "../_e2e.constants";
@@ -16,14 +17,21 @@ export class BankingPage extends OnboardingPage {
     iban: string;
     accountCode: string;
   }): Promise<void> {
-    await this.click(`${testIds.onboarding.task}-bankRelation`);
+    const [organizationUrl] = /^.*\/orgs\/[^/?]+/.exec(this.page.url()) ?? [];
+
+    assertNonNullish(organizationUrl);
+
+    await this.page.goto(`${organizationUrl}/banking/new`);
 
     await expect(this.page).toHaveURL(/\/banking\/new$/);
 
     await this.page.getByTestId(testIds.bankRelations.name).fill(name);
     await this.page.getByTestId(testIds.bankRelations.iban).fill(iban);
 
-    await this.page.getByTestId(testIds.bankRelations.account).locator("input").fill(accountCode);
+    await this.page
+      .getByTestId(testIds.bankRelations.account)
+      .getByRole("combobox")
+      .fill(accountCode);
     await this.page.getByRole("option").first().click();
 
     await this.click(testIds.bankRelations.create);

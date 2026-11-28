@@ -19,7 +19,7 @@ test("signs up and creates an organization", async () => {
 
   await bankingPage.letsGo();
 
-  await bankingPage.assertOnboardingVisible();
+  await bankingPage.assertChatVisible();
 });
 
 test("adds a bank account", async () => {
