@@ -20,8 +20,7 @@ const getOnboardingRoute = defineGetRoute({
     body: {
       schema: ApiSchema.Onboarding.GetOnboardingResponseSchema,
     },
-    description:
-      "Retrieves whether the organization has clients, invoices, bank accounts and bank statements",
+    description: "Retrieves whether the organization has clients, invoices and bank accounts",
   },
 });
 

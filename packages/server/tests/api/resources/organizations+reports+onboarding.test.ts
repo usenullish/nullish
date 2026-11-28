@@ -12,7 +12,6 @@ import { loadCallerMiddleware } from "../../../src/api/middlewares/caller";
 import { OrganizationsReportsOnboarding } from "../../../src/api/resources/_organizations+reports+onboarding";
 import {
   createBankRelation,
-  createBankStatement,
   createClient,
   createDraftInvoice,
   createOrganization,
@@ -121,16 +120,14 @@ describe("organization onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 
-  test("has everything once a client, an invoice, a bank account and a statement exist", async () => {
+  test("has everything once a client, an invoice and a bank account exist", async () => {
     const organizationId = await createOrganization(db, userId);
     const clientId = await createClient(db, organizationId);
     await createDraftInvoice(db, { organizationId, clientId });
-    const bankRelationId = await createBankRelation(db, organizationId);
-    await createBankStatement(db, { organizationId, bankRelationId });
+    await createBankRelation(db, organizationId);
 
     const response = await get({ organizationId, cookie });
 
@@ -139,7 +136,6 @@ describe("organization onboarding report", () => {
       hasClients: true,
       hasInvoices: true,
       hasBankRelations: true,
-      hasStatements: true,
     });
   });
 
@@ -154,7 +150,6 @@ describe("organization onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 });
