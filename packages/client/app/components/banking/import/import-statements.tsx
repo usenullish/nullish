@@ -22,6 +22,8 @@ import { replacePlaceholders } from "~/kit/i18n/i18n.utils";
 import { useNotify } from "~/kit/notifications/notify.hook";
 import { useActionWithNotifyError } from "~/kit/data/form.hooks";
 import { buildFormSubmit } from "~/kit/utils/form.utils";
+import { testId } from "~/kit/tests/test.utils";
+import { testIds } from "~/kit/tests/test-ids.constants";
 
 type ImportStatementsResponse = Api["BankRelations"]["Client"]["ImportStatementsResponse"];
 
@@ -106,13 +108,17 @@ export const ImportStatements = ({
               </DialogDescription>
             </DialogHeader>
 
-            <Field>
+            <Field {...testId(testIds.bankRelations.file)}>
               <FieldLabel htmlFor={fileId}>{i18n.bank_relations.label.file}</FieldLabel>
               <FileInput id={fileId} name="file" accept=".xml" required />
             </Field>
 
             <DialogFooter>
-              <Button type="submit" disabled={pending}>
+              <Button
+                type="submit"
+                disabled={pending}
+                {...testId(testIds.bankRelations.uploadFile)}
+              >
                 {pending
                   ? i18n.bank_relations.state.uploading
                   : i18n.bank_relations.action.upload_file}
