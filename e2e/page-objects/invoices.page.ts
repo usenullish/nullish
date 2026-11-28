@@ -5,7 +5,7 @@ import { OnboardingStepsPage } from "./onboarding-steps.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import { TIMEOUT_AVERAGE } from "../_e2e.constants";
 
-const INVOICE_URL = /\/billing\/invoices\/[^/]+$/;
+const INVOICE_URL = /\/billing\/invoices\/[0-9a-f-]{36}$/;
 
 export class InvoicesPage extends OnboardingStepsPage {
   #invoiceUrl: Option<string>;

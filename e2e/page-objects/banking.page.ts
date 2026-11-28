@@ -31,7 +31,7 @@ export class BankingPage extends OnboardingPage {
 
     await this.click(testIds.bankRelations.create);
 
-    await expect(this.page).toHaveURL(/\/banking\/[^/]+$/);
+    await expect(this.page).toHaveURL(/\/banking\/[0-9a-f-]{36}$/);
   }
 
   async importStatement({ file }: { file: string }): Promise<void> {
