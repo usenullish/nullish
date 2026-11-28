@@ -56,10 +56,6 @@ export class OnboardingReport extends DbUserContext {
               table: DbSchema.Core.Bank.BankRelationsSchema,
               organizationId: DbSchema.Core.Bank.BankRelationsSchema.organizationId,
             }).mapWith(Boolean),
-            hasStatements: anyOf({
-              table: DbSchema.Banking.Statements.StatementsSchema,
-              organizationId: DbSchema.Banking.Statements.StatementsSchema.organizationId,
-            }).mapWith(Boolean),
           })
           .from(DbSchema.Core.Organizations.OrganizationsSchema)
           .where(eq(DbSchema.Core.Organizations.OrganizationsSchema.id, this.#organizationId));
@@ -69,7 +65,6 @@ export class OnboardingReport extends DbUserContext {
             hasClients: false,
             hasInvoices: false,
             hasBankRelations: false,
-            hasStatements: false,
           },
         );
       });

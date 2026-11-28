@@ -6,7 +6,6 @@ import type { DbStoreInitArgs } from "../../../src/store";
 import { envDbUrl } from "@usenullish/nullish-env";
 import {
   createBankRelation,
-  createBankStatement,
   createClient,
   createDraftInvoice,
   createOrganization,
@@ -62,7 +61,6 @@ describe("onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 
@@ -74,7 +72,6 @@ describe("onboarding report", () => {
       hasClients: true,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 
@@ -87,7 +84,6 @@ describe("onboarding report", () => {
       hasClients: true,
       hasInvoices: true,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 
@@ -99,20 +95,6 @@ describe("onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: true,
-      hasStatements: false,
-    });
-  });
-
-  test("has statements once a statement is imported", async () => {
-    const organizationId = await createOrganization(db, TEST_USER_ID);
-    const bankRelationId = await createBankRelation(db, organizationId);
-    await createBankStatement(db, { organizationId, bankRelationId });
-
-    expect(await generate({ organizationId })).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: true,
-      hasStatements: true,
     });
   });
 
@@ -126,7 +108,6 @@ describe("onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 
@@ -139,7 +120,6 @@ describe("onboarding report", () => {
       hasClients: false,
       hasInvoices: false,
       hasBankRelations: false,
-      hasStatements: false,
     });
   });
 });
