@@ -32,6 +32,23 @@ export class InvoicesService extends Service {
     }
   };
 
+  update = async ({
+    values: body,
+    invoiceId,
+  }: {
+    values: Api["Invoices"]["Client"]["UpdateInvoiceBody"];
+  } & ApiWithInvoiceIdArgs): Promise<
+    Result<Api["Invoices"]["Client"]["UpdateInvoiceResponse"]>
+  > => {
+    try {
+      const result = await ApiInvoices.create().update({ invoiceId, body });
+
+      return { status: "success", result };
+    } catch (err: unknown) {
+      return { status: "error", err };
+    }
+  };
+
   open = async ({
     invoiceId,
   }: {

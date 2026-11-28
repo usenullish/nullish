@@ -448,7 +448,8 @@
       "write_off_title": "Write off this invoice?",
       "write_off_description": "The open amount will be booked as a loss on receivables. This cannot be undone.",
       "delete_title": "Delete the draft invoice for {client} of {date}?",
-      "delete_description": "The draft invoice and its lines are deleted. This action is irreversible."
+      "delete_description": "The draft invoice and its lines are deleted. This action is irreversible.",
+      "edit_title": "Edit invoice"
     },
     "toast": {
       "create_success": "The invoice is created.",
@@ -463,7 +464,9 @@
       "pay_error": "The payment could not be recorded.",
       "pdf_error": "The PDF could not be generated.",
       "delete_success": "The invoice is deleted.",
-      "delete_error": "The invoice could not be deleted."
+      "delete_error": "The invoice could not be deleted.",
+      "update_success": "The invoice is saved.",
+      "update_error": "The invoice could not be saved."
     },
     "status": {
       "draft": "Draft",

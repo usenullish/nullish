@@ -1,8 +1,8 @@
 import { InvoicesService } from "~/lib/services/invoices.services";
 import type { UseActionStateFn } from "~/context/form/form";
 import { type Api, ApiSchema } from "@usenullish/nullish-schema/server";
-import { emptyStringToNull, type Result } from "@usenullish/nullish-common";
-import * as z from "zod";
+import type { Result } from "@usenullish/nullish-common";
+import { InvoiceFormFieldsSchema, readInvoiceFormFields } from "~/context/form/_invoice.form";
 
 interface SubmitInvoiceArgs {
   formData: FormData;
@@ -27,25 +27,15 @@ export const buildUseNewInvoiceAction = ({
   return useNewInvoiceAction;
 };
 
-const FormCreateInvoiceSchema = ApiSchema.Invoices.CreateInvoiceRequestSchema.extend({
-  issueOn: z.coerce.date(),
-  dueOn: emptyStringToNull(z.coerce.date().nullable()),
-  exchangeRate: z.coerce.number(),
-  vatRateId: emptyStringToNull(z.uuid().nullable()),
-});
+const FormCreateInvoiceSchema = ApiSchema.Invoices.CreateInvoiceRequestSchema.extend(
+  InvoiceFormFieldsSchema.shape,
+);
 
 const submitInvoice = async ({
   formData,
   organizationId,
 }: SubmitInvoiceArgs): Promise<Result<CreatedInvoice>> => {
-  const invoice = FormCreateInvoiceSchema.parse({
-    clientId: formData.get("clientId"),
-    issueOn: formData.get("issueOn"),
-    dueOn: formData.get("dueOn"),
-    exchangeRate: formData.get("exchangeRate"),
-    currency: formData.get(`currency`),
-    vatRateId: formData.get("vatRateId"),
-  });
+  const invoice = FormCreateInvoiceSchema.parse(readInvoiceFormFields({ formData }));
 
   return await InvoicesService.create().submit({ organizationId, invoice });
 };

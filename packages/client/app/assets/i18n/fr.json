@@ -448,7 +448,8 @@
       "write_off_title": "Passer cette facture en perte ?",
       "write_off_description": "Le montant ouvert sera comptabilisé comme perte sur clients. Cette action est irréversible.",
       "delete_title": "Supprimer le brouillon de facture pour {client} du {date} ?",
-      "delete_description": "Le brouillon de facture et ses lignes sont supprimés. Cette action est irréversible."
+      "delete_description": "Le brouillon de facture et ses lignes sont supprimés. Cette action est irréversible.",
+      "edit_title": "Modifier la facture"
     },
     "toast": {
       "create_success": "La facture est créée.",
@@ -463,7 +464,9 @@
       "pay_error": "Le paiement n'a pas pu être enregistré.",
       "pdf_error": "Le PDF n'a pas pu être généré.",
       "delete_success": "La facture est supprimée.",
-      "delete_error": "La facture n'a pas pu être supprimée."
+      "delete_error": "La facture n'a pas pu être supprimée.",
+      "update_success": "La facture est enregistrée.",
+      "update_error": "La facture n'a pas pu être enregistrée."
     },
     "status": {
       "draft": "Brouillon",

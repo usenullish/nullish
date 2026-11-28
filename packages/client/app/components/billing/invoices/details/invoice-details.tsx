@@ -72,6 +72,14 @@ export const InvoiceDetails = ({ invoice }: { invoice: Api["Invoices"]["Client"]
                   successMsg={i18n.invoices.toast.open_success}
                   errorMsg={i18n.invoices.toast.open_error}
                 />
+
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link to={invoicePath("/edit")} />}
+                >
+                  {i18n.core.action.edit}
+                </Button>
               </>
             )}
           </WriteGuard>

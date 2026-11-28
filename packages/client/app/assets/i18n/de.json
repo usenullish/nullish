@@ -448,7 +448,8 @@
       "write_off_title": "Diese Rechnung abschreiben?",
       "write_off_description": "Der offene Betrag wird als Debitorenverlust gebucht. Dies kann nicht rückgängig gemacht werden.",
       "delete_title": "Den Rechnungsentwurf für {client} vom {date} löschen?",
-      "delete_description": "Der Rechnungsentwurf und seine Positionen werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+      "delete_description": "Der Rechnungsentwurf und seine Positionen werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "edit_title": "Rechnung bearbeiten"
     },
     "toast": {
       "create_success": "Die Rechnung ist erstellt.",
@@ -463,7 +464,9 @@
       "pay_error": "Die Zahlung konnte nicht erfasst werden.",
       "pdf_error": "Das PDF konnte nicht generiert werden.",
       "delete_success": "Die Rechnung wurde gelöscht.",
-      "delete_error": "Die Rechnung konnte nicht gelöscht werden."
+      "delete_error": "Die Rechnung konnte nicht gelöscht werden.",
+      "update_success": "Die Rechnung ist gespeichert.",
+      "update_error": "Die Rechnung konnte nicht gespeichert werden."
     },
     "status": {
       "draft": "Entwurf",
