@@ -58,9 +58,9 @@ describe("onboarding report", () => {
     const organizationId = await createOrganization(db, TEST_USER_ID);
 
     expect(await generate({ organizationId })).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 
@@ -69,9 +69,9 @@ describe("onboarding report", () => {
     await createClient(db, organizationId);
 
     expect(await generate({ organizationId })).toEqual({
-      hasClients: true,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: true },
+      invoices: { exists: false },
     });
   });
 
@@ -81,9 +81,9 @@ describe("onboarding report", () => {
     await createDraftInvoice(db, { organizationId, clientId });
 
     expect(await generate({ organizationId })).toEqual({
-      hasClients: true,
-      hasInvoices: true,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: true },
+      invoices: { exists: true },
     });
   });
 
@@ -92,9 +92,9 @@ describe("onboarding report", () => {
     await createBankRelation(db, organizationId);
 
     expect(await generate({ organizationId })).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: true,
+      bankRelations: { exists: true },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 
@@ -105,9 +105,9 @@ describe("onboarding report", () => {
     await createBankRelation(db, otherOrganizationId);
 
     expect(await generate({ organizationId })).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 
@@ -117,9 +117,9 @@ describe("onboarding report", () => {
     await createBankRelation(db, organizationId);
 
     expect(await generate({ organizationId, userId: TEST_OTHER_USER_ID })).toEqual({
-      hasClients: false,
-      hasInvoices: false,
-      hasBankRelations: false,
+      bankRelations: { exists: false },
+      clients: { exists: false },
+      invoices: { exists: false },
     });
   });
 });
