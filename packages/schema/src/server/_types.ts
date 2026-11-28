@@ -781,6 +781,8 @@ interface Api {
       GetInvoiceResponse: z.infer<typeof ApiSchema.Invoices.GetInvoiceResponseSchema>;
       CreateInvoiceBody: z.infer<typeof ApiSchema.Invoices.CreateInvoiceRequestSchema>;
       CreateInvoiceResponse: z.infer<typeof ApiSchema.Invoices.CreateInvoiceResponseSchema>;
+      UpdateInvoiceBody: z.infer<typeof ApiSchema.Invoices.UpdateInvoiceRequestSchema>;
+      UpdateInvoiceResponse: z.infer<typeof ApiSchema.Invoices.UpdateInvoiceResponseSchema>;
       OpenInvoiceResponse: z.infer<typeof ApiSchema.InvoicesOpen.OpenInvoiceResponseSchema>;
       PayInvoiceBody: z.infer<typeof ApiSchema.InvoicesPay.PayInvoiceRequestSchema>;
       PayInvoiceResponse: z.infer<typeof ApiSchema.InvoicesPay.PayInvoiceResponseSchema>;

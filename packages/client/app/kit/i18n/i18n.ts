@@ -415,6 +415,7 @@ const I18nInvoicesSchema = z.strictObject({
     write_off_description: z.string(),
     delete_title: z.string(),
     delete_description: z.string(),
+    edit_title: z.string(),
   }),
   toast: z.strictObject({
     create_success: z.string(),
@@ -430,6 +431,8 @@ const I18nInvoicesSchema = z.strictObject({
     pdf_error: z.string(),
     delete_success: z.string(),
     delete_error: z.string(),
+    update_success: z.string(),
+    update_error: z.string(),
   }),
   status: z.strictObject({
     draft: z.string(),

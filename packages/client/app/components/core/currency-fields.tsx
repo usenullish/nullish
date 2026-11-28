@@ -11,9 +11,11 @@ import { NO_SPIN_BUTTON_CLASS } from "~/kit/utils/input.utils";
 
 export const CurrencyFields = ({
   defaultCurrency,
+  defaultExchangeRate,
   onDecimalsChange,
 }: {
   defaultCurrency?: string;
+  defaultExchangeRate?: number;
   onDecimalsChange?: (decimals: Option<number>) => void;
 }) => {
   const { i18n } = useI18n();
@@ -25,7 +27,7 @@ export const CurrencyFields = ({
   const baseCurrency = accountingSettings?.baseCurrency;
 
   const [currency, setCurrency] = useState(defaultCurrency ?? baseCurrency);
-  const [exchangeRate, setExchangeRate] = useState("1");
+  const [exchangeRate, setExchangeRate] = useState(`${defaultExchangeRate ?? 1}`);
 
   const decimals = decimalsOf(currency);
 

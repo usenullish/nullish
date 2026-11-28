@@ -39,6 +39,17 @@ export const InvoiceActions = ({
           </DropdownMenuItem>
           {deletable && (
             <WriteGuard>
+              <DropdownMenuItem
+                render={
+                  <Link
+                    to={BillingPath.create({ organizationId: organization.id }).to({
+                      path: `/invoices/${invoice.id}/edit`,
+                    })}
+                  />
+                }
+              >
+                {i18n.core.action.edit}
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setDeleteOpen(true)}>
                 {i18n.core.action.delete}
               </DropdownMenuItem>

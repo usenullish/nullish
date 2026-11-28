@@ -47,6 +47,36 @@ export class ApiInvoices extends AppApi {
     return ApiSchema.Invoices.CreateInvoiceResponseSchema.parse(result);
   };
 
+  update = async ({
+    invoiceId,
+    body,
+  }: {
+    body: Api["Invoices"]["Client"]["UpdateInvoiceBody"];
+  } & ApiWithInvoiceIdArgs): Promise<Api["Invoices"]["Client"]["UpdateInvoiceResponse"]> => {
+    const response = await fetch(`${this.apiUrl}/billing/invoices/${invoiceId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: encodeJsonBody({
+        schema: ApiSchema.Invoices.UpdateInvoiceRequestSchema,
+        body,
+      }),
+    });
+
+    if (!response.ok) {
+      return await this.throwError({
+        response,
+        message: `Cannot patch /billing/invoices/${invoiceId}`,
+      });
+    }
+
+    const result = await response.json();
+
+    return ApiSchema.Invoices.UpdateInvoiceResponseSchema.parse(result);
+  };
+
   open = async ({
     invoiceId,
   }: ApiWithInvoiceIdArgs): Promise<Api["Invoices"]["Client"]["OpenInvoiceResponse"]> => {

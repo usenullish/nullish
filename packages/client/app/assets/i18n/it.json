@@ -448,7 +448,8 @@
       "write_off_title": "Ammortizzare questa fattura?",
       "write_off_description": "L'importo aperto verrà contabilizzato come perdita su crediti. L'operazione è irreversibile.",
       "delete_title": "Eliminare la bozza di fattura per {client} del {date}?",
-      "delete_description": "La bozza di fattura e le sue righe vengono eliminate. Questa azione è irreversibile."
+      "delete_description": "La bozza di fattura e le sue righe vengono eliminate. Questa azione è irreversibile.",
+      "edit_title": "Modifica fattura"
     },
     "toast": {
       "create_success": "La fattura è stata creata.",
@@ -463,7 +464,9 @@
       "pay_error": "Impossibile registrare il pagamento.",
       "pdf_error": "Impossibile generare il PDF.",
       "delete_success": "La fattura è stata eliminata.",
-      "delete_error": "Non è stato possibile eliminare la fattura."
+      "delete_error": "Non è stato possibile eliminare la fattura.",
+      "update_success": "La fattura è stata salvata.",
+      "update_error": "Impossibile salvare la fattura."
     },
     "status": {
       "draft": "Bozza",

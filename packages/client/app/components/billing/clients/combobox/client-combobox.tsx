@@ -12,7 +12,15 @@ import { useI18n } from "~/kit/i18n/i18n.context";
 
 type Client = Api["Clients"]["Client"]["GetClientsResponse"]["data"][number];
 
-export const ClientCombobox = ({ id, name }: { id: string; name: string }) => {
+export const ClientCombobox = ({
+  id,
+  name,
+  defaultClientId,
+}: {
+  id: string;
+  name: string;
+  defaultClientId?: Client["id"];
+}) => {
   const { i18n } = useI18n();
   const clients = useClients();
 
@@ -22,6 +30,7 @@ export const ClientCombobox = ({ id, name }: { id: string; name: string }) => {
     <Combobox
       items={items}
       name={name}
+      defaultValue={items.find(({ id }) => id === defaultClientId) ?? null}
       itemToStringLabel={({ name }: Client) => name}
       itemToStringValue={({ id }: Client) => id}
       isItemEqualToValue={(item: Client, value: Client) => item.id === value.id}
