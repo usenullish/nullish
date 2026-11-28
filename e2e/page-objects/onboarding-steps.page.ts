@@ -1,13 +1,13 @@
 import { expect } from "@playwright/test";
 import { assertNonNullish } from "../../packages/common/src/asserts/nullish";
 import type { Option } from "../../packages/common/src/option";
-import { BankingPage } from "./banking.page";
 import { testIds } from "../../packages/client/app/kit/tests/test-ids.constants";
 import { TIMEOUT_AVERAGE } from "../_e2e.constants";
+import { OnboardingPage } from "./onboarding.page";
 
 type OnboardingTask = "client" | "invoice" | "bankRelation";
 
-export class OnboardingStepsPage extends BankingPage {
+export class OnboardingStepsPage extends OnboardingPage {
   #organizationUrl: Option<string>;
 
   rememberOrganization(): void {
@@ -64,6 +64,8 @@ export class OnboardingStepsPage extends BankingPage {
 
   async assertChatOnHome(): Promise<void> {
     await expect(this.page.getByTestId(testIds.chat.prompt)).toBeVisible(TIMEOUT_AVERAGE);
-    await this.assertTasksClosed({ tasks: ["client", "invoice", "bankRelation"] });
+    await this.assertTasksClosed({
+      tasks: ["client", "invoice", "bankRelation"],
+    });
   }
 }
